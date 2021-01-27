@@ -58,6 +58,7 @@ export const Details = styled.div`
   }
 `;
 
+
 export const Thumbnail = styled.div`
   flex: 1;
 
@@ -69,3 +70,14 @@ export const Thumbnail = styled.div`
     width: 100%;
   }
 `;
+
+
+export const Link = styled.div` 
+  margin-top:50px;
+ a {
+   color:white;
+ }
+ a:hover {
+   color:white
+ }
+`

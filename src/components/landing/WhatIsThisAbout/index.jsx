@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
-import dev from 'assets/illustrations/skills.svg';
+import adAdastra from 'assets/illustrations/ad-adastra.svg';
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const WhatIsThisAbout = () => {
@@ -24,7 +24,7 @@ export const WhatIsThisAbout = () => {
 
 
         <Thumbnail>
-          <img src={dev} alt="I’m John and I’m a Backend & Devops engineer!" />
+          <img src={adAdastra} alt="Towards the stars! Are you ready?" />
         </Thumbnail>
       </SkillsWrapper>
     </Wrapper>

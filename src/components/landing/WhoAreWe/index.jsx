@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
-import dev from 'assets/illustrations/skills.svg';
+import starman from 'assets/illustrations/starman.svg';
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const WhoAreWe = () => {
@@ -24,7 +24,7 @@ export const WhoAreWe = () => {
 
 
         <Thumbnail>
-          <img src={dev} alt="I’m John and I’m a Backend & Devops engineer!" />
+          <img src={starman} alt="We take you to the orbit and beyond!" />
         </Thumbnail>
       </SkillsWrapper>
     </Wrapper>

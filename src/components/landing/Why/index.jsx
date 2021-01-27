@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
-import dev from 'assets/illustrations/skills.svg';
+import rocketLaunch from 'assets/illustrations/rocket-launch.svg';
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const Why = () => {
@@ -11,6 +11,10 @@ export const Why = () => {
   return (
     <Wrapper id="about">
       <SkillsWrapper as={Container}>
+
+      <Thumbnail>
+          <img src={rocketLaunch} alt="I’m John and I’m a Backend & Devops engineer!" />
+        </Thumbnail>
       
         <Details theme={theme}>
           <h1>Why are we setting this up?</h1>
@@ -24,9 +28,7 @@ export const Why = () => {
         </Details>
 
 
-        <Thumbnail>
-          <img src={dev} alt="I’m John and I’m a Backend & Devops engineer!" />
-        </Thumbnail>
+
       </SkillsWrapper>
     </Wrapper>
   );

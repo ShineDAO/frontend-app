@@ -49,7 +49,7 @@ export default () => {
   >
     {({ values, touched, errors, setFieldValue, isSubmitting }) => (
       <Form>
-      <h1>Subscribe to our mailing list for latest updates!</h1>
+      <h1>Subscribe to our mailing list for latest updates about our upcoming crowdsale!</h1>
         <InputField>
           <Input
             id="email"

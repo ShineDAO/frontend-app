@@ -8,8 +8,8 @@ export default () => (
     <Intro />
     <Projects />
     <WhatIsThisAbout/>
-    <WhoAreWe />
     <Why />
+    <WhoAreWe />
     <Contact />
   </Layout>
 );
