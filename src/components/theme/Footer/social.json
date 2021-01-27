@@ -3,24 +3,24 @@
     "id": 0,
     "name": "Discord",
     "link": "https://discord.com/invite/QkhbP7bZrj",
-    "icon": "../../../assets/icons/discord.svg"
+    "icon": "/icons/discord.svg"
   },{
     "id": 1,
     "name": "Telegram",
     "link": "https://t.me/smakosh",
-    "icon": "../../../assets/icons/telegram.svg"
+    "icon": "/icons/telegram.svg"
   },
 
   {
     "id": 2,
     "name": "Github",
     "link": "https://github.com/shine-squad/ShineToken",
-    "icon": "../../../assets/icons/github.svg"
+    "icon": "/icons/github.svg"
   },
   {
     "id": 3,
     "name": "Twitter",
     "link": "https://twitter.com/",
-    "icon": "../../../assets/icons/twitter.svg"
+    "icon": "/icons/twitter.svg"
   }
 ]
