@@ -4,9 +4,12 @@ on:
   push:
     branches:
       - main
-  steps:
-  - name: Build an app
-    run: echo "SHINE"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build an app
+      run: echo "SHINE"
 
 
 
