@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Install github pages 
+      run: npm install gh-pages --save-dev   
     - name: Install packages
       run: yarn install
     - name: Build an app
