@@ -11,7 +11,7 @@ jobs:
     - name: Install packages
       run: yarn install
     - name: Build an app
-      run: yarn build
+      run: gatsby build
     - name: Install github pages 
       run: npm install gh-pages --save-dev   
     - name: publish to github pages
