@@ -28,9 +28,9 @@ jobs:
         GATSBY_PORTFOLIO_FORMIK_ENDPOINT: ${{ secrets.GATSBY_PORTFOLIO_FORMIK_ENDPOINT }}
         GATSBY_PORTFOLIO_RECAPTCHA_KEY: ${{ secrets.GATSBY_PORTFOLIO_RECAPTCHA_KEY }}
     - name: Install github pages 
-      run: npm install gh-pages --save-dev   
+      run: yarn install gh-pages --save-dev   
     - name: publish to github pages
-      run: gh-pages -d public -b master
+      run: gh-pages -d public -b main
 
 
 
