@@ -5,7 +5,6 @@ require('dotenv').config({
 });
 
 module.exports = {
-  pathPrefix: "/ShineToken",
   siteMetadata: {
     title: config.defaultTitle,
     description: config.defaultDescription,
