@@ -1,0 +1,15 @@
+- uses: ipfs-shipyard/ipfs-github-action@v2
+  id: ipfs
+  with:
+    path_to_add: public
+    cluster_host: /dnsaddr/cluster.ipfs.io
+    cluster_user: ${{ secrets.CLUSTER_USER }}
+    cluster_password: ${{ secrets.CLUSTER_PASSWORD }}
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+# "bafkreicysg23kiwv34eg2d7qweipxwosdo2py4ldv42nbauguluen5v6am"
+- run: echo /ipfs/${{ steps.ipfs.outputs.cid }}
+
+# https://bafkreicysg23kiwv34eg2d7qweipxwosdo2py4ldv42nbauguluen5v6am.ipfs.dweb.link
+- run: echo ${{ steps.ipfs.outputs.url }}
