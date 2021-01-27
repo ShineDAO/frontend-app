@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Build an app
-      run: echo "SHINE"
+      run: yarn build
 
 
 
