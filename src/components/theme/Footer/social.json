@@ -2,7 +2,7 @@
   {
     "id": 0,
     "name": "Discord",
-    "link": "https://discord.com",
+    "link": "https://discord.com/invite/QkhbP7bZrj",
     "icon": "/icons/discord.svg"
   },{
     "id": 1,
@@ -14,7 +14,7 @@
   {
     "id": 2,
     "name": "Github",
-    "link": "https://github.com/",
+    "link": "https://github.com/shine-squad/ShineToken",
     "icon": "/icons/github.svg"
   },
   {

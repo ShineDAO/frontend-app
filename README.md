@@ -1,4 +1,4 @@
-# Portfolio for developers
+# Shine is your launchpad towards the crpyto stars
 
 ## Features
 

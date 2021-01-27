@@ -3,7 +3,7 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Header } from 'components/theme';
 import { Container, Button } from 'components/common';
-import dev from 'assets/illustrations/dev.svg';
+import shineNetwork from 'assets/illustrations/shine-network.svg';
 import { Wrapper, IntroWrapper, Details, Thumbnail, Link } from './styles';
 
 export const Intro = () => {
@@ -16,10 +16,6 @@ export const Intro = () => {
         <Details theme={theme}>
           <h1>Shine Token</h1>
           <h4>Next level decentralized incubator for early stage crypto teams</h4>
-
-          <Button as={AnchorLink} href="#contact">
-            Learn more
-          </Button>
 
           <Link>
           <Button >
@@ -34,7 +30,7 @@ export const Intro = () => {
           
         </Details>
         <Thumbnail>
-          <img src={dev} alt="I’m John and I’m a JAMStack engineer!" />
+          <img src={shineNetwork} alt="Shine is meant to interconnect the blockchain community" />
         </Thumbnail>
       </IntroWrapper>
     </Wrapper>
