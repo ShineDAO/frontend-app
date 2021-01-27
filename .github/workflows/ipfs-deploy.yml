@@ -16,7 +16,7 @@ jobs:
         node-version: "12.x"
 
     - name: Install github pages 
-      run: yarn add gh-pages --save-dev   
+      run: yarn global add gh-pages   
     - name: publish to github pages
       run: gh-pages -d public -b main
 
