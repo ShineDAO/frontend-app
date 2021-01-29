@@ -71,6 +71,17 @@ export const Thumbnail = styled.div`
   }
 `;
 
+export const ThumbnailBig = styled.div`
+  flex: 2;
+
+  @media (max-width: 960px) {
+    width: 100%;
+  }
+
+  img {
+    width: 100%;
+  }
+`;
 
 export const Link = styled.div` 
   margin-top:50px;

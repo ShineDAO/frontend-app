@@ -49,7 +49,8 @@ export default () => {
   >
     {({ values, touched, errors, setFieldValue, isSubmitting }) => (
       <Form>
-      <h1>Subscribe to our mailing list for latest updates about our upcoming crowdsale!</h1>
+      <h1>Subscribe to our mailing list for latest updates about our upcoming token launch!</h1>
+      <h4>No spam. We promise!</h4>
         <InputField>
           <Input
             id="email"
