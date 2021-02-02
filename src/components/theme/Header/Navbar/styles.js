@@ -14,3 +14,9 @@ export const Brand = styled.a`
     mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
   }
 `;
+
+
+export const LogoWrapper = styled.div`
+  margin-bottom:0 !important;
+  height:40px !important;
+`

@@ -6,10 +6,10 @@ export default () => (
   <Layout>
     <SEO />
     <Intro />
-    <Projects />
     <WhatIsThisAbout/>
     <Why />
     <WhoAreWe />
+    <Projects />
     <Contact />
   </Layout>
 );

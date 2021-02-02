@@ -47,7 +47,7 @@
     "lint:fix": "eslint . --fix",
     "reset": "rm -rf .cache/ public/",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
-    "gh-pages": "rm -fr docs/; mkdir docs; yarn autoclean; gatsby build --prefix-paths; cp -r public/ docs/"
+    "gh-pages": "rm -fr docs/; mkdir docs; yarn autoclean; gatsby build --prefix-paths; cp -r public/ docs/;echo 'shinedao.finance' > docs/CNAME"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

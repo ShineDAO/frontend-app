@@ -15,7 +15,7 @@ const NavbarLinks = ({ desktop }) => {
   return (
     <Wrapper desktop={desktop} theme={theme}>
 
-      <AnchorLink href="">Whitepaper</AnchorLink>
+      <a href="http://docs.shinedao.finance" target="_blank">Docs</a>
       <AnchorLink href="#about">About</AnchorLink>
       <AnchorLink href="#projects">Projects</AnchorLink>
       <AnchorLink href="#contact">Contact</AnchorLink>

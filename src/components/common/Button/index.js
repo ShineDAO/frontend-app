@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
+  margin-bottom:50px;
+
   cursor: pointer;
   border-radius: 3px;
   padding: 0.7rem 2.5rem;
@@ -13,7 +15,7 @@ export const Button = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: #fff;
-  background: #0074d9;
+  background: #2F2E40;
 
   &:focus {
     outline: none;
@@ -33,7 +35,6 @@ export const Button = styled.button`
 
 
 export const RedButton = styled.button`
-  margin-bottom:50px;
   cursor: pointer;
   border-radius: 3px;
   padding: 0.7rem 2.5rem;
@@ -46,7 +47,7 @@ export const RedButton = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: #fff;
-  background: red;
+  background: #2F2E40;
 
   &:focus {
     outline: none;

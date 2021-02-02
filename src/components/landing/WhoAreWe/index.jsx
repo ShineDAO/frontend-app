@@ -3,6 +3,7 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
 import starman from 'assets/illustrations/starman.svg';
+
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const WhoAreWe = () => {
@@ -13,9 +14,9 @@ export const WhoAreWe = () => {
       <SkillsWrapper as={Container}>
       
         <Details theme={theme}>
-          <h1>Who is behind the scenes?</h1>
+          <h1>How are we going to do this?</h1>
           <p>
-            We are a mutidiscplionary team who will support teams with insider DeFi knowledge, marketing and development.
+          We help new teams establish themselves in crypto community in legitimate and transparent way using IIOs.
           </p>
           <Button as={AnchorLink} href="#contact">
             Learn more

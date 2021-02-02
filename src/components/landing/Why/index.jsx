@@ -3,6 +3,8 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
 import rocketLaunch from 'assets/illustrations/rocket-launch.svg';
+import rocketLaunchV1 from 'assets/illustrations/rocket-launch-v1.png';
+
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const Why = () => {
@@ -13,7 +15,7 @@ export const Why = () => {
       <SkillsWrapper as={Container}>
 
       <Thumbnail>
-          <img src={rocketLaunch} alt="I’m John and I’m a Backend & Devops engineer!" />
+          <img src={rocketLaunchV1} alt="Shine will get you to the moon and beyond!" />
         </Thumbnail>
       
         <Details theme={theme}>

@@ -3,6 +3,8 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
 import adAdastra from 'assets/illustrations/ad-adastra.svg';
+import adAdastraV1 from 'assets/illustrations/ad-adastra-v1.png';
+
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const WhatIsThisAbout = () => {
@@ -24,7 +26,7 @@ export const WhatIsThisAbout = () => {
 
 
         <Thumbnail>
-          <img src={adAdastra} alt="Towards the stars! Are you ready?" />
+          <img src={adAdastraV1} alt="Towards the stars! Are you ready?" />
         </Thumbnail>
       </SkillsWrapper>
     </Wrapper>
