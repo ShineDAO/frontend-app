@@ -1,9 +1,9 @@
 module.exports = {
-  defaultTitle: 'Shine Token',
+  defaultTitle: 'Shine DAO',
   logo: '',
   author: 'John Doe',
   url: 'https://shinedao.finance',
-  legalName: 'Shine Token',
+  legalName: 'Shine DAO',
   defaultDescription: 'SHINE | Your Launchpad for the crypto stars!',
   socialLinks: {
     twitter: '',

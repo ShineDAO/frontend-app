@@ -39,7 +39,7 @@ export const Intro = () => {
 
           <Link>
           <Button >
-            <a href="https://discord.gg/QkhbP7bZrj">APPLY FOR THE PROGRAM</a> 
+            <a href="https://v2s0c9giox5.typeform.com/to/OElYo1Fe">APPLY FOR THE PROGRAM</a> 
           </Button>
           </Link>
 

@@ -63,3 +63,8 @@ export const Thumbnail = styled.div`
     width: 100%;
   }
 `;
+
+export const NoColor = styled.a`
+  text-decoration: none; 
+`;
+ 

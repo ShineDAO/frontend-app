@@ -3,6 +3,7 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
 import starman from 'assets/illustrations/starman.svg';
+import starmanV1 from 'assets/illustrations/starman-v1.png';
 
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
@@ -25,7 +26,7 @@ export const WhoAreWe = () => {
 
 
         <Thumbnail>
-          <img src={starman} alt="We take you to the orbit and beyond!" />
+          <img src={starmanV1} alt="We take you to the orbit and beyond!" />
         </Thumbnail>
       </SkillsWrapper>
     </Wrapper>
