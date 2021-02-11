@@ -7,20 +7,20 @@
   },{
     "id": 1,
     "name": "Telegram",
-    "link": "https://t.me/joinchat/IYb-lwrJSpPlvfaJ",
+    "link": "https://t.me/joinchat/IYb-l9U7iIws5f2c",
     "icon": "/icons/telegram.svg"
   },
 
   {
     "id": 2,
     "name": "Github",
-    "link": "https://github.com/shine-squad/ShineToken",
+    "link": "https://github.com/ShineDAO/",
     "icon": "/icons/github.svg"
   },
   {
     "id": 3,
     "name": "Twitter",
-    "link": "https://twitter.com/",
+    "link": "https://twitter.com/ShineDAO_/",
     "icon": "/icons/twitter.svg"
   }
 ]
