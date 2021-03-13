@@ -49,10 +49,10 @@ async function getCurrentMigrations() {
   console.log("current migrations is ", currentMigration);
 }
 
-async function getUserAddress(setUserAddress,setShineBalance) {
-  let userAddress = await window.ethereum.selectedAddress
+async function getUserAddress(setUserAddress, setShineBalance) {
+  let userAddress = await window.ethereum.selectedAddress;
   setUserAddress(userAddress);
-  await getShineBalance(setShineBalance,userAddress)
+  await getShineBalance(setShineBalance, userAddress);
 }
 
 async function getWeiRaised(setWeiRaised) {
@@ -91,7 +91,7 @@ async function getEthBalance(setBalance) {
     setBalance(window.web3.utils.fromWei(balance.toString(), "ether"));
   });
 }
-async function getShineBalance(setShineBalance,userAddress) {
+async function getShineBalance(setShineBalance, userAddress) {
   var abiArrayToken = ShineToken;
   var abiToken = abiArrayToken.abi;
   var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
@@ -101,7 +101,15 @@ async function getShineBalance(setShineBalance,userAddress) {
   var shineBalanceFromWei = window.web3.utils.fromWei(shineBalance, "ether");
   setShineBalance(shineBalanceFromWei);
 }
-async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode,userAddress) {
+async function buyShineTokens(
+  ethAmountToSpend,
+  setEthAmountToSpend,
+  setShineBought,
+  setShineBoughtAmount,
+  setTransactionBeingProcessed,
+  setMetamaskErrorCode,
+  userAddress
+) {
   let abiArray = SeedCrowdsale;
   let abi = abiArray.abi;
   let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, seedSalecontractAddress);
@@ -189,7 +197,7 @@ export const Sale = () => {
     isWalletEnabled ? getEthRaised(setEthRaised) : null;
     isWalletEnabled ? getWeiRaised(setWeiRaised) : null;
     isWalletEnabled ? getSeedSaleShnBalance(setSeedSaleShnBalance) : null;
-    isWalletEnabled ? getUserAddress(setUserAddress,setShineBalance) : null;
+    isWalletEnabled ? getUserAddress(setUserAddress, setShineBalance) : null;
     isWalletEnabled ? getCurrentMigrations() : null;
   }, [isWalletEnabled, isTransactionBeingProcessed, isShineBought]);
 
@@ -220,8 +228,12 @@ export const Sale = () => {
       <IntroWrapper as={Container}>
         <Details theme={theme}>
           <h1>Shine Seed Sale</h1>
-          <h4> </h4>
-
+          <h5>
+            Contract address{" "}
+            <a href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
+              0x1C7ede23b1361acC098A1e357C9085D131b34a01
+            </a>
+          </h5>
           <Thumbnail>
             <img src={shineLogoV7} alt="Shine is meant to interconnect the blockchain community" />
           </Thumbnail>
