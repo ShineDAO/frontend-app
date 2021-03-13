@@ -32,22 +32,28 @@ import Migrations from "../../../../static/abi/Migrations.json";
 import PulseLoader from "react-spinners/PulseLoader";
 const axios = require("axios");
 //Note that you need to select a different user from what created the inital ShineToken, e.g. accounts[1] instead of accounts[0]
-var userAddress = "0xb1D92EEec6f9F224ABD294DE643C94A01cB14E51";
+// var userAddress = "0xb1D92EEec6f9F224ABD294DE643C94A01cB14E51";
+//var userAddress = window.ethereum.selectedAddress
 var seedSalecontractAddress = "0x2DaeC58023965EB8b7b8aC56ab552F3663A53919";
 var tokenContractAddress = "0x1C7ede23b1361acC098A1e357C9085D131b34a01";
 var migrationsContractAddress = "0xbACf2F11eB10475DA816c1ADCB8B376FffD1544c";
 var rate = 181818;
-var gas = 125000;
+var gas = 90000;
 
 var maxWeiToRaise = "12000000000000000000000000" / rate; // 12 M SHN tokens * rate
-async function getCurrentMigrations(){
+async function getCurrentMigrations() {
   let abiArray = Migrations;
   let abi = abiArray.abi;
   let migrationsInstance = new window.web3.eth.Contract(abi, migrationsContractAddress);
-  let currentMigration =  await migrationsInstance.methods.last_completed_migration().call()
-  console.log("current migrations is ",currentMigration )
+  let currentMigration = await migrationsInstance.methods.last_completed_migration().call();
+  console.log("current migrations is ", currentMigration);
 }
 
+async function getUserAddress(setUserAddress,setShineBalance) {
+  let userAddress = await window.ethereum.selectedAddress
+  setUserAddress(userAddress);
+  await getShineBalance(setShineBalance,userAddress)
+}
 
 async function getWeiRaised(setWeiRaised) {
   let abiArray = SeedCrowdsale;
@@ -85,7 +91,7 @@ async function getEthBalance(setBalance) {
     setBalance(window.web3.utils.fromWei(balance.toString(), "ether"));
   });
 }
-async function getShineBalance(setShineBalance) {
+async function getShineBalance(setShineBalance,userAddress) {
   var abiArrayToken = ShineToken;
   var abiToken = abiArrayToken.abi;
   var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
@@ -95,7 +101,7 @@ async function getShineBalance(setShineBalance) {
   var shineBalanceFromWei = window.web3.utils.fromWei(shineBalance, "ether");
   setShineBalance(shineBalanceFromWei);
 }
-async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode) {
+async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode,userAddress) {
   let abiArray = SeedCrowdsale;
   let abi = abiArray.abi;
   let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, seedSalecontractAddress);
@@ -105,7 +111,7 @@ async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBou
   try {
     console.log("eth amount to spend", ethAmountToSpend);
     const receipt = await simpleCrowdsaleInstance.methods.buyTokens(userAddress).send({
-      from: window.ethereum.selectedAddress,
+      from: userAddress,
       value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
       gas: gas,
     });
@@ -176,15 +182,15 @@ export const Sale = () => {
   const [seedSaleShnBalance, setSeedSaleShnBalance] = useState();
   const [metamaskErrorCode, setMetamaskErrorCode] = useState();
   const [saleProgress, setSaleProgress] = useState();
+  const [userAddress, setUserAddress] = useState();
 
   useEffect(() => {
-    isWalletEnabled ? getShineBalance(setShineBalance) : null;
     isWalletEnabled ? getEthBalance(setBalance) : null;
     isWalletEnabled ? getEthRaised(setEthRaised) : null;
     isWalletEnabled ? getWeiRaised(setWeiRaised) : null;
     isWalletEnabled ? getSeedSaleShnBalance(setSeedSaleShnBalance) : null;
-    isWalletEnabled ? getCurrentMigrations(): null;
-
+    isWalletEnabled ? getUserAddress(setUserAddress,setShineBalance) : null;
+    isWalletEnabled ? getCurrentMigrations() : null;
   }, [isWalletEnabled, isTransactionBeingProcessed, isShineBought]);
 
   useEffect(() => {
@@ -291,13 +297,13 @@ export const Sale = () => {
                       setShineBought,
                       setShineBoughtAmount,
                       setTransactionBeingProcessed,
-                      setMetamaskErrorCode
+                      setMetamaskErrorCode,
+                      userAddress
                     )
                   }
                 >
                   Buy Shine
                 </Button>
-             
               </div>
             )}
             {isShineBought && !isTransactionBeingProcessed && (
