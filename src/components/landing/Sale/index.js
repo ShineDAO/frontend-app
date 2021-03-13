@@ -229,7 +229,7 @@ export const Sale = () => {
         <Details theme={theme}>
           <h1>Shine Seed Sale</h1>
           <h5>
-            Contract address{" "}
+            Token address{" "}
             <a href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
               0x1C7ede23b1361acC098A1e357C9085D131b34a01
             </a>

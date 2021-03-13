@@ -19,7 +19,7 @@ export const SaleDetails = () => {
         <Details theme={theme}>
           <h1>Tokenomics</h1>
           <p>
-          Welcome to the seed sale of Shine DAO. 12,000,000 Shine tokens (out of 100,000,000 total planned supply) are offered. Total deal structure can be seen on the photo.
+          Shine total supply is <b>hard capped</b> at 100M
           </p>
 
         </Details>
