@@ -1,4 +1,4 @@
-# Shine is your launchpad towards the crpyto stars
+# Shine is your launchpad towards the crypto stars
 
 ## Features
 

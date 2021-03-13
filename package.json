@@ -6,6 +6,7 @@
   "author": "Shine Squad <shine-token@protonmail.com.com>",
   "dependencies": {
     "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "dotenv": "^6.2.0",
     "formik": "^2.1.4",
     "gatsby": "^2.17.7",
@@ -28,11 +29,14 @@
     "prop-types": "^15.6.2",
     "react": "^16.11.0",
     "react-anchor-link-smooth-scroll": "^1.0.12",
+    "react-bootstrap": "^1.5.0",
     "react-dom": "^16.11.0",
     "react-google-recaptcha": "^1.0.5",
     "react-helmet": "^5.2.0",
+    "react-spinners": "^0.10.6",
     "styled-components": "^4.1.3",
     "use-wallet": "^0.8.1",
+    "web3": "^1.3.4",
     "yup": "^0.26.6"
   },
   "keywords": [
@@ -48,7 +52,7 @@
     "lint:fix": "eslint . --fix",
     "reset": "rm -rf .cache/ public/",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
-    "fix:sharp":"rm -r node_modules/sharp; yarn install --check-files",
+    "fix:sharp": "rm -r node_modules/sharp; yarn install --check-files",
     "gh-pages": "rm -fr docs/; mkdir docs; yarn autoclean; gatsby build --prefix-paths; cp -r public/ docs/;echo 'shinedao.finance' > docs/CNAME"
   },
   "devDependencies": {
