@@ -37,7 +37,7 @@ var seedSalecontractAddress = "0x2DaeC58023965EB8b7b8aC56ab552F3663A53919";
 var tokenContractAddress = "0x1C7ede23b1361acC098A1e357C9085D131b34a01";
 var migrationsContractAddress = "0xbACf2F11eB10475DA816c1ADCB8B376FffD1544c";
 var rate = 181818;
-var gas = 70000;
+var gas = 125000;
 
 var maxWeiToRaise = "12000000000000000000000000" / rate; // 12 M SHN tokens * rate
 async function getCurrentMigrations(){
