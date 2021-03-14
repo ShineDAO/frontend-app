@@ -105,7 +105,7 @@ export const Dot = styled.div`
 `;
 export const StatusContainer = styled.div`
   border-radius: 8px;
-  background: #d1fae5;
+  background: #ff4c4c;
   padding: 5px;
   width: 18%;
   @media (max-width: 680px) {
