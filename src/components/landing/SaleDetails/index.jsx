@@ -7,7 +7,7 @@ import starmanV1 from 'assets/illustrations/starman-v1.png';
 import tokenomics from 'assets/illustrations/tokenomics.png';
 
 
-import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
+import { Wrapper, SkillsWrapper, Details, Thumbnail, DisableColor } from './styles';
 
 export const SaleDetails = () => {
   const { theme } = useContext(ThemeContext);
@@ -21,6 +21,8 @@ export const SaleDetails = () => {
           <p>
           Shine total supply is <b>hard capped</b> at 100M
           </p>
+          <Button>
+          <DisableColor href="/Litepaper.pdf" target="_blank">Litepaper</DisableColor></Button>
 
         </Details>
 

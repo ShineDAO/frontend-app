@@ -108,10 +108,12 @@ export const StatusContainer = styled.div`
   background: #d1fae5;
   padding: 5px;
   width: 18%;
+  @media (max-width: 680px) {
+    width: 48%;
+  }
 `;
 
 export const EthInput = styled.input`
-
   /* Disable arrows in number input for Chrome, Safari, Edge, Opera */
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -123,16 +125,13 @@ export const EthInput = styled.input`
   &[type="number"] {
     -moz-appearance: textfield;
   }
-  
+
   border: 2px solid #6c63ff;
   border-radius: 7px;
-  height:100%;
+  height: 100%;
   padding: 0.5rem 0.5rem;
-
-
 `;
 
-
 export const ColorTitle = styled.h4`
-  color:red;
-`
+  color: red;
+`;

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import detailsIllustration from 'assets/illustrations/details.svg';
+import styled from "styled-components";
+import detailsIllustration from "assets/illustrations/details.svg";
 
 export const Wrapper = styled.div`
   background-image: url(${detailsIllustration});
@@ -31,10 +31,10 @@ export const Details = styled.div`
   h1 {
     margin-bottom: 2rem;
     font-size: 26pt;
-    color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#212121')};
+    color: ${({ theme }) => (theme === "dark" ? "#fff" : "#212121")};
 
     @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      mix-blend-mode: ${({ theme }) => (theme === "light" ? "unset" : "difference")};
     }
   }
 
@@ -43,10 +43,10 @@ export const Details = styled.div`
     font-size: 20pt;
     font-weight: normal;
     line-height: 1.3;
-    color: ${({ theme }) => (theme === 'dark' ? '#c7c7c7' : '#707070')};
+    color: ${({ theme }) => (theme === "dark" ? "#c7c7c7" : "#707070")};
 
     @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      mix-blend-mode: ${({ theme }) => (theme === "light" ? "unset" : "difference")};
     }
   }
 `;
@@ -62,4 +62,8 @@ export const Thumbnail = styled.div`
   img {
     width: 100%;
   }
+`;
+
+export const DisableColor = styled.a`
+  color: inherit;
 `;
