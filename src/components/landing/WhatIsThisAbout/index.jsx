@@ -3,7 +3,7 @@ import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
 import adAdastra from 'assets/illustrations/ad-adastra.svg';
-import adAdastraV1 from 'assets/illustrations/ad-adastra-v1.png';
+import adAdastraV1 from 'assets/illustrations/adastra-v1.png';
 
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
