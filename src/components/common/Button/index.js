@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   margin-bottom:50px;
-
   cursor: pointer;
   border-radius: 3px;
   padding: 0.7rem 2.5rem;
@@ -15,7 +14,8 @@ export const Button = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: #fff;
-  background: #2F2E40;
+  background: #3F3D56;
+  width:330px;
 
   &:focus {
     outline: none;
@@ -25,6 +25,11 @@ export const Button = styled.button`
     background: gray;
   }
 
+  &:hover {
+    background: #FADA5E;
+    color: #3F3D56;
+    text-decoration: none;
+  }
   ${({ secondary }) =>
     secondary &&
     `
@@ -35,10 +40,11 @@ export const Button = styled.button`
 
 
 export const RedButton = styled.button`
+ margin-bottom:50px;
   cursor: pointer;
   border-radius: 3px;
+  border: 3px solid #3F3D56;
   padding: 0.7rem 2.5rem;
-  border: none;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -46,8 +52,9 @@ export const RedButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #fff;
-  background: #2F2E40;
+  color: #3F3D56;
+  background: transparent;
+  width: 330px;
 
   &:focus {
     outline: none;
@@ -56,7 +63,11 @@ export const RedButton = styled.button`
   &:disabled {
     background: gray;
   }
-
+  &:hover {
+    background: #FADA5E;
+    color: #fff;
+    border: 3px solid #FADA5E;
+  }
   ${({ secondary }) =>
     secondary &&
     `
@@ -67,7 +78,7 @@ export const BlueButton = styled.button`
   cursor: pointer;
   border-radius: 3px;
   padding: 0.7rem 2.5rem;
-  border: none;
+  border: 3px solid #3F3D56;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -76,7 +87,7 @@ export const BlueButton = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: #fff;
-  background: #6c62ff;
+  background: #3F3D56;
 
   &:focus {
     outline: none;
@@ -84,6 +95,10 @@ export const BlueButton = styled.button`
 
   &:disabled {
     background: gray;
+  }
+  &:hover {
+    background: #FADA5E;
+    color: #3F3D56; 
   }
 
   ${({ secondary }) =>

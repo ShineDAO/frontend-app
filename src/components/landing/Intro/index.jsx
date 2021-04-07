@@ -18,7 +18,7 @@ import shineLogoV5 from 'assets/illustrations/shine-logo-v5.png';
 import shineLogoV7 from 'assets/illustrations/shine-logo-v7.png';
 
 
-import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link } from './styles';
+import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, LinkJoin, LinkApply, ButtonWrapper } from './styles';
 
 export const Intro = () => {
   const { theme } = useContext(ThemeContext);
@@ -30,19 +30,19 @@ export const Intro = () => {
         <Details theme={theme}>
           <h1>Shine DAO</h1>
           <h4>Next generation DeFi incubator aligning interests of teams and the investor community</h4>
-
-          <Link>
+        <ButtonWrapper>
+          <LinkJoin>
           <RedButton >
-            <a href="https://discord.gg/QkhbP7bZrj">JOIN THE COMMUNITY</a> 
+            <a href="https://discord.gg/QkhbP7bZrj">JOIN DISCORD</a> 
           </RedButton>
-          </Link>
+          </LinkJoin>
 
-          <Link>
+          <LinkApply>
           <Button >
-            <a href="https://v2s0c9giox5.typeform.com/to/OElYo1Fe">APPLY FOR THE PROGRAM</a> 
+            <a href="https://v2s0c9giox5.typeform.com/to/OElYo1Fe">LEARN MORE</a> 
           </Button>
-          </Link>
-
+          </LinkApply>
+        </ButtonWrapper>
 
 
           <Thumbnail>

@@ -83,12 +83,32 @@ export const ThumbnailBig = styled.div`
   }
 `;
 
-export const Link = styled.div` 
-  margin-top:50px;
+export const LinkJoin = styled.div` 
+  margin-top: 50px;
+  margin: 0.7em 1.5em;
  a {
-   color:white;
+   color:#3F3D56;
  }
  a:hover {
-   color:white
+   color: #3F3D56;
+   text-decoration: inherit;
+   vertical-align: inherit;
  }
+`
+export const LinkApply = styled.div`
+margin-top: 50px;
+margin: 0.7em 1.5em;
+a {
+  color: white;
+}
+a:hover {
+ color: #3F3D56;
+ text-decoration: inherit;
+ vertical-align: inherit;
+}
+`
+export const ButtonWrapper = styled.div`
+  display: flex;
+  margin: 0.7em 1.5em;
+
 `
