@@ -85,7 +85,7 @@ export const ThumbnailBig = styled.div`
 
 export const LinkJoin = styled.div` 
   margin-top: 50px;
-  margin: 0.7em 1.5em;
+  margin: 0.5em 1.5em;
  a {
    color:#3F3D56;
  }
@@ -97,7 +97,7 @@ export const LinkJoin = styled.div`
 `
 export const LinkApply = styled.div`
 margin-top: 50px;
-margin: 0.7em 1.5em;
+margin: 0.5em 1.5em;
 a {
   color: white;
 }

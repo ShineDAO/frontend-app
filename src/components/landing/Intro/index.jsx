@@ -2,19 +2,12 @@ import React, { useContext } from 'react';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Header } from 'components/theme';
-import { Container, Button, RedButton } from 'components/common';
+import { Container, Button, RedButton, BlueButton } from 'components/common';
 import shineNetwork from 'assets/illustrations/shine-network.svg';
 import shineNetworkV1 from 'assets/illustrations/shine-network-v1.svg';
 import shineNetworkV2 from 'assets/illustrations/shine-network-v2.svg';
 import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
 
-
-import shineLogo from 'assets/illustrations/shine-logo.png';
-import shineLogoV1 from 'assets/illustrations/shine-logo-v1.png';
-import shineLogoV2 from 'assets/illustrations/shine-logo-v2.png';
-import shineLogoV3 from 'assets/illustrations/shine-logo-v3.png';
-import shineLogoV4 from 'assets/illustrations/shine-logo-v4.png';
-import shineLogoV5 from 'assets/illustrations/shine-logo-v5.png';
 import shineLogoV7 from 'assets/illustrations/shine-logo-v7.png';
 
 
@@ -38,9 +31,9 @@ export const Intro = () => {
           </LinkJoin>
 
           <LinkApply>
-          <Button >
+          <BlueButton >
             <a href="https://v2s0c9giox5.typeform.com/to/OElYo1Fe">LEARN MORE</a> 
-          </Button>
+          </BlueButton>
           </LinkApply>
         </ButtonWrapper>
 

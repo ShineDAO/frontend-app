@@ -15,7 +15,6 @@ export const Button = styled.button`
   user-select: none;
   color: #fff;
   background: #3F3D56;
-  width:330px;
 
   &:focus {
     outline: none;
@@ -88,6 +87,7 @@ export const BlueButton = styled.button`
   user-select: none;
   color: #fff;
   background: #3F3D56;
+  width:330px;
 
   &:focus {
     outline: none;
@@ -99,6 +99,7 @@ export const BlueButton = styled.button`
   &:hover {
     background: #FADA5E;
     color: #3F3D56; 
+    border: 3px solid #FADA5E;
   }
 
   ${({ secondary }) =>
