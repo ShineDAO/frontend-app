@@ -4,8 +4,7 @@ import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
 import NavbarLinks from '../NavbarLinks';
 import { Wrapper, Brand, LogoWrapper } from './styles';
-import shineLogoBlack from 'assets/illustrations/shine-logo-small-black.png';
-import shineLogoBlackV1 from 'assets/illustrations/shine-logo-small-black-v1.png';
+import shineLogoV7 from 'assets/illustrations/shine-logo-v7.png';
 
 const Navbar = () => {
   const { theme } = useContext(ThemeContext);
@@ -15,7 +14,7 @@ const Navbar = () => {
       <Brand as={Link} to="/" theme={theme}>
       <LogoWrapper>
 
-      <img src={shineLogoBlackV1} alt={theme} />
+      <img height='40px' src={shineLogoV7} alt={theme} />
     </LogoWrapper>
 
       </Brand>
