@@ -26,6 +26,11 @@ export const Wrapper = styled.div`
 					&:last-child {
 							margin-right: unset;
 					}
+					font-weight: bold;
+			}
+			
+			a:hover {
+				color: #3F3D56;
 			}
 		`
       : `
