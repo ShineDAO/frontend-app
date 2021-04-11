@@ -16,7 +16,7 @@ export const Intro = () => {
       <IntroWrapper as={Container}>
         <Details theme={theme}>
           <h1>Shine DAO</h1>
-          <h4>Next generation DeFi incubator aligning interests of teams and the investor community</h4>
+          <h4>Next generation DeFi incubator</h4>
         <ButtonWrapper>
           <LinkJoin>
           <RedButton >
