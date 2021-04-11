@@ -59,7 +59,7 @@ async function addToWatchlist(){
         "address": "0x1C7ede23b1361acC098A1e357C9085D131b34a01", // The address that the token is at.
         "symbol": "SHN", // A ticker symbol or shorthand, up to 5 chars.
         "decimals": 18, // The number of decimals in the token
-        "image": "tokenImage", // A string url of the token logo
+        "image": "https://i.ibb.co/mRKYzwB/shine-logo-256.png", // A string url of the token logo
       },
     },
     id: Math.round(Math.random() * 100000),
@@ -363,10 +363,11 @@ export const PreSale1 = () => {
                 </Button>
               </div>
             )}
+              {true && <Button onClick={()=>addToWatchlist()}>Add SHN to MetaMask</Button>}
             {isShineBought && !isTransactionBeingProcessed && (
               <div>
                 <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
-                {false && <Button onClick={()=>addToWatchlist()}>Add SHN to MetaMask</Button>}
+                {true && <Button onClick={()=>addToWatchlist()}>Add SHN to MetaMask</Button>}
               </div>
             )}
             {isTransactionBeingProcessed && (
