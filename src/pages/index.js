@@ -9,7 +9,6 @@ export default () => (
     <WhatIsThisAbout/>
     <Why />
     <WhoAreWe />
-    <Projects />
     <Contact />
   </Layout>
 );

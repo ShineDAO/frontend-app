@@ -1,14 +1,19 @@
 import React, { useContext } from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
-import { Container, Button } from 'components/common';
+import {Container, Button, LearnButton} from 'components/common';
 import adAdastraV1 from 'assets/illustrations/adastra-v1.png';
 import { HalfCircle  } from "./styles";
 
-import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
+import { Wrapper, SkillsWrapper, Details } from './styles';
 
 export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
+
+  const onScrollToContact = () => {
+    document.querySelector('#contact').scrollIntoView({
+      behavior: 'smooth'
+    });
+  }
 
   return (
     <Wrapper id="about">
@@ -20,9 +25,9 @@ export const WhatIsThisAbout = () => {
           <p>
             Access to invest in the future stars from their earliest stages all the way to blastoff from our launchpad.
           </p>
-          <Button as={AnchorLink} href="#contact">
-            Learn more
-          </Button>
+          <LearnButton onClick={onScrollToContact}>
+            LEARN MORE
+          </LearnButton>
         </Details>
 
       </SkillsWrapper>

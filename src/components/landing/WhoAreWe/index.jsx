@@ -1,35 +1,36 @@
 import React, { useContext } from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
-import starman from 'assets/illustrations/starman.svg';
-import starmanV1 from 'assets/illustrations/starman-v1.png';
+import starman_dark from 'assets/illustrations/starman_dark.png';
 
-import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
+import { Wrapper, SkillsWrapper, Details } from './styles';
+import {LearnButton} from "../../common/Button";
 
 export const WhoAreWe = () => {
   const { theme } = useContext(ThemeContext);
 
+  const onScrollToContact = () => {
+    document.querySelector('#contact').scrollIntoView({
+      behavior: 'smooth'
+    });
+  }
+
   return (
     <Wrapper id="about">
       <SkillsWrapper as={Container}>
-      
+
+        <img width='400px' src={starman_dark} alt="We take you to the orbit and beyond!" />
         <Details theme={theme}>
-          <h1>How are we going to do this?</h1>
+          <h1>Are you building a project?</h1>
           <p>
-          We help new teams establish themselves in crypto community in legitimate and transparent way using IIOs.
+            Get access to an active and incentivized community of contributors from day 1 to polish your project.
           </p>
-          <Button as={AnchorLink} href="#contact">
-            Learn more
-          </Button>
+          <LearnButton onClick={onScrollToContact}>
+            LEARN MORE
+          </LearnButton>
         </Details>
 
-
-        <Thumbnail>
-          <img src={starmanV1} alt="We take you to the orbit and beyond!" />
-        </Thumbnail>
       </SkillsWrapper>
     </Wrapper>
   );
 };
-        

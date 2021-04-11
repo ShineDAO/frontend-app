@@ -1,15 +1,12 @@
 import React, { useContext } from 'react';
-import axios from 'axios';
 import { Formik, Form, FastField, ErrorMessage } from 'formik';
 import Recaptcha from 'react-google-recaptcha';
 import * as Yup from 'yup';
 import { Button, Input } from 'components/common';
 import { Error, Center, InputField, Details } from './styles';
 
-
 import addToMailchimp from 'gatsby-plugin-mailchimp'
 import { ThemeContext } from 'providers/ThemeProvider';
-
 
 export default () => {
   const { theme } = useContext(ThemeContext);
@@ -18,7 +15,6 @@ export default () => {
 
   <Details  theme={theme}>
 
- 
   <Formik
     initialValues={{
       name: '',
@@ -50,7 +46,7 @@ export default () => {
     {({ values, touched, errors, setFieldValue, isSubmitting }) => (
       <Form>
       <h1>Subscribe to our mailing list for updates about our upcoming SHN token launch!</h1>
-      <h4>No spam. We promise!</h4>
+      <p>No spam. We promise!</p>
         <InputField>
           <Input
             id="email"

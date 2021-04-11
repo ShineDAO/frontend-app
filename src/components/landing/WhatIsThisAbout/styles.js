@@ -14,7 +14,7 @@ export const HalfCircle = styled.div`
   height:1000px;
   border-radius: 50%;
   left: -500px;
-  bottom: -800px;
+  bottom: -700px;
   background: #EEEEFF;
   z-index: -1;
   position: absolute;
@@ -25,6 +25,7 @@ export const SkillsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 70%;
 
   @media (max-width: 960px) {
     flex-direction: column;
