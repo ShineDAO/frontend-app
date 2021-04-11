@@ -1,17 +1,23 @@
 import styled from 'styled-components';
 // import overlayIllustration from 'assets/illustrations/overlay.svg';
 
+export const QuartCircleIntro = styled.div`
+border-bottom-left-radius:100%;
+background: #EEEEFF;
+height: 500px;
+right: 0;
+width: 500px;
+position: absolute;
+z-index: -1;
+`;
+
 export const Wrapper = styled.div`
   // padding-bottom: 4rem;
   // background-image: url(${overlayIllustration});
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
-border-top-right-radius:0;
-border-top-left-radius:0;
-border-bottom-right-radius:0;
-border-bottom-left-radius:100%;
-background: #EEEEFF;
+
 `;
 
 export const IntroWrapper = styled.div`

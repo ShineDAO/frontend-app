@@ -5,13 +5,14 @@ import { Container, Button } from 'components/common';
 import rocketLaunch from 'assets/illustrations/rocket-launch.svg';
 import rocketLaunchV1 from 'assets/illustrations/rocket-launch-v1.png';
 
-import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
+import { Wrapper, SkillsWrapper, Details, Thumbnail, HalfCircle } from './styles';
 
 export const Why = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
     <Wrapper id="about">
+      <HalfCircle />
       <SkillsWrapper as={Container}>
 
       <Thumbnail>

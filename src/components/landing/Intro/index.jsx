@@ -11,13 +11,15 @@ import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
 import shineLogoV7 from 'assets/illustrations/shine-logo-v7.png';
 
 
-import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, LinkJoin, LinkApply, ButtonWrapper } from './styles';
+import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, LinkJoin, LinkApply, ButtonWrapper, QuartCircleIntro } from './styles';
+import { QuartCircle } from 'components/theme/Footer/styles';
 
 export const Intro = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
     <Wrapper>
+      <QuartCircleIntro />
       <Header />
       <IntroWrapper as={Container}>
         <Details theme={theme}>
