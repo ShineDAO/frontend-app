@@ -1,25 +1,21 @@
-// import footerIllustration from 'assets/illustrations/footer.svg';
 import styled from 'styled-components';
+
+export const Wrapper = styled.div`
+  position: relative;
+  margin-bottom: 50px;
+`
 
 export const QuartCircle = styled.div`
   background-size: contain;
   border-radius: 100% 0 0 0;
   background: #EEEEFF;
   height: 400px;
-    right: 0;
-    width: 400px;
-    position: absolute;
+  right: 0;
+  width: 400px;
+  position: absolute;
+  bottom: -50px;
+  z-index: -1;
 `
-
-export const Wrapper = styled.div`
-  padding: 28rem 0 4rem 0;
-  // background-image: url(${footerIllustration});
-
-
-  @media (max-width: 1960px) {
-    padding: 14rem 0 4rem;
-  }
-`;
 
 export const Flex = styled.div`
   display: flex;
