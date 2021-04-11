@@ -21,6 +21,7 @@ export const Wrapper = styled.div`
 			}
 
 			a {
+					color: #3F3D56;
 					margin-right: 1rem;
 
 					&:last-child {

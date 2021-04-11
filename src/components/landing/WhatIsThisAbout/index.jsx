@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
-import adAdastra from 'assets/illustrations/ad-adastra.svg';
 import adAdastraV1 from 'assets/illustrations/adastra-v1.png';
+import { HalfCircle  } from "./styles";
 
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
@@ -12,24 +12,20 @@ export const WhatIsThisAbout = () => {
 
   return (
     <Wrapper id="about">
+      <HalfCircle />
       <SkillsWrapper as={Container}>
-      
+        <img width='400px' src={adAdastraV1} alt="Towards the stars! Are you ready?" />
         <Details theme={theme}>
-          <h1>What is this about?</h1>
+          <h1>Participate Early</h1>
           <p>
-            You can think of it as a Y Combinator for teams developing the new DeFi projects.
+            Access to invest in the future stars from their earliest stages all the way to blastoff from our launchpad.
           </p>
           <Button as={AnchorLink} href="#contact">
             Learn more
           </Button>
         </Details>
 
-
-        <Thumbnail>
-          <img src={adAdastraV1} alt="Towards the stars! Are you ready?" />
-        </Thumbnail>
       </SkillsWrapper>
     </Wrapper>
   );
 };
-        

@@ -6,7 +6,19 @@ export const Wrapper = styled.div`
   background-size: contain;
   background-position: left top;
   background-repeat: no-repeat;
+  position: relative;
 `;
+
+export const HalfCircle = styled.div`
+  width: 1000px;
+  height:1000px;
+  border-radius: 50%;
+  left: -500px;
+  bottom: -800px;
+  background: #EEEEFF;
+  z-index: -1;
+  position: absolute;
+`
 
 export const SkillsWrapper = styled.div`
   padding: 4rem 0;

@@ -1,17 +1,6 @@
 import styled from 'styled-components';
 // import detailsIllustration from 'assets/illustrations/details-v2.svg';
 
-export const HalfCircle = styled.div`
-  width: 1000px;
-  height:1000px;
-  border-radius: 50%  ;
-  left: -500px;
-  background: #EEEEFF;
-  z-index: -1;
-  position: absolute;
-`
-
-
 export const Wrapper = styled.div`
   // background-image: url(${detailsIllustration});
   background-size: contain;
@@ -78,4 +67,4 @@ export const Thumbnail = styled.div`
 export const NoColor = styled.a`
   text-decoration: none; 
 `;
- 
+
