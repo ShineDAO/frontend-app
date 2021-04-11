@@ -38,8 +38,7 @@ export const Button = styled.button`
 
 
 
-export const RedButton = styled.button`
- margin-bottom:50px;
+export const JoinButton = styled.button`
   cursor: pointer;
   border-radius: 3px;
   border: 3px solid #3F3D56;
@@ -53,7 +52,9 @@ export const RedButton = styled.button`
   user-select: none;
   color: #3F3D56;
   background: transparent;
-  width: 330px;
+  width: 240px;
+  font-weight: bold;
+  margin-right: 20px;
 
   &:focus {
     outline: none;
@@ -64,7 +65,6 @@ export const RedButton = styled.button`
   }
   &:hover {
     background: #FADA5E;
-    color: #fff;
     border: 3px solid #FADA5E;
   }
   ${({ secondary }) =>
@@ -73,7 +73,7 @@ export const RedButton = styled.button`
 		background: #001F3F;
 	`}
 `;
-export const BlueButton = styled.button`
+export const LearnButton = styled.button`
   cursor: pointer;
   border-radius: 3px;
   padding: 0.7rem 2.5rem;
@@ -87,7 +87,8 @@ export const BlueButton = styled.button`
   user-select: none;
   color: #fff;
   background: #3F3D56;
-  width:330px;
+  width: 240px;
+  font-weight: bold;
 
   &:focus {
     outline: none;

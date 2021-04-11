@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { ThemeContext } from "providers/ThemeProvider";
 import { Header } from "components/theme";
-import { Container, Button, RedButton } from "components/common";
+import { Container, Button } from "components/common";
 import shineNetwork from "assets/illustrations/shine-network.svg";
 import shineNetworkV1 from "assets/illustrations/shine-network-v1.svg";
 import shineNetworkV2 from "assets/illustrations/shine-network-v2.svg";
@@ -50,7 +50,7 @@ async function getCurrentMigrations() {
   console.log("current migrations is ", currentMigration);
 }
 async function addToWatchlist(){
-  
+
   window.web3.currentProvider.sendAsync({
     method: 'metamask_watchAsset',
     params: {
@@ -64,7 +64,7 @@ async function addToWatchlist(){
     },
     id: Math.round(Math.random() * 100000),
   }, (err, addedBoolean) => {
-  
+
   })
 }
 async function getUserAddress(setUserAddress, setShineBalance) {
@@ -169,7 +169,7 @@ async function buyShineTokens(
       } else if (e.code === 4001) {
         setMetamaskErrorCode(e.message); //MetaMask Tx Signature: User denied transaction signature.
       } else {
-        setMetamaskErrorCode("There are not enough SHN tokens left for sale anymore"); //"There are not enough SHN tokens left for sale anymore" 
+        setMetamaskErrorCode("There are not enough SHN tokens left for sale anymore"); //"There are not enough SHN tokens left for sale anymore"
       }
       let searchCapExceeded = e.message.search("IndividuallyCappedCrowdsale: beneficiary's cap exceeded")
       console.log("search ", searchCapExceeded) //149
