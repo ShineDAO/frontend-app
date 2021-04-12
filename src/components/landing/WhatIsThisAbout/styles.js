@@ -54,7 +54,7 @@ export const Details = styled.div`
     font-size: 20pt;
     font-weight: normal;
     line-height: 1.3;
-    color: ${({ theme }) => (theme === 'dark' ? '#c7c7c7' : '#707070')};
+    color: ${({ theme }) => (theme === 'dark' ? '#c7c7c7' : '#1E1E1E')};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};

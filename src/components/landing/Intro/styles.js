@@ -42,7 +42,7 @@ export const Details = styled.div`
   h1 {
     margin-bottom: 2rem;
     font-size: 36pt;
-    color: ${({ theme }) => (theme === 'light' ? '#212121' : '#fff')};
+    color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
@@ -57,7 +57,7 @@ export const Details = styled.div`
     margin-bottom: 2.5rem;
     font-size: 32pt;
     font-weight: normal;
-    color: ${({ theme }) => (theme === 'light' ? '#707070' : '#e6e6e6')};
+    color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#FFF')};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
@@ -94,32 +94,7 @@ export const ThumbnailBig = styled.div`
   }
 `;
 
-export const LinkJoin = styled.div` 
-  margin-top: 50px;
-  margin: 0.5em 1.5em;
- a {
-   color:#3F3D56;
- }
- a:hover {
-   color: #3F3D56;
-   text-decoration: inherit;
-   vertical-align: inherit;
- }
-`
-export const LinkApply = styled.div`
-margin-top: 50px;
-margin: 0.5em 1.5em;
-a {
-  color: white;
-}
-a:hover {
- color: #3F3D56;
- text-decoration: inherit;
- vertical-align: inherit;
-}
-`
 export const ButtonWrapper = styled.div`
   display: flex;
   margin: 0.7em 1.5em;
-
-`
+`;
