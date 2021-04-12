@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'components/common';
 import contact from 'assets/illustrations/contact.png';
-import { Wrapper, Details, Thumbnail } from './styles';
+import { Wrapper, Details } from './styles';
 import ContactForm from './ContactForm';
 
 export const Contact = () => (

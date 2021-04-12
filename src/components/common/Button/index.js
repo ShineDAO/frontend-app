@@ -16,6 +16,7 @@ export const Button = styled.button`
   color: #fff;
   background: #3F3D56;
   font-weight: bold;
+  font-size: 20px;
   
   &:focus {
     outline: none;
@@ -41,9 +42,9 @@ export const Button = styled.button`
 
 export const JoinButton = styled.button`
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 4px;
   border: 3px solid #3F3D56;
-  padding: 0.7rem 2.5rem;
+  padding: 0.6rem 0;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -53,8 +54,9 @@ export const JoinButton = styled.button`
   user-select: none;
   color: #3F3D56;
   background: transparent;
-  width: 240px;
+  width: 260px;
   font-weight: bold;
+  font-size: 20px;
   margin-right: 20px;
 
   &:focus {
@@ -76,8 +78,8 @@ export const JoinButton = styled.button`
 `;
 export const LearnButton = styled.button`
   cursor: pointer;
-  border-radius: 3px;
-  padding: 0.7rem 2.5rem;
+  border-radius: 4px;
+  padding: 0.6rem 0;
   border: 3px solid #3F3D56;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -88,8 +90,9 @@ export const LearnButton = styled.button`
   user-select: none;
   color: #fff;
   background: #3F3D56;
-  width: 240px;
+  width: 260px;
   font-weight: bold;
+  font-size: 20px;
 
   &:focus {
     outline: none;
