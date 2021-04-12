@@ -1,9 +1,6 @@
 import styled from "styled-components";
-import overlayIllustration from "assets/illustrations/overlay.svg";
 
 export const Wrapper = styled.div`
-  padding-bottom: 4rem;
-  background-image: url(${overlayIllustration});
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
@@ -31,7 +28,7 @@ export const Details = styled.div`
   h1 {
     margin-bottom: 2rem;
     font-size: 36pt;
-    color: ${({ theme }) => (theme === "light" ? "#212121" : "#fff")};
+    color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === "light" ? "unset" : "difference")};

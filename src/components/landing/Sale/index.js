@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "providers/ThemeProvider";
 import { Header } from "components/theme";
 import { Container, Button } from "components/common";
-
-import shineLogoV7 from "assets/illustrations/shine-logo-v7.png";
+import {QuartCircleIntro} from '../Intro/styles.js';
 
 import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, Dot, EthInput, ColorTitle } from "./styles";
 
@@ -211,8 +210,9 @@ export const Sale = () => {
   }, [weiRaised]);
 
   return (
-    <Wrapper>
-      <Header />
+   <Wrapper>
+    <QuartCircleIntro theme={theme} />
+     <Header />
       <IntroWrapper as={Container}>
         <Details theme={theme}>
           <h1>Shine Seed Sale</h1>
@@ -223,7 +223,6 @@ export const Sale = () => {
             </a>
           </h5>
           <Thumbnail>
-            <img src={shineLogoV7} alt="Shine is meant to interconnect the blockchain community" />
           </Thumbnail>
         </Details>
 
