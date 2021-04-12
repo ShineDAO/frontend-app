@@ -3,12 +3,14 @@ import styled from 'styled-components';
 
 export const QuartCircleIntro = styled.div`
 border-bottom-left-radius:100%;
-background: #EEEEFF;
+background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+transition: 0.3s all;
 height: 500px;
 right: 0;
 width: 500px;
 position: absolute;
 z-index: -1;
+
 `;
 
 export const Wrapper = styled.div`

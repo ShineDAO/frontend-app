@@ -17,7 +17,7 @@ export const WhatIsThisAbout = () => {
 
   return (
     <Wrapper id="about">
-      <HalfCircle />
+      <HalfCircle theme={theme} />
       <SkillsWrapper as={Container}>
         <img width='400px' src={adAdastraV1} alt="Towards the stars! Are you ready?" />
         <Details theme={theme}>

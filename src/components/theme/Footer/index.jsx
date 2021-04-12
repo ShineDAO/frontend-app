@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
 import { Wrapper, Flex, Links, Details, QuartCircle } from './styles';
 import social from './social.json';
 
-export const Footer = () => (
+export const Footer = () => {
+  const { theme } = useContext(ThemeContext);
+  
+    return (
   <Wrapper>
-    <QuartCircle/>
+    <QuartCircle theme={theme} />
     <Flex as={Container}>
 
       <Details>
@@ -28,3 +32,4 @@ export const Footer = () => (
     </Flex>
   </Wrapper>
 );
+};

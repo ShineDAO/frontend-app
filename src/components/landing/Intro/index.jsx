@@ -18,7 +18,7 @@ export const Intro = () => {
 
   return (
     <Wrapper>
-      <QuartCircleIntro />
+      <QuartCircleIntro theme={theme} />
       <Header />
       <IntroWrapper as={Container}>
         <Details theme={theme}>

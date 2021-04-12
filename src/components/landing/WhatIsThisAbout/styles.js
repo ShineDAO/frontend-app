@@ -13,9 +13,11 @@ export const HalfCircle = styled.div`
   border-radius: 50%;
   left: -480px;
   bottom: -580px;
-  background: #EEEEFF;
+  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')}; 
+  transition: 0.3s all;
   z-index: -1;
   position: absolute;
+
 `
 
 export const SkillsWrapper = styled.div`
