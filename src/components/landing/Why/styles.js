@@ -10,6 +10,7 @@ export const SkillsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 70%;
 
   @media (max-width: 960px) {
     flex-direction: column;

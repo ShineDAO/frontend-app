@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-// import detailsIllustration from 'assets/illustrations/details.svg';
 
 export const Wrapper = styled.div`
-  // background-image: url(${detailsIllustration});
   background-size: contain;
   background-position: left top;
   background-repeat: no-repeat;
@@ -10,11 +8,11 @@ export const Wrapper = styled.div`
 `;
 
 export const HalfCircle = styled.div`
-  width: 1000px;
-  height:1000px;
+  width: 900px;
+  height:900px;
   border-radius: 50%;
-  left: -500px;
-  bottom: -700px;
+  left: -480px;
+  bottom: -580px;
   background: #EEEEFF;
   z-index: -1;
   position: absolute;
