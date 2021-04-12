@@ -16,9 +16,8 @@ const NavbarLinks = ({ desktop }) => {
     <Wrapper desktop={desktop} theme={theme}>
 
       <a href="http://docs.shinedao.finance" target="_blank">Docs</a>
-      <a href="https://docs.shinedao.finance/shine-incubator-program/shine-grant" target="_blank">About</a>
-      <AnchorLink href="#projects">Projects</AnchorLink>
-      <AnchorLink href="#contact">Contact</AnchorLink>
+      <a href="https://docs.shinedao.finance/shine-incubator-program/shine-grant" target="_blank">Litepaper</a>
+      <AnchorLink href="#contact">Launch App</AnchorLink>
       <ToggleTheme />
     </Wrapper>
   )
