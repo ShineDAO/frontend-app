@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from 'providers/ThemeProvider';
-import { Header } from 'components/theme';
-import { Container, JoinButton, LearnButton } from 'components/common';
+import React, {useContext} from 'react';
+import {ThemeContext} from 'providers/ThemeProvider';
+import {Header} from 'components/theme';
+import {Container, JoinButton, LearnButton} from 'components/common';
 import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
+import useIsMobile from "../../../hooks/useIsMobile";
 
-import { Wrapper, IntroWrapper, Details, ThumbnailBig, ButtonWrapper, QuartCircleIntro } from './styles';
+import {Wrapper, IntroWrapper, Details, ButtonWrapper, QuartCircleIntro} from './styles';
 
 export const Intro = () => {
-  const { theme } = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
+  const isMobile = useIsMobile()
   const onJoinButtonClick = () => {
     window.open("https://discord.gg/QkhbP7bZrj", "_blank", "noopener")
   }
@@ -18,25 +20,42 @@ export const Intro = () => {
 
   return (
     <Wrapper>
-      <QuartCircleIntro theme={theme} />
-      <Header />
+      <QuartCircleIntro theme={theme}/>
+      <Header/>
       <IntroWrapper as={Container}>
-        <Details theme={theme}>
-          <h1>Shine DAO</h1>
-          <h4>Next generation DeFi incubator</h4>
-        <ButtonWrapper>
-          <JoinButton onClick={onJoinButtonClick}>
-            JOIN DISCORD
-          </JoinButton>
+        {isMobile ?
+          <React.Fragment> <Details theme={theme}>
+            <h1>Shine DAO</h1>
+            <h4>Next generation DeFi incubator</h4>
+            <img width='400px' src={shineNetworkV3} alt="Shine is meant to interconnect the blockchain community"/>
+            <ButtonWrapper>
+              <JoinButton onClick={onJoinButtonClick}>
+                JOIN DISCORD
+              </JoinButton>
 
-          <LearnButton onClick={onLearnButtonClick}>
-            LEARN MORE
-          </LearnButton>
-        </ButtonWrapper>
+              <LearnButton onClick={onLearnButtonClick}>
+                LEARN MORE
+              </LearnButton>
+            </ButtonWrapper>
 
-        </Details>
-          <img width='400px' src={shineNetworkV3} alt="Shine is meant to interconnect the blockchain community" />
+          </Details>
+          </React.Fragment> :
+          <React.Fragment> <Details theme={theme}>
+            <h1>Shine DAO</h1>
+            <h4>Next generation DeFi incubator</h4>
+            <ButtonWrapper>
+              <JoinButton onClick={onJoinButtonClick}>
+                JOIN DISCORD
+              </JoinButton>
 
+              <LearnButton onClick={onLearnButtonClick}>
+                LEARN MORE
+              </LearnButton>
+            </ButtonWrapper>
+
+          </Details>
+            <img width='400px' src={shineNetworkV3} alt="Shine is meant to interconnect the blockchain community"/>
+          </React.Fragment>}
       </IntroWrapper>
     </Wrapper>
   );

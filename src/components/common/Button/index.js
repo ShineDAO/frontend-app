@@ -75,6 +75,9 @@ export const JoinButton = styled.button`
     `
 		background: #001F3F;
 	`}
+  @media (max-width: 680px) {
+    margin-bottom: 20px;
+  }
 `;
 export const LearnButton = styled.button`
   cursor: pointer;
