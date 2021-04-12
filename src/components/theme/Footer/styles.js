@@ -10,12 +10,17 @@ export const QuartCircle = styled.div`
   border-radius: 100% 0 0 0;
   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   transition: 0.3s all;
-  height: 400px;
   right: 0;
+  height: 400px;
   width: 400px;
   position: absolute;
   bottom: -50px;
   z-index: -1;
+  
+  @media (max-width: 680px) {
+    height: 200px;
+    width: 200px;
+  }
 `
 
 export const Flex = styled.div`
