@@ -19,12 +19,9 @@ export const QuartCircleIntro = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  // padding-bottom: 4rem;
-  // background-image: url(${overlayIllustration});
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
-
 `;
 
 export const IntroWrapper = styled.div`
@@ -104,4 +101,7 @@ export const ThumbnailBig = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   margin: 0.7em 1.5em;
+  @media (max-width: 680px) {
+    display: block;
+  }
 `;
