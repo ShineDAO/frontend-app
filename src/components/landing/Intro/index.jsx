@@ -4,7 +4,7 @@ import { Header } from 'components/theme';
 import { Container, JoinButton, LearnButton } from 'components/common';
 import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
 
-import { Wrapper, IntroWrapper, Details, ThumbnailBig, ButtonWrapper, QuartCircleIntro } from './styles';
+import { Wrapper, IntroWrapper, Details, ButtonWrapper, QuartCircleIntro } from './styles';
 
 export const Intro = () => {
   const { theme } = useContext(ThemeContext);
