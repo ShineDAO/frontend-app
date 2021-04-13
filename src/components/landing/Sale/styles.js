@@ -90,21 +90,35 @@ export const Link = styled.div`
 `;
 
 export const SaleCard = styled.div`
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 15px;
-  background-color: #ffcb0057;
+  background-color: #EEEEFF;
+  border: 1px solid #EEEEFF;
+  box-sizing: border-box;
+  width: 540px;
+  height: 344px;
+  color: #1E1E1E;
+
 `;
-export const Dot = styled.div`
-  width: 10px;
-  height: 10px;
-  background: #10b981;
-  border-radius: 50%;
-`;
+
 export const StatusContainer = styled.div`
-  border-radius: 8px;
-  background: #ff4c4c;
-  padding: 5px;
-  width: 18%;
+  border-radius: 4px;
+  background: #FF4D00;
+  height: 32px;
+  width: 104px;
+  left: 0px;
+  top: 0px;
+  text-align: center;
+  text-transform: uppercase;
+  b {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+}
+
   @media (max-width: 680px) {
     width: 48%;
   }
