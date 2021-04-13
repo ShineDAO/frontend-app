@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
 
 export const IntroWrapper = styled.div`
   padding: 4rem 0;
-  display: flex;
   align-items: center;
   justify-content: space-between;
 
@@ -18,16 +17,17 @@ export const IntroWrapper = styled.div`
 `;
 
 export const Details = styled.div`
-  flex: 1;
-
+  display: flex;
+  justify-content: space-around;
   @media (max-width: 960px) {
     width: 100%;
     margin-bottom: 2rem;
   }
 
   h1 {
+    font-size: 48px;
+    line-height: 64px;
     margin-bottom: 2rem;
-    font-size: 36pt;
     color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
 
     @media (max-width: 960px) {
@@ -50,14 +50,14 @@ export const Details = styled.div`
     }
 
     @media (max-width: 680px) {
-      font-size: 26pt;
+      font-size: 24px;
     }
   }
 `;
 
 export const Thumbnail = styled.div`
   flex: 1;
-
+  
   @media (max-width: 960px) {
     width: 70%;
   }
@@ -89,16 +89,26 @@ export const Link = styled.div`
   }
 `;
 
+export const ConnectWalletCard = styled.div`
+border-radius: 4px;
+padding: 15px;
+background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
+box-sizing: border-box;
+box-shadow: ${({ theme }) => (theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)')}; 
+width: 540px;
+height: 344px;
+color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+`;
+
 export const SaleCard = styled.div`
   border-radius: 4px;
   padding: 15px;
-  background-color: #EEEEFF;
-  border: 1px solid #EEEEFF;
+  background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   box-sizing: border-box;
   width: 540px;
   height: 344px;
-  color: #1E1E1E;
-
+  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+ 
 `;
 
 export const StatusContainer = styled.div`
@@ -110,6 +120,7 @@ export const StatusContainer = styled.div`
   top: 0px;
   text-align: center;
   text-transform: uppercase;
+  
   b {
   font-family: Barlow;
   font-style: normal;

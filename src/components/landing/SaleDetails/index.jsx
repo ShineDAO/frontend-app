@@ -17,30 +17,20 @@ export const SaleDetails = () => {
   return (
     <Wrapper id="about">
       <SkillsWrapper as={Container}>
-
-        <Details theme={theme}>
-          <h1>Tokenomics</h1>
+      <h4>Tokenomics</h4>
           <p>
             Shine total supply is <b>hard capped</b> at 100M
           </p>
-     
-          <Button>
-            <DisableColor href="/Litepaper.pdf" target="_blank">Litepaper</DisableColor></Button>
-
-        </Details>
-
-        <Thumbnail>
+        <Details theme={theme}>
+          
+         <h5>Litepaper</h5>
           <a href="https://snapshot.org/#/shinedao.eth/proposal/QmPwhgvyiokiFMLh4wbEf6xrTZLuGLne4Q5bNPMQ5FyM1J">
             <img src={tokenDistribution} alt="Shine Tokenomics" />
           </a>
-
-        <h5>
-            Seed sale status: {" "}
-            <a href="/seed-sale" target="_blank">
-            Sold out
-            </a>
-          </h5>
-        </Thumbnail>
+        <Button>
+          <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></Button>
+          
+       </Details> 
       </SkillsWrapper>
     </Wrapper>
   );

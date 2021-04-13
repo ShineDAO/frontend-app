@@ -4,7 +4,7 @@ import { Header } from "components/theme";
 import { Container, Button } from "components/common";
 import {QuartCircleIntro} from '../Intro/styles.js';
 
-import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, Dot, EthInput, ColorTitle } from "./styles";
+import { Wrapper, IntroWrapper, Details, Litepaper, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, EthInput, ColorTitle, ConnectWalletCard } from "./styles";
 
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -214,36 +214,9 @@ export const Sale = () => {
     <QuartCircleIntro theme={theme} />
      <Header />
       <IntroWrapper as={Container}>
+      <h1>Shine Seed Sale</h1>
         <Details theme={theme}>
-          <h1>Shine Seed Sale</h1>
-          <h5>
-            Token address{" "}
-            <a href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
-              0x1C7ede23b1361acC098A1e357C9085D131b34a01
-            </a>
-          </h5>
-          <Thumbnail>
-          </Thumbnail>
-        </Details>
-
-        <Thumbnail>
-          <Link></Link>
-          {isWalletEnabled ? (
-            <div>
-              <span>Account: {window.ethereum.selectedAddress}</span>
-              <br></br>
-              <span>Balance: {balance} ETH</span>
-              <br></br>
-              <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
-              <br></br>
-              {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
-              <br></br>
-            </div>
-          ) : (
-            <Button onClick={() => loadWeb3(setWalletStatus, setBalance)}>Connect Wallet </Button>
-          )}
-
-          <SaleCard>
+          <SaleCard theme={theme}>
             Sale status
             <StatusContainer>
               <span> <b>Sold out</b></span>
@@ -316,7 +289,32 @@ export const Sale = () => {
               </div>
             )}
           </SaleCard>
-        </Thumbnail>
+
+         <ConnectWalletCard theme={theme}>
+          <h5>
+            Token address{" "}
+            <a href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
+              0x1C7ede23b1361acC098A1e357C9085D131b34a01
+            </a>
+          </h5>
+          
+          <Link></Link>
+          {isWalletEnabled ? (
+            <div>
+              <span>Account: {window.ethereum.selectedAddress}</span>
+              <br></br>
+              <span>Balance: {balance} ETH</span>
+              <br></br>
+              <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
+              <br></br>
+              {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
+              <br></br>
+            </div>
+          ) : (
+            <Button onClick={() => loadWeb3(setWalletStatus, setBalance)}>APPLY FOR THE PROGRAM</Button>
+          )}
+         </ConnectWalletCard>
+         </Details>
       </IntroWrapper>
     </Wrapper>
   );

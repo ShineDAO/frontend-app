@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
 
 export const SkillsWrapper = styled.div`
   padding: 4rem 0;
-  display: flex;
   align-items: center;
   justify-content: space-between;
   width: 70%;
@@ -49,6 +48,10 @@ export const Details = styled.div`
     }
   }
 `;
+
+export const Liteparer = styled.div`
+
+`
 
 export const Thumbnail = styled.div`
   flex: 1;
