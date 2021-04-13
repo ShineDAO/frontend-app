@@ -18,9 +18,7 @@ export const IntroWrapper = styled.div`
 `;
 
 export const Details = styled.div`
-   flex: 1;
-   display: flex;
-   justify-content: space-around;
+   display:flex;
 
   @media (max-width: 960px) {
     width: 100%;
@@ -98,9 +96,19 @@ padding: 15px;
 background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
 box-sizing: border-box;
 box-shadow: ${({ theme }) => (theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)')}; 
-width: 540px;
+min-width: 500px;
+max-width: 500px;
 height: 344px;
 color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+
+a{
+  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  font-size: 18px;
+}
+a: hover {
+text-decoration: none;
+color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+}
 `;
 
 export const SaleCard = styled.div`
@@ -108,10 +116,10 @@ export const SaleCard = styled.div`
   padding: 15px;
   background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   box-sizing: border-box;
-  width: 540px;
+  min-width: 500px;
   height: 344px;
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
- 
+  margin-right: 40px;
 `;
 
 export const StatusContainer = styled.div`

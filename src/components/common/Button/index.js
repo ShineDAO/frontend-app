@@ -93,7 +93,7 @@ export const LearnButton = styled.button`
   user-select: none;
   color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
   background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
-  width: 260px;
+  width: 280px;
   font-weight: bold;
   font-size: 20px;
 

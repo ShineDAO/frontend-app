@@ -18,7 +18,7 @@ export const SkillsWrapper = styled.div`
 `;
 
 export const Details = styled.div`
-  flex: 1;
+  display:flex;
 
   @media (max-width: 960px) {
     padding-left: unset;
@@ -54,12 +54,19 @@ export const LiteparerCard = styled.div`
   background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
   box-sizing: border-box;
   box-shadow: ${({ theme }) => (theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)')}; 
-  width: 540px;
+  width: 500px;
   height: 451px;
   left: 160px;
   top: 965px;
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
   
+  a{
+    font-size: 18px;
+  }
+  a: hover {
+  text-decoration: none;
+  color: #3F3D56;
+  }
 `;
 
 export const Thumbnail = styled.div`

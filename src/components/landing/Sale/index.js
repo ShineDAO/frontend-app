@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "providers/ThemeProvider";
 import { Header } from "components/theme";
-import { Container, Button } from "components/common";
+import { Container } from "components/common";
+import { LearnButton } from "components/common/Button/index";
 import {QuartCircleIntro} from '../Intro/styles.js';
 
-import { Wrapper, IntroWrapper, Details, Litepaper, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, EthInput, ColorTitle, ConnectWalletCard } from "./styles";
+import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, EthInput, ColorTitle, ConnectWalletCard } from "./styles";
 
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -217,14 +218,14 @@ export const Sale = () => {
       <h1>Shine Seed Sale</h1>
         <Details theme={theme}>
           <SaleCard theme={theme}>
-            Sale status
+           <h5> Sale status</h5>
             <StatusContainer>
               <span> <b>Sold out</b></span>
             </StatusContainer>
             <br></br>
-            Total Swap amount: 12,000,000 SHN
+            <h5>Total Swap amount</h5> 12,000,000 SHN
             <br></br>
-            Rate
+            <h5>Rate</h5>
             <br></br>
             Rate: ≈ $0.01 / 1 SHN
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
@@ -259,7 +260,7 @@ export const Sale = () => {
                 <br></br>
                 <br></br>
 
-                <Button
+                <LearnButton
                   onClick={() =>
                     buyShineTokens(
                       ethAmountToSpend,
@@ -270,10 +271,10 @@ export const Sale = () => {
                       setMetamaskErrorCode,
                       userAddress
                     )
-                  }
+                  } theme={theme}
                 >
                   Buy Shine
-                </Button>
+                </LearnButton>
               </div>
             )}
             {isShineBought && !isTransactionBeingProcessed && (
@@ -290,13 +291,13 @@ export const Sale = () => {
               </div>
             )}
           </SaleCard>
+
          <ConnectWalletCard theme={theme}>
-          <h5>
-            Token address{" "}
-            <a href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
+          <h5>Token address{" "} </h5>
+            <a className='address' href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
               0x1C7ede23b1361acC098A1e357C9085D131b34a01
             </a>
-          </h5>
+          
           
           <Link></Link>
           {isWalletEnabled ? (
@@ -311,7 +312,7 @@ export const Sale = () => {
               <br></br>
             </div>
           ) : (
-            <Button onClick={() => loadWeb3(setWalletStatus, setBalance)}>APPLY FOR THE PROGRAM</Button>
+            <LearnButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>APPLY FOR THE PROGRAM</LearnButton>
           )}
          </ConnectWalletCard>
          </Details>
