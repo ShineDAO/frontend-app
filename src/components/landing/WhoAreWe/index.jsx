@@ -25,7 +25,7 @@ export const WhoAreWe = () => {
           <p>
             Get access to an active and incentivized community of contributors from day 1 to polish your project.
           </p>
-          <LearnButton onClick={onScrollToContact}>
+          <LearnButton onClick={onScrollToContact} theme={theme}>
             LEARN MORE
           </LearnButton>
         </Details>

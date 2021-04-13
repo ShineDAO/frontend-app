@@ -43,7 +43,7 @@ export const Button = styled.button`
 export const JoinButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
-  border: 3px solid #3F3D56;
+  border: 3px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   padding: 0.6rem 0;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -52,7 +52,7 @@ export const JoinButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #3F3D56;
+  color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   background: transparent;
   width: 260px;
   font-weight: bold;
@@ -91,8 +91,8 @@ export const LearnButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #fff;
-  background: #3F3D56;
+  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   width: 260px;
   font-weight: bold;
   font-size: 20px;

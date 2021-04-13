@@ -73,7 +73,7 @@ function Wallet() {
           {console.log("wallet ", wallet)}
           <div>Account: {wallet.account}</div>
           <div>Balance: {ethAmount} ETH</div>
-          <LearnButton>
+          <LearnButton theme={theme}>
           <a  onClick={() => {}}>
             Buy SHN tokens
           </a>

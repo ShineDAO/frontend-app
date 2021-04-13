@@ -33,7 +33,7 @@ export const Intro = () => {
                 JOIN DISCORD
               </JoinButton>
 
-              <LearnButton onClick={onLearnButtonClick}>
+              <LearnButton onClick={onLearnButtonClick} theme={theme}>
                 LEARN MORE
               </LearnButton>
             </ButtonWrapper>
@@ -44,11 +44,11 @@ export const Intro = () => {
             <h1>Shine DAO</h1>
             <h4>Next generation DeFi incubator</h4>
             <ButtonWrapper>
-              <JoinButton onClick={onJoinButtonClick}>
+              <JoinButton onClick={onJoinButtonClick} theme={theme}>
                 JOIN DISCORD
               </JoinButton>
 
-              <LearnButton onClick={onLearnButtonClick}>
+              <LearnButton onClick={onLearnButtonClick} theme={theme}>
                 LEARN MORE
               </LearnButton>
             </ButtonWrapper>

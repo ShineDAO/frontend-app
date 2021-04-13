@@ -22,7 +22,7 @@ export const Why = () => {
           <p>
             Participate in a secure and compliant environment to get assets beyond ERC20 standard.
           </p>
-          <LearnButton onClick={onScrollToContact}>
+          <LearnButton onClick={onScrollToContact} theme={theme}>
             LEARN MORE
           </LearnButton>
         </Details>

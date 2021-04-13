@@ -25,7 +25,7 @@ export const WhatIsThisAbout = () => {
           <p>
             Access to invest in the future stars from their earliest stages all the way to blastoff from our launchpad.
           </p>
-          <LearnButton onClick={onScrollToContact}>
+          <LearnButton onClick={onScrollToContact} theme={theme}>
             LEARN MORE
           </LearnButton>
         </Details>
