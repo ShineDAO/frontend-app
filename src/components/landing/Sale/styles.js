@@ -10,6 +10,7 @@ export const IntroWrapper = styled.div`
   padding: 4rem 0;
   align-items: center;
   justify-content: space-between;
+  width: 70%;
 
   @media (max-width: 960px) {
     flex-direction: column;
@@ -17,8 +18,10 @@ export const IntroWrapper = styled.div`
 `;
 
 export const Details = styled.div`
-  display: flex;
-  justify-content: space-around;
+   flex: 1;
+   display: flex;
+   justify-content: space-around;
+
   @media (max-width: 960px) {
     width: 100%;
     margin-bottom: 2rem;

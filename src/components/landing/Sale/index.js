@@ -224,8 +224,9 @@ export const Sale = () => {
             <br></br>
             Total Swap amount: 12,000,000 SHN
             <br></br>
-            Rate: ≈ $0.01 / 1 SHN
+            Rate
             <br></br>
+            Rate: ≈ $0.01 / 1 SHN
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
             <br></br>
             {console.log("weiRaised raised", weiRaised)}
@@ -289,7 +290,6 @@ export const Sale = () => {
               </div>
             )}
           </SaleCard>
-
          <ConnectWalletCard theme={theme}>
           <h5>
             Token address{" "}

@@ -9,7 +9,7 @@ import tokenDistribution from 'assets/illustrations/token-distribution.png';
 
 
 
-import { Wrapper, SkillsWrapper, Details, Thumbnail, DisableColor } from './styles';
+import { Wrapper, SkillsWrapper, Details, Thumbnail, DisableColor, LiteparerCard } from './styles';
 
 export const SaleDetails = () => {
   const { theme } = useContext(ThemeContext);
@@ -17,19 +17,20 @@ export const SaleDetails = () => {
   return (
     <Wrapper id="about">
       <SkillsWrapper as={Container}>
-      <h4>Tokenomics</h4>
+      
+        <Details theme={theme}>
+          <h4>Tokenomics</h4>
           <p>
             Shine total supply is <b>hard capped</b> at 100M
           </p>
-        <Details theme={theme}>
-          
+          <LiteparerCard theme={theme}>
          <h5>Litepaper</h5>
           <a href="https://snapshot.org/#/shinedao.eth/proposal/QmPwhgvyiokiFMLh4wbEf6xrTZLuGLne4Q5bNPMQ5FyM1J">
             <img src={tokenDistribution} alt="Shine Tokenomics" />
           </a>
         <Button>
           <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></Button>
-          
+        </LiteparerCard>
        </Details> 
       </SkillsWrapper>
     </Wrapper>
