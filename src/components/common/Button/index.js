@@ -43,7 +43,7 @@ export const Button = styled.button`
 export const JoinButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
-  border: 3px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   padding: 0.6rem 0;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -54,7 +54,7 @@ export const JoinButton = styled.button`
   user-select: none;
   color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   background: transparent;
-  width: 260px;
+  width: 240px;
   font-weight: bold;
   font-size: 20px;
   margin-right: 20px;
@@ -68,7 +68,7 @@ export const JoinButton = styled.button`
   }
   &:hover {
     background: #FADA5E;
-    border: 3px solid #FADA5E;
+    border: 1px solid #FADA5E;
   }
   ${({ secondary }) =>
     secondary &&
@@ -83,7 +83,7 @@ export const LearnButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
   padding: 0.6rem 0;
-  border: 3px solid #3F3D56;
+  border: 1px solid white;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -93,7 +93,7 @@ export const LearnButton = styled.button`
   user-select: none;
   color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
   background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
-  width: 280px;
+  width: 240px;
   font-weight: bold;
   font-size: 20px;
 
@@ -107,7 +107,7 @@ export const LearnButton = styled.button`
   &:hover {
     background: #FADA5E;
     color: #3F3D56; 
-    border: 3px solid #FADA5E;
+    border: 1px solid #FADA5E;
   }
 
   ${({ secondary }) =>

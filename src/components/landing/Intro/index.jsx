@@ -25,7 +25,8 @@ export const Intro = () => {
       <Header/>
       <IntroWrapper as={Container}>
         {isMobile ?
-          <React.Fragment> <Details theme={theme}>
+          <React.Fragment> 
+            <Details theme={theme}>
             <h1>Shine DAO</h1>
             <h4>Next generation DeFi incubator</h4>
             <img width='400px' src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
@@ -40,8 +41,9 @@ export const Intro = () => {
             </ButtonWrapper>
 
           </Details>
-          </React.Fragment> :
-          <React.Fragment> <Details theme={theme}>
+        </React.Fragment> :
+          <React.Fragment> 
+           <Details theme={theme}>
             <h1>Shine DAO</h1>
             <h4>Next generation DeFi incubator</h4>
             <ButtonWrapper>
@@ -55,7 +57,7 @@ export const Intro = () => {
             </ButtonWrapper>
 
           </Details>
-            <img width='400px' src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
+            <img width='340px' height='260px' src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
           </React.Fragment>}
       </IntroWrapper>
     </Wrapper>

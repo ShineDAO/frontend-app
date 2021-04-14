@@ -44,8 +44,8 @@ export const Details = styled.div`
   }
 
   h1 {
-    margin-bottom: 2rem;
-    font-size: 36pt;
+    margin-bottom: 1rem;
+    font-size: 48px;
     color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
 
     @media (max-width: 960px) {
@@ -59,7 +59,7 @@ export const Details = styled.div`
 
   h4 {
     margin-bottom: 2.5rem;
-    font-size: 32pt;
+    font-size: 28px;
     font-weight: normal;
     color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#FFF')};
 
