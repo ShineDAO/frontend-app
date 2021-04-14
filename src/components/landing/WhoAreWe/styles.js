@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   background-size: contain;
   background-position: left top;
   background-repeat: no-repeat;
+  position: relative;
 `;
 
 export const SkillsWrapper = styled.div`
@@ -20,6 +21,20 @@ export const SkillsWrapper = styled.div`
     flex-direction: column;
   }
 `;
+
+export const MobileHalfCircle = styled.div`
+  width: 445px;
+  height: 445px;
+  border-radius: 50%;
+  right: -250px;
+  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')}; 
+  transition: 0.3s all;
+  z-index: -1;
+  position: absolute;
+    @media (min-width: 960px) {
+      display: none;
+  }
+`
 
 export const Details = styled.div`
   flex: 1;

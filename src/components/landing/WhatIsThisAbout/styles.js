@@ -17,7 +17,12 @@ export const HalfCircle = styled.div`
   transition: 0.3s all;
   z-index: -1;
   position: absolute;
-
+    @media (max-width: 960px) {
+      width: 445px;
+      height:445px;
+      left: -290px;
+      top: 125px;
+  }
 `
 
 export const SkillsWrapper = styled.div`

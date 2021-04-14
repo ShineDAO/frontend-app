@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
 
 export const QuartCircle = styled.div`
   background-size: contain;
-  border-radius: 100% 0 0 0;
+  border-radius: 50%;
   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   transition: 0.3s all;
   right: 0;
@@ -17,9 +17,11 @@ export const QuartCircle = styled.div`
   bottom: -50px;
   z-index: -1;
   
-  @media (max-width: 680px) {
-    height: 200px;
-    width: 200px;
+  @media (max-width: 960px) {
+    height: 445px;
+    width: 445px;
+    left: -292px;
+    bottom: -243.5px;
   }
 `
 
