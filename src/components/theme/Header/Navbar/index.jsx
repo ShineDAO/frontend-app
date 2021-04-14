@@ -14,7 +14,7 @@ const Navbar = () => {
       <Brand as={Link} to="/" theme={theme}>
       <LogoWrapper>
 
-      <img height='40px' src={shineLogoV7} alt={theme} />
+      <img width='60px' height='53px' src={shineLogoV7} alt={theme} />
     </LogoWrapper>
 
       </Brand>

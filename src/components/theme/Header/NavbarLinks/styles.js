@@ -25,7 +25,9 @@ export const Wrapper = styled.div`
 
 			a {
 				    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
-					margin-right: 1rem;
+					margin-right: 3rem;
+					font-size: 18px;
+					line-height: 24px;
 
 					&:last-child {
 							margin-right: unset;
