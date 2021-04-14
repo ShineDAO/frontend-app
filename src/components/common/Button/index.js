@@ -55,8 +55,9 @@ export const JoinButton = styled.button`
   color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   background: transparent;
   width: 240px;
+  height: 48px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
   margin-right: 20px;
 
   &:focus {
@@ -94,8 +95,9 @@ export const LearnButton = styled.button`
   color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
   background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   width: 240px;
+  height: 48px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
 
   &:focus {
     outline: none;
