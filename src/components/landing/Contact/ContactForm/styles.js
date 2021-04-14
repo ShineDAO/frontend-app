@@ -29,7 +29,7 @@ export const Details = styled.div`
   h1 {
     padding-top: 6rem;
     margin-bottom: 2rem;
-    font-size: 26pt;
+    font-size: 24px;
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#212121')};
 
     @media (max-width: 960px) {
@@ -39,7 +39,7 @@ export const Details = styled.div`
 
   p {
     margin-bottom: 2.5rem;
-    font-size: 20pt;
+    font-size: 20px;
     font-weight: normal;
     line-height: 1.3;
     color: ${({ theme }) => (theme === 'dark' ? '#c7c7c7' : '#707070')};

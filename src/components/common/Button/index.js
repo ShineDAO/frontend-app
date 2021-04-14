@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const Button = styled.button`
   margin-bottom:50px;
   cursor: pointer;
-  border-radius: 3px;
-  padding: 0.7rem 2.5rem;
+  border-radius: 4px;
   border: none;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -16,7 +15,11 @@ export const Button = styled.button`
   color: #fff;
   background: #3F3D56;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
+  height: 48px;
+  width: 160px;
+
+
   
   &:focus {
     outline: none;
