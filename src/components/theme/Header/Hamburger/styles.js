@@ -17,15 +17,11 @@ export const Wrapper = styled.div`
     sidebar &&
     `
 			right: 18%;
-			top: 1.4rem;
+			top: 1.6rem;
 		
 			@media (max-width: 960px) {
-				right: 35%;
+				right: 20px;
 				position: fixed;
-			}
-		
-			@media (max-width: 600px) {
-				right: 66%;
 			}
 	`}
 `;

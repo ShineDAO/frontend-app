@@ -20,11 +20,8 @@ export const Wrapper = styled.div`
 			opacity: 1;
 
 			@media (max-width: 960px) {
-				width: 40%;
-			}
-
-			@media (max-width: 600px) {
-				width: 75%;
+				height: 40%;
+				width: 100%;
 			}
 	`}
 `;
