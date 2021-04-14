@@ -13,7 +13,7 @@ export const Subscribe = () => {
       <SkillsWrapper as={Container}>
       
 
-    <input></input>
+    <input theme={theme}></input>
         <Thumbnail>
           <img src={dev} alt="I’m John and I’m a Backend & Devops engineer!" />
         </Thumbnail>

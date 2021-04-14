@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 export const Input = styled.input`
-  width: 100%;
+  background-color: transparent;
   box-sizing: border-box;
-  border: 2px solid #6c63ff;
-  padding: 0.8rem 1rem;
-  border-radius: 7px;
+  border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  height: 48px;
+  width: 336px;
+  border-radius: 4px;
   margin-bottom: 0.5rem;
   transition: 0.3s;
 

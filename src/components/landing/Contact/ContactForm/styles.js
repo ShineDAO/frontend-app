@@ -30,7 +30,8 @@ export const Details = styled.div`
     padding-top: 6rem;
     margin-bottom: 2rem;
     font-size: 24px;
-    color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#212121')};
+    line-height: 32px;
+    color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#1E1E1E')};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
@@ -38,11 +39,10 @@ export const Details = styled.div`
   }
 
   p {
-    margin-bottom: 2.5rem;
     font-size: 20px;
     font-weight: normal;
     line-height: 32px;
-    color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#707070')};
+    color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#1E1E1E')};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};

@@ -56,7 +56,8 @@ export default () => {
             type="email"
             name="email"
             placeholder="Email*"
-            error={touched.email && errors.email}
+            error={touched.email && errors.email} 
+            theme={theme}
           />
           <ErrorMessage component={Error} name="email" />
         </InputField>
@@ -88,7 +89,7 @@ export default () => {
         )}
         <Center>
           <Button type="submit" disabled={isSubmitting}>
-            Submit
+            SUBMIT
           </Button>
         </Center>
       </Form>

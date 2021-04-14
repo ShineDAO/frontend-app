@@ -28,28 +28,6 @@ export const Details = styled.div`
     padding-left: unset;
     width: 100%;
   }
-
-  h1 {
-    margin-bottom: 2rem;
-    font-size: 26pt;
-    color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#1E1E1E')};
-
-    @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
-    }
-  }
-
-  p {
-    margin-bottom: 2.5rem;
-    font-size: 20pt;
-    font-weight: normal;
-    line-height: 1.3;
-    color: ${({ theme }) => (theme === 'dark' ? '#c7c7c7' : '#1E1E1E')};
-
-    @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
-    }
-  }
 `;
 
 export const Thumbnail = styled.div`
