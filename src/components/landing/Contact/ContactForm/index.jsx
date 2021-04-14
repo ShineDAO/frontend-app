@@ -3,7 +3,7 @@ import { Formik, Form, FastField, ErrorMessage } from 'formik';
 import Recaptcha from 'react-google-recaptcha';
 import * as Yup from 'yup';
 import { Button, Input } from 'components/common';
-import { Error, Center, InputField, Details } from './styles';
+import {Error, Center, InputField, Details, ContactFormContainer} from './styles';
 
 import addToMailchimp from 'gatsby-plugin-mailchimp'
 import { ThemeContext } from 'providers/ThemeProvider';
@@ -30,15 +30,15 @@ export default () => {
         .required('Email field is required'),
       recaptcha: Yup.string().required('Robots are not welcome yet!'),
     })}
-    onSubmit={async ({email }, { setSubmitting, resetForm, setFieldValue }) => {
+    onSubmit={async ({email }, { setSubmitting, setFieldValue }) => {
       console.log("test")
       const result = await addToMailchimp(email)
       console.log("res",result)
       setSubmitting(false);
 
-      if(result.result!="error"){
+      if(result.result!="error") {
         setFieldValue('success', true);
-      }else{
+      } else {
         setFieldValue('error', true);
       }
     }}
@@ -47,6 +47,7 @@ export default () => {
       <Form>
       <h1>Subscribe to our mailing list for updates about our upcoming SHN token launch!</h1>
       <p>No spam. We promise!</p>
+        <ContactFormContainer>
         <InputField>
           <Input
             id="email"
@@ -56,7 +57,7 @@ export default () => {
             type="email"
             name="email"
             placeholder="Email*"
-            error={touched.email && errors.email} 
+            error={touched.email && errors.email}
             theme={theme}
           />
           <ErrorMessage component={Error} name="email" />
@@ -92,6 +93,7 @@ export default () => {
             SUBMIT
           </Button>
         </Center>
+        </ContactFormContainer>
       </Form>
     )}
   </Formik>

@@ -49,3 +49,7 @@ export const Details = styled.div`
     }
   }
 `;
+
+export const ContactFormContainer = styled.div`
+  display: flex;
+`

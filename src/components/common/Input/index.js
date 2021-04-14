@@ -7,6 +7,7 @@ export const Input = styled.input`
   height: 48px;
   width: 336px;
   border-radius: 4px;
+  display: block;
   margin-bottom: 0.5rem;
   transition: 0.3s;
 
