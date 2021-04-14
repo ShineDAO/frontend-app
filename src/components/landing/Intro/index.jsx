@@ -3,6 +3,7 @@ import {ThemeContext} from 'providers/ThemeProvider';
 import {Header} from 'components/theme';
 import {Container, JoinButton, LearnButton} from 'components/common';
 import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
+import  ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
 import useIsMobile from "../../../hooks/useIsMobile";
 
 import {Wrapper, IntroWrapper, Details, ButtonWrapper, QuartCircleIntro} from './styles';
@@ -27,7 +28,7 @@ export const Intro = () => {
           <React.Fragment> <Details theme={theme}>
             <h1>Shine DAO</h1>
             <h4>Next generation DeFi incubator</h4>
-            <img width='400px' src={shineNetworkV3} alt="Shine is meant to interconnect the blockchain community"/>
+            <img width='400px' src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
             <ButtonWrapper>
               <JoinButton onClick={onJoinButtonClick}>
                 JOIN DISCORD
@@ -54,7 +55,7 @@ export const Intro = () => {
             </ButtonWrapper>
 
           </Details>
-            <img width='400px' src={shineNetworkV3} alt="Shine is meant to interconnect the blockchain community"/>
+            <img width='400px' src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
           </React.Fragment>}
       </IntroWrapper>
     </Wrapper>
