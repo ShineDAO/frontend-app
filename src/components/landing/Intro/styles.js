@@ -22,6 +22,8 @@ export const Wrapper = styled.div`
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const IntroWrapper = styled.div`

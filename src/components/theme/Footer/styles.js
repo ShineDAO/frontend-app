@@ -22,7 +22,9 @@ export const QuartCircle = styled.div`
   @media (max-width: 960px) {
     height: 200px;
     width: 200px;
-  }
+    left: 0;
+   border-radius: 0 100% 0 0;
+ }
 `
 
 export const Flex = styled.div`
