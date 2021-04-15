@@ -3,11 +3,13 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   position: relative;
   margin-bottom: 50px;
+  padding-left: 32px;
+  margin-top: 200px;
 `
 
 export const QuartCircle = styled.div`
   background-size: contain;
-  border-radius: 50%;
+  border-radius: 100% 0 0 0;
   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   transition: 0.3s all;
   right: 0;
@@ -18,10 +20,8 @@ export const QuartCircle = styled.div`
   z-index: -1;
   
   @media (max-width: 960px) {
-    height: 445px;
-    width: 445px;
-    left: -292px;
-    bottom: -243.5px;
+    height: 200px;
+    width: 200px;
   }
 `
 
