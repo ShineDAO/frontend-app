@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Input = styled.input`
-  background-color: transparent;
+  background: transparent;
   box-sizing: border-box;
   border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   height: 48px;
@@ -11,6 +11,14 @@ export const Input = styled.input`
   margin-bottom: 0.5rem;
   transition: 0.3s;
   margin-right:24px;
+  color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  font-size:14px;
+  line-height: 20px;
+  
+  :hover {
+    color:${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+
+  }
 
   @media (max-width: 960px) {
     height: 48px;
