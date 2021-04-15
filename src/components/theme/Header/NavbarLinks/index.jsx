@@ -10,11 +10,9 @@ import Wallet from 'components/theme/Header/Wallet';
 
 const NavbarLinks = ({ desktop }) => {
   const { theme } = useContext(ThemeContext);
-  
- 
+
   return (
     <Wrapper desktop={desktop} theme={theme}>
-
       <a href="http://docs.shinedao.finance" target="_blank">Docs</a>
       <a href="https://docs.shinedao.finance/shine-incubator-program/shine-grant" target="_blank">Litepaper</a>
       <AnchorLink href="#contact">Launch App</AnchorLink>

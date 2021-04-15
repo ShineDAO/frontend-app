@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   z-index: 5;
-  top: 1.6rem;
-  right: 1.8rem;
+  top: 22px;
+  right: 20px;
   display: none;
   cursor: pointer;
   transition: left 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
     sidebar &&
     `
 			right: 18%;
-			top: 1.6rem;
+			top: 22px;
 		
 			@media (max-width: 960px) {
 				right: 20px;
@@ -28,24 +28,24 @@ export const Wrapper = styled.div`
 
 export const Bar = styled.div`
 	width: 1.6rem;
-	height: .15rem;
-	margin-bottom: .3rem;
-	background-color: #1e1e1e;
+	height: 3px;
+	margin-bottom: 3px;
+	background-color: ${({ theme }) => (theme === 'light' ? '#1e1e1e' : '#fff')};
 	transition: transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91),
 	opacity 500ms,
 	box-shadow 250ms,
 	background-color 500ms;
 
 	@media (max-width: 600px){
-		width: 1.6rem;
+		width: 20px;
 	}
 
 	${({ top, sidebar, theme }) =>
     top &&
     sidebar &&
 		`
-		background-color: ${(theme === 'light' ? '#212121' : '#fff')};
-		transform: translateY(8px) rotate(-135deg);
+		background-color: ${(theme === 'light' ? '#1e1e1e' : '#fff')};
+		transform: translateY(6px) rotate(-135deg);
 		
 	`}
 

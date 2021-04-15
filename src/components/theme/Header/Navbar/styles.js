@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding: 1.5rem 0;
+  padding: ${({ isMobile }) => (isMobile ? '0' : '1.5rem 0')};
+  min-height: ${({ isMobile }) => (isMobile ? '56px' : '0')};
   display: flex;
   align-items: center;
   justify-content: space-between;
