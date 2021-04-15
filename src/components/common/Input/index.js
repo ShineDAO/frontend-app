@@ -14,6 +14,7 @@ export const Input = styled.input`
   color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   font-size:14px;
   line-height: 20px;
+  padding: 14px;
   
   :hover {
     color:${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};

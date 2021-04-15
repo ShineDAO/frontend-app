@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
   @media (max-width: 960px) {
     flex-direction: column;
     align-items:center;
+    width:70%
   }
 `;
 
