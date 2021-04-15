@@ -47,7 +47,7 @@ export default () => {
       <Form>
       <h1>Subscribe to our mailing list for updates about our upcoming SHN token launch!</h1>
       <p>No spam. We promise!</p>
-        <ContactFormContainer>
+      <ContactFormContainer>
         <InputField>
           <Input
             id="email"
@@ -62,7 +62,12 @@ export default () => {
           />
           <ErrorMessage component={Error} name="email" />
         </InputField>
-
+         <Center>
+          <Button type="submit" disabled={isSubmitting}>
+            SUBMIT
+          </Button>
+         </Center>
+      </ContactFormContainer>
         {values.email &&  (
           <InputField>
             <FastField
@@ -88,12 +93,7 @@ export default () => {
             </Center>
           </InputField>
         )}
-        <Center>
-          <Button type="submit" disabled={isSubmitting}>
-            SUBMIT
-          </Button>
-        </Center>
-        </ContactFormContainer>
+        
       </Form>
     )}
   </Formik>

@@ -27,7 +27,7 @@ export const Details = styled.div`
   }
 
   h1 {
-    padding-top: 6rem;
+    padding-top: 4rem;
     margin-bottom: 2rem;
     font-size: 24px;
     line-height: 32px;

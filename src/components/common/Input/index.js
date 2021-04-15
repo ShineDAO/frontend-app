@@ -10,6 +10,7 @@ export const Input = styled.input`
   display: block;
   margin-bottom: 0.5rem;
   transition: 0.3s;
+  margin-right:24px;
 
   @media (max-width: 960px) {
     height: 48px;
