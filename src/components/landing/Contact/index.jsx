@@ -9,6 +9,6 @@ export const Contact = () => (
     <Details>
       <ContactForm />
     </Details>
-    <img width='400px' src={contact} alt="I’m John and I’m a Backend & Devops engineer!" />
+    <img width='357px' height='218px' src={contact} alt="I’m John and I’m a Backend & Devops engineer!" />
   </Wrapper>
 );

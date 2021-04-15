@@ -23,7 +23,7 @@ export const Details = styled.div`
 
   @media (max-width: 960px) {
     padding-left: unset;
-    width: 100%;
+    width: 70%;
   }
 
   h1 {
@@ -31,10 +31,14 @@ export const Details = styled.div`
     margin-bottom: 2rem;
     font-size: 24px;
     line-height: 32px;
+    align-items:center;
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#1E1E1E')};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      font-size: 18px;
+      line-height: 24px;
+      padding-top: 0rem;
     }
   }
 
@@ -46,10 +50,16 @@ export const Details = styled.div`
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      font-size: 14px;
+      line-height: 20px;
     }
   }
 `;
 
 export const ContactFormContainer = styled.div`
   display: flex;
+
+  @media (max-width: 960px) {
+   display: block;
+  }
 `

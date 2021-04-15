@@ -19,8 +19,6 @@ export const Button = styled.button`
   height: 48px;
   width: 160px;
 
-
-  
   &:focus {
     outline: none;
   }
@@ -33,6 +31,14 @@ export const Button = styled.button`
     background: #FADA5E;
     color: #3F3D56;
     text-decoration: none;
+  }
+
+  @media (max-width: 960px) {
+    height: 48px;
+    width: 295px;
+    left: 0px;
+    top: 0px;
+    border-radius: 4px;
   }
   ${({ secondary }) =>
     secondary &&

@@ -8,12 +8,14 @@ export const Wrapper = styled.div`
 
   @media (max-width: 960px) {
     flex-direction: column;
+    align-items:center;
   }
 `;
 
 export const Details = styled.div`
   flex: 1;
   padding-right: 2rem;
+  display:flex;
 
   @media (max-width: 960px) {
     padding-right: unset;
