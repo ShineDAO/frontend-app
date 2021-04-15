@@ -17,6 +17,11 @@ export const InputField = styled.div`
   margin-bottom: 1rem;
 `;
 
+export const InputFieldCaptcha = styled.div`
+  position: absolute;
+  margin-bottom: 1rem;
+`;
+
 export const Details = styled.div`
   flex: 1;
   padding-left: 2rem;

@@ -3,7 +3,7 @@ import { Formik, Form, FastField, ErrorMessage } from 'formik';
 import Recaptcha from 'react-google-recaptcha';
 import * as Yup from 'yup';
 import { Button, Input } from 'components/common';
-import {Error, Center, InputField, Details, ContactFormContainer} from './styles';
+import {Error, Center, InputField, Details, ContactFormContainer, InputFieldCaptcha} from './styles';
 
 import addToMailchimp from 'gatsby-plugin-mailchimp'
 import { ThemeContext } from 'providers/ThemeProvider';
@@ -69,7 +69,7 @@ export default () => {
          </Center>
       </ContactFormContainer>
         {values.email &&  (
-          <InputField>
+          <InputFieldCaptcha>
             <FastField
               component={Recaptcha}
               sitekey={process.env.GATSBY_PORTFOLIO_RECAPTCHA_KEY}
@@ -77,7 +77,7 @@ export default () => {
               onChange={value => setFieldValue('recaptcha', value)}
             />
             <ErrorMessage component={Error} name="recaptcha" />
-          </InputField>
+          </InputFieldCaptcha>
         )}
         {values.success && (
           <InputField>
@@ -93,7 +93,7 @@ export default () => {
             </Center>
           </InputField>
         )}
-        
+
       </Form>
     )}
   </Formik>
