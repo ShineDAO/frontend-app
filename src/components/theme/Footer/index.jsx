@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
 import { Wrapper, Flex, Links, Details, QuartCircle } from './styles';
-import social from './social.json';
+import { social } from './social.js';
 
 export const Footer = () => {
   const { theme } = useContext(ThemeContext);
@@ -23,9 +23,9 @@ export const Footer = () => {
         </span>
       </Details>
       <Links>
-        {social.map(({ id, name, link, icon }) => (
+        {social.map(({ id, name, link, icon, iconLightTheme }) => (
           <a key={id} href={link} target="_blank" rel="noopener noreferrer" aria-label={`follow me on ${name}`}>
-            <img width="24" src={icon} alt={name} />
+            <img width="24" src={theme === 'light' ? iconLightTheme : icon} alt={name} />
           </a>
         ))}
       </Links>
