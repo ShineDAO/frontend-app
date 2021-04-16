@@ -10,9 +10,7 @@ export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
   const isMobile = useIsMobile();
   const onScrollToContact = () => {
-    document.querySelector('#contact').scrollIntoView({
-      behavior: 'smooth'
-    });
+    window.open('https://docs.shinedao.finance/shine-incubator-program/pr-and-community-building', 'blank', 'noopener')
   }
 
   return (

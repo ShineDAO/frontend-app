@@ -7,14 +7,13 @@ import useIsMobile from "../../../hooks/useIsMobile";
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const Why = () => {
-  const { theme } = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
   const isMobile = useIsMobile()
 
   const onScrollToContact = () => {
-    document.querySelector('#contact').scrollIntoView({
-      behavior: 'smooth'
-    });
+    window.open('https://docs.shinedao.finance/shine-investors/interoperable-environment', 'blank', 'noopener')
   }
+
 
   return (
     <Wrapper id="about">

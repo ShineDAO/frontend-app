@@ -25,7 +25,7 @@ export const Intro = () => {
       <Header/>
       <IntroWrapper as={Container}>
         {isMobile ?
-          <React.Fragment> 
+          <React.Fragment>
             <Details theme={theme}>
             <h1>Shine DAO</h1>
             <h4>Next generation DeFi incubator</h4>
@@ -36,13 +36,13 @@ export const Intro = () => {
               </JoinButton>
 
               <LearnButton onClick={onLearnButtonClick} theme={theme}>
-                LEARN MORE
+                APPLY FOR THE PROGRAM
               </LearnButton>
             </ButtonWrapper>
 
           </Details>
         </React.Fragment> :
-          <React.Fragment> 
+          <React.Fragment>
            <Details theme={theme}>
             <h1>Shine DAO</h1>
             <h4>Next generation DeFi incubator</h4>
@@ -52,7 +52,7 @@ export const Intro = () => {
               </JoinButton>
 
               <LearnButton onClick={onLearnButtonClick} theme={theme}>
-                LEARN MORE
+                APPLY FOR THE PROGRAM
               </LearnButton>
             </ButtonWrapper>
 

@@ -12,9 +12,7 @@ export const WhoAreWe = () => {
   const isMobile = useIsMobile()
 
   const onScrollToContact = () => {
-    document.querySelector('#contact').scrollIntoView({
-      behavior: 'smooth'
-    });
+    window.open('https://docs.shinedao.finance/shine-incubator-program/raising-iio-with-shine', 'blank', 'noopener')
   }
 
   return (
