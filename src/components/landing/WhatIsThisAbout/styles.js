@@ -34,6 +34,7 @@ export const SkillsWrapper = styled.div`
 
   @media (max-width: 960px) {
     flex-direction: column;
+    display: block;
   }
 `;
 

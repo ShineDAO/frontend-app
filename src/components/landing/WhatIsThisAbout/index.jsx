@@ -3,12 +3,12 @@ import { ThemeContext } from 'providers/ThemeProvider';
 import {Container, Button, LearnButton} from 'components/common';
 import adAdastraV1 from 'assets/illustrations/adastra-v1.png';
 import { HalfCircle  } from "./styles";
-
+import useIsMobile from '../../../hooks/useIsMobile';
 import { Wrapper, SkillsWrapper, Details } from './styles';
 
 export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
-
+  const isMobile = useIsMobile();
   const onScrollToContact = () => {
     document.querySelector('#contact').scrollIntoView({
       behavior: 'smooth'
@@ -19,7 +19,7 @@ export const WhatIsThisAbout = () => {
     <Wrapper id="about">
       <HalfCircle theme={theme} />
       <SkillsWrapper as={Container}>
-        <img width='385px' height='312px' src={adAdastraV1} alt="Towards the stars! Are you ready?" />
+        <img width={isMobile ? '192px' : '385px'} height={isMobile ? '156px' : '312px' } src={adAdastraV1} alt="Towards the stars! Are you ready?" />
         <Details theme={theme}>
           <h1>Participate Early</h1>
           <p>
