@@ -29,7 +29,7 @@ export const Intro = () => {
             <Details theme={theme}>
             <h1>Shine DAO</h1>
             <h4>Next generation DeFi incubator</h4>
-            <img width='400px' src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
+            <img width={isMobile ? '200px' : '400px'} src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
             <ButtonWrapper>
               <JoinButton onClick={onJoinButtonClick} theme={theme}>
                 JOIN DISCORD

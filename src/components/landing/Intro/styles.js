@@ -34,6 +34,7 @@ export const IntroWrapper = styled.div`
 
   @media (max-width: 960px) {
     flex-direction: column;
+    width: 70%
   }
 `;
 
@@ -55,7 +56,13 @@ export const Details = styled.div`
     }
 
     @media (max-width: 680px) {
-      font-size: 30pt;
+      font-size: 24px;
+      font family: Barlow;
+      font style: ExtraBold;
+      line height: 32px;
+      line height: 111%;
+      align: Left;
+      vertical align: Top;
     }
   }
 
@@ -67,10 +74,11 @@ export const Details = styled.div`
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      font-size: 19px;
     }
 
     @media (max-width: 680px) {
-      font-size: 28px;
+      font-size: 19px;
     }
   }
 `;
@@ -105,5 +113,6 @@ export const ButtonWrapper = styled.div`
   margin: 0.7em 1.5em;
   @media (max-width: 680px) {
     display: block;
+    margin: 0;
   }
 `;
