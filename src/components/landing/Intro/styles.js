@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
 `;
 
 export const IntroWrapper = styled.div`
-  padding: 4rem 0;
+  padding: 160px 0 200px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;

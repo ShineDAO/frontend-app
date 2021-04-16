@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `;
 
 export const SkillsWrapper = styled.div`
-  padding: 4rem 0;
+  padding: 80px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
