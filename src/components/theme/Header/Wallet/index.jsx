@@ -3,7 +3,7 @@
 import React from "react";
 import { useWallet, UseWalletProvider } from "use-wallet";
 
-import { Button, BlueButton } from "components/common";
+import { Button, LearnButton } from "components/common";
 
 import Web3 from 'web3';
 
@@ -59,7 +59,7 @@ function Wallet() {
       }
     }
 
-  
+
 
 
 
@@ -68,16 +68,16 @@ function Wallet() {
   return (
     <>
       {wallet.status === "connected" ? (
-        
+
         <div style={{paddingBottom:15}}>
           {console.log("wallet ", wallet)}
           <div>Account: {wallet.account}</div>
           <div>Balance: {ethAmount} ETH</div>
-          <BlueButton>
+          <LearnButton theme={theme}>
           <a  onClick={() => {}}>
             Buy SHN tokens
           </a>
-        </BlueButton>
+        </LearnButton>
         <br></br>
          {//<button onClick={() => wallet.reset()}>disconnect</button>
          }

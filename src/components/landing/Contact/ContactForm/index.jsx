@@ -1,15 +1,12 @@
 import React, { useContext } from 'react';
-import axios from 'axios';
 import { Formik, Form, FastField, ErrorMessage } from 'formik';
 import Recaptcha from 'react-google-recaptcha';
 import * as Yup from 'yup';
 import { Button, Input } from 'components/common';
-import { Error, Center, InputField, Details } from './styles';
-
+import {Error, Center, InputField, Details, ContactFormContainer, InputFieldCaptcha} from './styles';
 
 import addToMailchimp from 'gatsby-plugin-mailchimp'
 import { ThemeContext } from 'providers/ThemeProvider';
-
 
 export default () => {
   const { theme } = useContext(ThemeContext);
@@ -18,7 +15,6 @@ export default () => {
 
   <Details  theme={theme}>
 
- 
   <Formik
     initialValues={{
       name: '',
@@ -34,15 +30,15 @@ export default () => {
         .required('Email field is required'),
       recaptcha: Yup.string().required('Robots are not welcome yet!'),
     })}
-    onSubmit={async ({email }, { setSubmitting, resetForm, setFieldValue }) => {
+    onSubmit={async ({email }, { setSubmitting, setFieldValue }) => {
       console.log("test")
       const result = await addToMailchimp(email)
       console.log("res",result)
       setSubmitting(false);
 
-      if(result.result!="error"){
+      if(result.result!="error") {
         setFieldValue('success', true);
-      }else{
+      } else {
         setFieldValue('error', true);
       }
     }}
@@ -50,7 +46,8 @@ export default () => {
     {({ values, touched, errors, setFieldValue, isSubmitting }) => (
       <Form>
       <h1>Subscribe to our mailing list for updates about our upcoming SHN token launch!</h1>
-      <h4>No spam. We promise!</h4>
+      <p>No spam. We promise!</p>
+      <ContactFormContainer>
         <InputField>
           <Input
             id="email"
@@ -61,12 +58,18 @@ export default () => {
             name="email"
             placeholder="Email*"
             error={touched.email && errors.email}
+            theme={theme}
           />
           <ErrorMessage component={Error} name="email" />
         </InputField>
-
+         <Center>
+          <Button type="submit" disabled={isSubmitting}>
+            SUBMIT
+          </Button>
+         </Center>
+      </ContactFormContainer>
         {values.email &&  (
-          <InputField>
+          <InputFieldCaptcha>
             <FastField
               component={Recaptcha}
               sitekey={process.env.GATSBY_PORTFOLIO_RECAPTCHA_KEY}
@@ -74,7 +77,7 @@ export default () => {
               onChange={value => setFieldValue('recaptcha', value)}
             />
             <ErrorMessage component={Error} name="recaptcha" />
-          </InputField>
+          </InputFieldCaptcha>
         )}
         {values.success && (
           <InputField>
@@ -90,11 +93,7 @@ export default () => {
             </Center>
           </InputField>
         )}
-        <Center>
-          <Button secondary type="submit" disabled={isSubmitting}>
-            Submit
-          </Button>
-        </Center>
+
       </Form>
     )}
   </Formik>

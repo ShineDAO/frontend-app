@@ -1,63 +1,64 @@
-import React, { useContext } from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
-import { ThemeContext } from 'providers/ThemeProvider';
-import { Header } from 'components/theme';
-import { Container, Button, RedButton } from 'components/common';
-import shineNetwork from 'assets/illustrations/shine-network.svg';
-import shineNetworkV1 from 'assets/illustrations/shine-network-v1.svg';
-import shineNetworkV2 from 'assets/illustrations/shine-network-v2.svg';
+import React, {useContext} from 'react';
+import {ThemeContext} from 'providers/ThemeProvider';
+import {Header} from 'components/theme';
+import {Container, JoinButton, LearnButton} from 'components/common';
 import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
+import  ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
+import useIsMobile from "../../../hooks/useIsMobile";
 
-
-import shineLogo from 'assets/illustrations/shine-logo.png';
-import shineLogoV1 from 'assets/illustrations/shine-logo-v1.png';
-import shineLogoV2 from 'assets/illustrations/shine-logo-v2.png';
-import shineLogoV3 from 'assets/illustrations/shine-logo-v3.png';
-import shineLogoV4 from 'assets/illustrations/shine-logo-v4.png';
-import shineLogoV5 from 'assets/illustrations/shine-logo-v5.png';
-import shineLogoV7 from 'assets/illustrations/shine-logo-v7.png';
-
-
-import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link } from './styles';
+import {Wrapper, IntroWrapper, Details, ButtonWrapper, QuartCircleIntro} from './styles';
 
 export const Intro = () => {
-  const { theme } = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
+  const isMobile = useIsMobile()
+  const onJoinButtonClick = () => {
+    window.open("https://discord.gg/QkhbP7bZrj", "_blank", "noopener")
+  }
+
+  const onLearnButtonClick = () => {
+    window.open("https://v2s0c9giox5.typeform.com/to/OElYo1Fe", "_blank", "noopener")
+  }
 
   return (
     <Wrapper>
-      <Header />
+      <QuartCircleIntro theme={theme}/>
+      <Header/>
       <IntroWrapper as={Container}>
-        <Details theme={theme}>
-          <h1>Shine DAO</h1>
-          <h4>Next generation DeFi incubator aligning interests of teams and the investor community</h4>
+        {isMobile ?
+          <React.Fragment>
+            <Details theme={theme}>
+            <h1>Shine DAO</h1>
+            <h4>Next generation DeFi incubator</h4>
+            <img width={isMobile ? '200px' : '400px'} src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
+            <ButtonWrapper>
+              <JoinButton onClick={onJoinButtonClick} theme={theme}>
+                JOIN DISCORD
+              </JoinButton>
 
-          <Link>
-          <RedButton >
-            <a href="https://discord.gg/QkhbP7bZrj">JOIN THE COMMUNITY</a> 
-          </RedButton>
-          </Link>
+              <LearnButton onClick={onLearnButtonClick} theme={theme}>
+                APPLY FOR THE PROGRAM
+              </LearnButton>
+            </ButtonWrapper>
 
-          <Link>
-          <Button >
-            <a href="https://v2s0c9giox5.typeform.com/to/OElYo1Fe">APPLY FOR THE PROGRAM</a> 
-          </Button>
-          </Link>
+          </Details>
+        </React.Fragment> :
+          <React.Fragment>
+           <Details theme={theme}>
+            <h1>Shine DAO</h1>
+            <h4>Next generation DeFi incubator</h4>
+            <ButtonWrapper>
+              <JoinButton onClick={onJoinButtonClick} theme={theme}>
+                JOIN DISCORD
+              </JoinButton>
 
+              <LearnButton onClick={onLearnButtonClick} theme={theme}>
+                APPLY FOR THE PROGRAM
+              </LearnButton>
+            </ButtonWrapper>
 
-
-          <Thumbnail>
-          <img src={shineLogoV7} alt="Shine is meant to interconnect the blockchain community" />
-        </Thumbnail>
-
-
-   
-   
-          
-        </Details>
-        <ThumbnailBig>
-          <img src={shineNetworkV3} alt="Shine is meant to interconnect the blockchain community" />
-        </ThumbnailBig>
-          
+          </Details>
+            <img width='340px' height='260px' src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
+          </React.Fragment>}
       </IntroWrapper>
     </Wrapper>
   );

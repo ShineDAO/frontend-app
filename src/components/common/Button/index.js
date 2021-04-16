@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  margin-bottom:50px;
-
+  margin-bottom: 50px;
   cursor: pointer;
-  border-radius: 3px;
-  padding: 0.7rem 2.5rem;
+  border-radius: 4px;
   border: none;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -15,7 +13,11 @@ export const Button = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: #fff;
-  background: #2F2E40;
+  background: #3F3D56;
+  font-weight: bold;
+  font-size: 16px;
+  height: 48px;
+  width: 160px;
 
   &:focus {
     outline: none;
@@ -25,6 +27,20 @@ export const Button = styled.button`
     background: gray;
   }
 
+  &:hover {
+    background: #FADA5E;
+    color: #3F3D56;
+    text-decoration: none;
+  }
+
+  @media (max-width: 960px) {
+    height: 48px;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
   ${({ secondary }) =>
     secondary &&
     `
@@ -32,13 +48,11 @@ export const Button = styled.button`
 	`}
 `;
 
-
-
-export const RedButton = styled.button`
+export const JoinButton = styled.button`
   cursor: pointer;
-  border-radius: 3px;
-  padding: 0.7rem 2.5rem;
-  border: none;
+  border-radius: 4px;
+  border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  padding: 0.6rem 0;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -46,8 +60,13 @@ export const RedButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #fff;
-  background: #2F2E40;
+  color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  background: transparent;
+  width: 240px;
+  height: 48px;
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 20px;
 
   &:focus {
     outline: none;
@@ -56,18 +75,27 @@ export const RedButton = styled.button`
   &:disabled {
     background: gray;
   }
-
+  &:hover {
+    background: #FADA5E;
+    border: 1px solid #FADA5E;
+  }
   ${({ secondary }) =>
     secondary &&
     `
 		background: #001F3F;
 	`}
+  @media (max-width: 960px) {
+    margin-bottom: 20px;
+    border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  }
 `;
-export const BlueButton = styled.button`
+
+export const LearnButton = styled.button`
   cursor: pointer;
-  border-radius: 3px;
-  padding: 0.7rem 2.5rem;
-  border: none;
+  border-radius: 4px;
+  padding: 0.6rem 0;
+  border: 1px solid white;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -75,8 +103,12 @@ export const BlueButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #fff;
-  background: #6c62ff;
+  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  width: 240px;
+  height: 48px;
+  font-weight: bold;
+  font-size: 16px;
 
   &:focus {
     outline: none;
@@ -84,6 +116,11 @@ export const BlueButton = styled.button`
 
   &:disabled {
     background: gray;
+  }
+  &:hover {
+    background: #FADA5E;
+    color: #3F3D56; 
+    border: 1px solid #FADA5E;
   }
 
   ${({ secondary }) =>

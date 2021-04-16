@@ -1,35 +1,34 @@
 import React, { useContext } from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
-import { Container, Button } from 'components/common';
-import adAdastra from 'assets/illustrations/ad-adastra.svg';
+import {Container, Button, LearnButton} from 'components/common';
 import adAdastraV1 from 'assets/illustrations/adastra-v1.png';
-
-import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
+import { HalfCircle  } from "./styles";
+import useIsMobile from '../../../hooks/useIsMobile';
+import { Wrapper, SkillsWrapper, Details } from './styles';
 
 export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
+  const isMobile = useIsMobile();
+  const onScrollToContact = () => {
+    window.open('https://docs.shinedao.finance/shine-incubator-program/pr-and-community-building', 'blank', 'noopener')
+  }
 
   return (
     <Wrapper id="about">
+      <HalfCircle theme={theme} />
       <SkillsWrapper as={Container}>
-      
+        <img width={isMobile ? '192px' : '385px'} height={isMobile ? '156px' : '312px' } src={adAdastraV1} alt="Towards the stars! Are you ready?" />
         <Details theme={theme}>
-          <h1>What is this about?</h1>
+          <h1>Participate Early</h1>
           <p>
-            You can think of it as a Y Combinator for teams developing the new DeFi projects.
+            Access to invest in the future stars from their earliest stages all the way to blastoff from our launchpad.
           </p>
-          <Button as={AnchorLink} href="#contact">
-            Learn more
-          </Button>
+          <LearnButton onClick={onScrollToContact} theme={theme}>
+            LEARN MORE
+          </LearnButton>
         </Details>
 
-
-        <Thumbnail>
-          <img src={adAdastraV1} alt="Towards the stars! Are you ready?" />
-        </Thumbnail>
       </SkillsWrapper>
     </Wrapper>
   );
 };
-        

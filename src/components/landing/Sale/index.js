@@ -1,24 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import AnchorLink from "react-anchor-link-smooth-scroll";
 import { ThemeContext } from "providers/ThemeProvider";
 import { Header } from "components/theme";
-import { Container, Button, RedButton } from "components/common";
-import shineNetwork from "assets/illustrations/shine-network.svg";
-import shineNetworkV1 from "assets/illustrations/shine-network-v1.svg";
-import shineNetworkV2 from "assets/illustrations/shine-network-v2.svg";
-import shineNetworkV3 from "assets/illustrations/shine-network-v3.png";
+import { Container } from "components/common";
+import { LearnButton } from "components/common/Button/index";
+import {QuartCircleIntro} from '../Intro/styles.js';
 
-import shineLogo from "assets/illustrations/shine-logo.png";
-import shineLogoV1 from "assets/illustrations/shine-logo-v1.png";
-import shineLogoV2 from "assets/illustrations/shine-logo-v2.png";
-import shineLogoV3 from "assets/illustrations/shine-logo-v3.png";
-import shineLogoV4 from "assets/illustrations/shine-logo-v4.png";
-import shineLogoV5 from "assets/illustrations/shine-logo-v5.png";
-import shineLogoV7 from "assets/illustrations/shine-logo-v7.png";
+import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, EthInput, ColorTitle, ConnectWalletCard } from "./styles";
 
-import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, Dot, EthInput, ColorTitle } from "./styles";
-
-import { Card } from "../../common/Card";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -223,52 +211,23 @@ export const Sale = () => {
   }, [weiRaised]);
 
   return (
-    <Wrapper>
-      <Header />
+   <Wrapper>
+    <QuartCircleIntro theme={theme} />
+     <Header />
       <IntroWrapper as={Container}>
+      <h1>Shine Seed Sale</h1>
         <Details theme={theme}>
-          <h1>Shine Seed Sale</h1>
-          <h5>
-            Token address{" "}
-            <a href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
-              0x1C7ede23b1361acC098A1e357C9085D131b34a01
-            </a>
-          </h5>
-          <Thumbnail>
-            <img src={shineLogoV7} alt="Shine is meant to interconnect the blockchain community" />
-          </Thumbnail>
-        </Details>
-
-        <Thumbnail>
-          <Link></Link>
-          {isWalletEnabled ? (
-            <div>
-              <span>Account: {window.ethereum.selectedAddress}</span>
-              <br></br>
-              <span>Balance: {balance} ETH</span>
-              <br></br>
-              <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
-              <br></br>
-              {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
-              <br></br>
-            </div>
-          ) : (
-            <Button onClick={() => loadWeb3(setWalletStatus, setBalance)}>Connect Wallet </Button>
-          )}
-
-          <SaleCard>
-            Sale status
+          <SaleCard theme={theme}>
+           <h5> Sale status</h5>
             <StatusContainer>
-              <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-                <circle cx="4" cy="4" r="4" fill="#10b981"></circle>
-              </svg>
               <span> <b>Sold out</b></span>
             </StatusContainer>
             <br></br>
-            Total Swap amount: 12,000,000 SHN
+            <h5>Total Swap amount</h5> 12,000,000 SHN
+            <br></br>
+            <h5>Rate</h5>
             <br></br>
             Rate: ≈ $0.01 / 1 SHN
-            <br></br>
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
             <br></br>
             {console.log("weiRaised raised", weiRaised)}
@@ -301,7 +260,7 @@ export const Sale = () => {
                 <br></br>
                 <br></br>
 
-                <Button
+                <LearnButton
                   onClick={() =>
                     buyShineTokens(
                       ethAmountToSpend,
@@ -312,10 +271,10 @@ export const Sale = () => {
                       setMetamaskErrorCode,
                       userAddress
                     )
-                  }
+                  } theme={theme}
                 >
                   Buy Shine
-                </Button>
+                </LearnButton>
               </div>
             )}
             {isShineBought && !isTransactionBeingProcessed && (
@@ -332,7 +291,31 @@ export const Sale = () => {
               </div>
             )}
           </SaleCard>
-        </Thumbnail>
+
+         <ConnectWalletCard theme={theme}>
+          <h5>Token address{" "} </h5>
+            <a className='address' href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
+              0x1C7ede23b1361acC098A1e357C9085D131b34a01
+            </a>
+          
+          
+          <Link></Link>
+          {isWalletEnabled ? (
+            <div>
+              <span>Account: {window.ethereum.selectedAddress}</span>
+              <br></br>
+              <span>Balance: {balance} ETH</span>
+              <br></br>
+              <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
+              <br></br>
+              {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
+              <br></br>
+            </div>
+          ) : (
+            <LearnButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>APPLY FOR THE PROGRAM</LearnButton>
+          )}
+         </ConnectWalletCard>
+         </Details>
       </IntroWrapper>
     </Wrapper>
   );

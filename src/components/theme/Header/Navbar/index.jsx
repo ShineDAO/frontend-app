@@ -1,27 +1,25 @@
-import React, { useContext } from 'react';
-import { Link } from 'gatsby';
-import { ThemeContext } from 'providers/ThemeProvider';
-import { Container } from 'components/common';
+import React, {useContext} from 'react';
+import {Link} from 'gatsby';
+import {ThemeContext} from 'providers/ThemeProvider';
+import {Container} from 'components/common';
 import NavbarLinks from '../NavbarLinks';
-import { Wrapper, Brand, LogoWrapper } from './styles';
-import shineLogoBlack from 'assets/illustrations/shine-logo-small-black.png';
-import shineLogoBlackV1 from 'assets/illustrations/shine-logo-small-black-v1.png';
+import {Wrapper, Brand, LogoWrapper} from './styles';
+import shineLogoV7 from 'assets/illustrations/shine-logo-v7.png';
+import useIsMobile from '../../../../hooks/useIsMobile';
 
 const Navbar = () => {
-  const { theme } = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
+  const isMobile = useIsMobile();
 
   return (
-    <Wrapper as={Container}>
+    <Wrapper as={Container} isMobile={isMobile}>
       <Brand as={Link} to="/" theme={theme}>
-      <LogoWrapper>
-
-      <img src={shineLogoBlackV1} alt={theme} />
-    </LogoWrapper>
-
+        <LogoWrapper>
+          <img width={isMobile ? '45px' : '60px'} height={isMobile ? '40px': '53px'} src={shineLogoV7} alt={theme}/>
+        </LogoWrapper>
       </Brand>
-      <NavbarLinks desktop />
+      <NavbarLinks desktop/>
     </Wrapper>
-
   );
 };
 

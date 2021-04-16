@@ -1,35 +1,37 @@
 import React, { useContext } from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, Button } from 'components/common';
-import starman from 'assets/illustrations/starman.svg';
-import starmanV1 from 'assets/illustrations/starman-v1.png';
+import starman_dark from 'assets/illustrations/starman_dark.png';
+import useIsMobile from "../../../hooks/useIsMobile";
 
-import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
+import {Wrapper, SkillsWrapper, Details, MobileHalfCircle} from './styles';
+import {LearnButton} from "../../common/Button";
 
 export const WhoAreWe = () => {
   const { theme } = useContext(ThemeContext);
+  const isMobile = useIsMobile()
+
+  const onScrollToContact = () => {
+    window.open('https://docs.shinedao.finance/shine-incubator-program/raising-iio-with-shine', 'blank', 'noopener')
+  }
 
   return (
     <Wrapper id="about">
+      <MobileHalfCircle theme={theme} />
       <SkillsWrapper as={Container}>
-      
+
+        <img width={isMobile ? '174px' :'347px'} height={isMobile ? '156px' : '312px'} src={starman_dark} alt="We take you to the orbit and beyond!" />
         <Details theme={theme}>
-          <h1>How are we going to do this?</h1>
+          <h1>Are you building a project?</h1>
           <p>
-          We help new teams establish themselves in crypto community in legitimate and transparent way using IIOs.
+            Get access to an active and incentivized community of contributors from day 1 to polish your project.
           </p>
-          <Button as={AnchorLink} href="#contact">
-            Learn more
-          </Button>
+          <LearnButton onClick={onScrollToContact} theme={theme}>
+            LEARN MORE
+          </LearnButton>
         </Details>
 
-
-        <Thumbnail>
-          <img src={starmanV1} alt="We take you to the orbit and beyond!" />
-        </Thumbnail>
       </SkillsWrapper>
     </Wrapper>
   );
 };
-        

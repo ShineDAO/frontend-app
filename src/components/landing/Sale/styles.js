@@ -1,9 +1,6 @@
 import styled from "styled-components";
-import overlayIllustration from "assets/illustrations/overlay.svg";
 
 export const Wrapper = styled.div`
-  padding-bottom: 4rem;
-  background-image: url(${overlayIllustration});
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
@@ -11,9 +8,9 @@ export const Wrapper = styled.div`
 
 export const IntroWrapper = styled.div`
   padding: 4rem 0;
-  display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 70%;
 
   @media (max-width: 960px) {
     flex-direction: column;
@@ -21,7 +18,7 @@ export const IntroWrapper = styled.div`
 `;
 
 export const Details = styled.div`
-  flex: 1;
+   display:flex;
 
   @media (max-width: 960px) {
     width: 100%;
@@ -29,9 +26,10 @@ export const Details = styled.div`
   }
 
   h1 {
+    font-size: 48px;
+    line-height: 64px;
     margin-bottom: 2rem;
-    font-size: 36pt;
-    color: ${({ theme }) => (theme === "light" ? "#212121" : "#fff")};
+    color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === "light" ? "unset" : "difference")};
@@ -53,14 +51,14 @@ export const Details = styled.div`
     }
 
     @media (max-width: 680px) {
-      font-size: 26pt;
+      font-size: 24px;
     }
   }
 `;
 
 export const Thumbnail = styled.div`
   flex: 1;
-
+  
   @media (max-width: 960px) {
     width: 70%;
   }
@@ -92,22 +90,57 @@ export const Link = styled.div`
   }
 `;
 
+export const ConnectWalletCard = styled.div`
+border-radius: 4px;
+padding: 15px;
+background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
+box-sizing: border-box;
+box-shadow: ${({ theme }) => (theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)')}; 
+min-width: 500px;
+max-width: 500px;
+height: 344px;
+color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+
+a{
+  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  font-size: 18px;
+}
+a: hover {
+text-decoration: none;
+color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+}
+`;
+
 export const SaleCard = styled.div`
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 15px;
-  background-color: #ffcb0057;
+  background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  box-sizing: border-box;
+  min-width: 500px;
+  height: 344px;
+  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  margin-right: 40px;
 `;
-export const Dot = styled.div`
-  width: 10px;
-  height: 10px;
-  background: #10b981;
-  border-radius: 50%;
-`;
+
 export const StatusContainer = styled.div`
-  border-radius: 8px;
-  background: #ff4c4c;
-  padding: 5px;
-  width: 18%;
+  border-radius: 4px;
+  background: #FF4D00;
+  height: 32px;
+  width: 104px;
+  left: 0px;
+  top: 0px;
+  text-align: center;
+  text-transform: uppercase;
+  
+  b {
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+}
+
   @media (max-width: 680px) {
     width: 48%;
   }

@@ -2,14 +2,17 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   a {
-    color: #000;
+    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
     text-decoration: none;
 
 		@media (max-width: 960px) {
-			color: ${({ theme }) => (theme === 'light' ? '#000' : '#fff')};
+			color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
 		}
   }
 
+  a:hover {
+	color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  }
   ${({ desktop }) =>
     desktop
       ? `
@@ -21,11 +24,19 @@ export const Wrapper = styled.div`
 			}
 
 			a {
-					margin-right: 1rem;
+				    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+					margin-right: 3rem;
+					font-size: 18px;
+					line-height: 24px;
 
 					&:last-child {
 							margin-right: unset;
 					}
+					font-weight: bold;
+			}
+			
+			a:hover {
+				color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
 			}
 		`
       : `
