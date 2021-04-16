@@ -31,7 +31,7 @@ export const Intro = () => {
             <h4>Next generation DeFi incubator</h4>
             <img width='400px' src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine is meant to interconnect the blockchain community"/>
             <ButtonWrapper>
-              <JoinButton onClick={onJoinButtonClick}>
+              <JoinButton onClick={onJoinButtonClick} theme={theme}>
                 JOIN DISCORD
               </JoinButton>
 

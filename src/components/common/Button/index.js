@@ -47,8 +47,6 @@ export const Button = styled.button`
 	`}
 `;
 
-
-
 export const JoinButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
@@ -85,10 +83,13 @@ export const JoinButton = styled.button`
     `
 		background: #001F3F;
 	`}
-  @media (max-width: 680px) {
+  @media (max-width: 960px) {
     margin-bottom: 20px;
+    border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   }
 `;
+
 export const LearnButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
