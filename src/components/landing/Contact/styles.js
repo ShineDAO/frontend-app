@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     align-items:center;
     width: 70%;
-    padding: unset;
+    padding: 60px 0;
   }
 `;
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  margin-bottom:50px;
+  margin-bottom: 50px;
   cursor: pointer;
   border-radius: 4px;
   border: none;
@@ -35,10 +35,11 @@ export const Button = styled.button`
 
   @media (max-width: 960px) {
     height: 48px;
-    width: 295px;
+    width: 100%;
     left: 0px;
     top: 0px;
     border-radius: 4px;
+    margin-bottom: 20px;
   }
   ${({ secondary }) =>
     secondary &&

@@ -20,6 +20,9 @@ export const InputField = styled.div`
 export const InputFieldCaptcha = styled.div`
   position: absolute;
   margin-bottom: 1rem;
+  @media (max-width: 960px) {
+    width: 70%;
+  }
 `;
 
 export const Details = styled.div`

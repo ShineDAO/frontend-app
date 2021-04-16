@@ -34,8 +34,9 @@ export const IntroWrapper = styled.div`
 
   @media (max-width: 960px) {
     flex-direction: column;
-    width: 70%
-  }
+    width: 70%;
+    padding: 40px 0 60px 0;
+}
 `;
 
 export const Details = styled.div`
@@ -43,7 +44,6 @@ export const Details = styled.div`
 
   @media (max-width: 960px) {
     width: 100%;
-    margin-bottom: 2rem;
   }
 
   h1 {

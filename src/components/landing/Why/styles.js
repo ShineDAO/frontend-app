@@ -15,6 +15,7 @@ export const SkillsWrapper = styled.div`
   @media (max-width: 960px) {
     flex-direction: column-reverse;
     align-items: flex-start;
+    padding: 60px 0;
   }
 `;
 
