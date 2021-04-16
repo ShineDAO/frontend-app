@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import {Container, LearnButton} from 'components/common';
 import rocketLaunchV1 from 'assets/illustrations/rocket-launch-v1.png';
+import useIsMobile from "../../../hooks/useIsMobile";
 
 import { Wrapper, SkillsWrapper, Details, Thumbnail } from './styles';
 
 export const Why = () => {
   const { theme } = useContext(ThemeContext);
+  const isMobile = useIsMobile()
 
   const onScrollToContact = () => {
     document.querySelector('#contact').scrollIntoView({
@@ -26,7 +28,7 @@ export const Why = () => {
             LEARN MORE
           </LearnButton>
         </Details>
-        <img width='401px' height='257px' src={rocketLaunchV1} alt="Shine will get you to the moon and beyond!" />
+        <img width={isMobile ? '200px' : '401px'} height={isMobile ? '142px' : '257px'} src={rocketLaunchV1} alt="Shine will get you to the moon and beyond!" />
       </SkillsWrapper>
     </Wrapper>
   );
