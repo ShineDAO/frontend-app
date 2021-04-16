@@ -20,7 +20,7 @@ export const WhoAreWe = () => {
       <MobileHalfCircle theme={theme} />
       <SkillsWrapper as={Container}>
 
-        <img width='400px' src={starman_dark} alt="We take you to the orbit and beyond!" />
+        <img width='347px' height='312px' src={starman_dark} alt="We take you to the orbit and beyond!" />
         <Details theme={theme}>
           <h1>Are you building a project?</h1>
           <p>

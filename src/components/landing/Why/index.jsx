@@ -26,7 +26,7 @@ export const Why = () => {
             LEARN MORE
           </LearnButton>
         </Details>
-        <img width='400px' src={rocketLaunchV1} alt="Shine will get you to the moon and beyond!" />
+        <img width='401px' height='257px' src={rocketLaunchV1} alt="Shine will get you to the moon and beyond!" />
       </SkillsWrapper>
     </Wrapper>
   );

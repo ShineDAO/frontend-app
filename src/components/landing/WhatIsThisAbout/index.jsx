@@ -19,7 +19,7 @@ export const WhatIsThisAbout = () => {
     <Wrapper id="about">
       <HalfCircle theme={theme} />
       <SkillsWrapper as={Container}>
-        <img width='400px' src={adAdastraV1} alt="Towards the stars! Are you ready?" />
+        <img width='385px' height='312px' src={adAdastraV1} alt="Towards the stars! Are you ready?" />
         <Details theme={theme}>
           <h1>Participate Early</h1>
           <p>
