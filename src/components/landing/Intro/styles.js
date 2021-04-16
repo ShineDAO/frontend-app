@@ -55,14 +55,8 @@ export const Details = styled.div`
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 960px) {
       font-size: 24px;
-      font family: Barlow;
-      font style: ExtraBold;
-      line height: 32px;
-      line height: 111%;
-      align: Left;
-      vertical align: Top;
     }
   }
 

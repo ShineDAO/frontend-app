@@ -5,7 +5,11 @@ export const Wrapper = styled.div`
   margin-bottom: 50px;
   padding-left: 32px;
   margin-top: 200px;
-`
+
+  @media (max-width: 960px) {
+    margin: 0;
+  }
+`;
 
 export const QuartCircle = styled.div`
   background-size: contain;
@@ -23,9 +27,9 @@ export const QuartCircle = styled.div`
     height: 200px;
     width: 200px;
     left: 0;
-   border-radius: 0 100% 0 0;
+    border-radius: 0 100% 0 0;
  }
-`
+`;
 
 export const Flex = styled.div`
   display: flex;
@@ -34,8 +38,7 @@ export const Flex = styled.div`
 
   @media (max-width: 680px) {
     flex-direction: column;
-    text-align: center;
-    align-items: center;
+    display: inline;
   }
 `;
 
@@ -58,14 +61,18 @@ export const Links = styled.div`
 `;
 
 export const Details = styled.div`
-  h2,
+  h3 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 9px;
+  }
   a,
   span {
    font-color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
-
+   font-size: 14px;
   }
 
   @media (max-width: 680px) {
-    margin-bottom: 2rem;
+    margin-bottom: 24px;
   }
 `;

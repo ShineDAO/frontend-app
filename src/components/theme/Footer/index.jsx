@@ -11,9 +11,8 @@ export const Footer = () => {
   <Wrapper>
     <QuartCircle theme={theme} />
     <Flex as={Container}>
-
       <Details>
-        <h2>Shine DAO</h2>
+        <h3>Shine DAO</h3>
         <span>
           © All rights are reserved | {new Date().getFullYear()} | Made with&nbsp;
           <span aria-label="love" role="img">
