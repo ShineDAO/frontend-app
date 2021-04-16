@@ -33,10 +33,11 @@ export const Details = styled.div`
 
   h1 {
     padding-top: 4rem;
-    margin-bottom: 16px;
+    margin-bottom: 25px;
     font-size: 24px;
-    line-height: 32px;
+    line-height: 35px;
     align-items:center;
+    font-weight: 800;
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#1E1E1E')};
 
     @media (max-width: 960px) {
