@@ -18,6 +18,7 @@ export const SkillsWrapper = styled.div`
 
   @media (max-width: 960px) {
     flex-direction: column;
+    display:block;
   }
 `;
 
@@ -25,7 +26,7 @@ export const MobileHalfCircle = styled.div`
   width: 445px;
   height: 445px;
   border-radius: 50%;
-  right: -250px;
+  right: -290px;
   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')}; 
   transition: 0.3s all;
   z-index: -1;

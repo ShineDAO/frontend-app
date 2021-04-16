@@ -13,7 +13,8 @@ export const SkillsWrapper = styled.div`
   width: 70%;
 
   @media (max-width: 960px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
+    align-items: flex-start;
   }
 `;
 
