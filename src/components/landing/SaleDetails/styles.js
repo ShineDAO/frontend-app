@@ -63,13 +63,16 @@ export const LiteparerCard = styled.div`
   align-items: center;
   top: 965px;
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
-  
-  a{
+  a {
     font-size: 18px;
   }
   a: hover {
-  text-decoration: none;
-  color: #3F3D56;
+    text-decoration: none;
+    color: #3F3D56;
+  }
+  @media (max-width: 960px) {
+    width: 100%;
+    height: 342px;
   }
 `;
 

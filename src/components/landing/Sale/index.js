@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "providers/ThemeProvider";
 import { Header } from "components/theme";
 import { Container } from "components/common";
-import { LearnButton } from "components/common/Button/index";
-import {QuartCircleIntro} from '../Intro/styles.js';
+import {ConnectButton, QuartCircleIntro} from './styles.js';
 
 import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, EthInput, ColorTitle, ConnectWalletCard } from "./styles";
 
@@ -157,7 +156,6 @@ function estimateReceivedShn(ethAmountToSpend) {
 
   console.log("www", weiAmountToSpend * rate);
 
-  //const estimatedShnInWei = weiAmountToSpend * rate
   const estimatedReceivedShn = window.web3.utils.fromWei(toPlainString(weiAmountToSpend * rate), "ether");
   return Number.parseFloat(estimatedReceivedShn);
 }
@@ -206,7 +204,6 @@ export const Sale = () => {
   }, [ethAmountToSpend]);
 
   useEffect(() => {
-    console.log("wwwwwwwwww ", weiRaised);
     isWalletEnabled && setSaleProgress(((weiRaised / maxWeiToRaise) * 100).toFixed(2));
   }, [weiRaised]);
 
@@ -230,8 +227,6 @@ export const Sale = () => {
             Rate: ≈ $0.01 / 1 SHN
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
             <br/>
-            {console.log("weiRaised raised", weiRaised)}
-            {console.log("maxWeiToRaise raised", maxWeiToRaise)}
           </SaleCard>
 
          <ConnectWalletCard theme={theme} isWalletEnabled={isWalletEnabled}>
@@ -280,7 +275,7 @@ export const Sale = () => {
                   <br/>
                   <br/>
 
-                  <LearnButton
+                  <ConnectButton
                     onClick={() =>
                       buyShineTokens(
                         ethAmountToSpend,
@@ -294,7 +289,7 @@ export const Sale = () => {
                     } theme={theme}
                   >
                     Buy Shine
-                  </LearnButton>
+                  </ConnectButton>
                 </div>
               )}
               {isShineBought && !isTransactionBeingProcessed && (
@@ -313,7 +308,7 @@ export const Sale = () => {
             </div>
 
           ) : (
-            <LearnButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>CONNECT WALLET</LearnButton>
+            <ConnectButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>CONNECT WALLET</ConnectButton>
           )}
          </ConnectWalletCard>
          </Details>

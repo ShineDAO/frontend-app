@@ -6,19 +6,32 @@ export const Wrapper = styled.div`
   background-repeat: no-repeat;
 `;
 
-export const IntroWrapper = styled.div`
-  padding: 4rem 0;
-  align-items: center;
-  justify-content: space-between;
-  width: 70%;
+export const QuartCircleIntro = styled.div`
+  border-bottom-left-radius:100%;
+  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  transition: 0.3s all;
+  height: 500px;
+  right: 0;
+  width: 500px;
+  position: absolute;
+  z-index: -1;
+  
+  @media (max-width: 680px) {
+    display: none;
+  }
+`;
 
+
+export const IntroWrapper = styled.div`
+  padding: 4rem 30px;
   @media (max-width: 960px) {
-    flex-direction: column;
+    padding: 0 30px;
   }
 `;
 
 export const Details = styled.div`
    display:flex;
+   flex-wrap: wrap;
 
   @media (max-width: 960px) {
     width: 100%;
@@ -109,9 +122,12 @@ export const ConnectWalletCard = styled.div`
     font-size: 17px;
   }
   a: hover {
-  text-decoration: none;
-  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
-}
+    text-decoration: none;
+    color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  }
+  @media (max-width: 960px) {
+    min-width: 100%;
+  }
 `;
 
 export const SaleCard = styled.div`
@@ -128,6 +144,10 @@ export const SaleCard = styled.div`
   }
   br {
     line-height: 40px;
+  }
+  @media (max-width: 960px) {
+    margin-bottom: 40px;
+    min-width: 100%;
   }
 `;
 
@@ -168,6 +188,10 @@ export const EthInput = styled.input`
   &[type="number"] {
     -moz-appearance: textfield;
   }
+  
+  @media (max-width: 960px) {
+    width: 100%;
+  }
 
   border: 2px solid #6c63ff;
   border-radius: 7px;
@@ -177,4 +201,46 @@ export const EthInput = styled.input`
 
 export const ColorTitle = styled.h4`
   color: red;
+`;
+
+export const ConnectButton = styled.button`
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0.6rem 0;
+  border: 1px solid white;
+  -webkit-appearance: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  width: 240px;
+  height: 48px;
+  font-weight: bold;
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    background: gray;
+  }
+  &:hover {
+    background: #FADA5E;
+    color: #3F3D56; 
+    border: 1px solid #FADA5E;
+  }
+
+  ${({ secondary }) =>
+  secondary &&
+  `
+		background: #001F3F;
+	`}
+  @media (max-width: 960px) {
+    width: 100%;
+  }
 `;
