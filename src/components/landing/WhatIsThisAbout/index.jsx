@@ -21,7 +21,7 @@ export const WhatIsThisAbout = () => {
         <Details theme={theme}>
           <h1>Participate Early</h1>
           <p>
-            Access to invest in the future stars from their earliest stages all the way to blastoff from our launchpad.
+            Access to invest in the future stars from their earliest stages all the way to blast off from our launchpad.
           </p>
           <LearnButton onClick={onScrollToContact} theme={theme}>
             LEARN MORE

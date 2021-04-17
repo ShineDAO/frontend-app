@@ -1,16 +1,12 @@
 import React, { useContext } from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
-import { LearnButton } from 'components/common/Button/index';
-import starman from 'assets/illustrations/starman.svg';
-import starmanV1 from 'assets/illustrations/starman-v1.png';
-import tokenomics from 'assets/illustrations/tokenomics.png';
 import tokenDistribution from 'assets/illustrations/token-distribution.png';
 
 
 
 import { Wrapper, SkillsWrapper, Details, DisableColor, LiteparerCard } from './styles';
+import {ConnectButton} from "../Sale/styles";
 
 export const SaleDetails = () => {
   const { theme } = useContext(ThemeContext);
@@ -24,14 +20,14 @@ export const SaleDetails = () => {
           </p>
         <Details theme={theme}>
           <LiteparerCard theme={theme}>
-         <h5>Litepaper</h5>
+         <h3>Litepaper</h3>
           <a href="https://snapshot.org/#/shinedao.eth/proposal/QmPwhgvyiokiFMLh4wbEf6xrTZLuGLne4Q5bNPMQ5FyM1J">
             <img src={tokenDistribution} alt="Shine Tokenomics" />
           </a>
-        <LearnButton theme={theme}>
-          <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></LearnButton>
+        <ConnectButton theme={theme}>
+          <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></ConnectButton>
         </LiteparerCard>
-       </Details> 
+       </Details>
       </SkillsWrapper>
     </Wrapper>
   );

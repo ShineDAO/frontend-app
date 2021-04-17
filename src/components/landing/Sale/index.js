@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "providers/ThemeProvider";
 import { Header } from "components/theme";
 import { Container } from "components/common";
-import { LearnButton } from "components/common/Button/index";
-import {QuartCircleIntro} from '../Intro/styles.js';
+import {ConnectButton, QuartCircleIntro} from './styles.js';
 
 import { Wrapper, IntroWrapper, Details, Thumbnail, ThumbnailBig, Link, SaleCard, StatusContainer, EthInput, ColorTitle, ConnectWalletCard } from "./styles";
 
@@ -157,7 +156,6 @@ function estimateReceivedShn(ethAmountToSpend) {
 
   console.log("www", weiAmountToSpend * rate);
 
-  //const estimatedShnInWei = weiAmountToSpend * rate
   const estimatedReceivedShn = window.web3.utils.fromWei(toPlainString(weiAmountToSpend * rate), "ether");
   return Number.parseFloat(estimatedReceivedShn);
 }
@@ -206,7 +204,6 @@ export const Sale = () => {
   }, [ethAmountToSpend]);
 
   useEffect(() => {
-    console.log("wwwwwwwwww ", weiRaised);
     isWalletEnabled && setSaleProgress(((weiRaised / maxWeiToRaise) * 100).toFixed(2));
   }, [weiRaised]);
 
@@ -217,102 +214,101 @@ export const Sale = () => {
       <IntroWrapper as={Container}>
       <h1>Shine Seed Sale</h1>
         <Details theme={theme}>
-          <SaleCard theme={theme}>
-           <h5> Sale status</h5>
+          <SaleCard theme={theme} isWalletEnabled={isWalletEnabled}>
+           <h3> Sale status</h3>
             <StatusContainer>
               <span> <b>Sold out</b></span>
             </StatusContainer>
-            <br></br>
-            <h5>Total Swap amount</h5> 12,000,000 SHN
-            <br></br>
-            <h5>Rate</h5>
-            <br></br>
+            <br/>
+            <h3>Total Swap amount</h3> 12,000,000 SHN
+            <br/>
+            <br/>
+            <h3>Rate</h3>
             Rate: ≈ $0.01 / 1 SHN
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
-            <br></br>
-            {console.log("weiRaised raised", weiRaised)}
-            {console.log("maxWeiToRaise raised", maxWeiToRaise)}
-            {weiRaised && (
-              <div>
-                <span>Sale progress </span>
-                <ProgressBar animated striped variant="success" now={saleProgress} label={`${saleProgress}%`} />
-              </div>
-            )}
-            <br></br>
-            {metamaskErrorCode == -32603 && <ColorTitle>"There are not enough SHN tokens left for sale anymore" </ColorTitle>}
-            {isWalletEnabled && !isTransactionBeingProcessed && (
-              <div>
-                <label htmlFor="eth_amount">Enter ETH amount:</label>
-                <br></br>
-                <EthInput
-                  autoComplete="off"
-                  type="number"
-                  id="eth_amount"
-                  value={ethAmountToSpend}
-                  onChange={(e) => handleChangeOfEthAmountToSpend(e.target.value, setEthAmountToSpend)}
-                ></EthInput>
-                {ethAmountToSpend && (
-                  <span>
-                    <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br></br>{" "}
-                    <span>Estimated SHN to receive: {estimateReceivedShn(ethAmountToSpend).toLocaleString()}</span>
-                  </span>
-                )}
-                <br></br>
-                <br></br>
-
-                <LearnButton
-                  onClick={() =>
-                    buyShineTokens(
-                      ethAmountToSpend,
-                      setEthAmountToSpend,
-                      setShineBought,
-                      setShineBoughtAmount,
-                      setTransactionBeingProcessed,
-                      setMetamaskErrorCode,
-                      userAddress
-                    )
-                  } theme={theme}
-                >
-                  Buy Shine
-                </LearnButton>
-              </div>
-            )}
-            {isShineBought && !isTransactionBeingProcessed && (
-              <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
-            )}
-            {isTransactionBeingProcessed && (
-              <div>
-                {" "}
-                <h5>Processing </h5>
-                <PulseLoader color={"yellow"} loading={true} size={15} margin={2} /> <br></br> <br></br>
-                <h5>
-                  <i>(Can take up to few minutes)</i>
-                </h5>
-              </div>
-            )}
+            <br/>
           </SaleCard>
 
-         <ConnectWalletCard theme={theme}>
-          <h5>Token address{" "} </h5>
+         <ConnectWalletCard theme={theme} isWalletEnabled={isWalletEnabled}>
+          <div>
+            <h3>Token address</h3>
             <a className='address' href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
               0x1C7ede23b1361acC098A1e357C9085D131b34a01
             </a>
-          
-          
-          <Link></Link>
+          </div>
+          <Link/>
           {isWalletEnabled ? (
             <div>
               <span>Account: {window.ethereum.selectedAddress}</span>
-              <br></br>
+              <br/>
               <span>Balance: {balance} ETH</span>
-              <br></br>
+              <br/>
               <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
-              <br></br>
+              <br/>
               {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
-              <br></br>
+              <br/>
+              {weiRaised && (
+                <div>
+                  <span>Sale progress </span>
+                  <ProgressBar animated striped variant="success" now={saleProgress} label={`${saleProgress}%`} />
+                </div>
+              )}
+              <br/>
+              {metamaskErrorCode == -32603 && <ColorTitle>"There are not enough SHN tokens left for sale anymore" </ColorTitle>}
+              {isWalletEnabled && !isTransactionBeingProcessed && (
+                <div>
+                  <label htmlFor="eth_amount">Enter ETH amount:</label>
+                  <br/>
+                  <EthInput
+                    autoComplete="off"
+                    type="number"
+                    id="eth_amount"
+                    value={ethAmountToSpend}
+                    onChange={(e) => handleChangeOfEthAmountToSpend(e.target.value, setEthAmountToSpend)}
+                  />
+                  {ethAmountToSpend && (
+                    <span>
+                    <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br/>{" "}
+                      <span>Estimated SHN to receive: {estimateReceivedShn(ethAmountToSpend).toLocaleString()}</span>
+                  </span>
+                  )}
+                  <br/>
+                  <br/>
+
+                  <ConnectButton
+                    onClick={() =>
+                      buyShineTokens(
+                        ethAmountToSpend,
+                        setEthAmountToSpend,
+                        setShineBought,
+                        setShineBoughtAmount,
+                        setTransactionBeingProcessed,
+                        setMetamaskErrorCode,
+                        userAddress
+                      )
+                    } theme={theme}
+                  >
+                    Buy Shine
+                  </ConnectButton>
+                </div>
+              )}
+              {isShineBought && !isTransactionBeingProcessed && (
+                <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
+              )}
+              {isTransactionBeingProcessed && (
+                <div>
+                  {" "}
+                  <h5>Processing </h5>
+                  <PulseLoader color={"yellow"} loading={true} size={15} margin={2} /> <br/> <br/>
+                  <h5>
+                    <i>(Can take up to few minutes)</i>
+                  </h5>
+                </div>
+              )}
             </div>
+
           ) : (
-            <LearnButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>APPLY FOR THE PROGRAM</LearnButton>
+            <ConnectButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>CONNECT WALLET</ConnectButton>
           )}
          </ConnectWalletCard>
          </Details>

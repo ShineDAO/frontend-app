@@ -249,7 +249,7 @@ export const Global = createGlobalStyle`
       color: inherit;
       font-weight: bold;
       text-rendering: optimizeLegibility;
-      font-size: 1.38316rem;
+      font-size: 18px;
       line-height: 1.1;
     }
     h4 {
