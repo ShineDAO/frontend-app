@@ -223,10 +223,10 @@ export const Sale = () => {
               <span> <b>Sold out</b></span>
             </StatusContainer>
             <br/>
-            <h5>Total Swap amount</h5> 12,000,000 SHN
+            <h3>Total Swap amount</h3> 12,000,000 SHN
             <br/>
-            <h5>Rate</h5>
             <br/>
+            <h3>Rate</h3>
             Rate: ≈ $0.01 / 1 SHN
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
             <br/>
@@ -312,7 +312,7 @@ export const Sale = () => {
               <br/>
             </div>
           ) : (
-            <LearnButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>APPLY FOR THE PROGRAM</LearnButton>
+            <LearnButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>CONNECT WALLET</LearnButton>
           )}
          </ConnectWalletCard>
          </Details>

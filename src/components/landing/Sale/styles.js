@@ -91,55 +91,62 @@ export const Link = styled.div`
 `;
 
 export const ConnectWalletCard = styled.div`
-border-radius: 4px;
-padding: 15px;
-background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
-box-sizing: border-box;
-box-shadow: ${({ theme }) => (theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)')}; 
-min-width: 500px;
-max-width: 500px;
-height: 344px;
-color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
-
-a{
+  border-radius: 4px;
+  padding: 15px;
+  background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
+  box-sizing: border-box;
+  box-shadow: ${({ theme }) => (theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)')}; 
+  min-width: 500px;
+  max-width: 500px;
+  height: 344px;
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
-  font-size: 18px;
-}
-a: hover {
-text-decoration: none;
-color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  
+  a{
+    color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+    font-size: 18px;
+  }
+  a: hover {
+  text-decoration: none;
+  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
 }
 `;
 
 export const SaleCard = styled.div`
   border-radius: 4px;
-  padding: 15px;
+  padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   box-sizing: border-box;
   min-width: 500px;
   height: 344px;
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
   margin-right: 40px;
+  h3 {
+    margin-bottom: 4px;
+  }
+  br {
+    line-height: 40px;
+  }
 `;
 
 export const StatusContainer = styled.div`
-  border-radius: 4px;
   background: #FF4D00;
   height: 32px;
   width: 104px;
+  border-radius: 4px;
   left: 0px;
   top: 0px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-transform: uppercase;
+  margin-top: 8px;
   
   b {
-  font-family: Barlow;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 16px;
-  line-height: 20px;
-  color: #fff;
-}
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 20px;
+    color: #fff;
+  }
 
   @media (max-width: 680px) {
     width: 48%;
