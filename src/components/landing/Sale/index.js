@@ -218,18 +218,18 @@ export const Sale = () => {
       <h1>Shine Seed Sale</h1>
         <Details theme={theme}>
           <SaleCard theme={theme}>
-           <h5> Sale status</h5>
+           <h3> Sale status</h3>
             <StatusContainer>
               <span> <b>Sold out</b></span>
             </StatusContainer>
-            <br></br>
+            <br/>
             <h5>Total Swap amount</h5> 12,000,000 SHN
-            <br></br>
+            <br/>
             <h5>Rate</h5>
-            <br></br>
+            <br/>
             Rate: ≈ $0.01 / 1 SHN
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
-            <br></br>
+            <br/>
             {console.log("weiRaised raised", weiRaised)}
             {console.log("maxWeiToRaise raised", maxWeiToRaise)}
             {weiRaised && (
@@ -238,27 +238,27 @@ export const Sale = () => {
                 <ProgressBar animated striped variant="success" now={saleProgress} label={`${saleProgress}%`} />
               </div>
             )}
-            <br></br>
+            <br/>
             {metamaskErrorCode == -32603 && <ColorTitle>"There are not enough SHN tokens left for sale anymore" </ColorTitle>}
             {isWalletEnabled && !isTransactionBeingProcessed && (
               <div>
                 <label htmlFor="eth_amount">Enter ETH amount:</label>
-                <br></br>
+                <br/>
                 <EthInput
                   autoComplete="off"
                   type="number"
                   id="eth_amount"
                   value={ethAmountToSpend}
                   onChange={(e) => handleChangeOfEthAmountToSpend(e.target.value, setEthAmountToSpend)}
-                ></EthInput>
+                  />
                 {ethAmountToSpend && (
                   <span>
-                    <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br></br>{" "}
+                    <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br/>{" "}
                     <span>Estimated SHN to receive: {estimateReceivedShn(ethAmountToSpend).toLocaleString()}</span>
                   </span>
                 )}
-                <br></br>
-                <br></br>
+                <br/>
+                <br/>
 
                 <LearnButton
                   onClick={() =>
@@ -284,7 +284,7 @@ export const Sale = () => {
               <div>
                 {" "}
                 <h5>Processing </h5>
-                <PulseLoader color={"yellow"} loading={true} size={15} margin={2} /> <br></br> <br></br>
+                <PulseLoader color={"yellow"} loading={true} size={15} margin={2} /> <br/> <br/>
                 <h5>
                   <i>(Can take up to few minutes)</i>
                 </h5>
@@ -297,19 +297,19 @@ export const Sale = () => {
             <a className='address' href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
               0x1C7ede23b1361acC098A1e357C9085D131b34a01
             </a>
-          
-          
-          <Link></Link>
+
+
+          <Link/>
           {isWalletEnabled ? (
             <div>
               <span>Account: {window.ethereum.selectedAddress}</span>
-              <br></br>
+              <br/>
               <span>Balance: {balance} ETH</span>
-              <br></br>
+              <br/>
               <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
-              <br></br>
+              <br/>
               {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
-              <br></br>
+              <br/>
             </div>
           ) : (
             <LearnButton onClick={() => loadWeb3(setWalletStatus, setBalance)} theme={theme}>APPLY FOR THE PROGRAM</LearnButton>

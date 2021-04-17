@@ -104,9 +104,6 @@ export const ThumbnailBig = styled.div`
 
 export const ButtonWrapper = styled.div`
   display: flex;
-  margin: 0.7em 1.5em;
-  @media (max-width: 680px) {
-    display: block;
-    margin: 0;
-  }
+  margin: 0.7em 0;
+  flex-wrap: wrap;
 `;
