@@ -1,24 +1,23 @@
-import { useState, useEffect } from 'react';
-// TODO: use useMedia query to do this and remove this file
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height
-  };
-}
+import React from "react";
 
 export default function useIsMobile() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const isSSR = typeof window === "undefined";
+  const [windowSize, setWindowSize] = React.useState({
+    width: isSSR ? 1200 : window.innerWidth,
+    height: isSSR ? 800 : window.innerHeight,
+  });
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
+  function changeWindowSize() {
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+  }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+  React.useEffect(() => {
+    window.addEventListener("resize", changeWindowSize);
+
+    return () => {
+      window.removeEventListener("resize", changeWindowSize);
+    };
   }, []);
 
-  return windowDimensions.width < 680;
+  return windowSize.width < 960;
 }
