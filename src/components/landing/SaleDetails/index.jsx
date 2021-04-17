@@ -24,14 +24,14 @@ export const SaleDetails = () => {
           </p>
         <Details theme={theme}>
           <LiteparerCard theme={theme}>
-         <h5>Litepaper</h5>
+         <h3>Litepaper</h3>
           <a href="https://snapshot.org/#/shinedao.eth/proposal/QmPwhgvyiokiFMLh4wbEf6xrTZLuGLne4Q5bNPMQ5FyM1J">
             <img src={tokenDistribution} alt="Shine Tokenomics" />
           </a>
         <LearnButton theme={theme}>
           <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></LearnButton>
         </LiteparerCard>
-       </Details> 
+       </Details>
       </SkillsWrapper>
     </Wrapper>
   );

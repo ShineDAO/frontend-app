@@ -92,18 +92,21 @@ export const Link = styled.div`
 
 export const ConnectWalletCard = styled.div`
   border-radius: 4px;
-  padding: 15px;
+  padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
   box-sizing: border-box;
   box-shadow: ${({ theme }) => (theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)')}; 
   min-width: 500px;
   max-width: 500px;
-  height: 344px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: ${({ isWalletEnabled }) => (isWalletEnabled ? 'none' : '344px')};
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
   
   a{
     color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
-    font-size: 18px;
+    font-size: 17px;
   }
   a: hover {
   text-decoration: none;
@@ -117,7 +120,7 @@ export const SaleCard = styled.div`
   background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   box-sizing: border-box;
   min-width: 500px;
-  height: 344px;
+  height: ${({ isWalletEnabled }) => (isWalletEnabled ? 'none' : '344px')};
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
   margin-right: 40px;
   h3 {
