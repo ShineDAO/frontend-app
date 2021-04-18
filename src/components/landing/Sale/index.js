@@ -217,7 +217,10 @@ export const Sale = () => {
           <SaleCard theme={theme} isWalletEnabled={isWalletEnabled}>
            <h3> Sale status</h3>
             <StatusContainer>
-              <span> <b>Sold out</b></span>
+              &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+              <circle cx="4" cy="4" r="4" fill="red"></circle>{/* #10b981 */}
+            </svg>
+              <span>&nbsp;<b>Sold out</b>&nbsp;</span>
             </StatusContainer>
             <br/>
             <h3>Total Swap amount</h3> 12,000,000 SHN
