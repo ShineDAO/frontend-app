@@ -10,7 +10,7 @@ export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
   const isMobile = useIsMobile();
   const onScrollToContact = () => {
-    window.open('https://docs.shinedao.finance/', 'blank', 'noopener')
+    window.open('https://docs.shinedao.finance/decentralising-startup-incubation/community-incentives', 'blank', 'noopener')
   }
 
   return (
