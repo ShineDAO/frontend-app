@@ -11,7 +11,7 @@ export const Why = () => {
   const isMobile = useIsMobile()
 
   const onScrollToContact = () => {
-    window.open('https://docs.shinedao.finance/shine-investors/interoperable-environment', 'blank', 'noopener')
+    window.open('https://docs.shinedao.finance/shinedao/pr-and-community-building/raising-iio-with-shine', 'blank', 'noopener')
   }
 
 
