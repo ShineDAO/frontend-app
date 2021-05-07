@@ -15,6 +15,7 @@ const NavbarLinks = ({ desktop }) => {
       <JoinButton
         narrow
         onMouseEnter={() => setButtonText('Coming soon')}
+        onMouseLeave={() => setButtonText('Go to App')}
         onClick={() => setButtonText('Coming soon')}
         theme={theme}
       >
