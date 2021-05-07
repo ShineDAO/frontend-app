@@ -1,21 +1,25 @@
-import React, {useContext} from 'react';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
+import React, {useContext, useState} from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import ToggleTheme from 'components/theme/Header/ToggleTheme';
 import { Wrapper } from './styles';
-
-import Wallet from 'components/theme/Header/Wallet';
-
-
+import {JoinButton} from "../../../common";
 
 const NavbarLinks = ({ desktop }) => {
   const { theme } = useContext(ThemeContext);
+  const [buttonText, setButtonText] = useState('Go to App')
 
   return (
     <Wrapper desktop={desktop} theme={theme}>
       <a href="http://docs.shinedao.finance" target="_blank">Docs</a>
       <a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>
-      <AnchorLink href="#contact">Launch App</AnchorLink>
+      <JoinButton
+        narrow
+        onMouseEnter={() => setButtonText('Coming soon')}
+        onClick={() => setButtonText('Coming soon')}
+        theme={theme}
+      >
+        {buttonText}
+      </JoinButton>
       <ToggleTheme />
     </Wrapper>
   )

@@ -62,7 +62,7 @@ export const JoinButton = styled.button`
   user-select: none;
   color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   background: transparent;
-  width: 240px;
+  width: ${({ narrow }) => narrow ? '150px' : '240px'};
   height: 48px;
   font-weight: bold;
   font-size: 16px;
