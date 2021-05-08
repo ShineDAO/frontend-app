@@ -16,7 +16,7 @@ import SeedCrowdsale from "../../../../static/abi/PreSale1.json";
 import Migrations from "../../../../static/abi/Migrations.json";
 
 import PulseLoader from "react-spinners/PulseLoader";
-import {ConnectButton, ConnectWalletCard, QuartCircleIntro} from "../Sale/styles";
+import {ConnectButton, ConnectWalletCard, QuartCircleIntro} from "../PreSale1/styles";
 const axios = require("axios");
 //Note that you need to select a different user from what created the inital ShineToken, e.g. accounts[1] instead of accounts[0]
 // var userAddress = "0xb1D92EEec6f9F224ABD294DE643C94A01cB14E51";
@@ -280,11 +280,13 @@ export const PreSale1 = () => {
           <ConnectWalletCard theme={theme} isWalletEnabled={isWalletEnabled}>
             <div>
               <h3>Token address</h3>
-              <a className='address' href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
+              
+              <Link  href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
                 0x1C7ede23b1361acC098A1e357C9085D131b34a01
-              </a>
+              </Link>
+              <br></br><br></br>
             </div>
-            <Link/>
+         
             {isWalletEnabled ? (
               <div>
                 <span>Account: {window.ethereum.selectedAddress}</span>
@@ -343,12 +345,12 @@ export const PreSale1 = () => {
                     <br/>
                   </div>
                 )}
-                <ConnectButton theme={theme} onClick={()=>addToWatchlist()}>Add SHN to MetaMask</ConnectButton>
                 {isShineBought && !isTransactionBeingProcessed && (
                   <div>
                     <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
                   </div>
                 )}
+                <ConnectButton theme={theme} onClick={()=>addToWatchlist()}>Add SHN to MetaMask</ConnectButton>
                 {isTransactionBeingProcessed && (
                   <div>
                     {" "}

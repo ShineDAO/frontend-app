@@ -104,7 +104,7 @@ export const Link = styled.div`
 `;
 
 export const ConnectWalletCard = styled.div`
-  border-radius: 4px;
+  border-radius: 44px;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
   box-sizing: border-box;
@@ -131,7 +131,7 @@ export const ConnectWalletCard = styled.div`
 `;
 
 export const SaleCard = styled.div`
-  border-radius: 4px;
+  border-radius: 44px;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   box-sizing: border-box;

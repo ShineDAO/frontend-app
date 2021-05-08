@@ -32,7 +32,8 @@ export const IntroWrapper = styled.div`
 export const Details = styled.div`
    display:flex;
    flex-wrap: wrap;
-
+   gap:2rem;
+   
   @media (max-width: 960px) {
     width: 100%;
     margin-bottom: 2rem;
@@ -93,18 +94,13 @@ export const ThumbnailBig = styled.div`
   }
 `;
 
-export const Link = styled.div`
-  margin-top: 50px;
-  a {
-    color: white;
-  }
-  a:hover {
-    color: white;
-  }
+export const Link = styled.a`
+  color: #007bff !important;
+  font-weight: bold;
 `;
 
 export const ConnectWalletCard = styled.div`
-  border-radius: 4px;
+  border-radius: 33px;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
   box-sizing: border-box;
@@ -131,10 +127,12 @@ export const ConnectWalletCard = styled.div`
 `;
 
 export const SaleCard = styled.div`
-  border-radius: 4px;
+  border-radius: 33px;
+  border:1px solid #f5f5f538;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   box-sizing: border-box;
+  
   min-width: 500px;
   height: ${({ isWalletEnabled }) => (isWalletEnabled ? 'none' : '344px')};
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
@@ -236,8 +234,8 @@ export const ConnectButton = styled.button`
   }
 
   ${({ secondary }) =>
-  secondary &&
-  `
+    secondary &&
+    `
 		background: #001F3F;
 	`}
   @media (max-width: 960px) {

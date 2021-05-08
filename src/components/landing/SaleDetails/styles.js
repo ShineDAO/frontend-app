@@ -51,7 +51,7 @@ export const Details = styled.div`
 `;
 
 export const LiteparerCard = styled.div`
-  border-radius: 4px;
+  border-radius: 33px;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
   box-sizing: border-box;
