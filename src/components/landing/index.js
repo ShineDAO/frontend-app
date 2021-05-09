@@ -7,6 +7,7 @@ export * from './Why';
 export * from './Subscribe';
 export * from './Sale';
 export * from './PreSale1';
+export * from './PreSale2';
 export * from './SaleDetails';
 
 
