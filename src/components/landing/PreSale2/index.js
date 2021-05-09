@@ -275,6 +275,8 @@ export const PreSale2 = () => {
             <br />
             Rate: ≈ $0.028 / 1 SHN
             <br />
+            <br />
+            <ConnectButton theme={theme} onClick={() => addToWatchlist()}>Add SHN to MetaMask</ConnectButton>
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
             <br />
           </SaleCard>
@@ -350,7 +352,6 @@ export const PreSale2 = () => {
                 {isShineBought && !isTransactionBeingProcessed && (
                   <div>
                     <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
-                    <ConnectButton theme={theme} onClick={() => addToWatchlist()}>Add SHN to MetaMask</ConnectButton>
                   </div>
                 )}
 
