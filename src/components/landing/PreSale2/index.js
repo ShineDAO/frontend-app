@@ -151,7 +151,11 @@ async function buyShineTokens(
       console.log("err ", e);
       console.log("User rejected transaction", e.code);
 
-      if (e.message.search("IndividuallyCappedCrowdsale: beneficiary's cap exceeded") >= 0) {
+
+      if (e.message.search("insufficient funds for transfer") >= 0) {
+        setMetamaskErrorCode("The amount that you are trying to buy, exceeds the amount that you have available in your wallet");
+      }
+      else if (e.message.search("IndividuallyCappedCrowdsale: beneficiary's cap exceeded") >= 0) {
         setMetamaskErrorCode("Your total amount exceeds maximum participation");
       } else if (e.code === 4001) {
         setMetamaskErrorCode(e.message); //MetaMask Tx Signature: User denied transaction signature.
