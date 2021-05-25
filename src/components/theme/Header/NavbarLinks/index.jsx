@@ -11,7 +11,7 @@ const NavbarLinks = ({ desktop }) => {
   return (
     <Wrapper desktop={desktop} theme={theme}>
       <a href="http://docs.shinedao.finance" target="_blank">Docs</a>
-      {false && <a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>}
+      <a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>
       <JoinButton
         narrow
         onMouseEnter={() => setButtonText('Coming soon')}

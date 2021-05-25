@@ -4,32 +4,30 @@ on:
   push:
     branches:
       - main
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#   steps:
-#    - name: Checkout
-#      uses: actions/checkout@v1
-#    - name: Setup Node.js
-#      uses: actions/setup-node@v1
-#      with:
-#        node-version: "12.x"
-#    - name: Cache node_modules
-#      uses: actions/cache@v1
-#      with:
-#        path: node_modules
-#        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }} # Cache key based on os + hashed yarn.lock contents
-#    - name: Install packages
-#      run: yarn install
-#    - name: Build an app
-#      run: yarn build
-#      env:
-#        GATSBY_PORTFOLIO_GITHUB_TOKEN: ${{ secrets.GATSBY_PORTFOLIO_GITHUB_TOKEN }}
-#        GATSBY_PORTFOLIO_FORMIK_ENDPOINT: ${{ secrets.GATSBY_PORTFOLIO_FORMIK_ENDPOINT }}
-#        GATSBY_PORTFOLIO_RECAPTCHA_KEY: ${{ secrets.GATSBY_PORTFOLIO_RECAPTCHA_KEY }}
-#    
-#    - name: publish to github pages
-#      run: yarn gh-pages 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+   steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: "12.x"
+    - name: Cache node_modules
+      uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }} # Cache key based on os + hashed yarn.lock contents
+    - name: Install packages
+      run: yarn install
+      env:
+        GATSBY_PORTFOLIO_GITHUB_TOKEN: ${{ secrets.GATSBY_PORTFOLIO_GITHUB_TOKEN }}
+        GATSBY_PORTFOLIO_FORMIK_ENDPOINT: ${{ secrets.GATSBY_PORTFOLIO_FORMIK_ENDPOINT }}
+        GATSBY_PORTFOLIO_RECAPTCHA_KEY: ${{ secrets.GATSBY_PORTFOLIO_RECAPTCHA_KEY }}
+
+    - name: publish to github pages
+      run: yarn gh-pages
 
 
 
