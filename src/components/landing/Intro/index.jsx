@@ -44,7 +44,7 @@ export const Intro = () => {
         </React.Fragment> :
           <React.Fragment>
            <Details theme={theme}>
-            <h1>Shine DAO</h1>
+            <h1>ShineDAO</h1>
             <h4>Next generation DeFi incubator</h4>
             <ButtonWrapper>
               <JoinButton onClick={onJoinButtonClick} theme={theme}>

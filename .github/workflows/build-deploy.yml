@@ -14,16 +14,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
+
+
+      - name: Install packages
+        run: yarn install
+
       - name: Cache node_modules
         uses: actions/cache@v1
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }} # Cache key based on os + hashed yarn.lock contents
-
-      - name: Install packages
-        run: yarn install
-
-
+          
       - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: yarn build
         env:
