@@ -11,7 +11,7 @@ export const Why = () => {
   const isMobile = useIsMobile()
 
   const onScrollToContact = () => {
-    window.open('https://docs.shinedao.finance/shinedao/pr-and-community-building/raising-iio-with-shine', 'blank', 'noopener')
+    window.open('https://docs.shinedao.finance/decentralising-startup-incubation/community-incentives', 'blank', 'noopener')
   }
 
 
@@ -19,9 +19,9 @@ export const Why = () => {
     <Wrapper id="about">
       <SkillsWrapper as={Container}>
         <Details theme={theme}>
-          <h1>The Future is Multichain</h1>
+          <h1>Contribute and get rewarded</h1>
           <p>
-            Participate in a secure and compliant environment to get assets beyond ERC20 standard.
+          Join one of the operating squads, complete a task or suggest your own initiative. 5-20% of projects tokens will be distributed to early contributors.
           </p>
           <LearnButton onClick={onScrollToContact} theme={theme}>
             LEARN MORE
