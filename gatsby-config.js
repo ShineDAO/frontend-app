@@ -1,5 +1,12 @@
 const config = require('./src/data/config');
 
+//import config from './src/data/config'
+//import dotenv from 'dotenv'
+
+//dotenv.config({
+// path: `.env.${process.env.NODE_ENV}`
+//});
+
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
@@ -15,6 +22,14 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `projects`,
+        path: `${__dirname}/src/data/projects`,
+      },
+    },
     {
       resolve: 'gatsby-source-graphql',
       options: {

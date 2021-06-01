@@ -1,0 +1,52 @@
+{
+    "title": "DeFi Options DAO",
+    "tokenAddress": "0x12344567",
+    "shortDescription": "Defi Options defi options is an open source decentralized options trading platform for Ethereum / EVM-compatible chains bringing a more capital efficient collateral allocation model and a more diversified options offer to DeFi.",
+    "links": {
+        "docs": "",
+        "app": "",
+        "discord": "",
+        "github": ""
+    },
+    "tokenomics": {
+        "seedSale": {
+            "total": "",
+            "percentage": "",
+            "tokenPrice": "",
+            "amountRaised": ""
+        },
+        "ido": {
+            "total": "",
+            "percentage": "",
+            "tokenPrice": "",
+            "amountRaised": ""
+        },
+        "totalAmountRaised": "",
+        "totalOutstandingDeFiTokens": "",
+        "liquiditySupply": {
+            "total": "",
+            "percentage": "",
+            "tokenPrice": ""
+        },
+        "rewards": {
+            "total": "",
+            "percentage": ""
+        },
+        "treasury": {
+            "total": "",
+            "percentage": ""
+        },
+        "coreTeam": {
+            "total": "",
+            "percentage": ""
+        },
+        "shineDaoAllocation": {
+            "total": "",
+            "percentage": ""
+        },
+        "totalSupply": {
+            "total": "",
+            "percentage": ""
+        }
+    }
+}
