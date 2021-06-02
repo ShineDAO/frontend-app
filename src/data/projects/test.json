@@ -22,7 +22,7 @@
             "amountRaised": ""
         },
         "totalAmountRaised": "",
-        "totalOutstandingDeFiTokens": "",
+        "initialCirculatingSupply": "",
         "liquiditySupply": {
             "total": "",
             "percentage": "",
