@@ -13,7 +13,7 @@ export const Button = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: #fff;
-  background: #3F3D56;
+  background: #3f3d56;
   font-weight: bold;
   font-size: 16px;
   height: 48px;
@@ -28,8 +28,8 @@ export const Button = styled.button`
   }
 
   &:hover {
-    background: #FADA5E;
-    color: #3F3D56;
+    background: #fada5e;
+    color: #3f3d56;
     text-decoration: none;
   }
 
