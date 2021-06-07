@@ -4,6 +4,7 @@ import { ThemeContext } from "providers/ThemeProvider";
 import { Layout, SEO, Container } from 'components/common';
 import { Header } from 'components/theme';
 import { Wrapper, IntroWrapper, Details, Thumbnail, Link, SaleCard, StatusContainer, EthInput, ColorTitle, UnderlinedTitle, ConnectButton, ConnectWalletCard, QuartCircleIntro } from "./styles";
+import ProgressBar from "react-bootstrap/ProgressBar";
 
 const axios = require("axios");
 import * as utils from './utils';
@@ -18,15 +19,17 @@ export default function ProjectTemplate({ data }) {
   console.log('project data ', project);
 
 
-
   var currentStatus = project.technicalDetails.currentStatus;
-  var seedSalecontractAddress = project.technicalDetails[currentStatus].saleAddress;
+  var tokenAbi = project.technicalDetails.tokenAbi;
+  var saleAbi = project.technicalDetails[currentStatus].abi;
+
+
+  var saleContractAddress = project.technicalDetails[currentStatus].saleAddress;
   var tokenContractAddress = project.technicalDetails.tokenAddress;
-  var migrationsContractAddress = "0xbACf2F11eB10475DA816c1ADCB8B376FffD1544c";
   var tokensOffered = project.technicalDetails[currentStatus].tokensOffered
   var rate = project.technicalDetails[currentStatus].rate;
   var gas = project.technicalDetails[currentStatus].gas;
-  var maxWeiToRaise = tokensOffered / rate; 
+  var maxWeiToRaise = tokensOffered / rate;
 
   const [isWalletEnabled, setWalletStatus] = useState();
   const [balance, setBalance] = useState();
@@ -45,10 +48,10 @@ export default function ProjectTemplate({ data }) {
 
   useEffect(() => {
     isWalletEnabled ? utils.getEthBalance(setBalance) : null;
-    isWalletEnabled ? utils.getEthRaised(setEthRaised) : null;
-    isWalletEnabled ? utils.getWeiRaised(setWeiRaised) : null;
-    isWalletEnabled ? utils.getSeedSaleShnBalance(setSeedSaleShnBalance) : null;
-    isWalletEnabled ? utils.getUserAddress(setUserAddress, setShineBalance) : null;
+    isWalletEnabled ? utils.getEthRaised(setEthRaised, saleAbi, saleContractAddress) : null;
+    isWalletEnabled ? utils.getWeiRaised(setWeiRaised, saleAbi, saleContractAddress) : null;
+    isWalletEnabled ? utils.getSeedSaleShnBalance(setSeedSaleShnBalance, tokenAbi, saleContractAddress,tokenContractAddress) : null;
+    isWalletEnabled ? utils.getUserAddress(setUserAddress, setShineBalance, tokenAbi,tokenContractAddress) : null;
     isWalletEnabled ? utils.getCurrentMigrations() : null;
   }, [isWalletEnabled, isTransactionBeingProcessed, isShineBought]);
 
@@ -163,7 +166,9 @@ export default function ProjectTemplate({ data }) {
                             setShineBoughtAmount,
                             setTransactionBeingProcessed,
                             setMetamaskErrorCode,
-                            userAddress
+                            userAddress,
+                            saleAbi,
+                            saleContractAddress
                           )
                         }
                       >
@@ -260,17 +265,56 @@ export const query = graphql`
       technicalDetails {
         currentStatus
         tokenAddress
+        tokenAbi {
+          anonymous
+          constant
+          inputs {
+            indexed
+            internalType
+            name
+            type
+          }
+          name
+          outputs {
+            internalType
+            name
+            type
+          }
+          payable
+          stateMutability
+          type
+        }
         ido {
           gas
           rate
           saleAddress
           tokensOffered
+          abi 
         }
         seed {
           gas
           rate
           saleAddress
           tokensOffered
+          abi {
+            constant
+            name
+            payable
+            stateMutability
+            type
+            anonymous
+            inputs {
+              type
+              name
+              internalType
+              indexed
+            }
+            outputs {
+              type
+              name
+              internalType
+            }
+          }
         }
       }
     }

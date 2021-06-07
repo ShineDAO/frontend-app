@@ -1,4 +1,7 @@
 import Web3 from "web3";
+import Migrations from "../../../static/abi/Migrations.json";
+var migrationsContractAddress = "0xE8f8A54E0414b0bD6c3eCe310552E3dab8B88980";
+
 
 export async function addToWatchlist(metamaskDetails) {
 
@@ -26,36 +29,34 @@ export async function getCurrentMigrations() {
     console.log("current migrations is ", currentMigration);
 }
 
-export async function getUserAddress(setUserAddress, setShineBalance) {
+export async function getUserAddress(setUserAddress, setShineBalance,tokenAbi,tokenContractAddress) {
     let userAddress = await window.ethereum.selectedAddress;
     setUserAddress(userAddress);
-    await getShineBalance(setShineBalance, userAddress);
+    await getShineBalance(setShineBalance, userAddress,tokenAbi,tokenContractAddress);
 }
 
-export async function getWeiRaised(setWeiRaised) {
-    let abiArray = SeedCrowdsale;
-    let abi = abiArray.abi;
-    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, seedSalecontractAddress);
+export async function getWeiRaised(setWeiRaised,saleAbi,saleContractAddress) {
+    console.log("abi 1", saleAbi)
+    let abi = saleAbi
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
     let weiRaised = await simpleCrowdsaleInstance.methods.weiRaised().call();
 
     setWeiRaised(weiRaised);
     console.log("Wei raised so far", weiRaised);
 }
 
-export async function getSeedSaleShnBalance(setSeedSaleShnBalance) {
-    var abiArrayToken = ShineToken;
-    var abiToken = abiArrayToken.abi;
+export async function getSeedSaleShnBalance(setSeedSaleShnBalance,tokenAbi,saleContractAddress,tokenContractAddress) {
+    var abiToken = tokenAbi
     var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
-    var seedSaleShnBalance = await tokenInst.methods.balanceOf(seedSalecontractAddress).call();
+    var seedSaleShnBalance = await tokenInst.methods.balanceOf(saleContractAddress).call();
     let shnAvailable = window.web3.utils.fromWei(seedSaleShnBalance.toString(), "ether");
 
     setSeedSaleShnBalance(shnAvailable);
 }
 
-export async function getEthRaised(setEthRaised) {
-    let abiArray = SeedCrowdsale;
-    let abi = abiArray.abi;
-    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, seedSalecontractAddress);
+export async function getEthRaised(setEthRaised,saleAbi,saleContractAddress) {
+    let abi = saleAbi
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
     let weiRaised = await simpleCrowdsaleInstance.methods.weiRaised().call();
     let ethRaised = window.web3.utils.fromWei(weiRaised.toString(), "ether");
     setEthRaised(ethRaised);
@@ -68,9 +69,8 @@ export async function getEthBalance(setBalance) {
         setBalance(window.web3.utils.fromWei(balance.toString(), "ether"));
     });
 }
-export async function getShineBalance(setShineBalance, userAddress) {
-    var abiArrayToken = ShineToken;
-    var abiToken = abiArrayToken.abi;
+export async function getShineBalance(setShineBalance, userAddress,tokenAbi,tokenContractAddress) {
+    var abiToken = tokenAbi;
     var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
 
     var shineBalance = await tokenInst.methods.balanceOf(userAddress).call();
@@ -85,12 +85,13 @@ export async function buyShineTokens(
     setShineBoughtAmount,
     setTransactionBeingProcessed,
     setMetamaskErrorCode,
-    userAddress
+    userAddress,
+    saleAbi,
+    saleContractAddress
 ) {
     if (ethAmountToSpend !== "") { //disable button if no amount is entered
-        let abiArray = SeedCrowdsale;
-        let abi = abiArray.abi;
-        let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, seedSalecontractAddress);
+        let abi = saleAbi;
+        let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
 
         setTransactionBeingProcessed(true);
         setMetamaskErrorCode(undefined)
