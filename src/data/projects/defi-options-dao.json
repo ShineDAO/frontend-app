@@ -48,5 +48,27 @@
             "total": "",
             "percentage": ""
         }
+    },
+    "metamaskDetails": {
+        "address": "",
+        "symbol": "",
+        "decimals": 18,
+        "image": ""
+    },
+    "technicalDetails": {
+        "currentStatus":"seed",
+        "tokenAddress": "",
+        "seed": {
+            "saleAddress": "",
+            "tokensOffered": "",
+            "rate": "",
+            "gas": 1500000
+        },
+        "ido": {
+            "saleAddress": "",
+            "tokensOffered": "",
+            "rate": "",
+            "gas": 1500000
+        }
     }
 }

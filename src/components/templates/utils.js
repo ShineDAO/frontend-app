@@ -1,28 +1,30 @@
+import Web3 from "web3";
+
 export async function addToWatchlist(metamaskDetails) {
 
     window.web3.currentProvider.sendAsync({
-      method: 'metamask_watchAsset',
-      params: {
-        "type": "ERC20", // Initially only supports ERC20, but eventually more!
-        "options": {
-          "address": metamaskDetails.address, // The address that the token is at.
-          "symbol": metamaskDetails.symbol, // A ticker symbol or shorthand, up to 5 chars.
-          "decimals": metamaskDetails.decimals, // The number of decimals in the token
-          "image": metamaskDetails.image, // A string url of the token logo
+        method: 'metamask_watchAsset',
+        params: {
+            "type": "ERC20", // Initially only supports ERC20, but eventually more!
+            "options": {
+                "address": metamaskDetails.address, // The address that the token is at.
+                "symbol": metamaskDetails.symbol, // A ticker symbol or shorthand, up to 5 chars.
+                "decimals": metamaskDetails.decimals, // The number of decimals in the token
+                "image": metamaskDetails.image, // A string url of the token logo
+            },
         },
-      },
-      id: Math.round(Math.random() * 100000),
+        id: Math.round(Math.random() * 100000),
     }, (err, addedBoolean) => {
-  
+
     })
-  }
+}
 export async function getCurrentMigrations() {
     let abiArray = Migrations;
     let abi = abiArray.abi;
     let migrationsInstance = new window.web3.eth.Contract(abi, migrationsContractAddress);
     let currentMigration = await migrationsInstance.methods.last_completed_migration().call();
     console.log("current migrations is ", currentMigration);
-  }
+}
 
 export async function getUserAddress(setUserAddress, setShineBalance) {
     let userAddress = await window.ethereum.selectedAddress;

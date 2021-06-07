@@ -9,19 +9,24 @@ const axios = require("axios");
 import * as utils from './utils';
 
 
+
+
 export default function ProjectTemplate({ data }) {
+  const { theme } = useContext(ThemeContext);
+
   const project = data.projectsJson;
   console.log('project data ', project);
 
-  const metamaskDetails = {
-    address: "",
-    symbol: "",
-    decimal: "",
-    image: ""
-  }
 
-  const { theme } = useContext(ThemeContext);
-  const now = 60;
+
+  var currentStatus = project.technicalDetails.currentStatus;
+  var seedSalecontractAddress = project.technicalDetails[currentStatus].saleAddress;
+  var tokenContractAddress = project.technicalDetails.tokenAddress;
+  var migrationsContractAddress = "0xbACf2F11eB10475DA816c1ADCB8B376FffD1544c";
+  var tokensOffered = project.technicalDetails[currentStatus].tokensOffered
+  var rate = project.technicalDetails[currentStatus].rate;
+  var gas = project.technicalDetails[currentStatus].gas;
+  var maxWeiToRaise = tokensOffered / rate; 
 
   const [isWalletEnabled, setWalletStatus] = useState();
   const [balance, setBalance] = useState();
@@ -95,7 +100,7 @@ export default function ProjectTemplate({ data }) {
             Rate: ≈ $0.028 / 1 SHN
             <br />
               <br />
-              <ConnectButton theme={theme} onClick={() => addToWatchlist(metamaskDetails)}>Add SHN to MetaMask</ConnectButton>
+              <ConnectButton theme={theme} onClick={() => utils.addToWatchlist(project.metamaskDetails)}>Add SHN to MetaMask</ConnectButton>
               {false && <span>ETH raised so far {ethRaised} ETH </span>}
               <br />
             </SaleCard>
@@ -244,6 +249,28 @@ export const query = graphql`
         treasury {
           total
           percentage
+        }
+      }
+      metamaskDetails {
+        address
+        decimals
+        image
+        symbol
+      }
+      technicalDetails {
+        currentStatus
+        tokenAddress
+        ido {
+          gas
+          rate
+          saleAddress
+          tokensOffered
+        }
+        seed {
+          gas
+          rate
+          saleAddress
+          tokensOffered
         }
       }
     }
