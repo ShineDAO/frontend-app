@@ -1,10 +1,10 @@
 import Web3 from "web3";
 import Migrations from "../../../static/abi/Migrations.json";
-var migrationsContractAddress = "0xE8f8A54E0414b0bD6c3eCe310552E3dab8B88980";
+var migrationsContractAddress = "0x194af59b7788e22CF6D0ce269876e143ca98db59";
 
 
 export async function addToWatchlist(metamaskDetails) {
-
+console.log("details " , metamaskDetails)
     window.web3.currentProvider.sendAsync({
         method: 'metamask_watchAsset',
         params: {
@@ -29,7 +29,13 @@ export async function getCurrentMigrations() {
     console.log("current migrations is ", currentMigration);
 }
 
-export async function getUserAddress(setUserAddress, setShineBalance,tokenAbi,tokenContractAddress) {
+export async function getUserAddressProject(setUserAddress, setProjectBalance, tokenAbi,tokenContractAddress) {
+    let userAddress = await window.ethereum.selectedAddress;
+    setUserAddress(userAddress);
+    await getProjectBalance(setProjectBalance, userAddress,tokenAbi,tokenContractAddress);
+}
+
+export async function getUserAddress(setUserAddress, setShineBalance, tokenAbi,tokenContractAddress) {
     let userAddress = await window.ethereum.selectedAddress;
     setUserAddress(userAddress);
     await getShineBalance(setShineBalance, userAddress,tokenAbi,tokenContractAddress);
@@ -78,6 +84,18 @@ export async function getShineBalance(setShineBalance, userAddress,tokenAbi,toke
     var shineBalanceFromWei = window.web3.utils.fromWei(shineBalance, "ether");
     setShineBalance(shineBalanceFromWei);
 }
+
+export async function getProjectBalance(setProjectBalance, userAddress,tokenAbi,tokenContractAddress) {
+    console.log("adress ", userAddress)
+    var abiToken = tokenAbi;
+    var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
+
+    var projectBalance = await tokenInst.methods.balanceOf(userAddress).call();
+
+    var projectBalanceFromWei = window.web3.utils.fromWei(projectBalance, "ether");
+    setProjectBalance(projectBalanceFromWei);
+}
+
 export async function buyShineTokens(
     ethAmountToSpend,
     setEthAmountToSpend,
@@ -87,22 +105,26 @@ export async function buyShineTokens(
     setMetamaskErrorCode,
     userAddress,
     saleAbi,
-    saleContractAddress
+    saleContractAddress,
+    gas
 ) {
     if (ethAmountToSpend !== "") { //disable button if no amount is entered
         let abi = saleAbi;
         let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
 
+
+
         setTransactionBeingProcessed(true);
         setMetamaskErrorCode(undefined)
 
         try {
+            
             let estimatedGas = await simpleCrowdsaleInstance.methods.buyTokens(userAddress).estimateGas({
                 from: userAddress,
                 value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
                 gas: gas,
             })
-
+            //let estimatedGas = 100000;
 
             console.log("estimated gas ", estimatedGas)
 
@@ -146,17 +168,21 @@ export async function buyShineTokens(
 
 export async function loadWeb3(setWalletStatus, setBalance) {
     if (window.ethereum) {
+        console.log("load 1", window.web3)
         window.web3 = new Web3(window.ethereum);
         await window.ethereum.enable();
 
         await getEthBalance(setBalance);
         setWalletStatus(true);
+        console.log("load 1", window.web3)
     } else if (window.web3) {
         window.web3 = new Web3(window.web3.currentProvider);
         setWalletStatus(true);
+        console.log("load 2")
     } else {
         setWalletStatus(false);
         window.alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
+        console.log("load 3")
     }
 }
 
@@ -168,7 +194,7 @@ export function toPlainString(num) {
     return num.toLocaleString("fullwide", { useGrouping: false });
 }
 
-export function estimateReceivedShn(ethAmountToSpend) {
+export function estimateReceivedShn(ethAmountToSpend,rate) {
     console.log("eth to spend", ethAmountToSpend);
     const weiAmountToSpend = window.web3.utils.toWei(ethAmountToSpend.toString(), "ether");
     console.log("wei", toPlainString(weiAmountToSpend * rate));
