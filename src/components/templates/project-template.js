@@ -5,10 +5,12 @@ import { Layout, SEO, Container } from 'components/common';
 import { Header } from 'components/theme';
 import { Wrapper, IntroWrapper, Details, Thumbnail, Link, SaleCard, StatusContainer, EthInput, ColorTitle, UnderlinedTitle, ConnectButton, ConnectWalletCard, QuartCircleIntro } from "./styles";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const axios = require("axios");
 import * as utils from './utils';
 
+import ShineToken from "../../../static/abi/ShineToken.json";
 
 
 
@@ -17,6 +19,10 @@ export default function ProjectTemplate({ data }) {
 
   const project = data.projectsJson;
   console.log('project data ', project);
+
+
+  var shineTokenAddress = "0xd3E104c53966Dd06E3CF62FE7C3A3EC2247c4Ade"
+  var shineTokenAbi = ShineToken.abi;
 
 
   var currentStatus = project.technicalDetails.currentStatus;
@@ -31,9 +37,15 @@ export default function ProjectTemplate({ data }) {
   var gas = project.technicalDetails[currentStatus].gas;
   var maxWeiToRaise = tokensOffered / rate;
 
+  
+
+
+
+
   const [isWalletEnabled, setWalletStatus] = useState();
   const [balance, setBalance] = useState();
   const [shineBalance, setShineBalance] = useState();
+  const [projectBalance, setProjectBalance] = useState();
   const [isShineBought, setShineBought] = useState(false);
   const [shineBoughtAmount, setShineBoughtAmount] = useState(false);
   const [isTransactionBeingProcessed, setTransactionBeingProcessed] = useState(false);
@@ -50,8 +62,11 @@ export default function ProjectTemplate({ data }) {
     isWalletEnabled ? utils.getEthBalance(setBalance) : null;
     isWalletEnabled ? utils.getEthRaised(setEthRaised, saleAbi, saleContractAddress) : null;
     isWalletEnabled ? utils.getWeiRaised(setWeiRaised, saleAbi, saleContractAddress) : null;
-    isWalletEnabled ? utils.getSeedSaleShnBalance(setSeedSaleShnBalance, tokenAbi, saleContractAddress,tokenContractAddress) : null;
-    isWalletEnabled ? utils.getUserAddress(setUserAddress, setShineBalance, tokenAbi,tokenContractAddress) : null;
+    isWalletEnabled ? utils.getSeedSaleShnBalance(setSeedSaleShnBalance, tokenAbi, saleContractAddress, tokenContractAddress) : null;
+    isWalletEnabled ? utils.getUserAddress(setUserAddress, setShineBalance, shineTokenAbi, shineTokenAddress) : null;
+
+    isWalletEnabled ? utils.getUserAddressProject(setUserAddress, setProjectBalance, tokenAbi, tokenContractAddress) : null;
+
     isWalletEnabled ? utils.getCurrentMigrations() : null;
   }, [isWalletEnabled, isTransactionBeingProcessed, isShineBought]);
 
@@ -126,6 +141,8 @@ export default function ProjectTemplate({ data }) {
                   <br />
                   <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
                   <br />
+                  <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString()} {project.metamaskDetails.symbol}</span>
+                  <br />
                   {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
                   <br />
                   {weiRaised && (
@@ -150,7 +167,7 @@ export default function ProjectTemplate({ data }) {
                       {ethAmountToSpend && (
                         <span>
                           <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
-                          <span>Estimated SHN to receive: {utils.estimateReceivedShn(ethAmountToSpend).toLocaleString()}</span>
+                          <span>Estimated SHN to receive: {utils.estimateReceivedShn(ethAmountToSpend, rate).toLocaleString()}</span>
                         </span>
                       )}
                       <br />
@@ -168,7 +185,8 @@ export default function ProjectTemplate({ data }) {
                             setMetamaskErrorCode,
                             userAddress,
                             saleAbi,
-                            saleContractAddress
+                            saleContractAddress,
+                            gas
                           )
                         }
                       >
