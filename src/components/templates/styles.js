@@ -6,8 +6,19 @@ export const Wrapper = styled.div`
   background-repeat: no-repeat;
 `;
 
+export const Heading = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const HeadingText = styled.div`
+  font-size: 48px;
+  font-weight: 800;
+  margin-left: 24px;
+`;
+
 export const QuartCircleIntro = styled.div`
-  border-bottom-left-radius:100%;
+  border-bottom-left-radius: 100%;
   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   transition: 0.3s all;
   height: 500px;
@@ -15,25 +26,24 @@ export const QuartCircleIntro = styled.div`
   width: 500px;
   position: absolute;
   z-index: -1;
-  
+
   @media (max-width: 680px) {
     display: none;
   }
 `;
 
-
 export const IntroWrapper = styled.div`
-  padding: 4rem 30px;
+  padding: 70px 0;
   @media (max-width: 960px) {
     padding: 0 30px;
   }
 `;
 
 export const Details = styled.div`
-   display:flex;
-   flex-wrap: wrap;
-   gap:2rem;
-   
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+
   @media (max-width: 960px) {
     width: 100%;
     margin-bottom: 2rem;
