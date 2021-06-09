@@ -11,6 +11,35 @@ export const Heading = styled.div`
   align-items: center;
 `;
 
+export const InfoCards = styled.div`
+  display: flex;
+  margin-top: 60px;
+  height: 580px;
+  justify-content: space-between;
+`;
+
+export const CardHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 460px;
+  @media (max-width: 960px) {
+    flex-direction: column;
+    display: block;
+    padding: 60px 0;
+  }
+`;
+
+export const ProjectNameWrapper = styled.div`
+  display: flex;
+`;
+
+export const CardTitleWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+`;
+
 export const HeadingText = styled.div`
   font-size: 48px;
   font-weight: 800;
