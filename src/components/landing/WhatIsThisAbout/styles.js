@@ -7,27 +7,8 @@ export const Wrapper = styled.div`
   position: relative;
 `;
 
-export const HalfCircle = styled.div`
-  width: 900px;
-  height:900px;
-  border-radius: 50%;
-  left: -480px;
-  bottom: -580px;
-  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')}; 
-  transition: 0.3s all;
-  z-index: -1;
-  position: absolute;
-    @media (max-width: 960px) {
-      width: 445px;
-      height:445px;
-      left: -290px;
-      top: 125px;
-  }
-`
-
 export const SkillsWrapper = styled.div`
   padding: 80px 0;
-  display: flex;
   align-items: center;
   justify-content: space-between;
   width: 70%;
@@ -42,6 +23,8 @@ export const SkillsWrapper = styled.div`
 export const Details = styled.div`
   flex: 1;
   padding-left: 2rem;
+  display: grid;
+  grid-template-columns: 320px 320px 320px;
 
   @media (max-width: 960px) {
     padding-left: unset;
@@ -52,6 +35,7 @@ export const Details = styled.div`
     margin-bottom: 2rem;
     font-size: 24px;
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#212121')};
+    
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
@@ -68,6 +52,21 @@ export const Details = styled.div`
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
     }
+  }
+  .what {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .why {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .who {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 `;
 

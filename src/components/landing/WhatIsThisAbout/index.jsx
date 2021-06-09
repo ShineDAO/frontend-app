@@ -1,9 +1,13 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, LearnButton } from 'components/common';
+
 import adAdastraV1 from 'assets/illustrations/adastra-v1.png';
+import rocketLaunchV1 from 'assets/illustrations/rocket-launch-v1.png';
+import starman_dark from 'assets/illustrations/starman_dark.png';
+
 import useIsMobile from '../../../hooks/useIsMobile';
-import { HalfCircle, Wrapper, SkillsWrapper, Details } from './styles';
+import { Wrapper, SkillsWrapper, Details } from './styles';
 
 export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
@@ -14,23 +18,39 @@ export const WhatIsThisAbout = () => {
 
   return (
     <Wrapper id="about">
-      <HalfCircle theme={theme} />
       <SkillsWrapper as={Container}>
+      <h2>ABOUT US</h2>
+        <Details theme={theme}>
+         <div className= "what">
         <img
-          width={isMobile ? '192px' : '385px'}
-          height={isMobile ? '156px' : '312px'}
+          width={isMobile ? '192px' : '180px'}
+          height={isMobile ? '156px' : '144.8px'}
           src={adAdastraV1}
           alt="Towards the stars! Are you ready?"
         />
-        <Details theme={theme}>
-          <h1>Participate Early</h1>
+          <h2>Participate Early</h2>
           <p>
             Access to invest in the future stars from their earliest stages all the way to blast off from our launchpad.
           </p>
-          <LearnButton onClick={onScrollToContact} theme={theme}>
+         </div>
+         <div className="why">
+          <img width={isMobile ? '200px' : '180px'} height={isMobile ? '142px' : '128,14px'} src={rocketLaunchV1} alt="Shine will get you to the moon and beyond!" />
+          <h2>Contribute and get rewarded</h2>
+          <p>
+          Participate in a secure and compliant environment to get assets beyond ERC20 standard.
+          </p>
+        </div>
+        <div className="who">
+          <img width={isMobile ? '174px' :'180px'} height={isMobile ? '156px' : '160px'} src={starman_dark} alt="We take you to the orbit and beyond!" />
+          <h2>Are you building a project?</h2>
+          <p>
+          Access to an active and incentivized community of contributors from day 1 to polish your project.
+          </p>
+        </div>
+        </Details>
+        <LearnButton onClick={onScrollToContact} theme={theme}>
             LEARN MORE
           </LearnButton>
-        </Details>
       </SkillsWrapper>
     </Wrapper>
   );

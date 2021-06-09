@@ -11,8 +11,8 @@ export default () => (
     <UpcomingProjects />
     <Stages />
     <WhatIsThisAbout />
-    <Why />
-    <WhoAreWe />
+    {/* <Why />
+    <WhoAreWe /> */}
     <Contact />
   </Layout>
 );
