@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  margin-bottom: 50px;
   cursor: pointer;
   border-radius: 4px;
   border: none;
@@ -17,7 +16,7 @@ export const Button = styled.button`
   font-weight: bold;
   font-size: 16px;
   height: 48px;
-  width: 160px;
+  width: ${({ width }) => width || '160px'};
 
   &:focus {
     outline: none;

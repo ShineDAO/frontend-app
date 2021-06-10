@@ -62,10 +62,64 @@ export const QuartCircleIntro = styled.div`
 `;
 
 export const IntroWrapper = styled.div`
-  padding: 70px 0;
+  padding: 70px 0 0 0;
   @media (max-width: 960px) {
     padding: 0 30px;
   }
+`;
+
+export const DetailsSection = styled.div`
+  margin-top: 160px;
+  width: 1120px;
+`;
+
+export const DetailsWrapper = styled.div`
+  display: flex;
+  margin: 24px 0 160px 0;
+  justify-content: space-between;
+`;
+
+export const ContributionWrapper = styled.div`
+  display: flex;
+  padding: 40px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #3f3d56;
+  box-sizing: border-box;
+  border-radius: 8px;
+  z-index: 2;
+  background-color: white;
+`;
+
+export const ContributionTextWrapper = styled.div`
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const DetailsText = styled.div`
+  width: 520px;
+`;
+
+export const Links = styled.div`
+  width: 520px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+export const LinkWrapper = styled.div`
+  display: flex;
+  width: 240px;
+  height: 40px;
+  border-radius: 80px;
+  border: 1px solid #3f3d56;
+  box-sizing: border-box;
+  align-items: center;
+  margin-bottom: 16px;
+`;
+
+export const IconWrapper = styled.div`
+  margin: 0 18px;
 `;
 
 export const Details = styled.div`
