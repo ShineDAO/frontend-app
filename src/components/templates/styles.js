@@ -91,6 +91,20 @@ export const ContributionWrapper = styled.div`
   background-color: white;
 `;
 
+export const Tokenomics = styled.div`
+  margin-top: 160px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const TokenomicsTableWrapper = styled.div`
+  margin: 40px 0;
+`;
+
+export const TokenomicsButtonWrapper = styled.div`
+  margin-bottom: 100px;
+`;
+
 export const ContributionTextWrapper = styled.div`
   justify-content: space-between;
   align-items: center;

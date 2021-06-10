@@ -20,7 +20,12 @@ import {
   DetailsText,
   LinkWrapper,
   Links,
-  IconWrapper, ContributionWrapper, ContributionTextWrapper,
+  IconWrapper,
+  ContributionWrapper,
+  ContributionTextWrapper,
+  Tokenomics,
+  TokenomicsTableWrapper,
+  TokenomicsButtonWrapper,
 } from './styles';
 
 import * as utils from './utils';
@@ -31,6 +36,7 @@ import DefiOptionsLogo from '../landing/UpcomingProjects/defi_options_logo.png';
 import { Text } from '../common/Text';
 
 import ToolsLight from '../../assets/icons/Tools-light-theme.svg';
+import DefiOptionsTokenomics from '../../assets/illustrations/defi-options-tokenomics.png';
 
 export default function ProjectTemplate({ data }) {
   const { theme } = useContext(ThemeContext);
@@ -97,15 +103,15 @@ export default function ProjectTemplate({ data }) {
   useEffect(() => {
     axios
       .get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum')
-      .then(function(response) {
+      .then(function (response) {
         // handle success
         setCurrentEthPrice(response.data[0].current_price);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         // handle error
         console.log(error);
       })
-      .then(function() {
+      .then(function () {
         // always executed
       });
   }, [ethAmountToSpend]);
@@ -117,20 +123,20 @@ export default function ProjectTemplate({ data }) {
 
   return (
     <Layout>
-      <SEO />
+      <SEO/>
       <Wrapper>
-        <QuartCircleIntro theme={theme} />
-        <Header />
+        <QuartCircleIntro theme={theme}/>
+        <Header/>
         <IntroWrapper as={Container}>
           <Heading>
-            <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />
+            <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px"/>
             <HeadingText>Defi Options DAO</HeadingText>
           </Heading>
           <InfoCards>
             <Card background="#3F3D56" padding="40px" flexDirection="column" width="540px" justifyContent="flex-start">
               <CardHeaderWrapper>
                 <ProjectNameWrapper>
-                  <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" width="40px" height="40px" />
+                  <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" width="40px" height="40px"/>
                   <Text margin="0 0 0 16px" fontSize="24px" fontWeight={800} color="white">
                     Defi Options DAO
                   </Text>
@@ -138,7 +144,7 @@ export default function ProjectTemplate({ data }) {
                 <Card background="#fada5e" borderRadius="4px" height="32px" width="140px">
                   &nbsp; &nbsp;
                   <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-                    <circle cx="4" cy="4" r="4" fill="#3F3D56" />
+                    <circle cx="4" cy="4" r="4" fill="#3F3D56"/>
                   </svg>
                   <Text color="#3F3D56" fontWeight={800}>
                     &nbsp; in TBA days
@@ -378,49 +384,60 @@ export default function ProjectTemplate({ data }) {
             <Links>
               <LinkWrapper>
                 <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon" />
+                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
                 </IconWrapper>
                 <Text fontWeight={800}>PROJECT LINKS</Text>
               </LinkWrapper>
               <LinkWrapper>
                 <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon" />
+                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
                 </IconWrapper>
                 <Text fontWeight={800}>PROJECT LINKS</Text>
               </LinkWrapper>
               <LinkWrapper>
                 <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon" />
+                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
                 </IconWrapper>
                 <Text fontWeight={800}>PROJECT LINKS</Text>
               </LinkWrapper>
               <LinkWrapper>
                 <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon" />
+                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
                 </IconWrapper>
                 <Text fontWeight={800}>PROJECT LINKS</Text>
               </LinkWrapper>
               <LinkWrapper>
                 <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon" />
+                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
                 </IconWrapper>
                 <Text fontWeight={800}>PROJECT LINKS</Text>
               </LinkWrapper>
             </Links>
           </DetailsWrapper>
-          <ContributionWrapper>
-            <ContributionTextWrapper>
-              <Text fontSize="24px" fontWeight={800}>
-                Contribute and get rewarded
-              </Text>
-              <br style={{ lineHeight: '8px' }} />
-              <Text fontSize="20px" fontWeight={300}>
-                20% of projects tokens will be distributed to early contributors.
-              </Text>
-            </ContributionTextWrapper>
-            <Button width="240px">SEE TASKS</Button>
-          </ContributionWrapper>
         </DetailsSection>
+        <ContributionWrapper as={Container}>
+          <ContributionTextWrapper>
+            <Text color="#3F3D56" fontSize="24px" fontWeight={800}>
+              Contribute and get rewarded
+            </Text>
+            <br style={{ lineHeight: '8px' }} />
+            <Text color="#3F3D56" fontSize="20px" fontWeight={300}>
+              20% of projects tokens will be distributed to early contributors.
+            </Text>
+          </ContributionTextWrapper>
+          <Button width="240px">SEE TASKS</Button>
+        </ContributionWrapper>
+        <Tokenomics as={Container}>
+          <Text fontSize="24px" fontWeight={800}>
+            Tokenomics
+          </Text>
+          <TokenomicsTableWrapper>
+            <img width="540px" alt="table containing the project's tokenomics" src={DefiOptionsTokenomics} />
+          </TokenomicsTableWrapper>
+          <TokenomicsButtonWrapper>
+            <Button width="240px">GO TO LITEPAPER</Button>
+          </TokenomicsButtonWrapper>
+        </Tokenomics>
       </Wrapper>
     </Layout>
   );
