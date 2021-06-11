@@ -107,12 +107,6 @@ export default function ProjectTemplate({ data }) {
     isWalletEnabled,
     isTransactionBeingProcessed,
     isShineBought,
-    saleAbi,
-    saleContractAddress,
-    tokenAbi,
-    tokenContractAddress,
-    shineTokenAbi,
-    shineTokenAddress,
   ]);
 
   useEffect(() => {
@@ -134,7 +128,7 @@ export default function ProjectTemplate({ data }) {
   useEffect(() => {
     console.log('wwwwwwwwww ', weiRaised);
     isWalletEnabled && setSaleProgress(((weiRaised / maxWeiToRaise) * 100).toFixed(2));
-  }, [isWalletEnabled, maxWeiToRaise, weiRaised]);
+  }, [weiRaised]);
 
   return (
     <Layout>
