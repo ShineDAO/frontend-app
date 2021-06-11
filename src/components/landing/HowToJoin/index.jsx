@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
 // import useIsMobile from '../../../hooks/useIsMobile';
-import { Wrapper, Details , JoinCard, Cards, Button } from './styles';
+import { Wrapper, Details , JoinCard, Cards, Button, HalfCircle } from './styles';
 
 export const  HowToJoin = () => {
     const { theme } = useContext(ThemeContext);
@@ -10,12 +10,13 @@ export const  HowToJoin = () => {
 
 return (
     <Wrapper id="about"> 
+     <HalfCircle theme={theme} />
       <Container>
        <Details theme={theme}>  
-       <h1>How to join?</h1>
-       <p>
+        <h1>How to join?</h1>
+        <p>
         By acquiring a predefined amount of Shine tokens (SHN), you get the right to participate in seed sales and IDOs of incubated projects, as well as access to the investor hub.
-       </p>
+        </p>
        <Cards>
        <JoinCard theme={theme}>
            <h3 theme={theme}>TIER 1</h3>

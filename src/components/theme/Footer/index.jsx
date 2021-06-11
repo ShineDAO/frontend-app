@@ -9,7 +9,7 @@ export const Footer = () => {
 
     return (
   <Wrapper>
-    <QuartCircle theme={theme} />
+    {/* <QuartCircle theme={theme} /> */}
     <Flex as={Container}>
       <Details>
         <h3>Shine DAO</h3>

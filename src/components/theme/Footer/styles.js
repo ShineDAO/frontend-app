@@ -11,25 +11,25 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const QuartCircle = styled.div`
-  background-size: contain;
-  border-radius: 100% 0 0 0;
-  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
-  transition: 0.3s all;
-  right: 0;
-  height: 400px;
-  width: 400px;
-  position: absolute;
-  bottom: -50px;
-  z-index: -1;
+// export const QuartCircle = styled.div`
+//   background-size: contain;
+//   border-radius: 100% 0 0 0;
+//   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+//   transition: 0.3s all;
+//   right: 0;
+//   height: 400px;
+//   width: 400px;
+//   position: absolute;
+//   bottom: -50px;
+//   z-index: -1;
   
-  @media (max-width: 960px) {
-    height: 200px;
-    width: 200px;
-    left: 0;
-    border-radius: 0 100% 0 0;
- }
-`;
+//   @media (max-width: 960px) {
+//     height: 200px;
+//     width: 200px;
+//     left: 0;
+//     border-radius: 0 100% 0 0;
+//  }
+// `;
 
 export const Flex = styled.div`
   display: flex;

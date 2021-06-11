@@ -7,9 +7,26 @@ background-repeat: no-repeat;
 position: relative;
 `;
 
+export const HalfCircle = styled.div`
+  width: 900px;
+  height: 900px;
+  border-radius: 50%;
+  right: -500px;
+  bottom: -150px;
+  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  transition: 0.3s all;
+  z-index: -1;
+  position: absolute;
+  @media (max-width: 960px) {
+    width: 445px;
+    height: 445px;
+    left: -290px;
+    top: 125px;
+  }
+`;
+
 export const Details = styled.div`
   flex: 1;
-  padding-left: 2rem;
 
   @media (max-width: 960px) {
     padding-left: unset;
