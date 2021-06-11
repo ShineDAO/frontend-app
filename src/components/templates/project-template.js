@@ -14,18 +14,7 @@ import {
   InfoCards,
   CardHeaderWrapper,
   CardTitleWrapper,
-  ProjectNameWrapper,
-  DetailsSection,
-  DetailsWrapper,
-  DetailsText,
-  LinkWrapper,
-  Links,
-  IconWrapper,
-  ContributionWrapper,
-  ContributionTextWrapper,
-  Tokenomics,
-  TokenomicsTableWrapper,
-  TokenomicsButtonWrapper,
+  ProjectNameWrapper
 } from './styles';
 
 import * as utils from './utils';
@@ -34,9 +23,6 @@ import ShineToken from '../../../static/abi/ShineToken.json';
 import { Avatar } from '../common/Avatar';
 import DefiOptionsLogo from '../landing/UpcomingProjects/defi_options_logo.png';
 import { Text } from '../common/Text';
-
-import ToolsLight from '../../assets/icons/Tools-light-theme.svg';
-import DefiOptionsTokenomics from '../../assets/illustrations/defi-options-tokenomics.png';
 
 export default function ProjectTemplate({ data }) {
   const { theme } = useContext(ThemeContext);
@@ -369,75 +355,6 @@ export default function ProjectTemplate({ data }) {
             </Card>
           </InfoCards>
         </IntroWrapper>
-        <DetailsSection as={Container}>
-          <Text fontSize="24px" fontWeight={800}>
-            Details
-          </Text>
-          <DetailsWrapper>
-            <DetailsText>
-              <Text fontSize="20px" fontWeight={300}>
-                Defi Options is an open source decentralized options trading platform for Ethereum / EVM-compatible
-                chains bringing a more capital efficient collateral allocation model and a more diversified options
-                offer to DeFi.
-              </Text>
-            </DetailsText>
-            <Links>
-              <LinkWrapper>
-                <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
-                </IconWrapper>
-                <Text fontWeight={800}>PROJECT LINKS</Text>
-              </LinkWrapper>
-              <LinkWrapper>
-                <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
-                </IconWrapper>
-                <Text fontWeight={800}>PROJECT LINKS</Text>
-              </LinkWrapper>
-              <LinkWrapper>
-                <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
-                </IconWrapper>
-                <Text fontWeight={800}>PROJECT LINKS</Text>
-              </LinkWrapper>
-              <LinkWrapper>
-                <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
-                </IconWrapper>
-                <Text fontWeight={800}>PROJECT LINKS</Text>
-              </LinkWrapper>
-              <LinkWrapper>
-                <IconWrapper>
-                  <img width="20px" src={ToolsLight} alt="Tools icon"/>
-                </IconWrapper>
-                <Text fontWeight={800}>PROJECT LINKS</Text>
-              </LinkWrapper>
-            </Links>
-          </DetailsWrapper>
-        </DetailsSection>
-        <ContributionWrapper as={Container}>
-          <ContributionTextWrapper>
-            <Text color="#3F3D56" fontSize="24px" fontWeight={800}>
-              Contribute and get rewarded
-            </Text>
-            <br style={{ lineHeight: '8px' }} />
-            <Text color="#3F3D56" fontSize="20px" fontWeight={300}>
-              20% of projects tokens will be distributed to early contributors.
-            </Text>
-          </ContributionTextWrapper>
-          <Button width="240px">SEE TASKS</Button>
-        </ContributionWrapper>
-        <Tokenomics as={Container}>
-          <Text fontSize="24px" fontWeight={800}>
-            Tokenomics
-          </Text>
-          <TokenomicsTableWrapper>
-            <img width="540px" alt="table containing the project's tokenomics" src={DefiOptionsTokenomics} />
-          </TokenomicsTableWrapper>
-          <TokenomicsButtonWrapper>
-            <Button width="240px">GO TO LITEPAPER</Button>
-          </TokenomicsButtonWrapper>
-        </Tokenomics>
       </Wrapper>
     </Layout>
   );
