@@ -14,7 +14,7 @@ export const HalfCircle = styled.div`
   height: 900px;
   border-radius: 50%;
   right: -480px;
-  bottom: -128px;
+  bottom: -40px;
   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   transition: 0.3s all;
   z-index: -1;
@@ -49,7 +49,6 @@ export const Details = styled.div`
     margin-top: 24px;
     margin-bottom: 40px;
     font-size: 20px;
-    font-weight: normal;
     line-height: 32px;
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#3F3D56')};
     @media (max-width: 960px) {
@@ -61,16 +60,18 @@ export const Details = styled.div`
 
 export const JoinCard = styled.div`
 background: ${({ theme }) => (theme === 'dark' ? '#1E1E1E' : '#EEEEFF')};
-border: 1px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};;
+border: 1px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+font-weight: 800;
 box-sizing: border-box;
 height: 383px;
 width: 250px;
 border-radius: 0px;
 text-align: -webkit-center;
 margin-right: 40px;
-h3 {
+h2 {
   background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  font-size: 24px;
   border-radius: 4px;
   display: flex;
   justify-content: center;
@@ -83,6 +84,7 @@ h3 {
 .frame1 {
   background: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
   border-radius: 8px;
+  font-size: 24px;
   padding: 16px;
   width: 202px;
   height: 64px;
