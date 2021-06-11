@@ -9,6 +9,10 @@ import planet from 'assets/illustrations/planet.png';
 import useIsMobile from '../../../hooks/useIsMobile';
 import { Wrapper, SkillsWrapper, Details, Button, WrapperButton } from './styles';
 
+import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
+import ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
+
+
 export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
   const isMobile = useIsMobile();
@@ -34,7 +38,7 @@ export const WhatIsThisAbout = () => {
           </p>
          </div>
          <div className="why">
-          <img width={isMobile ? '200px' : '225px'} height={isMobile ? '142px' : '180px'} src={rocket} alt="Shine will get you to the moon and beyond!" />
+          <img width={isMobile ? '200px' : '225px'} height={isMobile ? '142px' : '180px'} src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine will get you to the moon and beyond!" />
           <h2>Contribute and get rewarded</h2>
           <p>
           Participate in a secure and compliant environment to get assets beyond ERC20 standard.

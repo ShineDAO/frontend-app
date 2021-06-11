@@ -5,7 +5,7 @@ import tokenDistribution from 'assets/illustrations/token-distribution.png';
 
 
 
-import { Wrapper, SkillsWrapper, Details, DisableColor, LiteparerCard } from './styles';
+import { Wrapper, SkillsWrapper, Details, DisableColor, LitepaperCard } from './styles';
 import { ConnectButton } from "../Sale/styles";
 
 export const SaleDetails = () => {
@@ -19,14 +19,14 @@ export const SaleDetails = () => {
           Shine total supply is <b>hard capped</b> at 100M
           </p>
         <Details theme={theme}>
-          <LiteparerCard theme={theme}>
+          <LitepaperCard theme={theme}>
             <h3>Tokenomics</h3>
             <a href="https://snapshot.org/#/shinedao.eth/proposal/QmPwhgvyiokiFMLh4wbEf6xrTZLuGLne4Q5bNPMQ5FyM1J">
               <img src={tokenDistribution} alt="Shine Tokenomics" />
             </a>
             {false && <ConnectButton theme={theme}>
               <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></ConnectButton>}
-          </LiteparerCard>
+          </LitepaperCard>
 
         </Details>
       </SkillsWrapper>
