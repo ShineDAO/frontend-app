@@ -3,12 +3,17 @@
     "tokenAddress": "0x12344567",
     "shortDescription": "Defi Options defi options is an open source decentralized options trading platform for Ethereum / EVM-compatible chains bringing a more capital efficient collateral allocation model and a more diversified options offer to DeFi.",
     "links": {
-        "docs": "",
-        "app": "",
-        "discord": "",
-        "github": ""
+        "website":"https://defioptions.github.io/DeFiOptions-frontend/#/",
+        "docs": "https://docs.defioptions.org/",
+        "discord": "https://discord.gg/Mw7Akgtcka",
+        "github": "https://github.com/DeFiOptions",
+        "tasks": "https://www.notion.so/DeFi-Options-DAO-ef46b38ed2f14eb6b37f8a23a808d204"
     },
     "tokenomics": {
+        "tokenDistributionImage": {
+            "light": "defi-options-token-distribution_light.png",
+            "dark": "defi-options-token-distribution_dark.png"
+        },
         "seedSale": {
             "total": "",
             "percentage": "",

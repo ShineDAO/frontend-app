@@ -2,12 +2,16 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container, LearnButton } from 'components/common';
 
-import adAdastraV1 from 'assets/illustrations/adastra-v1.png';
-import rocketLaunchV1 from 'assets/illustrations/rocket-launch-v1.png';
-import starman_dark from 'assets/illustrations/starman_dark.png';
+import man from 'assets/illustrations/man.png';
+import rocket from 'assets/illustrations/rocket.png';
+import planet from 'assets/illustrations/planet.png';
 
 import useIsMobile from '../../../hooks/useIsMobile';
 import { Wrapper, SkillsWrapper, Details } from './styles';
+
+import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
+import ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
+
 
 export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
@@ -23,9 +27,9 @@ export const WhatIsThisAbout = () => {
         <Details theme={theme}>
          <div className= "what">
         <img
-          width={isMobile ? '192px' : '180px'}
-          height={isMobile ? '156px' : '144.8px'}
-          src={adAdastraV1}
+          width={isMobile ? '192px' : '220px'}
+          height={isMobile ? '156px' : '180px'}
+          src={man}
           alt="Towards the stars! Are you ready?"
         />
           <h2>Participate Early</h2>
@@ -34,14 +38,14 @@ export const WhatIsThisAbout = () => {
           </p>
          </div>
          <div className="why">
-          <img width={isMobile ? '200px' : '180px'} height={isMobile ? '142px' : '128,14px'} src={rocketLaunchV1} alt="Shine will get you to the moon and beyond!" />
+          <img width={isMobile ? '200px' : '225px'} height={isMobile ? '142px' : '180px'} src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine will get you to the moon and beyond!" />
           <h2>Contribute and get rewarded</h2>
           <p>
           Participate in a secure and compliant environment to get assets beyond ERC20 standard.
           </p>
         </div>
         <div className="who">
-          <img width={isMobile ? '174px' :'180px'} height={isMobile ? '156px' : '160px'} src={starman_dark} alt="We take you to the orbit and beyond!" />
+          <img width={isMobile ? '174px' :'230px'} height={isMobile ? '156px' : '180px'} src={planet} alt="We take you to the orbit and beyond!" />
           <h2>Are you building a project?</h2>
           <p>
           Access to an active and incentivized community of contributors from day 1 to polish your project.

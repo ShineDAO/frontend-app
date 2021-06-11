@@ -16,13 +16,20 @@ import {
   CardTitleWrapper,
   ProjectNameWrapper
 } from './styles';
+import { Wrapper, IntroWrapper, Details, Thumbnail, Link, SaleCard, StatusContainer, EthInput, ColorTitle, UnderlinedTitle, ConnectButton, ConnectWalletCard, QuartCircleIntro, LitepaperCard } from "./styles";
+import ProgressBar from "react-bootstrap/ProgressBar";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import * as utils from './utils';
+import tokenDistribution from 'assets/illustrations/defi-options-token-distribution_light.png';
 
 import ShineToken from '../../../static/abi/ShineToken.json';
 import { Avatar } from '../common/Avatar';
 import DefiOptionsLogo from '../landing/UpcomingProjects/defi_options_logo.png';
 import { Text } from '../common/Text';
+import ShineToken from "../../../static/abi/ShineToken.json";
+import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer, DetailsTitle, TasksSection, ContributeTitle, ContributeText, ConnectButtonContainer, TaskSectionTextContainer } from 'components/common/RoundedLinkButton';
+
 
 export default function ProjectTemplate({ data }) {
   const { theme } = useContext(ThemeContext);
@@ -43,6 +50,10 @@ export default function ProjectTemplate({ data }) {
   const { rate } = project.technicalDetails[currentStatus];
   const { gas } = project.technicalDetails[currentStatus];
   const maxWeiToRaise = tokensOffered / rate;
+  const openLink = (link) => {
+    window.open(link, '_blank', 'noopener');
+  };
+
 
   const [isWalletEnabled, setWalletStatus] = useState();
   const [balance, setBalance] = useState();
@@ -354,6 +365,87 @@ export default function ProjectTemplate({ data }) {
               </Card>
             </Card>
           </InfoCards>
+
+          <br></br>
+          <br></br>
+
+
+          <Details>
+
+
+            <DetailsTitle>Details</DetailsTitle>
+
+            <DescriptionLinksContainer>
+              <TextContainer>
+                {project.shortDescription}
+              </TextContainer>
+              <LinkContainer>
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/links_${theme}.png`}></Icon>
+                    <Text onClick={() => openLink(project.links.website)} >WEBSITE</Text>
+                  </div>
+                </RoundedLinkButton>
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/docs_${theme}.png`}></Icon>
+                    <Text onClick={() => openLink(project.links.docs)}>DOCS</Text>
+                  </div>
+                </RoundedLinkButton>
+
+                {false && <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
+                    <Text>ALPHA VERSION</Text>
+                  </div>
+                </RoundedLinkButton>}
+
+
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/discord_${theme}.png`}></Icon>
+                    <Text onClick={() => openLink(project.links.discord)}>DISCORD</Text>
+                  </div>
+                </RoundedLinkButton>
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/github_${theme}.png`}></Icon>
+                    <Text onClick={() => openLink(project.links.github)}>GITHUB</Text>
+                  </div>
+                </RoundedLinkButton>
+              </LinkContainer>
+            </DescriptionLinksContainer>
+
+            <TasksSection theme={theme}>
+              <TaskSectionTextContainer>
+                <ContributeTitle>Contribute and get rewarded</ContributeTitle>
+
+                <ContributeText>20% of projects tokens will be distributed to early contributors.</ContributeText>
+
+              </TaskSectionTextContainer>
+
+              <ConnectButtonContainer>
+                <ConnectButton onClick={() => openLink(project.links.tasks)} theme={theme}>SEE TASKS</ConnectButton>
+              </ConnectButtonContainer>
+
+            </TasksSection>
+
+
+            <LitepaperCard theme={theme}>
+              <h3>Tokenomics</h3>
+
+              {false && <ConnectButton theme={theme}>
+                <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></ConnectButton>}
+            </LitepaperCard>
+          </Details>
+
+          {true &&
+
+            <a>
+              <img src={theme == "light" ? require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.light}`) : require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.dark}`)}
+                alt="Project Tokenomics" />
+            </a>}
+
         </IntroWrapper>
       </Wrapper>
     </Layout>
@@ -368,12 +460,17 @@ export const query = graphql`
       tokenAddress
       shortDescription
       links {
-        app
+        website
         discord
         docs
         github
+        tasks
       }
       tokenomics {
+        tokenDistributionImage {
+          light
+          dark
+        }
         initialCirculatingSupply
         totalAmountRaised
         coreTeam {

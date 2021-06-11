@@ -68,6 +68,32 @@ export const IntroWrapper = styled.div`
   }
 `;
 
+export const LitepaperCard = styled.div`
+  margin: 0 auto;
+  margin-top: 80px;
+  border-radius: 30px;
+  box-sizing: border-box;
+  left: 160px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  top: 965px;
+  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  a {
+    font-size: 18px;
+  }
+  a: hover {
+    text-decoration: none;
+    color: #3F3D56;
+  }
+  @media (max-width: 960px) {
+    width: 100%;
+    height: 342px;
+    margin-top: 40px;
+  }
+`;
+
+
 export const Details = styled.div`
   display: flex;
   flex-wrap: wrap;

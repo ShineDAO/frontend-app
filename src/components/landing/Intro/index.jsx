@@ -3,6 +3,7 @@ import { ThemeContext } from 'providers/ThemeProvider';
 import { Header } from 'components/theme';
 import { Container, JoinButton, LearnButton } from 'components/common';
 import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
+import shineAnimatedRocket from 'assets/illustrations/shineAnimatedRocket.gif'
 import ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
 import useIsMobile from '../../../hooks/useIsMobile';
 
@@ -31,7 +32,7 @@ export const Intro = () => {
               <h4>Protocol based incubator for DeFi projects</h4>
               <img
                 width={isMobile ? '200px' : '400px'}
-                src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite}
+                src={theme === 'light' ? shineAnimatedRocket : shineAnimatedRocket}
                 alt="Shine is meant to interconnect the blockchain community"
               />
               <ButtonWrapper>
@@ -63,7 +64,7 @@ export const Intro = () => {
             <img
               width="340px"
               height="260px"
-              src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite}
+              src={theme === 'light' ? shineAnimatedRocket : shineAnimatedRocket}
               alt="Shine is meant to interconnect the blockchain community"
             />
           </React.Fragment>
