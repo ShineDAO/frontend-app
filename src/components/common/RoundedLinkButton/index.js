@@ -52,6 +52,7 @@ export const TextContainer = styled.p`
 
 
 export const DescriptionLinksContainer = styled.div`
+
     display: flex;
     @media (max-width: 960px) {
         flex-direction: column;
@@ -74,7 +75,12 @@ export const LinkContainer = styled.div`
 `;
 
 export const DetailsTitle = styled.h3`
+    margin-top:60px;
     margin-bottom: 0rem;
+
+    @media (max-width: 960px) {
+        margin-top:20px;
+    }
 `;
 
 export const ContributeTitle = styled.h3`
@@ -92,6 +98,7 @@ export const ContributeText = styled.p`
 `;
 
 export const TasksSection = styled.div`
+    margin-top:60px;
     width: 1120px;
     height: 152px;
 
@@ -103,7 +110,10 @@ export const TasksSection = styled.div`
     @media (max-width: 960px) {
         flex-direction: column;
         height: 192px;
+        margin-top:20px;
     }
+
+    
  
 
     background: ${({ theme }) => (theme === 'dark' ? '#3F3D56' : '#FFFFFF')};

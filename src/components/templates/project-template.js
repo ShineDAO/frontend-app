@@ -3,16 +3,16 @@ import { ThemeContext } from "providers/ThemeProvider";
 
 import { Layout, SEO, Container } from 'components/common';
 import { Header } from 'components/theme';
-import { Wrapper, IntroWrapper, Details, Thumbnail, Link, SaleCard, StatusContainer, EthInput, ColorTitle, UnderlinedTitle, ConnectButton, ConnectWalletCard, QuartCircleIntro } from "./styles";
+import { Wrapper, IntroWrapper, Details, Thumbnail, Link, SaleCard, StatusContainer, EthInput, ColorTitle, UnderlinedTitle, ConnectButton, ConnectWalletCard, QuartCircleIntro, LitepaperCard } from "./styles";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import PulseLoader from "react-spinners/PulseLoader";
 
 const axios = require("axios");
 import * as utils from './utils';
+import tokenDistribution from 'assets/illustrations/token-distribution.png';
 
 import ShineToken from "../../../static/abi/ShineToken.json";
-import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer, DetailsTitle, TasksSection, ContributeTitle,ContributeText,ConnectButtonContainer,TaskSectionTextContainer } from 'components/common/RoundedLinkButton';
-
+import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer, DetailsTitle, TasksSection, ContributeTitle, ContributeText, ConnectButtonContainer, TaskSectionTextContainer } from 'components/common/RoundedLinkButton';
 
 
 export default function ProjectTemplate({ data }) {
@@ -227,44 +227,38 @@ export default function ProjectTemplate({ data }) {
 
           <Details>
 
-            {console.log("theme ", theme)}
 
             <DetailsTitle>Details</DetailsTitle>
+
             <DescriptionLinksContainer>
               <TextContainer>
                 {project.shortDescription}
               </TextContainer>
-
               <LinkContainer>
-
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/links_${theme}.png`}></Icon>
                     <Text>PROJECT LINKS</Text>
                   </div>
                 </RoundedLinkButton>
-
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/docs_${theme}.png`}></Icon>
                     <Text>DOCS</Text>
                   </div>
                 </RoundedLinkButton>
-
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
                     <Text>ALPHA VERSION</Text>
                   </div>
                 </RoundedLinkButton>
-
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/discord_${theme}.png`}></Icon>
                     <Text>DISCORD</Text>
                   </div>
                 </RoundedLinkButton>
-
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/github_${theme}.png`}></Icon>
@@ -272,25 +266,35 @@ export default function ProjectTemplate({ data }) {
                   </div>
                 </RoundedLinkButton>
               </LinkContainer>
-
-
             </DescriptionLinksContainer>
 
             <TasksSection theme={theme}>
               <TaskSectionTextContainer>
-                  <ContributeTitle>Contribute and get rewarded</ContributeTitle>
-               
-                  <ContributeText>20% of projects tokens will be distributed to early contributors.</ContributeText>
-     
+                <ContributeTitle>Contribute and get rewarded</ContributeTitle>
+
+                <ContributeText>20% of projects tokens will be distributed to early contributors.</ContributeText>
+
               </TaskSectionTextContainer>
 
               <ConnectButtonContainer>
                 <ConnectButton onClick={() => console.log("Clicked")} theme={theme}>SEE TASKS</ConnectButton>
               </ConnectButtonContainer>
-        
+
             </TasksSection>
 
+
+            <LitepaperCard theme={theme}>
+              <h3>Tokenomics</h3>
+
+              <a href="https://snapshot.org/#/shinedao.eth/proposal/QmPwhgvyiokiFMLh4wbEf6xrTZLuGLne4Q5bNPMQ5FyM1J">
+                <img src={tokenDistribution} alt="Shine Tokenomics" />
+              </a>
+              {false && <ConnectButton theme={theme}>
+                <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></ConnectButton>}
+            </LitepaperCard>
           </Details>
+
+
         </IntroWrapper>
       </Wrapper>
     </Layout>
