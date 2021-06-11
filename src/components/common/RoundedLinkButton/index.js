@@ -36,7 +36,7 @@ export const Icon = styled.img`
 `;
 
 
-export const Text = styled.h5`
+export const TextRoundedLinkButton = styled.h5`
   display: inline-block;
   margin-bottom: 0rem;
   padding-left:3px;

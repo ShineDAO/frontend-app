@@ -28,7 +28,7 @@ export const UpcomingProjects = () => {
               <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" />
               <h2>Defi Options DAO</h2>
             </NameWrapper>
-            <Card background="#fada5e" borderRadius="4px" height="32px" width="111px">
+            <Card background="#fada5e" borderRadius="4px" height="32px" width="140px">
               &nbsp; &nbsp;
               <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
                 <circle cx="4" cy="4" r="4" fill="#3F3D56" />

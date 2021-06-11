@@ -1,19 +1,56 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { ThemeContext } from "providers/ThemeProvider";
+import { ThemeContext } from 'providers/ThemeProvider';
 
-import { Layout, SEO, Container } from 'components/common';
+import { Layout, SEO, Container, Card } from 'components/common';
 import { Header } from 'components/theme';
-import { Wrapper, IntroWrapper, Details, Thumbnail, Link, SaleCard, StatusContainer, EthInput, ColorTitle, UnderlinedTitle, ConnectButton, ConnectWalletCard, QuartCircleIntro, LitepaperCard } from "./styles";
-import ProgressBar from "react-bootstrap/ProgressBar";
-import PulseLoader from "react-spinners/PulseLoader";
+import axios from 'axios';
+import { graphql } from 'gatsby';
+import {
+  RoundedLinkButton,
+  Icon,
+  TextRoundedLinkButton,
+  DescriptionLinksContainer,
+  LinkContainer,
+  TextContainer,
+  DetailsTitle,
+  TasksSection,
+  ContributeTitle,
+  ContributeText,
+  ConnectButtonContainer,
+  TaskSectionTextContainer,
+} from 'components/common/RoundedLinkButton';
+import {
+  Wrapper,
+  IntroWrapper,
+  QuartCircleIntro,
+  Heading,
+  HeadingText,
+  InfoCards,
+  CardHeaderWrapper,
+  CardTitleWrapper,
+  ProjectNameWrapper,
+  Details,
+  ConnectButton,
+  Thumbnail,
+  Link,
+  SaleCard,
+  StatusContainer,
+  EthInput,
+  ColorTitle,
+  UnderlinedTitle,
+  ConnectWalletCard,
+  LitepaperCard,
+} from './styles';
 
-const axios = require("axios");
 import * as utils from './utils';
-import tokenDistribution from 'assets/illustrations/defi-options-token-distribution_light.png';
 
-import ShineToken from "../../../static/abi/ShineToken.json";
-import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer, DetailsTitle, TasksSection, ContributeTitle, ContributeText, ConnectButtonContainer, TaskSectionTextContainer } from 'components/common/RoundedLinkButton';
-
+import { Avatar } from '../common/Avatar';
+import DefiOptionsLogo from '../landing/UpcomingProjects/defi_options_logo.png';
+import { Text } from '../common/Text';
+import ShineToken from '../../../static/abi/ShineToken.json';
+import { DisableColor } from '../landing/SaleDetails/styles';
+import PulseLoader from 'react-spinners/PulseLoader';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 export default function ProjectTemplate({ data }) {
   const { theme } = useContext(ThemeContext);
@@ -21,29 +58,22 @@ export default function ProjectTemplate({ data }) {
   const project = data.projectsJson;
   console.log('project data ', project);
 
+  const shineTokenAddress = '0xd3E104c53966Dd06E3CF62FE7C3A3EC2247c4Ade';
+  const shineTokenAbi = ShineToken.abi;
 
-  var shineTokenAddress = "0xd3E104c53966Dd06E3CF62FE7C3A3EC2247c4Ade"
-  var shineTokenAbi = ShineToken.abi;
+  const { currentStatus } = project.technicalDetails;
+  const { tokenAbi } = project.technicalDetails;
+  const saleAbi = project.technicalDetails[currentStatus].abi;
 
-
-  var currentStatus = project.technicalDetails.currentStatus;
-  var tokenAbi = project.technicalDetails.tokenAbi;
-  var saleAbi = project.technicalDetails[currentStatus].abi;
-
-
-  var saleContractAddress = project.technicalDetails[currentStatus].saleAddress;
-  var tokenContractAddress = project.technicalDetails.tokenAddress;
-  var tokensOffered = project.technicalDetails[currentStatus].tokensOffered
-  var rate = project.technicalDetails[currentStatus].rate;
-  var gas = project.technicalDetails[currentStatus].gas;
-  var maxWeiToRaise = tokensOffered / rate;
-
-
-
-  const openLink = (link) => {
+  const saleContractAddress = project.technicalDetails[currentStatus].saleAddress;
+  const tokenContractAddress = project.technicalDetails.tokenAddress;
+  const { tokensOffered } = project.technicalDetails[currentStatus];
+  const { rate } = project.technicalDetails[currentStatus];
+  const { gas } = project.technicalDetails[currentStatus];
+  const maxWeiToRaise = tokensOffered / rate;
+  const openLink = link => {
     window.open(link, '_blank', 'noopener');
   };
-
 
   const [isWalletEnabled, setWalletStatus] = useState();
   const [balance, setBalance] = useState();
@@ -52,7 +82,7 @@ export default function ProjectTemplate({ data }) {
   const [isShineBought, setShineBought] = useState(false);
   const [shineBoughtAmount, setShineBoughtAmount] = useState(false);
   const [isTransactionBeingProcessed, setTransactionBeingProcessed] = useState(false);
-  const [ethAmountToSpend, setEthAmountToSpend] = useState("");
+  const [ethAmountToSpend, setEthAmountToSpend] = useState('');
   const [currentEthPrice, setCurrentEthPrice] = useState();
   const [ethRaised, setEthRaised] = useState();
   const [weiRaised, setWeiRaised] = useState();
@@ -65,32 +95,40 @@ export default function ProjectTemplate({ data }) {
     isWalletEnabled ? utils.getEthBalance(setBalance) : null;
     isWalletEnabled ? utils.getEthRaised(setEthRaised, saleAbi, saleContractAddress) : null;
     isWalletEnabled ? utils.getWeiRaised(setWeiRaised, saleAbi, saleContractAddress) : null;
-    isWalletEnabled ? utils.getSeedSaleShnBalance(setSeedSaleShnBalance, tokenAbi, saleContractAddress, tokenContractAddress) : null;
+    isWalletEnabled
+      ? utils.getSeedSaleShnBalance(setSeedSaleShnBalance, tokenAbi, saleContractAddress, tokenContractAddress)
+      : null;
     isWalletEnabled ? utils.getUserAddress(setUserAddress, setShineBalance, shineTokenAbi, shineTokenAddress) : null;
 
-    isWalletEnabled ? utils.getUserAddressProject(setUserAddress, setProjectBalance, tokenAbi, tokenContractAddress) : null;
+    isWalletEnabled
+      ? utils.getUserAddressProject(setUserAddress, setProjectBalance, tokenAbi, tokenContractAddress)
+      : null;
 
     isWalletEnabled ? utils.getCurrentMigrations() : null;
-  }, [isWalletEnabled, isTransactionBeingProcessed, isShineBought]);
+  }, [
+    isWalletEnabled,
+    isTransactionBeingProcessed,
+    isShineBought,
+  ]);
 
   useEffect(() => {
     axios
-      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum")
-      .then(function (response) {
+      .get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum')
+      .then(function(response) {
         // handle success
         setCurrentEthPrice(response.data[0].current_price);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // handle error
         console.log(error);
       })
-      .then(function () {
+      .then(function() {
         // always executed
       });
   }, [ethAmountToSpend]);
 
   useEffect(() => {
-    console.log("wwwwwwwwww ", weiRaised);
+    console.log('wwwwwwwwww ', weiRaised);
     isWalletEnabled && setSaleProgress(((weiRaised / maxWeiToRaise) * 100).toFixed(2));
   }, [weiRaised]);
 
@@ -100,26 +138,25 @@ export default function ProjectTemplate({ data }) {
       <Wrapper>
         <QuartCircleIntro theme={theme} />
         <Header />
-        <IntroWrapper as={Container}>
           <h1>Shine Pre Sale (Tranche II)</h1>
           <Details theme={theme}>
             <SaleCard theme={theme} isWalletEnabled={isWalletEnabled}>
               Sale status
-            <StatusContainer>
+              <StatusContainer>
                 &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-                  <circle cx="4" cy="4" r="4" fill="#10b981"></circle>{/* red */}
-                </svg>
+                <circle cx="4" cy="4" r="4" fill="#10b981"></circle>{/* red */}
+              </svg>
                 <span>&nbsp;<b>Open</b>&nbsp;</span>
               </StatusContainer>
               <br />
               <UnderlinedTitle>Sale details:</UnderlinedTitle>
 
-            Total Swap amount: 7,000,000 SHN
-            <br />
-            Max participation: 1 ETH / address
-            <br />
-            Rate: ≈ $0.028 / 1 SHN
-            <br />
+              Total Swap amount: 7,000,000 SHN
+              <br />
+              Max participation: 1 ETH / address
+              <br />
+              Rate: ≈ $0.028 / 1 SHN
+              <br />
               <br />
               <ConnectButton theme={theme} onClick={() => utils.addToWatchlist(project.metamaskDetails)}>Add SHN to MetaMask</ConnectButton>
               {false && <span>ETH raised so far {ethRaised} ETH </span>}
@@ -132,7 +169,7 @@ export default function ProjectTemplate({ data }) {
 
                 <Link href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
                   0x1C7ede23b1361acC098A1e357C9085D131b34a01
-              </Link>
+                </Link>
                 <br></br><br></br>
               </div>
 
@@ -141,8 +178,6 @@ export default function ProjectTemplate({ data }) {
                   <span>Account: {window.ethereum.selectedAddress}</span>
                   <br />
                   <span>Balance: {balance} ETH</span>
-                  <br />
-                  <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
                   <br />
                   <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString()} {project.metamaskDetails.symbol}</span>
                   <br />
@@ -169,9 +204,9 @@ export default function ProjectTemplate({ data }) {
                       />
                       {ethAmountToSpend && (
                         <span>
-                          <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
-                          <span>Estimated SHN to receive: {utils.estimateReceivedShn(ethAmountToSpend, rate).toLocaleString()}</span>
-                        </span>
+                            <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
+                                                      <span>Estimated SHN to receive: {utils.estimateReceivedShn(ethAmountToSpend, rate).toLocaleString()}</span>
+                    </span>
                       )}
                       <br />
                       <br />
@@ -190,11 +225,12 @@ export default function ProjectTemplate({ data }) {
                             saleAbi,
                             saleContractAddress,
                             gas
+                            
                           )
                         }
                       >
                         Buy Shine
-                    </ConnectButton>
+                      </ConnectButton>
                       <br />
                       <br />
                     </div>
@@ -223,51 +259,293 @@ export default function ProjectTemplate({ data }) {
             </ConnectWalletCard>
           </Details>
 
-          <br></br>
-          <br></br>
+        <IntroWrapper as={Container}>
+          <Heading>
+            <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />
+            <HeadingText>Defi Options DAO</HeadingText>
+          </Heading>
+          <InfoCards>
+            <Card background="#3F3D56" padding="40px" flexDirection="column" width="540px" justifyContent="flex-start">
+              <CardHeaderWrapper>
+                <ProjectNameWrapper>
+                  <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" width="40px" height="40px" />
+                  <Text margin="0 0 0 16px" fontSize="24px" fontWeight={800} color="white">
+                    Defi Options DAO
+                  </Text>
+                </ProjectNameWrapper>
+                <Card background="#fada5e" borderRadius="4px" height="32px" width="140px">
+                  &nbsp; &nbsp;
+                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                    <circle cx="4" cy="4" r="4" fill="#3F3D56" />
+                  </svg>
+                  <Text color="#3F3D56" fontWeight={800}>
+                    &nbsp; in TBA days
+                  </Text>
+                </Card>
+              </CardHeaderWrapper>
+              <Card background="#3F3D56" flexWrap="wrap" height="336px" margin="40px 0">
+                <Card
+                  alignItems="flex-start"
+                  justifyContent="space-around"
+                  background="white"
+                  display="flex"
+                  height="96px"
+                  flexDirection="column"
+                  margin="0 24px 24px 0"
+                  padding="16px 0 16px 24px"
+                  width="218px"
+                >
+                  <Text color="#3F3D56" fontWeight={300} fontSize="20px">
+                    Total raise
+                  </Text>
+                  <Text color="#3F3D56" fontWeight={800} fontSize="24px">
+                    $200k
+                  </Text>
+                </Card>
+                <Card
+                  alignItems="flex-start"
+                  justifyContent="space-around"
+                  background="#3F3D56"
+                  border="1px solid white"
+                  display="flex"
+                  flexDirection="column"
+                  height="96px"
+                  margin="0 0 24px 0"
+                  padding="16px 0 16px 24px"
+                  width="218px"
+                >
+                  <Text color="white" fontWeight={300} fontSize="20px">
+                    Incubation Stage
+                  </Text>
+                  <Text color="white" fontWeight={700} fontSize="20px">
+                    Seed Sale
+                  </Text>
+                </Card>
+                <Card
+                  alignItems="flex-start"
+                  justifyContent="space-around"
+                  background="#3F3D56"
+                  display="flex"
+                  height="96px"
+                  border="1px solid white"
+                  flexDirection="column"
+                  margin="0 24px 24px 0"
+                  padding="16px 0 16px 24px"
+                  width="218px"
+                >
+                  <Text color="white" fontWeight={300} fontSize="20px">
+                    Total supply
+                  </Text>
+                  <Text color="white" fontWeight={700} fontSize="20px">
+                    100,000,000 DoD
+                  </Text>
+                </Card>
+                <Card
+                  alignItems="flex-start"
+                  justifyContent="space-around"
+                  background="#3F3D56"
+                  border="1px solid white"
+                  display="flex"
+                  flexDirection="column"
+                  height="96px"
+                  margin="0 0 24px 0"
+                  padding="16px 0 16px 24px"
+                  width="218px"
+                >
+                  <Text color="white" fontWeight={300} fontSize="20px">
+                    Chain
+                  </Text>
+                  <Text color="white" fontWeight={700} fontSize="20px">
+                    Ethereum
+                  </Text>
+                </Card>
+                <Card
+                  alignItems="flex-start"
+                  justifyContent="space-around"
+                  background="#3F3D56"
+                  display="flex"
+                  border="1px solid white"
+                  height="96px"
+                  flexDirection="column"
+                  margin="0 24px 0 0"
+                  padding="16px 0 16px 24px"
+                  width="218px"
+                >
+                  <Text color="white" fontWeight={300} fontSize="20px">
+                    Round allocation
+                  </Text>
+                  <Text color="white" fontWeight={700} fontSize="20px">
+                    100,000,000 DoD
+                  </Text>
+                </Card>
+                <Card
+                  alignItems="flex-start"
+                  justifyContent="space-around"
+                  background="#3F3D56"
+                  border="1px solid white"
+                  display="flex"
+                  flexDirection="column"
+                  height="96px"
+                  margin="0"
+                  padding="16px 0 16px 24px"
+                  width="218px"
+                >
+                  <Text color="white" fontWeight={300} fontSize="20px">
+                    Rate
+                  </Text>
+                  <Text color="white" fontWeight={700} fontSize="20px">
+                    ≈ $0.01 / 1 DoD
+                  </Text>
+                </Card>
+                <Card borderRadius="4px" background="white" clickable width="100%" height="48px" margin="40px 0 0 0">
+                  <Text fontWeight={800}>ADD DOD TO METAMASK</Text>
+                </Card>
+              </Card>
+            </Card>
+            <Card background="#1E1E1E" padding="40px" flexDirection="column" width="540px" justifyContent="flex-start">
+              <CardTitleWrapper>
+                <Text fontWeight={800} fontSize="24px" color="white">
+                  Token Address
+                </Text>
+              </CardTitleWrapper>
+              <Card
+                width="462px"
+                borderRadius="4px"
+                border="1px solid #3F3D56"
+                background="#1E1E1E"
+                height="72px"
+                margin="24px 0 0 0"
+                padding="20px 24px"
+                justifyContent="space-between"
+              >
+                <Card width="120px" height="32px" background="#EEEEFF">
+                  <Text fontSize="18px" fontWeight={800}>
+                    TIER 1
+                  </Text>
+                </Card>
+                <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
+                  ≈ $300
+                </Text>
+              </Card>
+              <Card
+                width="462px"
+                borderRadius="4px"
+                border="1px solid #3F3D56"
+                background="#1E1E1E"
+                height="72px"
+                margin="24px 0 0 0"
+                padding="20px 24px"
+                justifyContent="space-between"
+              >
+                <Card width="120px" height="32px" background="#EEEEFF">
+                  <Text fontSize="18px" fontWeight={800}>
+                    TIER 2
+                  </Text>
+                </Card>
+                <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
+                  ≈ $800
+                </Text>
+              </Card>
+              <Card
+                width="462px"
+                borderRadius="4px"
+                border="1px solid #3F3D56"
+                background="#1E1E1E"
+                height="72px"
+                margin="24px 0 0 0"
+                padding="20px 24px"
+                justifyContent="space-between"
+              >
+                <Card width="120px" height="32px" background="#EEEEFF">
+                  <Text fontSize="18px" fontWeight={800}>
+                    TIER 3
+                  </Text>
+                </Card>
+                <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
+                  ≈ $2400
+                </Text>
+              </Card>
+              <Card
+                width="462px"
+                borderRadius="4px"
+                border="1px solid #3F3D56"
+                background="#1E1E1E"
+                height="72px"
+                margin="24px 0 0 0"
+                padding="20px 24px"
+                justifyContent="space-between"
+              >
+                <Card width="120px" height="32px" background="#EEEEFF">
+                  <Text fontSize="18px" fontWeight={800}>
+                    TIER 4
+                  </Text>
+                </Card>
+                <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
+                  ≈ $4200
+                </Text>
+              </Card>
+              <Card
+                borderRadius="4px"
+                border="1px solid white"
+                color="white"
+                background="#1E1E1E"
+                clickable
+                width="100%"
+                height="48px"
+                margin="40px 0 0 0"
+              >
+                <Text fontWeight={800} color="white">
+                  CONNECT WALLET
+                </Text>
+              </Card>
+            </Card>
+          </InfoCards>
 
+          <br></br>
+          <br></br>
 
           <Details>
-
-
             <DetailsTitle>Details</DetailsTitle>
 
             <DescriptionLinksContainer>
-              <TextContainer>
-                {project.shortDescription}
-              </TextContainer>
+              <TextContainer>{project.shortDescription}</TextContainer>
               <LinkContainer>
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/links_${theme}.png`}></Icon>
-                    <Text onClick={() => openLink(project.links.website)} >WEBSITE</Text>
+                    <TextRoundedLinkButton onClick={() => openLink(project.links.website)}>
+                      WEBSITE
+                    </TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/docs_${theme}.png`}></Icon>
-                    <Text onClick={() => openLink(project.links.docs)}>DOCS</Text>
+                    <TextRoundedLinkButton onClick={() => openLink(project.links.docs)}>DOCS</TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
 
-                {false && <RoundedLinkButton theme={theme}>
-                  <div>
-                    <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
-                    <Text>ALPHA VERSION</Text>
-                  </div>
-                </RoundedLinkButton>}
-
+                {false && (
+                  <RoundedLinkButton theme={theme}>
+                    <div>
+                      <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
+                      <TextRoundedLinkButton>ALPHA VERSION</TextRoundedLinkButton>
+                    </div>
+                  </RoundedLinkButton>
+                )}
 
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/discord_${theme}.png`}></Icon>
-                    <Text onClick={() => openLink(project.links.discord)}>DISCORD</Text>
+                    <TextRoundedLinkButton onClick={() => openLink(project.links.discord)}>
+                      DISCORD
+                    </TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/github_${theme}.png`}></Icon>
-                    <Text onClick={() => openLink(project.links.github)}>GITHUB</Text>
+                    <TextRoundedLinkButton onClick={() => openLink(project.links.github)}>GITHUB</TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
               </LinkContainer>
@@ -278,39 +556,46 @@ export default function ProjectTemplate({ data }) {
                 <ContributeTitle>Contribute and get rewarded</ContributeTitle>
 
                 <ContributeText>20% of projects tokens will be distributed to early contributors.</ContributeText>
-
               </TaskSectionTextContainer>
 
               <ConnectButtonContainer>
-                <ConnectButton onClick={() => openLink(project.links.tasks)} theme={theme}>SEE TASKS</ConnectButton>
+                <ConnectButton onClick={() => openLink(project.links.tasks)} theme={theme}>
+                  SEE TASKS
+                </ConnectButton>
               </ConnectButtonContainer>
-
             </TasksSection>
-
 
             <LitepaperCard theme={theme}>
               <h3>Tokenomics</h3>
 
-              {false && <ConnectButton theme={theme}>
-                <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></ConnectButton>}
+              {false && (
+                <ConnectButton theme={theme}>
+                  <DisableColor href="/Litepaper.pdf" target="_blank">
+                    GO TO LITEPAPER
+                  </DisableColor>
+                </ConnectButton>
+              )}
             </LitepaperCard>
           </Details>
 
-          {true &&
-
+          {true && (
             <a>
-              <img src={theme == "light" ? require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.light}`) : require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.dark}`)}
-                alt="Project Tokenomics" />
-            </a>}
-
-
+              <img
+                src={
+                  theme == 'light'
+                    ? require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.light}`)
+                    : require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.dark}`)
+                }
+                alt="Project Tokenomics"
+              />
+            </a>
+          )}
         </IntroWrapper>
       </Wrapper>
     </Layout>
   );
 }
 
-// eslint-disable-next-line no-undef
 export const query = graphql`
   query($slug: String!) {
     projectsJson(fields: { slug: { eq: $slug } }) {
@@ -397,7 +682,7 @@ export const query = graphql`
           rate
           saleAddress
           tokensOffered
-          abi 
+          abi
         }
         seed {
           gas

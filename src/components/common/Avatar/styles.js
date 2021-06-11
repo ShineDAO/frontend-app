@@ -13,8 +13,8 @@ const Wrapper = styled.div`
   border-radius: 50%;
   border: 2px solid #ddd;
   padding: 2px;
-  width: 60px;
-  height: 60px;
+  width: ${({ width }) => width || '60px'};
+  height: ${({ height }) => height || '60px'};
   background-color: white;
 `;
 
