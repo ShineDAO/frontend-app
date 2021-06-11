@@ -11,6 +11,7 @@ const axios = require("axios");
 import * as utils from './utils';
 
 import ShineToken from "../../../static/abi/ShineToken.json";
+import { RoundedLinkButton, Icon, Text } from 'components/common/RoundedLinkButton';
 
 
 
@@ -37,7 +38,7 @@ export default function ProjectTemplate({ data }) {
   var gas = project.technicalDetails[currentStatus].gas;
   var maxWeiToRaise = tokensOffered / rate;
 
-  
+
 
 
 
@@ -218,6 +219,49 @@ export default function ProjectTemplate({ data }) {
                 <ConnectButton onClick={() => utils.loadWeb3(setWalletStatus, setBalance)} theme={theme}>CONNECT WALLET</ConnectButton>
               )}
             </ConnectWalletCard>
+          </Details>
+
+          <br></br>
+          <br></br>
+          <RoundedLinkButton>
+            <div>
+              <Icon src={"/icons/links_light.png"}></Icon>
+              <Text>PROJECT LINKS</Text>
+            </div>
+          </RoundedLinkButton>
+
+          <RoundedLinkButton>
+            <div>
+              <Icon src={"/icons/docs_light.png"}></Icon>
+              <Text>DOCS</Text>
+            </div>
+          </RoundedLinkButton>
+
+          <RoundedLinkButton>
+            <div>
+              <Icon src={"/icons/alphaversion_light.png"}></Icon>
+              <Text>ALPHA VERSION</Text>
+            </div>
+          </RoundedLinkButton>
+
+          <RoundedLinkButton>
+            <div>
+              <Icon src={"/icons/discord_light.png"}></Icon>
+              <Text>DISCORD</Text>
+            </div>
+          </RoundedLinkButton>
+
+          <RoundedLinkButton>
+            <div>
+              <Icon src={"/icons/github_light.png"}></Icon>
+              <Text>GITHUB</Text>
+            </div>
+          </RoundedLinkButton>
+
+          <Details>
+
+            <h3>Details</h3>
+            <p>{project.shortDescription}</p>
           </Details>
         </IntroWrapper>
       </Wrapper>
