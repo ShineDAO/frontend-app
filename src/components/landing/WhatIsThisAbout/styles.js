@@ -12,6 +12,12 @@ export const SkillsWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  h2 {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 32px;
+  }
+
   @media (max-width: 960px) {
     flex-direction: column;
     display: block;
@@ -30,11 +36,8 @@ export const Details = styled.div`
     width: 100%;
   }
 
-  h1 {
-    margin-bottom: 2rem;
-    font-size: 24px;
+  h2 { 
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#212121')};
-    
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
@@ -42,10 +45,10 @@ export const Details = styled.div`
   }
 
   p {
-    margin-bottom: 2.5rem;
     font-size: 20px;
-    font-weight: normal;
+    font-weight: 300;
     line-height: 32px;
+    text-align: center;    
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#1E1E1E')};
 
     @media (max-width: 960px) {
