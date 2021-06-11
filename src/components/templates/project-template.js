@@ -205,8 +205,8 @@ export default function ProjectTemplate({ data }) {
                       {ethAmountToSpend && (
                         <span>
                             <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
-                          <span>Estimated SHN to receive: {utils.estimateReceivedShn(ethAmountToSpend).toLocaleString()}</span>
-                          </span>
+                                                      <span>Estimated SHN to receive: {utils.estimateReceivedShn(ethAmountToSpend, rate).toLocaleString()}</span>
+                    </span>
                       )}
                       <br />
                       <br />
