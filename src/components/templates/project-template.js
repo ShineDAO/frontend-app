@@ -11,7 +11,7 @@ const axios = require("axios");
 import * as utils from './utils';
 
 import ShineToken from "../../../static/abi/ShineToken.json";
-import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer,DetailsTitle } from 'components/common/RoundedLinkButton';
+import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer, DetailsTitle, TasksSection, ContributeTitle,ContributeText } from 'components/common/RoundedLinkButton';
 
 
 
@@ -273,7 +273,24 @@ export default function ProjectTemplate({ data }) {
                 </RoundedLinkButton>
               </LinkContainer>
 
+
             </DescriptionLinksContainer>
+
+            <TasksSection theme={theme}>
+              <div>
+                <div>
+                  <ContributeTitle>Contribute and get rewarded</ContributeTitle>
+                </div>
+                <div>
+                  <ContributeText>20% of projects tokens will be distributed to early contributors.</ContributeText>
+                </div>
+              </div>
+
+              <div>
+                <ConnectButton onClick={() => console.log("Clicked")} theme={theme}>SEE TASKS</ConnectButton>
+
+              </div>
+            </TasksSection>
 
           </Details>
         </IntroWrapper>

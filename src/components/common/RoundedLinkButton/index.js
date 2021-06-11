@@ -67,4 +67,29 @@ export const DetailsTitle = styled.h3`
     margin-bottom: 0rem;
 `;
 
+export const ContributeTitle = styled.h3`
+    margin-bottom: 1rem;
+    
+`;
+export const ContributeText = styled.p`
+    margin-bottom: 0rem;
+`;
+
+export const TasksSection = styled.div`
+    width: 1120px;
+    height: 152px;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    
+
+    background: ${({ theme }) => (theme === 'dark' ? '#3F3D56' : '#FFFFFF')};
+    border: 1px solid ${({ theme }) => (theme === 'dark' ? '#EEEEFF' : '#3F3D56')};
+    box-sizing: border-box;
+    border-radius: 8px;
+`;
+
+
 
