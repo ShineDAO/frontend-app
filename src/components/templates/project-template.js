@@ -22,6 +22,7 @@ import {
 import {
   Wrapper,
   IntroWrapper,
+  HalfCircle,
   QuartCircleIntro,
   Heading,
   HeadingText,
@@ -506,7 +507,7 @@ export default function ProjectTemplate({ data }) {
 
           <Details>
             <DetailsTitle>Details</DetailsTitle>
-
+            <HalfCircle theme={theme}/>
             <DescriptionLinksContainer>
               <TextContainer>{project.shortDescription}</TextContainer>
               <LinkContainer>
