@@ -49,6 +49,8 @@ import DefiOptionsLogo from '../landing/UpcomingProjects/defi_options_logo.png';
 import { Text } from '../common/Text';
 import ShineToken from '../../../static/abi/ShineToken.json';
 import { DisableColor } from '../landing/SaleDetails/styles';
+import PulseLoader from 'react-spinners/PulseLoader';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 export default function ProjectTemplate({ data }) {
   const { theme } = useContext(ThemeContext);
@@ -136,6 +138,123 @@ export default function ProjectTemplate({ data }) {
       <Wrapper>
         <QuartCircleIntro theme={theme} />
         <Header />
+        <h1>Shine Pre Sale (Tranche II)</h1>
+        <Details theme={theme}>
+          <SaleCard theme={theme} isWalletEnabled={isWalletEnabled}>
+            Sale status
+            <StatusContainer>
+              &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+              <circle cx="4" cy="4" r="4" fill="#10b981"></circle>{/* red */}
+            </svg>
+              <span>&nbsp;<b>Open</b>&nbsp;</span>
+            </StatusContainer>
+            <br />
+            <UnderlinedTitle>Sale details:</UnderlinedTitle>
+
+            Total Swap amount: 7,000,000 SHN
+            <br />
+            Max participation: 1 ETH / address
+            <br />
+            Rate: ≈ $0.028 / 1 SHN
+            <br />
+            <br />
+            <ConnectButton theme={theme} onClick={() => addToWatchlist(metamaskDetails)}>Add SHN to MetaMask</ConnectButton>
+            {false && <span>ETH raised so far {ethRaised} ETH </span>}
+            <br />
+          </SaleCard>
+
+          <ConnectWalletCard theme={theme} isWalletEnabled={isWalletEnabled}>
+            <div>
+              <h3>Token address</h3>
+
+              <Link href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
+                0x1C7ede23b1361acC098A1e357C9085D131b34a01
+              </Link>
+              <br></br><br></br>
+            </div>
+
+            {isWalletEnabled ? (
+              <div>
+                <span>Account: {window.ethereum.selectedAddress}</span>
+                <br />
+                <span>Balance: {balance} ETH</span>
+                <br />
+                <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
+                <br />
+                {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
+                <br />
+                {weiRaised && (
+                  <div>
+                    <span>Sale progress </span>
+                    <ProgressBar animated striped variant="success" now={saleProgress} label={`${saleProgress}%`} />
+                  </div>
+                )}
+                <br />
+                {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
+                {isWalletEnabled && !isTransactionBeingProcessed && (
+                  <div>
+                    <label htmlFor="eth_amount">Enter ETH amount:</label>
+                    <br />
+                    <EthInput
+                      autoComplete="off"
+                      type="number"
+                      id="eth_amount"
+                      value={ethAmountToSpend}
+                      onChange={(e) => utils.handleChangeOfEthAmountToSpend(e.target.value, setEthAmountToSpend)}
+                    />
+                    {ethAmountToSpend && (
+                      <span>
+                          <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
+                        <span>Estimated SHN to receive: {utils.estimateReceivedShn(ethAmountToSpend).toLocaleString()}</span>
+                        </span>
+                    )}
+                    <br />
+                    <br />
+
+                    <ConnectButton
+                      theme={theme}
+                      onClick={() =>
+                        utils.buyShineTokens(
+                          ethAmountToSpend,
+                          setEthAmountToSpend,
+                          setShineBought,
+                          setShineBoughtAmount,
+                          setTransactionBeingProcessed,
+                          setMetamaskErrorCode,
+                          userAddress
+                        )
+                      }
+                    >
+                      Buy Shine
+                    </ConnectButton>
+                    <br />
+                    <br />
+                  </div>
+                )}
+                {isShineBought && !isTransactionBeingProcessed && (
+                  <div>
+                    <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
+                  </div>
+                )}
+
+                {isTransactionBeingProcessed && (
+                  <div>
+                    {" "}
+                    <h5>Processing </h5>
+                    <PulseLoader color={"yellow"} loading={true} size={15} margin={2} /> <br /> <br />
+                    <h5>
+                      <i>(Can take up to few minutes)</i>
+                    </h5>
+                  </div>
+                )}
+              </div>
+
+            ) : (
+              <ConnectButton onClick={() => utils.loadWeb3(setWalletStatus, setBalance)} theme={theme}>CONNECT WALLET</ConnectButton>
+            )}
+          </ConnectWalletCard>
+        </Details>
+
         <IntroWrapper as={Container}>
           <Heading>
             <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />
