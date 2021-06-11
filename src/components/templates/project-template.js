@@ -179,7 +179,7 @@ export default function ProjectTemplate({ data }) {
                   <br />
                   <span>Balance: {balance} ETH</span>
                   <br />
-                  <span>Shine Balance: {Number.parseFloat(shineBalance).toLocaleString()} SHN ✨</span>
+                  <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString()} {project.metamaskDetails.symbol}</span>
                   <br />
                   {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
                   <br />
