@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
 // import useIsMobile from '../../../hooks/useIsMobile';
-import { Wrapper, Details , JoinCard, Cards, Button, HalfCircle } from './styles';
+import { Wrapper, Details , JoinCard, Cards, Button, HalfCircle, WrapperButton } from './styles';
 
 export const  HowToJoin = () => {
     const { theme } = useContext(ThemeContext);
@@ -46,7 +46,9 @@ return (
        <p>
         To contribute to projects and participate in community discussions, please join our <b>Discord server</b>.
        </p>
+       <WrapperButton>
        <Button theme={theme}>GET SHN TOKEN</Button>
+       </WrapperButton>
       </Details>
      </Container>
     </Wrapper>

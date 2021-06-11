@@ -5,14 +5,15 @@ background-size: contain;
 background-position: left top;
 background-repeat: no-repeat;
 position: relative;
+overflow-x: clip;
 `;
 
 export const HalfCircle = styled.div`
   width: 900px;
   height: 900px;
   border-radius: 50%;
-  right: -500px;
-  bottom: -150px;
+  right: -480px;
+  bottom: -128px;
   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   transition: 0.3s all;
   z-index: -1;
@@ -102,6 +103,11 @@ margin: 16px;
 export const Cards = styled.div`
 display: flex;
 justify-content: space-around;
+`;
+
+export const WrapperButton = styled.div`
+  text-align: center;
+  margin-top: 60px;
 `;
 
 export const Button = styled.button`

@@ -8,11 +8,11 @@ export const Wrapper = styled.div`
 `;
 
 export const HalfCircle = styled.div`
-  width: 900px;
-  height: 900px;
+  width: 800px;
+  height: 800px;
   border-radius: 50%;
-  left: -480px;
-  bottom: -500px;
+  left: -400px;
+  bottom: -445px;
   background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   transition: 0.3s all;
   z-index: -1;

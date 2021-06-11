@@ -11,7 +11,6 @@ export const SkillsWrapper = styled.div`
   padding: 80px 0;
   align-items: center;
   justify-content: space-between;
-  width: 70%;
 
   @media (max-width: 960px) {
     flex-direction: column;
@@ -22,9 +21,9 @@ export const SkillsWrapper = styled.div`
 
 export const Details = styled.div`
   flex: 1;
-  padding-left: 2rem;
   display: grid;
   grid-template-columns: 320px 320px 320px;
+  justify-content: center;
 
   @media (max-width: 960px) {
     padding-left: unset;
@@ -70,15 +69,46 @@ export const Details = styled.div`
   }
 `;
 
-export const Thumbnail = styled.div`
-  flex: 1;
+export const WrapperButton = styled.div`
+  text-align: center;
+  margin-top: 60px;
+`;
 
-  @media (max-width: 960px) {
-    width: 100%;
-    margin-bottom: 2rem;
+export const Button = styled.button`
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0.6rem 0;
+  border: 1px solid white;
+  -webkit-appearance: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  width: 400px;
+  height: 48px;
+  font-weight: bold;
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
   }
 
-  img {
-    width: 100%;
+  &:disabled {
+    background: gray;
   }
+  &:hover {
+    background: #FADA5E;
+    color: #3F3D56; 
+    border: 1px solid #FADA5E;
+  }
+
+  ${({ secondary }) =>
+    secondary &&
+    `
+		background: #001F3F;
+	`}
 `;

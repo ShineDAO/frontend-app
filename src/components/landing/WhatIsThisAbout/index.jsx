@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
-import { Container, LearnButton } from 'components/common';
+import { Container } from 'components/common';
 
 import man from 'assets/illustrations/man.png';
 import rocket from 'assets/illustrations/rocket.png';
 import planet from 'assets/illustrations/planet.png';
 
 import useIsMobile from '../../../hooks/useIsMobile';
-import { Wrapper, SkillsWrapper, Details } from './styles';
+import { Wrapper, SkillsWrapper, Details, Button, WrapperButton } from './styles';
 
 export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
@@ -48,9 +48,11 @@ export const WhatIsThisAbout = () => {
           </p>
         </div>
         </Details>
-        <LearnButton onClick={onScrollToContact} theme={theme}>
+        <WrapperButton>
+          <Button onClick={onScrollToContact} theme={theme}>
             LEARN MORE
-          </LearnButton>
+          </Button>
+        </WrapperButton>
       </SkillsWrapper>
     </Wrapper>
   );
