@@ -240,31 +240,34 @@ export default function ProjectTemplate({ data }) {
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/links_${theme}.png`}></Icon>
-                    <Text>PROJECT LINKS</Text>
+                    <Text onClick={() => openLink(project.links.website)} >WEBSITE</Text>
                   </div>
                 </RoundedLinkButton>
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/docs_${theme}.png`}></Icon>
-                    <Text>DOCS</Text>
+                    <Text onClick={() => openLink(project.links.docs)}>DOCS</Text>
                   </div>
                 </RoundedLinkButton>
-                <RoundedLinkButton theme={theme}>
+
+                {false && <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
                     <Text>ALPHA VERSION</Text>
                   </div>
-                </RoundedLinkButton>
+                </RoundedLinkButton>}
+
+
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/discord_${theme}.png`}></Icon>
-                    <Text>DISCORD</Text>
+                    <Text onClick={() => openLink(project.links.discord)}>DISCORD</Text>
                   </div>
                 </RoundedLinkButton>
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/github_${theme}.png`}></Icon>
-                    <Text>GITHUB</Text>
+                    <Text onClick={() => openLink(project.links.github)}>GITHUB</Text>
                   </div>
                 </RoundedLinkButton>
               </LinkContainer>
@@ -279,7 +282,7 @@ export default function ProjectTemplate({ data }) {
               </TaskSectionTextContainer>
 
               <ConnectButtonContainer>
-                <ConnectButton onClick={() => openLink("https://google.com")} theme={theme}>SEE TASKS</ConnectButton>
+                <ConnectButton onClick={() => openLink(project.links.tasks)} theme={theme}>SEE TASKS</ConnectButton>
               </ConnectButtonContainer>
 
             </TasksSection>
@@ -316,10 +319,11 @@ export const query = graphql`
       tokenAddress
       shortDescription
       links {
-        app
+        website
         discord
         docs
         github
+        tasks
       }
       tokenomics {
         tokenDistributionImage {

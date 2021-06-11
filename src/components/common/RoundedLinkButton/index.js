@@ -18,6 +18,7 @@ export const RoundedLinkButton = styled.div`
   justify-content: left;
   align-items: center;
   margin-bottom: 10px;
+  cursor: pointer;
 
   @media (min-width: 601px) {
     width: 90%;
