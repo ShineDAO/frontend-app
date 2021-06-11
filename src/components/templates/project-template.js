@@ -11,7 +11,7 @@ const axios = require("axios");
 import * as utils from './utils';
 
 import ShineToken from "../../../static/abi/ShineToken.json";
-import { RoundedLinkButton, Icon, Text } from 'components/common/RoundedLinkButton';
+import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer,DetailsTitle } from 'components/common/RoundedLinkButton';
 
 
 
@@ -223,45 +223,58 @@ export default function ProjectTemplate({ data }) {
 
           <br></br>
           <br></br>
-          <RoundedLinkButton>
-            <div>
-              <Icon src={"/icons/links_light.png"}></Icon>
-              <Text>PROJECT LINKS</Text>
-            </div>
-          </RoundedLinkButton>
 
-          <RoundedLinkButton>
-            <div>
-              <Icon src={"/icons/docs_light.png"}></Icon>
-              <Text>DOCS</Text>
-            </div>
-          </RoundedLinkButton>
-
-          <RoundedLinkButton>
-            <div>
-              <Icon src={"/icons/alphaversion_light.png"}></Icon>
-              <Text>ALPHA VERSION</Text>
-            </div>
-          </RoundedLinkButton>
-
-          <RoundedLinkButton>
-            <div>
-              <Icon src={"/icons/discord_light.png"}></Icon>
-              <Text>DISCORD</Text>
-            </div>
-          </RoundedLinkButton>
-
-          <RoundedLinkButton>
-            <div>
-              <Icon src={"/icons/github_light.png"}></Icon>
-              <Text>GITHUB</Text>
-            </div>
-          </RoundedLinkButton>
 
           <Details>
 
-            <h3>Details</h3>
-            <p>{project.shortDescription}</p>
+            {console.log("theme ", theme)}
+
+            <DetailsTitle>Details</DetailsTitle>
+            <DescriptionLinksContainer>
+              <TextContainer>
+                {project.shortDescription}
+              </TextContainer>
+
+              <LinkContainer>
+
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/links_${theme}.png`}></Icon>
+                    <Text>PROJECT LINKS</Text>
+                  </div>
+                </RoundedLinkButton>
+
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/docs_${theme}.png`}></Icon>
+                    <Text>DOCS</Text>
+                  </div>
+                </RoundedLinkButton>
+
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
+                    <Text>ALPHA VERSION</Text>
+                  </div>
+                </RoundedLinkButton>
+
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/discord_${theme}.png`}></Icon>
+                    <Text>DISCORD</Text>
+                  </div>
+                </RoundedLinkButton>
+
+                <RoundedLinkButton theme={theme}>
+                  <div>
+                    <Icon src={`/icons/github_${theme}.png`}></Icon>
+                    <Text>GITHUB</Text>
+                  </div>
+                </RoundedLinkButton>
+              </LinkContainer>
+
+            </DescriptionLinksContainer>
+
           </Details>
         </IntroWrapper>
       </Wrapper>
