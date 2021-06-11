@@ -221,7 +221,11 @@ export default function ProjectTemplate({ data }) {
                             setShineBoughtAmount,
                             setTransactionBeingProcessed,
                             setMetamaskErrorCode,
-                            userAddress
+                            userAddress,
+                            saleAbi,
+                            saleContractAddress,
+                            gas
+                            
                           )
                         }
                       >
