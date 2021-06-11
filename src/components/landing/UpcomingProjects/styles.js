@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   background-position: left top;
   background-repeat: no-repeat;
   position: relative;
+  padding-bottom: 80px;
 `;
 
 export const HalfCircle = styled.div`

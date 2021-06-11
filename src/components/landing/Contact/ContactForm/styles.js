@@ -35,7 +35,6 @@ export const Details = styled.div`
   }
 
   h1 {
-    padding-top: 4rem;
     margin-bottom: 25px;
     font-size: 24px;
     line-height: 35px;

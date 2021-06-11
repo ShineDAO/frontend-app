@@ -5,13 +5,13 @@ export const Wrapper = styled.div`
   background-position: left top;
   background-repeat: no-repeat;
   position: relative;
+  padding: 80px 0;
 `;
 
 export const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 460px;
-  padding-top: 160px;
   padding-bottom: 40px;
   h4 {
     font-size: 24px;

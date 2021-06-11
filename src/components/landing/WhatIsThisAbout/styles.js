@@ -5,10 +5,10 @@ export const Wrapper = styled.div`
   background-position: left top;
   background-repeat: no-repeat;
   position: relative;
+  padding: 80px 0;
 `;
 
 export const SkillsWrapper = styled.div`
-  padding: 80px 0;
   align-items: center;
   justify-content: space-between;
 

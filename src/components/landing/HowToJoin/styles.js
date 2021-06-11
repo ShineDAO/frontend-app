@@ -6,6 +6,7 @@ background-position: left top;
 background-repeat: no-repeat;
 position: relative;
 overflow-x: clip;
+padding: 80px 0;
 `;
 
 export const HalfCircle = styled.div`
