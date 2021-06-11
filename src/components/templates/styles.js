@@ -34,7 +34,6 @@ export const LitepaperCard = styled.div`
   margin-top: 80px;
   border-radius: 30px;
   box-sizing: border-box;
-  width: 800px;
   left: 160px;
   display:flex;
   flex-direction: column;

@@ -9,7 +9,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 
 const axios = require("axios");
 import * as utils from './utils';
-import tokenDistribution from 'assets/illustrations/token-distribution.png';
+import tokenDistribution from 'assets/illustrations/defi-options-token-distribution_light.png';
 
 import ShineToken from "../../../static/abi/ShineToken.json";
 import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer, DetailsTitle, TasksSection, ContributeTitle, ContributeText, ConnectButtonContainer, TaskSectionTextContainer } from 'components/common/RoundedLinkButton';
@@ -40,7 +40,9 @@ export default function ProjectTemplate({ data }) {
 
 
 
-
+  const openLink = (link) => {
+    window.open(link, '_blank', 'noopener');
+  };
 
 
   const [isWalletEnabled, setWalletStatus] = useState();
@@ -277,7 +279,7 @@ export default function ProjectTemplate({ data }) {
               </TaskSectionTextContainer>
 
               <ConnectButtonContainer>
-                <ConnectButton onClick={() => console.log("Clicked")} theme={theme}>SEE TASKS</ConnectButton>
+                <ConnectButton onClick={() => openLink("https://google.com")} theme={theme}>SEE TASKS</ConnectButton>
               </ConnectButtonContainer>
 
             </TasksSection>
@@ -286,13 +288,17 @@ export default function ProjectTemplate({ data }) {
             <LitepaperCard theme={theme}>
               <h3>Tokenomics</h3>
 
-              <a href="https://snapshot.org/#/shinedao.eth/proposal/QmPwhgvyiokiFMLh4wbEf6xrTZLuGLne4Q5bNPMQ5FyM1J">
-                <img src={tokenDistribution} alt="Shine Tokenomics" />
-              </a>
               {false && <ConnectButton theme={theme}>
                 <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></ConnectButton>}
             </LitepaperCard>
           </Details>
+
+          {true &&
+
+            <a>
+              <img src={theme == "light" ? require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.light}`) : require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.dark}`)}
+                alt="Project Tokenomics" />
+            </a>}
 
 
         </IntroWrapper>
@@ -316,6 +322,10 @@ export const query = graphql`
         github
       }
       tokenomics {
+        tokenDistributionImage {
+          light
+          dark
+        }
         initialCirculatingSupply
         totalAmountRaised
         coreTeam {

@@ -9,6 +9,10 @@
         "github": ""
     },
     "tokenomics": {
+        "tokenDistributionImage": {
+            "light": "defi-options-token-distribution_light.png",
+            "dark": "defi-options-token-distribution_dark.png"
+        },
         "seedSale": {
             "total": "",
             "percentage": "",
