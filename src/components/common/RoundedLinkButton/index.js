@@ -44,14 +44,18 @@ export const Text = styled.h5`
 
 export const TextContainer = styled.p`
   width:50%;
-
+  @media (max-width: 960px) {
+    width:100%;
+  }
 `;
 
 
 
 export const DescriptionLinksContainer = styled.div`
     display: flex;
-
+    @media (max-width: 960px) {
+        flex-direction: column;
+    }
 `;
 
 export const LinkContainer = styled.div`
@@ -60,6 +64,12 @@ export const LinkContainer = styled.div`
     flex-wrap: wrap;
     width:50%;
     height: 120px;
+
+    @media (max-width: 960px) {
+        width:100%;
+        flex-direction: row;
+        height: 100%;
+    }
 
 `;
 
@@ -73,6 +83,12 @@ export const ContributeTitle = styled.h3`
 `;
 export const ContributeText = styled.p`
     margin-bottom: 0rem;
+    text-align: center;
+    @media (max-width: 960px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 `;
 
 export const TasksSection = styled.div`
@@ -83,7 +99,12 @@ export const TasksSection = styled.div`
     justify-content: space-evenly;
     align-items: center;
 
-    
+
+    @media (max-width: 960px) {
+        flex-direction: column;
+        height: 192px;
+    }
+ 
 
     background: ${({ theme }) => (theme === 'dark' ? '#3F3D56' : '#FFFFFF')};
     border: 1px solid ${({ theme }) => (theme === 'dark' ? '#EEEEFF' : '#3F3D56')};
@@ -91,5 +112,18 @@ export const TasksSection = styled.div`
     border-radius: 8px;
 `;
 
+export const ConnectButtonContainer = styled.div`
+    @media (max-width: 960px) {
+        width:40%;
+    }
+`;
+
+export const TaskSectionTextContainer = styled.div`
+    @media (max-width: 960px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+`;
 
 
