@@ -1,10 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 
-import { Layout, SEO, Container, Card, Button } from 'components/common';
+import { Layout, SEO, Container, Card } from 'components/common';
 import { Header } from 'components/theme';
 import axios from 'axios';
 import { graphql } from 'gatsby';
+import {
+  RoundedLinkButton,
+  Icon,
+  TextRoundedLinkButton,
+  DescriptionLinksContainer,
+  LinkContainer,
+  TextContainer,
+  DetailsTitle,
+  TasksSection,
+  ContributeTitle,
+  ContributeText,
+  ConnectButtonContainer,
+  TaskSectionTextContainer,
+} from 'components/common/RoundedLinkButton';
 import {
   Wrapper,
   IntroWrapper,
@@ -14,22 +28,27 @@ import {
   InfoCards,
   CardHeaderWrapper,
   CardTitleWrapper,
-  ProjectNameWrapper
+  ProjectNameWrapper,
+  Details,
+  ConnectButton,
+  Thumbnail,
+  Link,
+  SaleCard,
+  StatusContainer,
+  EthInput,
+  ColorTitle,
+  UnderlinedTitle,
+  ConnectWalletCard,
+  LitepaperCard,
 } from './styles';
-import { Wrapper, IntroWrapper, Details, Thumbnail, Link, SaleCard, StatusContainer, EthInput, ColorTitle, UnderlinedTitle, ConnectButton, ConnectWalletCard, QuartCircleIntro, LitepaperCard } from "./styles";
-import ProgressBar from "react-bootstrap/ProgressBar";
-import PulseLoader from "react-spinners/PulseLoader";
 
 import * as utils from './utils';
-import tokenDistribution from 'assets/illustrations/defi-options-token-distribution_light.png';
 
-import ShineToken from '../../../static/abi/ShineToken.json';
 import { Avatar } from '../common/Avatar';
 import DefiOptionsLogo from '../landing/UpcomingProjects/defi_options_logo.png';
 import { Text } from '../common/Text';
-import ShineToken from "../../../static/abi/ShineToken.json";
-import { RoundedLinkButton, Icon, Text, DescriptionLinksContainer, LinkContainer, TextContainer, DetailsTitle, TasksSection, ContributeTitle, ContributeText, ConnectButtonContainer, TaskSectionTextContainer } from 'components/common/RoundedLinkButton';
-
+import ShineToken from '../../../static/abi/ShineToken.json';
+import { DisableColor } from '../landing/SaleDetails/styles';
 
 export default function ProjectTemplate({ data }) {
   const { theme } = useContext(ThemeContext);
@@ -50,10 +69,9 @@ export default function ProjectTemplate({ data }) {
   const { rate } = project.technicalDetails[currentStatus];
   const { gas } = project.technicalDetails[currentStatus];
   const maxWeiToRaise = tokensOffered / rate;
-  const openLink = (link) => {
+  const openLink = link => {
     window.open(link, '_blank', 'noopener');
   };
-
 
   const [isWalletEnabled, setWalletStatus] = useState();
   const [balance, setBalance] = useState();
@@ -100,15 +118,15 @@ export default function ProjectTemplate({ data }) {
   useEffect(() => {
     axios
       .get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum')
-      .then(function (response) {
+      .then(function(response) {
         // handle success
         setCurrentEthPrice(response.data[0].current_price);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // handle error
         console.log(error);
       })
-      .then(function () {
+      .then(function() {
         // always executed
       });
   }, [ethAmountToSpend]);
@@ -120,20 +138,20 @@ export default function ProjectTemplate({ data }) {
 
   return (
     <Layout>
-      <SEO/>
+      <SEO />
       <Wrapper>
-        <QuartCircleIntro theme={theme}/>
-        <Header/>
+        <QuartCircleIntro theme={theme} />
+        <Header />
         <IntroWrapper as={Container}>
           <Heading>
-            <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px"/>
+            <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />
             <HeadingText>Defi Options DAO</HeadingText>
           </Heading>
           <InfoCards>
             <Card background="#3F3D56" padding="40px" flexDirection="column" width="540px" justifyContent="flex-start">
               <CardHeaderWrapper>
                 <ProjectNameWrapper>
-                  <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" width="40px" height="40px"/>
+                  <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" width="40px" height="40px" />
                   <Text margin="0 0 0 16px" fontSize="24px" fontWeight={800} color="white">
                     Defi Options DAO
                   </Text>
@@ -141,7 +159,7 @@ export default function ProjectTemplate({ data }) {
                 <Card background="#fada5e" borderRadius="4px" height="32px" width="140px">
                   &nbsp; &nbsp;
                   <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-                    <circle cx="4" cy="4" r="4" fill="#3F3D56"/>
+                    <circle cx="4" cy="4" r="4" fill="#3F3D56" />
                   </svg>
                   <Text color="#3F3D56" fontWeight={800}>
                     &nbsp; in TBA days
@@ -369,48 +387,48 @@ export default function ProjectTemplate({ data }) {
           <br></br>
           <br></br>
 
-
           <Details>
-
-
             <DetailsTitle>Details</DetailsTitle>
 
             <DescriptionLinksContainer>
-              <TextContainer>
-                {project.shortDescription}
-              </TextContainer>
+              <TextContainer>{project.shortDescription}</TextContainer>
               <LinkContainer>
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/links_${theme}.png`}></Icon>
-                    <Text onClick={() => openLink(project.links.website)} >WEBSITE</Text>
+                    <TextRoundedLinkButton onClick={() => openLink(project.links.website)}>
+                      WEBSITE
+                    </TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/docs_${theme}.png`}></Icon>
-                    <Text onClick={() => openLink(project.links.docs)}>DOCS</Text>
+                    <TextRoundedLinkButton onClick={() => openLink(project.links.docs)}>DOCS</TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
 
-                {false && <RoundedLinkButton theme={theme}>
-                  <div>
-                    <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
-                    <Text>ALPHA VERSION</Text>
-                  </div>
-                </RoundedLinkButton>}
-
+                {false && (
+                  <RoundedLinkButton theme={theme}>
+                    <div>
+                      <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
+                      <TextRoundedLinkButton>ALPHA VERSION</TextRoundedLinkButton>
+                    </div>
+                  </RoundedLinkButton>
+                )}
 
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/discord_${theme}.png`}></Icon>
-                    <Text onClick={() => openLink(project.links.discord)}>DISCORD</Text>
+                    <TextRoundedLinkButton onClick={() => openLink(project.links.discord)}>
+                      DISCORD
+                    </TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
                 <RoundedLinkButton theme={theme}>
                   <div>
                     <Icon src={`/icons/github_${theme}.png`}></Icon>
-                    <Text onClick={() => openLink(project.links.github)}>GITHUB</Text>
+                    <TextRoundedLinkButton onClick={() => openLink(project.links.github)}>GITHUB</TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
               </LinkContainer>
@@ -421,31 +439,40 @@ export default function ProjectTemplate({ data }) {
                 <ContributeTitle>Contribute and get rewarded</ContributeTitle>
 
                 <ContributeText>20% of projects tokens will be distributed to early contributors.</ContributeText>
-
               </TaskSectionTextContainer>
 
               <ConnectButtonContainer>
-                <ConnectButton onClick={() => openLink(project.links.tasks)} theme={theme}>SEE TASKS</ConnectButton>
+                <ConnectButton onClick={() => openLink(project.links.tasks)} theme={theme}>
+                  SEE TASKS
+                </ConnectButton>
               </ConnectButtonContainer>
-
             </TasksSection>
-
 
             <LitepaperCard theme={theme}>
               <h3>Tokenomics</h3>
 
-              {false && <ConnectButton theme={theme}>
-                <DisableColor href="/Litepaper.pdf" target="_blank">GO TO LITEPAPER</DisableColor></ConnectButton>}
+              {false && (
+                <ConnectButton theme={theme}>
+                  <DisableColor href="/Litepaper.pdf" target="_blank">
+                    GO TO LITEPAPER
+                  </DisableColor>
+                </ConnectButton>
+              )}
             </LitepaperCard>
           </Details>
 
-          {true &&
-
+          {true && (
             <a>
-              <img src={theme == "light" ? require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.light}`) : require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.dark}`)}
-                alt="Project Tokenomics" />
-            </a>}
-
+              <img
+                src={
+                  theme == 'light'
+                    ? require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.light}`)
+                    : require(`assets/illustrations/${project.tokenomics.tokenDistributionImage.dark}`)
+                }
+                alt="Project Tokenomics"
+              />
+            </a>
+          )}
         </IntroWrapper>
       </Wrapper>
     </Layout>
