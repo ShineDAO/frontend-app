@@ -6,6 +6,9 @@ export const Wrapper = styled.div`
   background-repeat: no-repeat;
   position: relative;
   padding-bottom: 80px;
+  @media (max-width: 1200px) {
+    padding-bottom: 60px;
+  }
 `;
 
 export const HalfCircle = styled.div`

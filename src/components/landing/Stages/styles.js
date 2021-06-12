@@ -6,6 +6,9 @@ export const Wrapper = styled.div`
   background-repeat: no-repeat;
   position: relative;
   padding: 80px 0;
+  @media (max-width: 1200px) {
+    padding: 60px 0;
+  }
 `;
 
 export const StagesWrapper = styled.div`
@@ -26,7 +29,6 @@ export const HeaderWrapper = styled.div`
   @media (max-width: 960px) {
     flex-direction: column;
     display: block;
-    padding: 60px 0;
   }
 `;
 

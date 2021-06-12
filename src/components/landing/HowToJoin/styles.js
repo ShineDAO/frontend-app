@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-background-size: contain;
-background-position: left top;
-background-repeat: no-repeat;
-position: relative;
-overflow-x: clip;
-padding: 80px 0;
+  background-size: contain;
+  background-position: left top;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow-x: clip;
+  padding: 80px 0;
+  @media (max-width: 1200px) {
+    padding: 60px 0;
+  }
 `;
 
 export const HowToJoinWrapper = styled.div`
