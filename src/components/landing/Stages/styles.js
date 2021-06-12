@@ -16,9 +16,10 @@ export const StagesWrapper = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   @media (max-width: 1200px) {
     width: 70%;
+    align-items: center;
   }
 `;
 
@@ -124,6 +125,7 @@ export const Bubble = styled.div`
 export const WrapperButton = styled.div`
   text-align: center;
   margin-top: 60px;
+  width: 100%;
 `;
 
 export const Button = styled.button`

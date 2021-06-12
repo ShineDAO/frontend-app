@@ -40,7 +40,7 @@ export const UpcomingProjects = () => {
               </Text>
             </When>
           </HeaderWrapper>
-          <BottomWrapper>
+          <BottomWrapper theme={theme}>
             <TotalRaise>
               <Text color="#3F3D56">Total raise</Text>
               <Text color="#3F3D56" fontWeight={800}>

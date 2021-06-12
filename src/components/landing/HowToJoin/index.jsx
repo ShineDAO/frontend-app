@@ -47,7 +47,7 @@ return (
         To contribute to projects and participate in community discussions, please join our <b>Discord server</b>.
        </p>
        <WrapperButton>
-       <Button theme={theme}>GET SHN TOKEN</Button>
+       <Button onClick={() => window.open('https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28', 'blank', 'noopener')} theme={theme}>GET SHN TOKEN</Button>
        </WrapperButton>
       </Details>
      </HowToJoinWrapper>
