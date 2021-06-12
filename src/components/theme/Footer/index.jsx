@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
-import { Wrapper, Flex, Links, Details, QuartCircle } from './styles';
+import { Wrapper, FooterWrapper, Links, Details, QuartCircle } from './styles';
 import { social } from './social.js';
 
 export const Footer = () => {
@@ -10,7 +10,7 @@ export const Footer = () => {
     return (
   <Wrapper>
     {/* <QuartCircle theme={theme} /> */}
-    <Flex as={Container}>
+    <FooterWrapper>
       <Details>
         <h3>Shine DAO</h3>
         <span>
@@ -28,7 +28,7 @@ export const Footer = () => {
           </a>
         ))}
       </Links>
-    </Flex>
+    </FooterWrapper>
   </Wrapper>
 );
 };

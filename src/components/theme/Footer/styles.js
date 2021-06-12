@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
 //   position: absolute;
 //   bottom: -50px;
 //   z-index: -1;
-  
+
 //   @media (max-width: 960px) {
 //     height: 200px;
 //     width: 200px;
@@ -31,11 +31,15 @@ export const Wrapper = styled.div`
 //  }
 // `;
 
-export const Flex = styled.div`
+export const FooterWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-
+  width: 1120px;
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    width: 70%;
+  }
   @media (max-width: 680px) {
     flex-direction: column;
     display: inline;
