@@ -1,4 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import React from 'react';
+import { Card } from '../common';
 
 export const Wrapper = styled.div`
   background-size: contain;
@@ -9,13 +11,79 @@ export const Wrapper = styled.div`
 export const Heading = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 682px) {
+    flex-direction: column;
+    text-align: center;
+  }
 `;
 
 export const InfoCards = styled.div`
   display: flex;
   margin-top: 60px;
-  height: 580px;
   justify-content: space-between;
+  flex-wrap: wrap;
+  @media (max-width: 1200px) {
+    justify-content: center;
+  }
+`;
+
+export const StatsCard = styled.div`
+  background: #3f3d56;
+  padding: 40px;
+  flex-direction: column;
+  display: flex;
+  width: 540px;
+  height: 584px;
+  justify-content: flex-start;
+  border-radius: 8px;
+  @media (max-width: 1200px) {
+    margin-bottom: 40px;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    align-items: center;
+    height: 980px;
+  }
+  @media (max-width: 489px) {
+    height: 1010px;
+  }
+`;
+
+export const TokenCard = styled.div`
+  background: #1e1e1e;
+  padding: 40px;
+  flex-direction: column;
+  display: flex;
+  width: 540px;
+  height: 584px;
+  justify-content: flex-start;
+  border-radius: 8px;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+  @media (max-width: 500px) {
+    height: 784px;
+  }
+`;
+
+export const TierWrapper = styled.div`
+  width: 462px;
+  border-radius: 4px;
+  border: 1px solid #3f3d56;
+  display: flex;
+  background: #1e1e1e;
+  height: 72px;
+  margin: 24px 0 0 0;
+  padding: 20px 24px;
+  justify-content: space-between;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+  @media (max-width: 500px) {
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+  }
 `;
 
 export const CardHeaderWrapper = styled.div`
@@ -23,27 +91,125 @@ export const CardHeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 460px;
-  @media (max-width: 960px) {
+  @media (max-width: 600px) {
     flex-direction: column;
-    display: block;
-    padding: 60px 0;
+    width: 100%;
+  }
+`;
+
+export const CardHeaderTextWrapper = styled.div`
+  border: 1px solid #3f3d56;
+  background: #fada5e;
+  border-radius: 4px;
+  align-items: center;
+  height: 32px;
+  width: 140px;
+  display: flex;
+  @media (max-width: 600px) {
+    margin-top: 20px;
+    width: 218px;
+  }
+`;
+
+export const CardBottomWrapper = styled.div`
+  background: #3f3d56;
+  flex-wrap: wrap;
+  height: 336px;
+  margin: 40px 0;
+  border: 1px solid #3f3d56;
+  border-radius: 4px;
+  display: flex;
+  width: 460px;
+  @media (max-width: 600px) {
+    margin-top: 20px;
+    width: 218px;
   }
 `;
 
 export const ProjectNameWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
 `;
 
-export const CardTitleWrapper = styled.div`
-  display: flex;
-  width: 100%;
+export const FirstStatsCard = styled.div`
   align-items: flex-start;
+  justify-content: space-around;
+  background: white;
+  display: flex;
+  height: 96px;
+  flex-direction: column;
+  margin: 0 22px 22px 0;
+  padding: 16px 0 16px 24px;
+  width: 218px;
+  border-radius: 8px;
+  @media (max-width: 600px) {
+    margin: 0 0 22px 0;
+  }
+`;
+
+export const RightStatsCard = styled.div`
+  align-items: flex-start;
+  justify-content: space-around;
+  background: 3f3d56;
+  border: 1px solid white;
+  display: flex;
+  height: 96px;
+  flex-direction: column;
+  margin: 0 0 22px 0;
+  padding: 16px 0 16px 24px;
+  width: 218px;
+  border-radius: 8px;
+`;
+
+export const LeftStatsCard = styled.div`
+  align-items: flex-start;
+  justify-content: space-around;
+  background: 3f3d56;
+  border: 1px solid white;
+  display: flex;
+  height: 96px;
+  flex-direction: column;
+  margin: 0 22px 22px 0;
+  padding: 16px 0 16px 24px;
+  width: 218px;
+  border-radius: 8px;
+  @media (max-width: 600px) {
+    margin: 0 0 22px 0;
+  }
+`;
+
+export const TitleText = styled.div`
+  color: ${({ color }) => color || 'black'};
+  font-weight: ${({ fontWeight }) => fontWeight || 400};
+  font-size: ${({ fontSize }) => fontSize || '16px'};
+  margin: ${({ margin }) => margin || '0'};
+  @media (max-width: 600px) {
+    text-align: center;
+  }
 `;
 
 export const HeadingText = styled.div`
   font-size: 48px;
   font-weight: 800;
   margin-left: 24px;
+  @media (max-width: 600px) {
+    text-align: center;
+  }
+`;
+
+export const StatsCardHeading = styled.div`
+  color: ${({ color }) => color || 'black'};
+  font-weight: ${({ fontWeight }) => fontWeight || 400};
+  font-size: ${({ fontSize }) => fontSize || '16px'};
+  margin: ${({ margin }) => margin || '0'};
+  @media (max-width: 466px) {
+    text-align: center;
+    margin: 0;
+  }
 `;
 
 export const QuartCircleIntro = styled.div`
@@ -61,10 +227,11 @@ export const QuartCircleIntro = styled.div`
   }
 `;
 
-export const IntroWrapper = styled.div`
-  padding: 70px 0 0 0;
-  @media (max-width: 960px) {
-    padding: 0 30px;
+export const ProjectsWrapper = styled.div`
+  width: 1120px;
+  margin: 40px auto;
+  @media (max-width: 1200px) {
+    width: 70%;
   }
 `;
 
@@ -74,7 +241,7 @@ export const LitepaperCard = styled.div`
   border-radius: 30px;
   box-sizing: border-box;
   left: 160px;
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   top: 965px;
@@ -84,15 +251,13 @@ export const LitepaperCard = styled.div`
   }
   a: hover {
     text-decoration: none;
-    color: #3F3D56;
+    color: #3f3d56;
   }
   @media (max-width: 960px) {
     width: 100%;
-    height: 342px;
     margin-top: 40px;
   }
 `;
-
 
 export const Details = styled.div`
   display: flex;
@@ -108,10 +273,10 @@ export const Details = styled.div`
     font-size: 48px;
     line-height: 64px;
     margin-bottom: 2rem;
-    color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
+    color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
 
     @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === "light" ? "unset" : "difference")};
+      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
     }
 
     @media (max-width: 680px) {
@@ -123,10 +288,10 @@ export const Details = styled.div`
     margin-bottom: 2.5rem;
     font-size: 18pt;
     font-weight: normal;
-    color: ${({ theme }) => (theme === "light" ? "#f9a72a" : "#f9a72a")};
+    color: ${({ theme }) => (theme === 'light' ? '#f9a72a' : '#f9a72a')};
 
     @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === "light" ? "unset" : "difference")};
+      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
     }
 
     @media (max-width: 680px) {
@@ -137,10 +302,10 @@ export const Details = styled.div`
 
 export const UnderlinedTitle = styled.h3`
   text-decoration: underline;
-`
+`;
 export const Thumbnail = styled.div`
   flex: 1;
-  
+
   @media (max-width: 960px) {
     width: 70%;
   }
@@ -172,7 +337,8 @@ export const ConnectWalletCard = styled.div`
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
   box-sizing: border-box;
-  box-shadow: ${({ theme }) => (theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)')}; 
+  box-shadow: ${({ theme }) =>
+    theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)'};
   min-width: 500px;
   max-width: 500px;
   display: flex;
@@ -180,8 +346,8 @@ export const ConnectWalletCard = styled.div`
   justify-content: space-between;
   height: ${({ isWalletEnabled }) => (isWalletEnabled ? 'none' : '344px')};
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
-  
-  a{
+
+  a {
     color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
     font-size: 17px;
   }
@@ -196,11 +362,11 @@ export const ConnectWalletCard = styled.div`
 
 export const SaleCard = styled.div`
   border-radius: 33px;
-  border:1px solid #f5f5f538;
+  border: 1px solid #f5f5f538;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
   box-sizing: border-box;
-  
+
   min-width: 500px;
   height: ${({ isWalletEnabled }) => (isWalletEnabled ? 'none' : '344px')};
   color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
@@ -217,10 +383,10 @@ export const SaleCard = styled.div`
   }
 `;
 
-//0a8e28 green
-//FF4D00 red
+// 0a8e28 green
+// FF4D00 red
 export const StatusContainer = styled.div`
-  background: #298a3f; 
+  background: #298a3f;
   height: 32px;
   width: 104px;
   border-radius: 4px;
@@ -231,7 +397,7 @@ export const StatusContainer = styled.div`
   align-items: center;
   text-transform: uppercase;
   margin-top: 8px;
-  
+
   b {
     font-weight: 800;
     font-size: 16px;
@@ -253,10 +419,10 @@ export const EthInput = styled.input`
   }
 
   /* Disable arrows in number input for Firefox */
-  &[type="number"] {
+  &[type='number'] {
     -moz-appearance: textfield;
   }
-  
+
   @media (max-width: 960px) {
     width: 100%;
   }
@@ -298,9 +464,9 @@ export const ConnectButton = styled.button`
     background: gray;
   }
   &:hover {
-    background: #FADA5E;
-    color: #3F3D56; 
-    border: 1px solid #FADA5E;
+    background: #fada5e;
+    color: #3f3d56;
+    border: 1px solid #fada5e;
   }
 
   ${({ secondary }) =>
