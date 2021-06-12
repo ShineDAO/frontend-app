@@ -34,7 +34,7 @@ export const NameWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 270px;
-  @media (max-width: 495px) {
+  @media (max-width: 699px) {
     flex-direction: column;
   }
   h2 {
@@ -50,6 +50,11 @@ export const UpcomingContainer = styled.div`
   width: 1120px;
   @media (max-width: 1200px) {
     width: 70%;
+  }
+  h2 {
+    @media (max-width: 960px) {
+      text-align: center;
+    }
   }
 `;
 
@@ -86,7 +91,7 @@ export const BottomWrapper = styled.div`
   justify-content: space-between;
   display: flex;
   flex-wrap: wrap;
-  background: white;
+  background: ${({ theme }) => (theme === 'light' ? 'white' : '#3F3D56')};
   @media (max-width: 960px) {
     width: 100%;
   }
@@ -123,7 +128,7 @@ export const FundingStage = styled.div`
 `;
 
 export const UpcomingWrapper = styled.div`
-  background: white;
+  background: ${({ theme }) => (theme === 'light' ? 'white' : '#3F3D56')};
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;

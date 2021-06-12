@@ -53,14 +53,15 @@ export const Details = styled.div`
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      text-align: center;
     }
   }
 
   p {
-    margin-top: 24px;
-    margin-bottom: 40px;
+    margin: 40px 0;
     font-size: 20px;
     line-height: 32px;
+    text-align: center;
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#3F3D56')};
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
@@ -128,7 +129,6 @@ export const Cards = styled.div`
 
 export const WrapperButton = styled.div`
   text-align: center;
-  margin-top: 40px;
 `;
 
 export const Button = styled.button`

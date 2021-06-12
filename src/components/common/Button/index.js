@@ -65,7 +65,6 @@ export const JoinButton = styled.button`
   height: 48px;
   font-weight: bold;
   font-size: 16px;
-  margin-right: 20px;
 
   &:focus {
     outline: none;

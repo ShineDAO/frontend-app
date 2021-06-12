@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import shineNetworkV3 from '../../../assets/illustrations/shine-network-v3.png';
+import ShineNetworkWhite from '../../../assets/illustrations/Shine-Network-White.svg';
+import React from 'react';
 
 export const Wrapper = styled.div`
   background-size: contain;
@@ -30,6 +33,34 @@ export const AboutUsWrapper = styled.div`
   @media (max-width: 960px) {
     flex-direction: column;
     display: block;
+    text-align: center;
+  }
+`;
+
+export const IllustrationMan = styled.img`
+  width: 220px;
+  height: 180px;
+  @media (max-width: 960px) {
+    width: 192px;
+    height: 156px;
+  }
+`;
+
+export const IllustrationShineNetwork3 = styled.img`
+  width: 225px;
+  height: 180px;
+  @media (max-width: 960px) {
+    width: 200px;
+    height: 142px;
+  }
+`;
+
+export const IllustrationPlanet = styled.img`
+  width: 230px;
+  height: 180px;
+  @media (max-width: 960px) {
+    width: 200px;
+    height: 156px;
   }
 `;
 

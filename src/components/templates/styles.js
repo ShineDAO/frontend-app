@@ -132,6 +132,7 @@ export const ProjectNameWrapper = styled.div`
   align-items: center;
   @media (max-width: 600px) {
     justify-content: center;
+    flex-direction: column;
   }
 `;
 
@@ -206,7 +207,7 @@ export const StatsCardHeading = styled.div`
   font-weight: ${({ fontWeight }) => fontWeight || 400};
   font-size: ${({ fontSize }) => fontSize || '16px'};
   margin: ${({ margin }) => margin || '0'};
-  @media (max-width: 466px) {
+  @media (max-width: 600px) {
     text-align: center;
     margin: 0;
   }

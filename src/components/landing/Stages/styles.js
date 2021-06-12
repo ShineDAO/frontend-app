@@ -14,6 +14,9 @@ export const Wrapper = styled.div`
 export const StagesWrapper = styled.div`
   width: 1120px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   @media (max-width: 1200px) {
     width: 70%;
   }
@@ -29,6 +32,7 @@ export const HeaderWrapper = styled.div`
   @media (max-width: 960px) {
     flex-direction: column;
     display: block;
+    text-align: center;
   }
 `;
 

@@ -24,7 +24,7 @@ export const UpcomingProjects = () => {
       <HalfCircle theme={theme} />
       <UpcomingContainer>
         <h2>Upcoming Projects</h2>
-        <UpcomingWrapper>
+        <UpcomingWrapper theme={theme}>
           <HeaderWrapper>
             <NameWrapper>
               <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" />
