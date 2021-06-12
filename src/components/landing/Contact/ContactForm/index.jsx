@@ -45,7 +45,8 @@ export default () => {
   >
     {({ values, touched, errors, setFieldValue, isSubmitting }) => (
       <Form>
-      <h1>Subscribe to our mailing list for updates about our upcoming SHN token launch!</h1>
+        <br />
+        <h1>Subscribe to our mailing list for updates about our upcoming SHN token launch!</h1>
       <p>No spam. We promise!</p>
       <ContactFormContainer>
         <InputField>

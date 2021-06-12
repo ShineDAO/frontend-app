@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import shineNetworkV3 from '../../../assets/illustrations/shine-network-v3.png';
+import ShineNetworkWhite from '../../../assets/illustrations/Shine-Network-White.svg';
+import React from 'react';
 
 export const Wrapper = styled.div`
   background-size: contain;
@@ -6,29 +9,66 @@ export const Wrapper = styled.div`
   background-repeat: no-repeat;
   position: relative;
   padding: 80px 0;
+  @media (max-width: 1200px) {
+    padding: 60px 0;
+  }
 `;
 
-export const SkillsWrapper = styled.div`
+export const AboutUsWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
+  width: 1120px;
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    width: 70%;
+  }
 
   h2 {
     font-size: 24px;
     font-weight: 800;
     line-height: 32px;
+    margin: 0 0 60px 0;
   }
 
   @media (max-width: 960px) {
     flex-direction: column;
     display: block;
-    padding: 60px 0;
+    text-align: center;
+  }
+`;
+
+export const IllustrationMan = styled.img`
+  width: 220px;
+  height: 180px;
+  @media (max-width: 960px) {
+    width: 192px;
+    height: 156px;
+  }
+`;
+
+export const IllustrationShineNetwork3 = styled.img`
+  width: 225px;
+  height: 180px;
+  @media (max-width: 960px) {
+    width: 200px;
+    height: 142px;
+  }
+`;
+
+export const IllustrationPlanet = styled.img`
+  width: 230px;
+  height: 180px;
+  @media (max-width: 960px) {
+    width: 200px;
+    height: 156px;
   }
 `;
 
 export const Details = styled.div`
   flex: 1;
   display: grid;
-  grid-template-columns: 320px 320px 320px;
+  column-gap: 60px;
+  grid-template-columns: repeat(auto-fill, 330px);
   justify-content: center;
 
   @media (max-width: 960px) {
@@ -36,7 +76,8 @@ export const Details = styled.div`
     width: 100%;
   }
 
-  h2 { 
+  h2 {
+  margin-top: 20px;
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#212121')};
 
     @media (max-width: 960px) {
@@ -107,6 +148,9 @@ export const Button = styled.button`
     background: #FADA5E;
     color: #3F3D56; 
     border: 1px solid #FADA5E;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
   }
 
   ${({ secondary }) =>

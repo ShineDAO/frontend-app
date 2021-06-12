@@ -2,17 +2,17 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
 // import useIsMobile from '../../../hooks/useIsMobile';
-import { Wrapper, Details , JoinCard, Cards, Button, HalfCircle, WrapperButton } from './styles';
+import { Wrapper, Details, JoinCard, Cards, Button, HalfCircle, WrapperButton, HowToJoinWrapper } from './styles';
 
-export const  HowToJoin = () => {
+export const HowToJoin = () => {
     const { theme } = useContext(ThemeContext);
     // const isMobile = useIsMobile();
 
 return (
-    <Wrapper id="about"> 
+    <Wrapper id="about">
      <HalfCircle theme={theme} />
-      <Container>
-       <Details theme={theme}>  
+      <HowToJoinWrapper>
+       <Details theme={theme}>
         <h1>How to join?</h1>
         <p>
         By acquiring a predefined amount of Shine tokens (SHN), you get the right to participate in seed sales and IDOs of incubated projects, as well as access to the investor hub.
@@ -47,10 +47,10 @@ return (
         To contribute to projects and participate in community discussions, please join our <b>Discord server</b>.
        </p>
        <WrapperButton>
-       <Button theme={theme}>GET SHN TOKEN</Button>
+       <Button onClick={() => window.open('https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28', 'blank', 'noopener')} theme={theme}>GET SHN TOKEN</Button>
        </WrapperButton>
       </Details>
-     </Container>
+     </HowToJoinWrapper>
     </Wrapper>
  );
 };

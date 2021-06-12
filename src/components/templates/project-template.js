@@ -21,7 +21,7 @@ import {
 } from 'components/common/RoundedLinkButton';
 import {
   Wrapper,
-  IntroWrapper,
+  ProjectsWrapper,
   QuartCircleIntro,
   Heading,
   HeadingText,
@@ -40,6 +40,14 @@ import {
   UnderlinedTitle,
   ConnectWalletCard,
   LitepaperCard,
+  StatsCard,
+  TokenCard,
+  CardHeaderTextWrapper,
+  CardBottomWrapper,
+  FirstStatsCard,
+  RightStatsCard,
+  LeftStatsCard,
+  TierWrapper, TitleText, StatsCardHeading,
 } from './styles';
 
 import * as utils from './utils';
@@ -225,7 +233,7 @@ export default function ProjectTemplate({ data }) {
                             saleAbi,
                             saleContractAddress,
                             gas
-                            
+
                           )
                         }
                       >
@@ -258,22 +266,22 @@ export default function ProjectTemplate({ data }) {
               )}
             </ConnectWalletCard>
           </Details>
-
-        <IntroWrapper as={Container}>
+<br style={{lineHeight: '200px'}}/>
+        <ProjectsWrapper as={Container}>
           <Heading>
             <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />
             <HeadingText>Defi Options DAO</HeadingText>
           </Heading>
           <InfoCards>
-            <Card background="#3F3D56" padding="40px" flexDirection="column" width="540px" justifyContent="flex-start">
+            <StatsCard>
               <CardHeaderWrapper>
                 <ProjectNameWrapper>
-                  <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" width="40px" height="40px" />
-                  <Text margin="0 0 0 16px" fontSize="24px" fontWeight={800} color="white">
+                  <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" width="60px" height="60px" />
+                  <StatsCardHeading margin="0 0 0 16px" fontSize="24px" fontWeight={800} color="white">
                     Defi Options DAO
-                  </Text>
+                  </StatsCardHeading>
                 </ProjectNameWrapper>
-                <Card background="#fada5e" borderRadius="4px" height="32px" width="140px">
+                <CardHeaderTextWrapper>
                   &nbsp; &nbsp;
                   <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
                     <circle cx="4" cy="4" r="4" fill="#3F3D56" />
@@ -281,143 +289,67 @@ export default function ProjectTemplate({ data }) {
                   <Text color="#3F3D56" fontWeight={800}>
                     &nbsp; in TBA days
                   </Text>
-                </Card>
+                </CardHeaderTextWrapper>
               </CardHeaderWrapper>
-              <Card background="#3F3D56" flexWrap="wrap" height="336px" margin="40px 0">
-                <Card
-                  alignItems="flex-start"
-                  justifyContent="space-around"
-                  background="white"
-                  display="flex"
-                  height="96px"
-                  flexDirection="column"
-                  margin="0 24px 24px 0"
-                  padding="16px 0 16px 24px"
-                  width="218px"
-                >
+              <CardBottomWrapper>
+                <FirstStatsCard>
                   <Text color="#3F3D56" fontWeight={300} fontSize="20px">
                     Total raise
                   </Text>
                   <Text color="#3F3D56" fontWeight={800} fontSize="24px">
                     $200k
                   </Text>
-                </Card>
-                <Card
-                  alignItems="flex-start"
-                  justifyContent="space-around"
-                  background="#3F3D56"
-                  border="1px solid white"
-                  display="flex"
-                  flexDirection="column"
-                  height="96px"
-                  margin="0 0 24px 0"
-                  padding="16px 0 16px 24px"
-                  width="218px"
-                >
+                </FirstStatsCard>
+                <RightStatsCard>
                   <Text color="white" fontWeight={300} fontSize="20px">
                     Incubation Stage
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
                     Seed Sale
                   </Text>
-                </Card>
-                <Card
-                  alignItems="flex-start"
-                  justifyContent="space-around"
-                  background="#3F3D56"
-                  display="flex"
-                  height="96px"
-                  border="1px solid white"
-                  flexDirection="column"
-                  margin="0 24px 24px 0"
-                  padding="16px 0 16px 24px"
-                  width="218px"
-                >
+                </RightStatsCard>
+                <LeftStatsCard>
                   <Text color="white" fontWeight={300} fontSize="20px">
                     Total supply
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
                     100,000,000 DoD
                   </Text>
-                </Card>
-                <Card
-                  alignItems="flex-start"
-                  justifyContent="space-around"
-                  background="#3F3D56"
-                  border="1px solid white"
-                  display="flex"
-                  flexDirection="column"
-                  height="96px"
-                  margin="0 0 24px 0"
-                  padding="16px 0 16px 24px"
-                  width="218px"
-                >
+                </LeftStatsCard>
+                <RightStatsCard>
                   <Text color="white" fontWeight={300} fontSize="20px">
                     Chain
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
                     Ethereum
                   </Text>
-                </Card>
-                <Card
-                  alignItems="flex-start"
-                  justifyContent="space-around"
-                  background="#3F3D56"
-                  display="flex"
-                  border="1px solid white"
-                  height="96px"
-                  flexDirection="column"
-                  margin="0 24px 0 0"
-                  padding="16px 0 16px 24px"
-                  width="218px"
-                >
+                </RightStatsCard>
+                <LeftStatsCard>
                   <Text color="white" fontWeight={300} fontSize="20px">
                     Round allocation
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
                     100,000,000 DoD
                   </Text>
-                </Card>
-                <Card
-                  alignItems="flex-start"
-                  justifyContent="space-around"
-                  background="#3F3D56"
-                  border="1px solid white"
-                  display="flex"
-                  flexDirection="column"
-                  height="96px"
-                  margin="0"
-                  padding="16px 0 16px 24px"
-                  width="218px"
-                >
+                </LeftStatsCard>
+                <RightStatsCard>
                   <Text color="white" fontWeight={300} fontSize="20px">
                     Rate
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
                     ≈ $0.01 / 1 DoD
                   </Text>
-                </Card>
-                <Card borderRadius="4px" background="white" clickable width="100%" height="48px" margin="40px 0 0 0">
+                </RightStatsCard>
+                <Card borderRadius="4px" background="white" clickable width="100%" height="48px">
                   <Text fontWeight={800}>ADD DOD TO METAMASK</Text>
                 </Card>
-              </Card>
-            </Card>
-            <Card background="#1E1E1E" padding="40px" flexDirection="column" width="540px" justifyContent="flex-start">
-              <CardTitleWrapper>
-                <Text fontWeight={800} fontSize="24px" color="white">
-                  Token Address
-                </Text>
-              </CardTitleWrapper>
-              <Card
-                width="462px"
-                borderRadius="4px"
-                border="1px solid #3F3D56"
-                background="#1E1E1E"
-                height="72px"
-                margin="24px 0 0 0"
-                padding="20px 24px"
-                justifyContent="space-between"
-              >
+              </CardBottomWrapper>
+            </StatsCard>
+            <TokenCard>
+              <TitleText fontWeight={800} fontSize="24px" color="white">
+                Token Address
+              </TitleText>
+              <TierWrapper>
                 <Card width="120px" height="32px" background="#EEEEFF">
                   <Text fontSize="18px" fontWeight={800}>
                     TIER 1
@@ -426,17 +358,8 @@ export default function ProjectTemplate({ data }) {
                 <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
                   ≈ $300
                 </Text>
-              </Card>
-              <Card
-                width="462px"
-                borderRadius="4px"
-                border="1px solid #3F3D56"
-                background="#1E1E1E"
-                height="72px"
-                margin="24px 0 0 0"
-                padding="20px 24px"
-                justifyContent="space-between"
-              >
+              </TierWrapper>
+              <TierWrapper>
                 <Card width="120px" height="32px" background="#EEEEFF">
                   <Text fontSize="18px" fontWeight={800}>
                     TIER 2
@@ -445,17 +368,8 @@ export default function ProjectTemplate({ data }) {
                 <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
                   ≈ $800
                 </Text>
-              </Card>
-              <Card
-                width="462px"
-                borderRadius="4px"
-                border="1px solid #3F3D56"
-                background="#1E1E1E"
-                height="72px"
-                margin="24px 0 0 0"
-                padding="20px 24px"
-                justifyContent="space-between"
-              >
+              </TierWrapper>
+              <TierWrapper>
                 <Card width="120px" height="32px" background="#EEEEFF">
                   <Text fontSize="18px" fontWeight={800}>
                     TIER 3
@@ -464,17 +378,8 @@ export default function ProjectTemplate({ data }) {
                 <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
                   ≈ $2400
                 </Text>
-              </Card>
-              <Card
-                width="462px"
-                borderRadius="4px"
-                border="1px solid #3F3D56"
-                background="#1E1E1E"
-                height="72px"
-                margin="24px 0 0 0"
-                padding="20px 24px"
-                justifyContent="space-between"
-              >
+              </TierWrapper>
+              <TierWrapper>
                 <Card width="120px" height="32px" background="#EEEEFF">
                   <Text fontSize="18px" fontWeight={800}>
                     TIER 4
@@ -483,7 +388,7 @@ export default function ProjectTemplate({ data }) {
                 <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
                   ≈ $4200
                 </Text>
-              </Card>
+              </TierWrapper>
               <Card
                 borderRadius="4px"
                 border="1px solid white"
@@ -498,7 +403,7 @@ export default function ProjectTemplate({ data }) {
                   CONNECT WALLET
                 </Text>
               </Card>
-            </Card>
+            </TokenCard>
           </InfoCards>
 
           <br></br>
@@ -590,7 +495,7 @@ export default function ProjectTemplate({ data }) {
               />
             </a>
           )}
-        </IntroWrapper>
+        </ProjectsWrapper>
       </Wrapper>
     </Layout>
   );

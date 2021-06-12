@@ -1,12 +1,23 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-background-size: contain;
-background-position: left top;
-background-repeat: no-repeat;
-position: relative;
-overflow-x: clip;
-padding: 80px 0;
+  background-size: contain;
+  background-position: left top;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow-x: clip;
+  padding: 80px 0;
+  @media (max-width: 1200px) {
+    padding: 60px 0;
+  }
+`;
+
+export const HowToJoinWrapper = styled.div`
+  width: 1120px;
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    width: 70%;
+  }
 `;
 
 export const HalfCircle = styled.div`
@@ -42,14 +53,15 @@ export const Details = styled.div`
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      text-align: center;
     }
   }
 
   p {
-    margin-top: 24px;
-    margin-bottom: 40px;
+    margin: 40px 0;
     font-size: 20px;
     line-height: 32px;
+    text-align: center;
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#3F3D56')};
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
@@ -67,7 +79,7 @@ height: 383px;
 width: 250px;
 border-radius: 0px;
 text-align: -webkit-center;
-margin-right: 40px;
+
 h2 {
   background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
@@ -78,8 +90,7 @@ h2 {
   align-items: center;
   width: 202px;
   height: 32px;
-  margin-top: 24px;
-  margin-bottom: 16px;
+  margin: 24px 16px 16px 16px;
 }
 .frame1 {
   background: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
@@ -102,15 +113,22 @@ width: 202px;
 padding: 16px;
 margin: 16px;
 }
+
+  @media (max-width: 1200px) {
+    margin: 20px auto;
+  }
 `;
 export const Cards = styled.div`
-display: flex;
-justify-content: space-around;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @media (max-width: 1200px) {
+    justify-content: center;
+  }
 `;
 
 export const WrapperButton = styled.div`
   text-align: center;
-  margin-top: 60px;
 `;
 
 export const Button = styled.button`
@@ -143,6 +161,9 @@ export const Button = styled.button`
     background: #FADA5E;
     color: #3F3D56; 
     border: 1px solid #FADA5E;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
   }
 
   ${({ secondary }) =>
