@@ -3,13 +3,12 @@ import { ThemeContext } from 'providers/ThemeProvider';
 import { Container } from 'components/common';
 
 import man from 'assets/illustrations/man.png';
-import rocket from 'assets/illustrations/rocket.png';
 import planet from 'assets/illustrations/planet.png';
 
-import useIsMobile from '../../../hooks/useIsMobile';
-import { Wrapper, SkillsWrapper, Details, Button, WrapperButton } from './styles';
-
 import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
+import useIsMobile from '../../../hooks/useIsMobile';
+import { Wrapper, AboutUsWrapper, Details, Button, WrapperButton } from './styles';
+
 import ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
 
 
@@ -22,7 +21,7 @@ export const WhatIsThisAbout = () => {
 
   return (
     <Wrapper id="about">
-      <SkillsWrapper as={Container}>
+      <AboutUsWrapper>
       <h2 style={{ marginBottom: '60px' }}>About us</h2>
         <Details theme={theme}>
          <div className= "what">
@@ -45,7 +44,7 @@ export const WhatIsThisAbout = () => {
           </p>
         </div>
         <div className="who">
-          <img width={isMobile ? '174px' :'230px'} height={isMobile ? '156px' : '180px'} src={planet} alt="We take you to the orbit and beyond!" />
+          <img width={isMobile ? '200px' :'230px'} height={isMobile ? '156px' : '180px'} src={planet} alt="We take you to the orbit and beyond!" />
           <h2>Are you building a project?</h2>
           <p>
           Access to an active and incentivized community of contributors from day 1 to polish your project.
@@ -57,7 +56,7 @@ export const WhatIsThisAbout = () => {
             LEARN MORE
           </Button>
         </WrapperButton>
-      </SkillsWrapper>
+      </AboutUsWrapper>
     </Wrapper>
   );
 };

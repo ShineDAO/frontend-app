@@ -8,9 +8,14 @@ export const Wrapper = styled.div`
   padding: 80px 0;
 `;
 
-export const SkillsWrapper = styled.div`
+export const AboutUsWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
+  width: 1120px;
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    width: 70%;
+  }
 
   h2 {
     font-size: 24px;
@@ -30,7 +35,7 @@ export const Details = styled.div`
   flex: 1;
   display: grid;
   column-gap: 60px;
-  grid-template-columns: 330px 330px 330px;
+  grid-template-columns: repeat(auto-fill, 330px);
   justify-content: center;
 
   @media (max-width: 960px) {
