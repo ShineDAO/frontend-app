@@ -115,6 +115,9 @@ export const Button = styled.button`
     color: #3F3D56; 
     border: 1px solid #FADA5E;
   }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 
   ${({ secondary }) =>
     secondary &&

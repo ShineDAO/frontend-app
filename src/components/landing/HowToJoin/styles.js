@@ -9,6 +9,14 @@ overflow-x: clip;
 padding: 80px 0;
 `;
 
+export const HowToJoinWrapper = styled.div`
+  width: 1120px;
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    width: 70%;
+  }
+`;
+
 export const HalfCircle = styled.div`
   width: 900px;
   height: 900px;
@@ -67,7 +75,6 @@ height: 383px;
 width: 250px;
 border-radius: 0px;
 text-align: -webkit-center;
-margin-right: 40px;
 
 h2 {
   background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
@@ -102,10 +109,18 @@ width: 202px;
 padding: 16px;
 margin: 16px;
 }
+
+  @media (max-width: 1200px) {
+    margin: 20px auto;
+  }
 `;
 export const Cards = styled.div`
-display: flex;
-justify-content: space-around;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @media (max-width: 1200px) {
+    justify-content: center;
+  }
 `;
 
 export const WrapperButton = styled.div`
@@ -143,6 +158,9 @@ export const Button = styled.button`
     background: #FADA5E;
     color: #3F3D56; 
     border: 1px solid #FADA5E;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
   }
 
   ${({ secondary }) =>
