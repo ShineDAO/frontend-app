@@ -37,6 +37,7 @@ export const NameWrapper = styled.div`
   @media (max-width: 699px) {
     flex-direction: column;
   }
+  cursor: pointer;
   h2 {
     margin: 0 0 0 20px;
     @media (max-width: 495px) {

@@ -26,7 +26,7 @@ export const UpcomingProjects = () => {
         <h2>Upcoming Projects</h2>
         <UpcomingWrapper theme={theme}>
           <HeaderWrapper>
-            <NameWrapper>
+            <NameWrapper onClick={() => window.open('/defi-options-dao', 'blank', 'noopener')}>
               <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" />
               <h2>Defi Options DAO</h2>
             </NameWrapper>
