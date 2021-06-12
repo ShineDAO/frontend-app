@@ -16,6 +16,7 @@ export const SkillsWrapper = styled.div`
     font-size: 24px;
     font-weight: 800;
     line-height: 32px;
+    margin: 40px 0 16px 0;
   }
 
   @media (max-width: 960px) {
@@ -28,7 +29,8 @@ export const SkillsWrapper = styled.div`
 export const Details = styled.div`
   flex: 1;
   display: grid;
-  grid-template-columns: 320px 320px 320px;
+  column-gap: 60px;
+  grid-template-columns: 330px 330px 330px;
   justify-content: center;
 
   @media (max-width: 960px) {
@@ -36,7 +38,7 @@ export const Details = styled.div`
     width: 100%;
   }
 
-  h2 { 
+  h2 {
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#212121')};
 
     @media (max-width: 960px) {

@@ -68,6 +68,7 @@ width: 250px;
 border-radius: 0px;
 text-align: -webkit-center;
 margin-right: 40px;
+
 h2 {
   background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
@@ -78,8 +79,7 @@ h2 {
   align-items: center;
   width: 202px;
   height: 32px;
-  margin-top: 24px;
-  margin-bottom: 16px;
+  margin: 24px 16px 16px 16px;
 }
 .frame1 {
   background: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
@@ -110,7 +110,7 @@ justify-content: space-around;
 
 export const WrapperButton = styled.div`
   text-align: center;
-  margin-top: 60px;
+  margin-top: 40px;
 `;
 
 export const Button = styled.button`

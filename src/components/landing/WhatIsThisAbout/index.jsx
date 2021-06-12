@@ -23,7 +23,7 @@ export const WhatIsThisAbout = () => {
   return (
     <Wrapper id="about">
       <SkillsWrapper as={Container}>
-      <h2>About us</h2>
+      <h2 style={{ marginBottom: '60px' }}>About us</h2>
         <Details theme={theme}>
          <div className= "what">
         <img

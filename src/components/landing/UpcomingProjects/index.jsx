@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
-import { Card, Container } from 'components/common';
+import { Card } from 'components/common';
 import DefiOptionsLogo from './defi_options_logo.png';
-import { HalfCircle, HeaderWrapper, NameWrapper, Wrapper } from './styles';
+import { HalfCircle, UpcomingContainer, HeaderWrapper, NameWrapper, Wrapper, UpcomingWrapper } from './styles';
 import { Avatar } from '../../common/Avatar';
 import { Text } from '../../common/Text';
 
@@ -12,17 +12,9 @@ export const UpcomingProjects = () => {
   return (
     <Wrapper id="about">
       <HalfCircle theme={theme} />
-      <Container>
+      <UpcomingContainer>
         <h2>Upcoming Projects</h2>
-        <Card
-          background="white"
-          boxShadow="0px 4px 20px rgba(0, 0, 0, 0.1);"
-          display="block"
-          margin="40px 0 0 0"
-          padding="40px"
-          theme={theme}
-          width="540px"
-        >
+        <UpcomingWrapper>
           <HeaderWrapper>
             <NameWrapper>
               <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" />
@@ -73,8 +65,8 @@ export const UpcomingProjects = () => {
               </Text>
             </Card>
           </Card>
-        </Card>
-      </Container>
+        </UpcomingWrapper>
+      </UpcomingContainer>
     </Wrapper>
   );
 };

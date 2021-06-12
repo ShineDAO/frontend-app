@@ -34,7 +34,15 @@ export const NameWrapper = styled.div`
   @media (max-width: 960px) {
     flex-direction: column;
     display: block;
-    padding: 60px 0;
+  }
+`;
+
+export const UpcomingContainer = styled.div`
+  margin: 0 auto;
+  width: 1120px;
+
+  @media (max-width: 960px) {
+    width: 70%;
   }
 `;
 
@@ -44,9 +52,22 @@ export const HeaderWrapper = styled.div`
   justify-content: space-between;
   width: 460px;
   @media (max-width: 960px) {
+    width: 100%;
     flex-direction: column;
-    display: block;
-    padding: 60px 0;
+    display: flex;
+  }
+`;
+
+export const UpcomingWrapper = styled.div`
+  background: white;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 40px 0 0 0;
+  padding: 40px;
+  width: 540px;
+  @media (max-width: 960px) {
+    flex-direction: column;
+    width: 100%;
   }
 `;
 

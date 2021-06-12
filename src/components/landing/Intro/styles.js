@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
 `;
 
 export const IntroWrapper = styled.div`
-  padding: 160px 0 200px 0;
+  padding: 160px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,7 +36,7 @@ export const IntroWrapper = styled.div`
     flex-direction: column;
     width: 70%;
     padding: 40px 0 60px 0;
-}
+  }
 `;
 
 export const Details = styled.div`

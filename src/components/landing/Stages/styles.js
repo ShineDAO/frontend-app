@@ -12,7 +12,6 @@ export const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 460px;
-  padding-bottom: 40px;
   h4 {
     font-size: 24px;
   }
@@ -24,68 +23,80 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const Infographic = styled.div`
-width: 1120px;
-text-align: center;
-align-items: center;
-display: flex;
-justify-content: space-between;
+  width: 1120px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
 
-h4 {
-  font-size: 24px;
-  line-height: 75px;
-  color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')}; 
-}
-div {
-  padding-top: 40px;
-}
+  @media (max-width: 960px) {
+    flex-direction: column;
+    width: 70%;
+  }
+
+  h4 {
+    font-size: 24px;
+    line-height: 75px;
+    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')};
+  }
 `;
 
 export const DarkBubble = styled.div`
-background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
-width: 160px;
-height: 160px;
-border-radius: 50%;
-text-align: center;
-border: 4px solid ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
-box-sizing: border-box;
+  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 4px solid ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  box-sizing: border-box;
 
-h4 {
-  font-size: 24px;
-  line-height: 75px;
-  color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')}; 
-}
+  h4 {
+    font-size: 24px;
+    line-height: 75px;
+    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')};
+  }
 `;
 
 export const LightBubble = styled.div`
-background: ${({ theme }) => (theme === 'light' ? '#FFFFFF' : '#1E1E1E')};
-width: 160px;
-height: 160px;
-border-radius: 50%;
-text-align: center;
-border: 4px solid ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
-box-sizing: border-box;
+  background: ${({ theme }) => (theme === 'light' ? '#FFFFFF' : '#1E1E1E')};
+  width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 160px;
+  border-radius: 50%;
+  text-align: center;
+  border: 4px solid ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  box-sizing: border-box;
 
-h4 {
-  font-size: 24px;
-  line-height: 75px;
-  color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')}; 
-}
+  h4 {
+    font-size: 24px;
+    line-height: 75px;
+    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')};
+  }
 `;
 
 export const Bubble = styled.div`
-background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
-width: 160px;
-height: 160px;
-border-radius: 50%;
-text-align: center;
-border: 4px solid ${({ theme }) => (theme === 'light' ? '#FFFFFF' : '#1E1E1E')};
-box-sizing: border-box;
+  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 160px;
+  border-radius: 50%;
+  text-align: center;
+  border: 4px solid ${({ theme }) => (theme === 'light' ? '#FFFFFF' : '#1E1E1E')};
+  box-sizing: border-box;
 
-h4 {
-  font-size: 24px;
-  line-height: 75px;
-  color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')}; 
-}
+  h4 {
+    font-size: 24px;
+    line-height: 75px;
+    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')};
+  }
 `;
 
 export const WrapperButton = styled.div`
@@ -120,9 +131,9 @@ export const Button = styled.button`
     background: gray;
   }
   &:hover {
-    background: #FADA5E;
-    color: #3F3D56; 
-    border: 1px solid #FADA5E;
+    background: #fada5e;
+    color: #3f3d56;
+    border: 1px solid #fada5e;
   }
 
   ${({ secondary }) =>
