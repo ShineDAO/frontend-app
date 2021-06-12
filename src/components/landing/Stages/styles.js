@@ -8,6 +8,14 @@ export const Wrapper = styled.div`
   padding: 80px 0;
 `;
 
+export const StagesWrapper = styled.div`
+  width: 1120px;
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    width: 70%;
+  }
+`;
+
 export const HeaderWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
@@ -30,15 +38,23 @@ export const Infographic = styled.div`
   justify-content: space-between;
   margin-top: 60px;
 
-  @media (max-width: 960px) {
+  @media (max-width: 1200px) {
+    align-items: center;
     flex-direction: column;
-    width: 70%;
+    width: 100%;
   }
 
   h4 {
     font-size: 24px;
     line-height: 75px;
     color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')};
+  }
+`;
+
+export const ArrowWrapper = styled.div`
+  @media (max-width: 1200px) {
+    transform: rotate(90deg);
+    margin: 20px;
   }
 `;
 
@@ -134,6 +150,9 @@ export const Button = styled.button`
     background: #fada5e;
     color: #3f3d56;
     border: 1px solid #fada5e;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
   }
 
   ${({ secondary }) =>
