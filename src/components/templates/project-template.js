@@ -66,7 +66,10 @@ export default function ProjectTemplate({ data }) {
   const project = data.projectsJson;
   console.log('project data ', project);
 
-  const shineTokenAddress = '0xd3E104c53966Dd06E3CF62FE7C3A3EC2247c4Ade';
+  //const shineTokenAddress = '0xd3E104c53966Dd06E3CF62FE7C3A3EC2247c4Ade'; //Local Ganache
+  const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
+
+  
   const shineTokenAbi = ShineToken.abi;
 
   const { currentStatus } = project.technicalDetails;
@@ -273,8 +276,8 @@ export default function ProjectTemplate({ data }) {
         <br style={{ lineHeight: '200px' }} />
         <ProjectsWrapper as={Container}>
           <Heading>
-            <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />
-            <HeadingText>Defi Options DAO</HeadingText>
+            {false && <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />}
+            <HeadingText>Project Details</HeadingText>
           </Heading>
           <InfoCards>
             <StatsCard>
@@ -301,7 +304,7 @@ export default function ProjectTemplate({ data }) {
                     Total raise
                   </Text>
                   <Text color="#3F3D56" fontWeight={800} fontSize="24px">
-                    $200k
+                    $150k
                   </Text>
                 </FirstStatsCard>
                 <RightStatsCard>
@@ -363,7 +366,7 @@ export default function ProjectTemplate({ data }) {
                   (&gt;15k SHN)
                 </Text>
                 <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                  ≈ $300
+                  ❌
                 </Text>
               </TierWrapper>
               <TierWrapper highlightTier={shineBalance >= 50000 && shineBalance < 200000}>
@@ -376,7 +379,7 @@ export default function ProjectTemplate({ data }) {
                   (&gt;50k SHN)
                 </Text>
                 <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                  ≈ $800
+                  ❌
                 </Text>
               </TierWrapper>
               <TierWrapper highlightTier={shineBalance >= 200000 && shineBalance < 400000}>
@@ -406,7 +409,7 @@ export default function ProjectTemplate({ data }) {
                 </Text>
               </TierWrapper>
               {console.log("shine balance", shineBalance)}
-              <Card
+              {!isWalletEnabled && (<Card
                 onClick={() => utils.loadWeb3(setWalletStatus, setBalance)}
                 borderRadius="4px"
                 border="1px solid white"
@@ -420,7 +423,8 @@ export default function ProjectTemplate({ data }) {
                 <Text fontWeight={800} color="white">
                   CONNECT WALLET
                 </Text>
-              </Card>
+              </Card>)}
+
             </TokenCard>
           </InfoCards>
 

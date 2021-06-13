@@ -44,7 +44,7 @@ export const UpcomingProjects = () => {
             <TotalRaise>
               <Text color="#3F3D56">Total raise</Text>
               <Text color="#3F3D56" fontWeight={800}>
-                $200k
+                $150k
               </Text>
             </TotalRaise>
             <FundingStage>

@@ -17,8 +17,8 @@ import LightVector from './LightVector.svg';
 
 export const Stages = () => {
   const { theme } = useContext(ThemeContext);
-  const onScrollToContact = () => {
-    window.open('https://docs.shinedao.finance/positioning', 'blank', 'noopener');
+  const onScrollToContact = (link) => {
+    window.open(link, '_blank', 'noopener');
   };
 
   return (
@@ -57,7 +57,7 @@ export const Stages = () => {
           </DarkBubble>
         </Infographic>
         <WrapperButton>
-          <Button onClick={onScrollToContact} theme={theme}>LEARN MORE</Button>
+          <Button onClick={() => onScrollToContact("https://docs.shinedao.finance/decentralising-startup-incubation/deal-flow")} theme={theme}>LEARN MORE</Button>
         </WrapperButton>
       </StagesWrapper>
     </Wrapper>

@@ -199,9 +199,9 @@ export const TitleText = styled.div`
 `;
 
 export const HeadingText = styled.div`
-  font-size: 48px;
+  font-size: 34px;
   font-weight: 800;
-  margin-left: 24px;
+  margin-left: 12px;
   @media (max-width: 600px) {
     text-align: center;
   }

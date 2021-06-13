@@ -23,42 +23,43 @@ import ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
 export const WhatIsThisAbout = () => {
   const { theme } = useContext(ThemeContext);
   const isMobile = useIsMobile();
-  const onScrollToContact = () => {
-    window.open('https://docs.shinedao.finance/positioning', 'blank', 'noopener');
+  const onScrollToContact = (link) => {
+    window.open(link, '_blank', 'noopener');
   };
 
   return (
     <Wrapper id="about">
       <AboutUsWrapper>
-      <h2>About us</h2>
+        <h2>About us</h2>
         <Details theme={theme}>
-         <div className= "what">
-        <IllustrationMan
-          src={man}
-          alt="Towards the stars! Are you ready?"
-        />
-          <h2>Participate Early</h2>
-          <p>
-            Access to invest in the future stars from their earliest stages all the way to blast off from our launchpad.
+          <div className="what">
+            <IllustrationMan
+              src={man}
+              alt="Towards the stars! Are you ready?"
+            />
+            <h2>Early deal access</h2>
+            <p>
+              Exclusive access to early-stage and thrust-worthy gems.
           </p>
-         </div>
-         <div className="why">
-          <IllustrationShineNetwork3 src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine will get you to the moon and beyond!" />
-          <h2>Contribute and get rewarded</h2>
-          <p>
-          Participate in a secure and compliant environment to get assets beyond ERC20 standard.
+          </div>
+          <div className="why">
+            <IllustrationShineNetwork3 src={theme === 'light' ? shineNetworkV3 : ShineNetworkWhite} alt="Shine will get you to the moon and beyond!" />
+            <h2>Contribute and get rewarded</h2>
+            <p>
+              5 - 20 % of projects tokens will be distributed to early contributors.
+
           </p>
-        </div>
-        <div className="who">
-          <IllustrationPlanet src={planet} alt="We take you to the orbit and beyond!" />
-          <h2>Are you building a project?</h2>
-          <p>
-          Access to an active and incentivized community of contributors from day 1 to polish your project.
+          </div>
+          <div className="who">
+            <IllustrationPlanet src={planet} alt="We take you to the orbit and beyond!" />
+            <h2>Are you building a project?</h2>
+            <p>
+              Get access to community of contributors to polish your project.
           </p>
-        </div>
+          </div>
         </Details>
         <WrapperButton>
-          <Button onClick={onScrollToContact} theme={theme}>
+          <Button onClick={() => onScrollToContact("https://docs.shinedao.finance/decentralising-startup-incubation/community-incentives")} theme={theme}>
             LEARN MORE
           </Button>
         </WrapperButton>
@@ -66,3 +67,4 @@ export const WhatIsThisAbout = () => {
     </Wrapper>
   );
 };
+

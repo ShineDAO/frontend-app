@@ -20,6 +20,9 @@ export const HowToJoinWrapper = styled.div`
   }
 `;
 
+export const TextLink = styled.b`
+  cursor:pointer
+`
 export const HalfCircle = styled.div`
   width: 900px;
   height: 900px;
