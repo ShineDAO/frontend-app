@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  margin-bottom: 50px;
   cursor: pointer;
   border-radius: 4px;
   border: none;
@@ -13,11 +12,11 @@ export const Button = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: #fff;
-  background: #3F3D56;
+  background: #3f3d56;
   font-weight: bold;
   font-size: 16px;
   height: 48px;
-  width: 160px;
+  width: ${({ width }) => width || '160px'};
 
   &:focus {
     outline: none;
@@ -28,8 +27,8 @@ export const Button = styled.button`
   }
 
   &:hover {
-    background: #FADA5E;
-    color: #3F3D56;
+    background: #fada5e;
+    color: #3f3d56;
     text-decoration: none;
   }
 
@@ -66,7 +65,6 @@ export const JoinButton = styled.button`
   height: 48px;
   font-weight: bold;
   font-size: 16px;
-  margin-right: 20px;
 
   &:focus {
     outline: none;

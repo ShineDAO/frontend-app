@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
 `;
 
 export const IntroWrapper = styled.div`
-  padding: 160px 0 200px 0;
+  padding: 160px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,14 +36,17 @@ export const IntroWrapper = styled.div`
     flex-direction: column;
     width: 70%;
     padding: 40px 0 60px 0;
-}
+  }
 `;
 
 export const Details = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: 960px) {
     width: 100%;
+    align-items: center;
   }
 
   h1 {
@@ -52,11 +55,9 @@ export const Details = styled.div`
     color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
 
     @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
-    }
-
-    @media (max-width: 960px) {
       font-size: 24px;
+      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      text-align: center;
     }
   }
 
@@ -69,6 +70,7 @@ export const Details = styled.div`
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
       font-size: 19px;
+      text-align: center;
     }
 
     @media (max-width: 680px) {
@@ -106,4 +108,10 @@ export const ButtonWrapper = styled.div`
   display: flex;
   margin: 0.7em 0;
   flex-wrap: wrap;
+  width: 500px;
+  justify-content: space-between;
+  @media (max-width: 600px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;

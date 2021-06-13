@@ -50,7 +50,7 @@ export const Details = styled.div`
   }
 `;
 
-export const LiteparerCard = styled.div`
+export const LitepaperCard = styled.div`
   border-radius: 33px;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};

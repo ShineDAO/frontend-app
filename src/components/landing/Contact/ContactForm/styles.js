@@ -27,7 +27,6 @@ export const InputFieldCaptcha = styled.div`
 
 export const Details = styled.div`
   flex: 1;
-  padding-left: 2rem;
 
   @media (max-width: 960px) {
     padding-left: unset;
@@ -35,7 +34,6 @@ export const Details = styled.div`
   }
 
   h1 {
-    padding-top: 4rem;
     margin-bottom: 25px;
     font-size: 24px;
     line-height: 35px;

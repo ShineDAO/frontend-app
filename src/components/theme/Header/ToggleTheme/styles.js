@@ -17,5 +17,6 @@ export const Wrapper = styled.button`
 
   img {
     margin-bottom: unset;
+    margin-left: 3rem;
   }
 `;

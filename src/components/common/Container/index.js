@@ -10,6 +10,6 @@ export const Container = styled.div`
   }
 
   @media (min-width: 993px) {
-    width: 80%;
+    width: 1120px;
   }
 `;

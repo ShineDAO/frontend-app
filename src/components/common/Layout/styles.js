@@ -205,7 +205,7 @@ export const Global = createGlobalStyle`
       padding-left: 0;
       padding-right: 0;
       padding-top: 0;
-      margin-bottom: 1.45rem;
+      margin-bottom: 0;
     }
     h1 {
       margin-left: 0;
@@ -230,11 +230,10 @@ export const Global = createGlobalStyle`
       padding-left: 0;
       padding-right: 0;
       padding-top: 0;
-      margin-bottom: 1.45rem;
       color: inherit;
       font-weight: bold;
       text-rendering: optimizeLegibility;
-      font-size: 1.62671rem;
+      font-size: 24px;
       line-height: 1.1;
     }
     h3 {
@@ -260,7 +259,7 @@ export const Global = createGlobalStyle`
       padding-left: 0;
       padding-right: 0;
       padding-top: 0;
-      margin-bottom: 1.45rem;
+      margin-bottom: 0;
       color: inherit;
       font-weight: bold;
       text-rendering: optimizeLegibility;
