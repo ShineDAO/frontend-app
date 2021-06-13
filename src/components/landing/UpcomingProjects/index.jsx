@@ -36,7 +36,7 @@ export const UpcomingProjects = () => {
                 <circle cx="4" cy="4" r="4" fill="#3F3D56" />
               </svg>
               <Text color="#3F3D56" fontWeight={800}>
-                &nbsp; in 4 days
+                &nbsp; in TBA days
               </Text>
             </When>
           </HeaderWrapper>

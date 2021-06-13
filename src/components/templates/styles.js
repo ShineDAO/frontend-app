@@ -67,8 +67,13 @@ export const TokenCard = styled.div`
 `;
 
 export const TierWrapper = styled.div`
+
+  -webkit-box-shadow: ${({ highlightTier }) => (highlightTier ? '0 0 20px 9px #fada5d' : '')};
+  -moz-box-shadow: ${({ highlightTier }) => (highlightTier ? '0 0 20px 9px #fada5d' : '')};
+  box-shadow: ${({ highlightTier }) => (highlightTier? '0 0 20px 9px #fada5d' : '')};
+
   width: 462px;
-  border-radius: 4px;
+  border-radius: 10px;
   border: 1px solid #3f3d56;
   display: flex;
   background: #1e1e1e;
