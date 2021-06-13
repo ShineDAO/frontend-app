@@ -47,7 +47,7 @@ export const HowToJoin = () => {
                         To contribute to projects and participate in community discussions, please join our <TextLink onClick={() => window.open('https://discord.gg/QkhbP7bZrj', '_blank', 'noopener')}>Discord server.</TextLink>
                     </p>
                     <WrapperButton>
-                        <Button onClick={() => window.open('https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28', '_blank', 'noopener')} theme={theme}>GET SHN TOKEN</Button>
+                        <Button onClick={() => window.open('https://app.uniswap.org/#/swap?inputCurrency=0x1c7ede23b1361acc098a1e357c9085d131b34a01&outputCurrency=ETH', '_blank', 'noopener')} theme={theme}>GET SHN TOKEN</Button>
                     </WrapperButton>
                 </Details>
             </HowToJoinWrapper>
