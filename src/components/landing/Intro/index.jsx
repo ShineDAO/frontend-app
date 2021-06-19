@@ -28,8 +28,8 @@ export const Intro = () => {
         {isMobile ? (
           <React.Fragment>
             <Details theme={theme}>
-              <h1>ShineDAO</h1>
-              <h4>Protocol based incubator for DeFi projects</h4>
+              <h1>Decentralized Launchpad &#38; Incubator</h1>
+              <h4>ShineDAO makes it easy to invest in seed-sales and IDOs of new projects, support with completing missions and get rewarded with their tokens</h4>
               <img
                 width={isMobile ? '200px' : '400px'}
                 src={theme === 'light' ? shineAnimatedRocket : shineAnimatedRocket}
@@ -49,8 +49,8 @@ export const Intro = () => {
         ) : (
           <React.Fragment>
             <Details theme={theme}>
-              <h1>ShineDAO</h1>
-              <h4>Protocol based incubator for DeFi projects</h4>
+              <h1>Decentralized Launchpad &#38; Incubator</h1>
+              <h4>ShineDAO makes it easy to invest in seed-sales and IDOs of new projects, support with completing missions and get rewarded with their tokens</h4>
               <ButtonWrapper>
                 <JoinButton onClick={onJoinButtonClick} theme={theme}>
                   JOIN DISCORD
