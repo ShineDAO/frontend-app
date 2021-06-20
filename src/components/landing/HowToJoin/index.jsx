@@ -20,13 +20,13 @@ export const HowToJoin = () => {
                         <JoinCard theme={theme}>
                             <h2 theme={theme}>TIER 1</h2>
                             <p className="frame1" theme={theme} > &#62; 15.000 SHN </p>
-                            <p className="frame2">✅   IDO  <br></br>❌   Seed-sale </p>
+                            <p className="frame2">✅   IDO  <br></br>❔   Seed-sale </p>
                             <p className="frame2">Cap/person <br></br> 1x</p>
                         </JoinCard>
                         <JoinCard theme={theme}>
                             <h2>TIER 2</h2>
                             <p className="frame1"> &#62; 50.000 SHN </p>
-                            <p className="frame2">✅   IDO  <br></br>❌   Seed-sale </p>
+                            <p className="frame2">✅   IDO  <br></br>❔   Seed-sale </p>
                             <p className="frame2">Cap/person <br></br>2-4x</p>
                         </JoinCard>
                         <JoinCard theme={theme}>

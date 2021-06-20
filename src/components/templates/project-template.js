@@ -69,7 +69,7 @@ export default function ProjectTemplate({ data }) {
   //const shineTokenAddress = '0xd3E104c53966Dd06E3CF62FE7C3A3EC2247c4Ade'; //Local Ganache
   const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
 
-  
+
   const shineTokenAbi = ShineToken.abi;
 
   const { currentStatus } = project.technicalDetails;
@@ -366,7 +366,7 @@ export default function ProjectTemplate({ data }) {
                   (&gt;15k SHN)
                 </Text>
                 <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                  ❌
+                  ❔
                 </Text>
               </TierWrapper>
               <TierWrapper highlightTier={shineBalance >= 50000 && shineBalance < 200000}>
@@ -379,7 +379,7 @@ export default function ProjectTemplate({ data }) {
                   (&gt;50k SHN)
                 </Text>
                 <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                  ❌
+                  ❔
                 </Text>
               </TierWrapper>
               <TierWrapper highlightTier={shineBalance >= 200000 && shineBalance < 400000}>
