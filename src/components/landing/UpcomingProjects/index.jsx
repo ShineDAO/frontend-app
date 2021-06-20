@@ -23,9 +23,9 @@ export const UpcomingProjects = () => {
     <Wrapper id="about">
       <UpcomingContainer>
         <h2>Upcoming Projects</h2>
-        <UpcomingWrapper theme={theme}>
+        <UpcomingWrapper theme={theme} onClick={() => window.open('/defi-options-dao', 'blank', 'noopener')}>
           <HeaderWrapper>
-            <NameWrapper onClick={() => window.open('/defi-options-dao', 'blank', 'noopener')}>
+            <NameWrapper>
               <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" />
               <h2>Defi Options DAO</h2>
             </NameWrapper>
@@ -40,15 +40,15 @@ export const UpcomingProjects = () => {
             </When>
           </HeaderWrapper>
           <BottomWrapper theme={theme}>
-            <TotalRaise>
-              <Text color="#3F3D56">Total raise</Text>
-              <Text color="#3F3D56" fontWeight={800}>
-                $150k
+            <TotalRaise theme={theme}>
+              <Text fontSize="20px" color={theme === 'light' ? '#3f3d56' : 'white'}>Total raise</Text>
+              <Text fontSize="24px" color={theme === 'light' ? '#3f3d56' : 'white'} fontWeight={800}>
+                $200k
               </Text>
             </TotalRaise>
-            <FundingStage>
-              <Text color="#3F3D56">Funding stage</Text>
-              <Text color="#3F3D56" fontWeight={800}>
+            <FundingStage theme={theme}>
+              <Text fontSize="20px" color={theme === 'light' ? '#3f3d56' : 'white'}>Funding stage</Text>
+              <Text fontSize="24px" color={theme === 'light' ? '#3f3d56' : 'white'} fontWeight={800}>
                 Seed Sale
               </Text>
             </FundingStage>
