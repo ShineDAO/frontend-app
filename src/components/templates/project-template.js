@@ -22,12 +22,10 @@ import {
 import {
   Wrapper,
   ProjectsWrapper,
-  QuartCircleIntro,
   Heading,
   HeadingText,
   InfoCards,
   CardHeaderWrapper,
-  CardTitleWrapper,
   ProjectNameWrapper,
   Details,
   ConnectButton,
@@ -147,7 +145,6 @@ export default function ProjectTemplate({ data }) {
     <Layout>
       <SEO />
       <Wrapper>
-        <QuartCircleIntro theme={theme} />
         <Header />
 
 
@@ -273,7 +270,6 @@ export default function ProjectTemplate({ data }) {
         </Details>}
 
 
-        <br style={{ lineHeight: '200px' }} />
         <ProjectsWrapper as={Container}>
           <Heading>
             {false && <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />}

@@ -58,6 +58,15 @@ export const UpcomingContainer = styled.div`
   }
 `;
 
+export const UpcomingCardContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 960px) {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+`;
+
 export const When = styled.div`
   display: flex;
   align-items: center;
@@ -85,6 +94,18 @@ export const HeaderWrapper = styled.div`
   @media (max-width: 699px) {
     justify-content: center;
   }
+`;
+
+export const GetAccessText = styled.div`
+  margin: 20px 0;
+  @media (max-width: 960px) {
+    text-align: center;
+  }
+`;
+
+export const CtaWrapper = styled.div`
+  display: flex;
+  justify-content: right;
 `;
 
 export const BottomWrapper = styled.div`
@@ -130,7 +151,7 @@ export const FundingStage = styled.div`
 
 export const UpcomingWrapper = styled.div`
   background: ${({ theme }) => (theme === 'light' ? 'white' : '#212121')};
-  border: 1px solid #3f3d56;
+  border: ${({ theme }) => (theme === 'light' ? 'none' : '1px solid #3f3d56')};
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   display: flex;
   cursor: pointer;

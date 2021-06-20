@@ -2,12 +2,10 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Header } from 'components/theme';
 import { Container, JoinButton, LearnButton } from 'components/common';
-import shineNetworkV3 from 'assets/illustrations/shine-network-v3.png';
 import shineAnimatedRocket from 'assets/illustrations/shineAnimatedRocket.gif'
-import ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
 import useIsMobile from '../../../hooks/useIsMobile';
 
-import { Wrapper, IntroWrapper, Details, ButtonWrapper, QuartCircleIntro } from './styles';
+import { Wrapper, IntroWrapper, Details, ButtonWrapper } from './styles';
 
 export const Intro = () => {
   const { theme } = useContext(ThemeContext);
@@ -17,7 +15,7 @@ export const Intro = () => {
   };
 
   const onLearnButtonClick = () => {
-    window.open('https://v2s0c9giox5.typeform.com/to/OElYo1Fe', '_blank', 'noopener');
+    window.open('https://docs.shinedao.finance/', '_blank', 'noopener');
   };
 
   return (
@@ -40,7 +38,7 @@ export const Intro = () => {
                 </JoinButton>
 
                 <LearnButton onClick={onLearnButtonClick} theme={theme}>
-                  APPLY FOR THE PROGRAM
+                  LEARN MORE
                 </LearnButton>
               </ButtonWrapper>
             </Details>
@@ -49,14 +47,14 @@ export const Intro = () => {
           <React.Fragment>
             <Details theme={theme}>
               <h1>Decentralized Launchpad &#38; Incubator</h1>
-              <h4>ShineDAO makes it easy to invest in seed-sales and IDOs of new projects, support with completing missions and get rewarded with their tokens</h4>
+              <h4>ShineDAO makes it easy to invest in seed-sales and IDOs of new projects,<br/>support with completing missions and get rewarded with their tokens</h4>
               <ButtonWrapper>
                 <JoinButton onClick={onJoinButtonClick} theme={theme}>
                   JOIN DISCORD
                 </JoinButton>
 
                 <LearnButton onClick={onLearnButtonClick} theme={theme}>
-                  APPLY FOR THE PROGRAM
+                  LEARN MORE
                 </LearnButton>
               </ButtonWrapper>
             </Details>

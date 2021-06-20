@@ -80,7 +80,7 @@ font-weight: 800;
 box-sizing: border-box;
 height: 383px;
 width: 250px;
-border-radius: 0px;
+border-radius: 8px;
 text-align: -webkit-center;
 
 h2 {

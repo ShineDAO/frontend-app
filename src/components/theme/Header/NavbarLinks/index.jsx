@@ -9,13 +9,17 @@ const NavbarLinks = ({ desktop }) => {
 
   return (
     <Wrapper desktop={desktop} theme={theme}>
-      <a href="http://docs.shinedao.finance" target="_blank">Docs</a>
-      <a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>
+      <a href="http://docs.shinedao.finance" target="_blank">DOCS</a>
+      {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
       <JoinButton
-        onClick={() => window.open(link, '_blank', 'noopener')}
+        onClick={() => window.scroll({
+          top: 650,
+          left: 0,
+          behavior: 'smooth'
+        })}
         theme={theme}
       >
-        See upcoming projects
+        SEE UPCOMING PROJECTS
       </JoinButton>
       <ToggleTheme />
     </Wrapper>
