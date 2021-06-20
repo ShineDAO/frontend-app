@@ -21,7 +21,6 @@ export const UpcomingProjects = () => {
 
   return (
     <Wrapper id="about">
-      <HalfCircle theme={theme} />
       <UpcomingContainer>
         <h2>Upcoming Projects</h2>
         <UpcomingWrapper theme={theme}>

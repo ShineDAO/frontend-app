@@ -22,7 +22,6 @@ export const Intro = () => {
 
   return (
     <Wrapper>
-      <QuartCircleIntro theme={theme} />
       <Header />
       <IntroWrapper as={Container}>
         {isMobile ? (

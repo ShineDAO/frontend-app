@@ -10,7 +10,6 @@ export const HowToJoin = () => {
 
     return (
         <Wrapper id="about">
-            <HalfCircle theme={theme} />
             <HowToJoinWrapper>
                 <Details theme={theme}>
                     <h1>How to join?</h1>
