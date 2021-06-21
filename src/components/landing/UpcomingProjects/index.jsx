@@ -25,7 +25,7 @@ export const UpcomingProjects = () => {
       <UpcomingContainer>
         <h2>Upcoming Projects</h2>
         <UpcomingCardContainer>
-          <UpcomingWrapper theme={theme} onClick={() => window.open('/defi-options-dao', 'blank', 'noopener')}>
+          <UpcomingWrapper theme={theme} onClick={() => window.open('/defi-options-dao', '_blank', 'noopener')}>
             <HeaderWrapper>
               <NameWrapper>
                 <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" />
@@ -45,7 +45,7 @@ export const UpcomingProjects = () => {
               <TotalRaise theme={theme}>
                 <Text fontSize="20px" color={theme === 'light' ? '#3f3d56' : 'white'}>Total raise</Text>
                 <Text fontSize="24px" color={theme === 'light' ? '#3f3d56' : 'white'} fontWeight={800}>
-                  $200k
+                  $150k
                 </Text>
               </TotalRaise>
               <FundingStage theme={theme}>
@@ -56,7 +56,7 @@ export const UpcomingProjects = () => {
               </FundingStage>
             </BottomWrapper>
           </UpcomingWrapper>
-          <UpcomingWrapper theme={theme} onClick={() => window.open('/defi-options-dao', 'blank', 'noopener')}>
+          <UpcomingWrapper theme={theme} onClick={() => window.open('https://form.typeform.com/to/OElYo1Fe', '_blank', 'noopener')}>
             <h2>
               Are you building a project?
             </h2>
