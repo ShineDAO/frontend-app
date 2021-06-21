@@ -11,24 +11,6 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const HalfCircle = styled.div`
-  width: 800px;
-  height: 800px;
-  border-radius: 50%;
-  left: -400px;
-  bottom: -445px;
-  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
-  transition: 0.3s all;
-  z-index: -1;
-  position: absolute;
-  @media (max-width: 960px) {
-    width: 445px;
-    height: 445px;
-    left: -290px;
-    top: 125px;
-  }
-`;
-
 export const NameWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -200,18 +182,5 @@ export const Details = styled.div`
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
     }
-  }
-`;
-
-export const Thumbnail = styled.div`
-  flex: 1;
-
-  @media (max-width: 960px) {
-    width: 100%;
-    margin-bottom: 2rem;
-  }
-
-  img {
-    width: 100%;
   }
 `;
