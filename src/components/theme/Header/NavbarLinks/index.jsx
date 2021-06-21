@@ -12,11 +12,7 @@ const NavbarLinks = ({ desktop }) => {
       <a href="http://docs.shinedao.finance" target="_blank">DOCS</a>
       {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
       <JoinButton
-        onClick={() => window.scroll({
-          top: 650,
-          left: 0,
-          behavior: 'smooth'
-        })}
+        onClick={() => window.location.href = '#about'}
         theme={theme}
       >
         SEE UPCOMING PROJECTS
