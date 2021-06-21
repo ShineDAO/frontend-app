@@ -25,7 +25,7 @@ export const Intro = () => {
         {isMobile ? (
           <React.Fragment>
             <Details theme={theme}>
-              <h1>Decentralized Launchpad &#38; Incubator</h1>
+              <h1>Community Driven DeFi Incubator</h1>
               <h4>ShineDAO makes it easy to invest in seed-sales and IDOs of new projects, support with completing missions and get rewarded with their tokens</h4>
               <img
                 width={isMobile ? '200px' : '400px'}
@@ -46,7 +46,7 @@ export const Intro = () => {
         ) : (
           <React.Fragment>
             <Details theme={theme}>
-              <h1>Decentralized Launchpad &#38; Incubator</h1>
+              <h1>Community Driven DeFi Incubator</h1>
               <h4>ShineDAO makes it easy to invest in seed-sales and IDOs of new projects,<br/>support with completing missions and get rewarded with their tokens</h4>
               <ButtonWrapper>
                 <JoinButton onClick={onJoinButtonClick} theme={theme}>
