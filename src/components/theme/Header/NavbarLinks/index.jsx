@@ -6,20 +6,20 @@ import {JoinButton} from "../../../common";
 
 const NavbarLinks = ({ desktop }) => {
   const { theme } = useContext(ThemeContext);
-  const [buttonText, setButtonText] = useState('Go to App')
 
   return (
     <Wrapper desktop={desktop} theme={theme}>
-      <a href="http://docs.shinedao.finance" target="_blank">Docs</a>
-      <a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>
+      <a href="http://docs.shinedao.finance" target="_blank">DOCS</a>
+      {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
       <JoinButton
-        narrow
-        onMouseEnter={() => setButtonText('Coming soon')}
-        onMouseLeave={() => setButtonText('Go to App')}
-        onClick={() => setButtonText('Coming soon')}
+        onClick={() => window.scroll({
+          top: 650,
+          left: 0,
+          behavior: 'smooth'
+        })}
         theme={theme}
       >
-        {buttonText}
+        SEE UPCOMING PROJECTS
       </JoinButton>
       <ToggleTheme />
     </Wrapper>

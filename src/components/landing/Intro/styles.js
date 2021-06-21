@@ -51,7 +51,7 @@ export const Details = styled.div`
 
   h1 {
     margin-bottom: 1rem;
-    font-size: 48px;
+    font-size: 37px;
     color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
 
     @media (max-width: 960px) {
@@ -62,9 +62,10 @@ export const Details = styled.div`
   }
 
   h4 {
-    margin-bottom: 2.5rem;
-    font-size: 28px;
+    margin-bottom: 50px;
+    font-size: 20px;
     font-weight: normal;
+    line-height: 32px;
     color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#FFF')};
 
     @media (max-width: 960px) {

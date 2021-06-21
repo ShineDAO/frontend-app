@@ -37,7 +37,6 @@ export const NameWrapper = styled.div`
   @media (max-width: 699px) {
     flex-direction: column;
   }
-  cursor: pointer;
   h2 {
     margin: 0 0 0 20px;
     @media (max-width: 495px) {
@@ -56,6 +55,15 @@ export const UpcomingContainer = styled.div`
     @media (max-width: 960px) {
       text-align: center;
     }
+  }
+`;
+
+export const UpcomingCardContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 960px) {
+    flex-direction: column;
+    margin-top: 20px;
   }
 `;
 
@@ -88,11 +96,23 @@ export const HeaderWrapper = styled.div`
   }
 `;
 
+export const GetAccessText = styled.div`
+  margin: 20px 0;
+  @media (max-width: 960px) {
+    text-align: center;
+  }
+`;
+
+export const CtaWrapper = styled.div`
+  display: flex;
+  justify-content: right;
+`;
+
 export const BottomWrapper = styled.div`
   justify-content: space-between;
   display: flex;
   flex-wrap: wrap;
-  background: ${({ theme }) => (theme === 'light' ? 'white' : '#3F3D56')};
+  background: ${({ theme }) => (theme === 'light' ? 'white' : '#212121')};
   @media (max-width: 960px) {
     width: 100%;
   }
@@ -104,7 +124,7 @@ export const BottomWrapper = styled.div`
 export const TotalRaise = styled.div`
   align-items: flex-start;
   justify-content: space-around;
-  background: #eeeeff;
+  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3f3d56')};
   display: flex;
   height: 96px;
   flex-direction: column;
@@ -118,7 +138,8 @@ export const FundingStage = styled.div`
   align-items: flex-start;
   justify-content: space-around;
   background: white;
-  border: 1px solid #3f3d56;
+  border: ${({ theme }) => (theme === 'light' ? '1px solid black' : '1px solid white')};
+  background: ${({ theme }) => (theme === 'light' ? 'white' : '#212121')};
   display: flex;
   flex-direction: column;
   height: 96px;
@@ -129,9 +150,11 @@ export const FundingStage = styled.div`
 `;
 
 export const UpcomingWrapper = styled.div`
-  background: ${({ theme }) => (theme === 'light' ? 'white' : '#3F3D56')};
+  background: ${({ theme }) => (theme === 'light' ? 'white' : '#212121')};
+  border: ${({ theme }) => (theme === 'light' ? 'none' : '1px solid #3f3d56')};
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   display: flex;
+  cursor: pointer;
   flex-direction: column;
   margin: 40px 0 0 0;
   padding: 40px;

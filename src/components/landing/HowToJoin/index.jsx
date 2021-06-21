@@ -10,10 +10,9 @@ export const HowToJoin = () => {
 
     return (
         <Wrapper id="about">
-            <HalfCircle theme={theme} />
             <HowToJoinWrapper>
                 <Details theme={theme}>
-                    <h1>How to join?</h1>
+                    <h1>How To Join?</h1>
                     <p>
                         By acquiring a predefined amount of Shine tokens (SHN), you get the right to participate in seed sales and IDOs of incubated projects, as well as access to the investor hub.
                     </p>
@@ -21,13 +20,13 @@ export const HowToJoin = () => {
                         <JoinCard theme={theme}>
                             <h2 theme={theme}>TIER 1</h2>
                             <p className="frame1" theme={theme} > &#62; 15.000 SHN </p>
-                            <p className="frame2">✅   IDO  <br></br>❌   Seed-sale </p>
+                            <p className="frame2">✅   IDO  <br></br>❔   Seed-sale </p>
                             <p className="frame2">Cap/person <br></br> 1x</p>
                         </JoinCard>
                         <JoinCard theme={theme}>
                             <h2>TIER 2</h2>
                             <p className="frame1"> &#62; 50.000 SHN </p>
-                            <p className="frame2">✅   IDO  <br></br>❌   Seed-sale </p>
+                            <p className="frame2">✅   IDO  <br></br>❔   Seed-sale </p>
                             <p className="frame2">Cap/person <br></br>2-4x</p>
                         </JoinCard>
                         <JoinCard theme={theme}>
@@ -47,7 +46,7 @@ export const HowToJoin = () => {
                         To contribute to projects and participate in community discussions, please join our <TextLink onClick={() => window.open('https://discord.gg/QkhbP7bZrj', '_blank', 'noopener')}>Discord server.</TextLink>
                     </p>
                     <WrapperButton>
-                        <Button onClick={() => window.open('https://app.uniswap.org/#/swap?inputCurrency=0x1c7ede23b1361acc098a1e357c9085d131b34a01&outputCurrency=ETH', '_blank', 'noopener')} theme={theme}>GET SHN TOKEN</Button>
+                        <Button onClick={() => window.open('https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x1c7ede23b1361acc098a1e357c9085d131b34a01&use=V2', '_blank', 'noopener')} theme={theme}>GET SHN TOKEN</Button>
                     </WrapperButton>
                 </Details>
             </HowToJoinWrapper>

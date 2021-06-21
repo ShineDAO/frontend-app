@@ -47,10 +47,10 @@ export const IllustrationMan = styled.img`
 `;
 
 export const IllustrationShineNetwork3 = styled.img`
-  width: 225px;
+  width: 259px;
   height: 180px;
   @media (max-width: 960px) {
-    width: 200px;
+    width: 220px;
     height: 142px;
   }
 `;
