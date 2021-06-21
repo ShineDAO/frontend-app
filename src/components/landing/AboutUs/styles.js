@@ -1,7 +1,4 @@
 import styled from 'styled-components';
-import shineNetworkV3 from '../../../assets/illustrations/shine-network-v3.png';
-import ShineNetworkWhite from '../../../assets/illustrations/Shine-Network-White.svg';
-import React from 'react';
 
 export const Wrapper = styled.div`
   background-size: contain;
@@ -116,46 +113,4 @@ export const Details = styled.div`
 export const WrapperButton = styled.div`
   text-align: center;
   margin-top: 60px;
-`;
-
-export const Button = styled.button`
-  cursor: pointer;
-  border-radius: 4px;
-  padding: 0.6rem 0;
-  border: 1px solid white;
-  -webkit-appearance: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
-  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
-  width: 400px;
-  height: 48px;
-  font-weight: bold;
-  font-size: 16px;
-
-  &:focus {
-    outline: none;
-  }
-
-  &:disabled {
-    background: gray;
-  }
-  &:hover {
-    background: #FADA5E;
-    color: #3F3D56; 
-    border: 1px solid #FADA5E;
-  }
-  @media (max-width: 600px) {
-    width: 100%;
-  }
-
-  ${({ secondary }) =>
-    secondary &&
-    `
-		background: #001F3F;
-	`}
 `;

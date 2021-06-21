@@ -89,7 +89,7 @@ export const JoinButton = styled.button`
   }
 `;
 
-export const LearnButton = styled.button`
+export const IntroButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
   padding: 0.6rem 0;
@@ -119,6 +119,48 @@ export const LearnButton = styled.button`
     background: #FADA5E;
     color: #3F3D56; 
     border: 1px solid #FADA5E;
+  }
+
+  ${({ secondary }) =>
+    secondary &&
+    `
+		background: #001F3F;
+	`}
+`;
+
+export const LearnButton = styled.button`
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0.6rem 0;
+  border: 1px solid white;
+  -webkit-appearance: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  width: 400px;
+  height: 48px;
+  font-weight: bold;
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    background: gray;
+  }
+  &:hover {
+    background: #FADA5E;
+    color: #3F3D56; 
+    border: 1px solid #FADA5E;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
   }
 
   ${({ secondary }) =>

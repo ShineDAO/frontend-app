@@ -3,21 +3,19 @@ import { ThemeContext } from 'providers/ThemeProvider';
 
 import man from 'assets/illustrations/man.png';
 import planet from 'assets/illustrations/planet.png';
-
 import shineNetwork from 'assets/illustrations/shine-network-without-dude.png';
+
+import { LearnButton }from '../../common/Button/index';
 import useIsMobile from '../../../hooks/useIsMobile';
 import {
   Wrapper,
   AboutUsWrapper,
   Details,
-  Button,
   WrapperButton,
   IllustrationMan,
   IllustrationShineNetwork3,
   IllustrationPlanet
 } from './styles';
-
-import ShineNetworkWhite from 'assets/illustrations/Shine-Network-White.svg';
 
 
 export const WhatIsThisAbout = () => {
@@ -59,9 +57,9 @@ export const WhatIsThisAbout = () => {
           </div>
         </Details>
         <WrapperButton>
-          <Button onClick={() => onScrollToContact("https://docs.shinedao.finance/decentralising-startup-incubation/community-incentives")} theme={theme}>
+          <LearnButton onClick={() => onScrollToContact("https://docs.shinedao.finance/decentralising-startup-incubation/community-incentives")} theme={theme}>
             LEARN MORE
-          </Button>
+          </LearnButton>
         </WrapperButton>
       </AboutUsWrapper>
     </Wrapper>

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
+import { LearnButton } from '../../common/Button/index';
 import {
   HeaderWrapper,
   Wrapper,
@@ -7,7 +8,6 @@ import {
   DarkBubble,
   Bubble,
   LightBubble,
-  Button,
   WrapperButton,
   StagesWrapper, ArrowWrapper
 } from './styles';
@@ -57,7 +57,7 @@ export const Stages = () => {
           </DarkBubble>
         </Infographic>
         <WrapperButton>
-          <Button onClick={() => onScrollToContact("https://docs.shinedao.finance/decentralising-startup-incubation/deal-flow")} theme={theme}>LEARN MORE</Button>
+          <LearnButton onClick={() => onScrollToContact("https://docs.shinedao.finance/decentralising-startup-incubation/deal-flow")} theme={theme}>LEARN MORE</LearnButton>
         </WrapperButton>
       </StagesWrapper>
     </Wrapper>

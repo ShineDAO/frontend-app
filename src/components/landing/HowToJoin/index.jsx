@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
-import { Container } from 'components/common';
+import { LearnButton } from 'components/common';
 // import useIsMobile from '../../../hooks/useIsMobile';
-import { Wrapper, Details, JoinCard, Cards, Button, HalfCircle, WrapperButton, HowToJoinWrapper, TextLink } from './styles';
+import { Wrapper, Details, JoinCard, Cards, WrapperButton, HowToJoinWrapper, TextLink } from './styles';
 
 export const HowToJoin = () => {
     const { theme } = useContext(ThemeContext);
@@ -46,7 +46,7 @@ export const HowToJoin = () => {
                         To contribute to projects and participate in community discussions, please join our <TextLink onClick={() => window.open('https://discord.gg/QkhbP7bZrj', '_blank', 'noopener')}>Discord server.</TextLink>
                     </p>
                     <WrapperButton>
-                        <Button onClick={() => window.open('https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x1c7ede23b1361acc098a1e357c9085d131b34a01&use=V2', '_blank', 'noopener')} theme={theme}>GET SHN TOKEN</Button>
+                        <LearnButton onClick={() => window.open('https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x1c7ede23b1361acc098a1e357c9085d131b34a01&use=V2', '_blank', 'noopener')} theme={theme}>GET SHN TOKEN</LearnButton>
                     </WrapperButton>
                 </Details>
             </HowToJoinWrapper>
