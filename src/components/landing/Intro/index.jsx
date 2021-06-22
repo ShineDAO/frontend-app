@@ -5,7 +5,7 @@ import { Container, JoinButton, IntroButton } from 'components/common';
 import shineAnimatedRocket from 'assets/illustrations/shineAnimatedRocket.gif'
 import useIsMobile from '../../../hooks/useIsMobile';
 
-import { Wrapper, IntroWrapper, Details, ButtonWrapper } from './styles';
+import { Wrapper, IntroWrapper, Details, ButtonWrapper, LandingIllustration } from './styles';
 
 export const Intro = () => {
   const { theme } = useContext(ThemeContext);
@@ -27,11 +27,6 @@ export const Intro = () => {
             <Details theme={theme}>
               <h1>Community Driven DeFi Incubator</h1>
               <h4>ShineDAO makes it easy to invest in seed-sales and IDOs of new projects, support with completing missions and get rewarded with their tokens</h4>
-              <img
-                width={isMobile ? '200px' : '400px'}
-                src={theme === 'light' ? shineAnimatedRocket : shineAnimatedRocket}
-                alt="Shine is meant to interconnect the blockchain community"
-              />
               <ButtonWrapper>
                 <JoinButton onClick={onJoinButtonClick} theme={theme}>
                   JOIN DISCORD
@@ -41,6 +36,10 @@ export const Intro = () => {
                   LEARN MORE
                 </LearnButton>
               </ButtonWrapper>
+              <LandingIllustration
+                src={theme === 'light' ? shineAnimatedRocket : shineAnimatedRocket}
+                alt="Shine is meant to interconnect the blockchain community"
+              />
             </Details>
           </React.Fragment>
         ) : (
@@ -58,9 +57,7 @@ export const Intro = () => {
                 </IntroButton>
               </ButtonWrapper>
             </Details>
-            <img
-              width="340px"
-              height="260px"
+            <LandingIllustration
               src={theme === 'light' ? shineAnimatedRocket : shineAnimatedRocket}
               alt="Shine is meant to interconnect the blockchain community"
             />
