@@ -117,7 +117,7 @@ export const ButtonWrapper = styled.div`
   }
 `;
 
-export const Giff = styled.img`
+export const LandingIllustration = styled.img`
   object-fit: fill;
   height: 300px;
   @media (max-width: 600px) {

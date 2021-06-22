@@ -5,7 +5,7 @@ import { Container, JoinButton, LearnButton } from 'components/common';
 import shineAnimatedRocket from 'assets/illustrations/shineAnimatedRocket.gif'
 import useIsMobile from '../../../hooks/useIsMobile';
 
-import { Wrapper, IntroWrapper, Details, ButtonWrapper, Giff } from './styles';
+import { Wrapper, IntroWrapper, Details, ButtonWrapper, LandingIllustration } from './styles';
 
 export const Intro = () => {
   const { theme } = useContext(ThemeContext);
@@ -36,7 +36,7 @@ export const Intro = () => {
                   LEARN MORE
                 </LearnButton>
               </ButtonWrapper>
-              <Giff
+              <LandingIllustration
                 src={theme === 'light' ? shineAnimatedRocket : shineAnimatedRocket}
                 alt="Shine is meant to interconnect the blockchain community"
               />
@@ -57,7 +57,7 @@ export const Intro = () => {
                 </LearnButton>
               </ButtonWrapper>
             </Details>
-            <Giff
+            <LandingIllustration
               src={theme === 'light' ? shineAnimatedRocket : shineAnimatedRocket}
               alt="Shine is meant to interconnect the blockchain community"
             />
