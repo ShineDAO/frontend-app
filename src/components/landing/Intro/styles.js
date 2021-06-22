@@ -116,3 +116,12 @@ export const ButtonWrapper = styled.div`
     justify-content: center;
   }
 `;
+
+export const Giff = styled.img`
+  object-fit: fill;
+  height: 300px;
+  @media (max-width: 600px) {
+    height: 145px;
+    margin-top: 40px;
+  }
+`;
