@@ -1,12 +1,12 @@
 module.exports = {
   defaultTitle: 'Shine DAO',
   logo: '',
-  author: 'John Doe',
+  author: 'ShineSquad',
   url: 'https://shinedao.finance',
   legalName: 'Shine DAO',
-  defaultDescription: 'SHINE | Your Launchpad for the crypto stars!',
+  defaultDescription: 'SHINE | Community Driven DeFi Incubator',
   socialLinks: {
-    twitter: '',
+    twitter: 'https://twitter.com/ShineDAO_',
     github: 'https://github.com/shine-squad/ShineToken',
     linkedin: '',
     instagram: '',
@@ -18,7 +18,7 @@ module.exports = {
   backgroundColor: '#6b63ff',
   social: {
     facebook: '',
-    twitter: '@shine_finance',
+    twitter: '@ShineDAO_',
   },
   address: {
     city: 'City',
@@ -27,7 +27,7 @@ module.exports = {
     zipCode: 'ZipCode',
   },
   contact: {
-    email: 'email',
+    email: 'shinedao@protonmail.com',
     phone: 'phone number',
   },
   foundingDate: '2021',
