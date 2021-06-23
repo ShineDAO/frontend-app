@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'providers/ThemeProvider';
 import { Header } from 'components/theme';
-import { Container, JoinButton, IntroButton } from 'components/common';
+import { Container, JoinButton, IntroButton, LearnButton } from 'components/common';
 import shineAnimatedRocket from 'assets/illustrations/shineAnimatedRocket.gif'
 import useIsMobile from '../../../hooks/useIsMobile';
 
