@@ -89,27 +89,37 @@ export const Details = styled.div`
     font-size: 20px;
     font-weight: 300;
     line-height: 32px;
-    text-align: center;    
+    text-align: center;  
     color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#1E1E1E')};
 
     @media (max-width: 960px) {
       mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      margin: 0 20px 0 20px;
     }
   }
   .what {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    @media (max-width: 960px) {
+      padding: 45px 0;
+    }
   }
   .why {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    @media (max-width: 960px) {
+      padding: 45px 0;
+    }
   }
   .who {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    @media (max-width: 960px) {
+      padding-top: 45px;
+    }
   }
 `;
 
