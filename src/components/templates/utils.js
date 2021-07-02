@@ -4,7 +4,7 @@ var migrationsContractAddress = "0x194af59b7788e22CF6D0ce269876e143ca98db59";
 
 
 export async function addToWatchlist(metamaskDetails) {
-console.log("details " , metamaskDetails)
+    console.log("details ", metamaskDetails)
     window.web3.currentProvider.sendAsync({
         method: 'metamask_watchAsset',
         params: {
@@ -29,19 +29,19 @@ export async function getCurrentMigrations() {
     console.log("current migrations is ", currentMigration);
 }
 
-export async function getUserAddressProject(setUserAddress, setProjectBalance, tokenAbi,tokenContractAddress) {
+export async function getUserAddressProject(setUserAddress, setProjectBalance, tokenAbi, tokenContractAddress) {
     let userAddress = await window.ethereum.selectedAddress;
     setUserAddress(userAddress);
-    await getProjectBalance(setProjectBalance, userAddress,tokenAbi,tokenContractAddress);
+    await getProjectBalance(setProjectBalance, userAddress, tokenAbi, tokenContractAddress);
 }
 
-export async function getUserAddress(setUserAddress, setShineBalance, tokenAbi,tokenContractAddress) {
+export async function getUserAddress(setUserAddress, setShineBalance, tokenAbi, tokenContractAddress) {
     let userAddress = await window.ethereum.selectedAddress;
     setUserAddress(userAddress);
-    await getShineBalance(setShineBalance, userAddress,tokenAbi,tokenContractAddress);
+    await getShineBalance(setShineBalance, userAddress, tokenAbi, tokenContractAddress);
 }
 
-export async function getWeiRaised(setWeiRaised,saleAbi,saleContractAddress) {
+export async function getWeiRaised(setWeiRaised, saleAbi, saleContractAddress) {
     console.log("abi 1", saleAbi)
     let abi = saleAbi
     let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
@@ -51,7 +51,7 @@ export async function getWeiRaised(setWeiRaised,saleAbi,saleContractAddress) {
     console.log("Wei raised so far", weiRaised);
 }
 
-export async function getSeedSaleShnBalance(setSeedSaleShnBalance,tokenAbi,saleContractAddress,tokenContractAddress) {
+export async function getSeedSaleShnBalance(setSeedSaleShnBalance, tokenAbi, saleContractAddress, tokenContractAddress) {
     var abiToken = tokenAbi
     var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
     var seedSaleShnBalance = await tokenInst.methods.balanceOf(saleContractAddress).call();
@@ -60,7 +60,7 @@ export async function getSeedSaleShnBalance(setSeedSaleShnBalance,tokenAbi,saleC
     setSeedSaleShnBalance(shnAvailable);
 }
 
-export async function getEthRaised(setEthRaised,saleAbi,saleContractAddress) {
+export async function getEthRaised(setEthRaised, saleAbi, saleContractAddress) {
     let abi = saleAbi
     let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
     let weiRaised = await simpleCrowdsaleInstance.methods.weiRaised().call();
@@ -75,7 +75,7 @@ export async function getEthBalance(setBalance) {
         setBalance(window.web3.utils.fromWei(balance.toString(), "ether"));
     });
 }
-export async function getShineBalance(setShineBalance, userAddress,tokenAbi,tokenContractAddress) {
+export async function getShineBalance(setShineBalance, userAddress, tokenAbi, tokenContractAddress) {
     var abiToken = tokenAbi;
     var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
 
@@ -85,7 +85,7 @@ export async function getShineBalance(setShineBalance, userAddress,tokenAbi,toke
     setShineBalance(shineBalanceFromWei);
 }
 
-export async function getProjectBalance(setProjectBalance, userAddress,tokenAbi,tokenContractAddress) {
+export async function getProjectBalance(setProjectBalance, userAddress, tokenAbi, tokenContractAddress) {
     console.log("adress ", userAddress)
     var abiToken = tokenAbi;
     var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
@@ -96,6 +96,30 @@ export async function getProjectBalance(setProjectBalance, userAddress,tokenAbi,
     setProjectBalance(projectBalanceFromWei);
 }
 
+export async function getVestingPeriod(saleAbi, saleContractAddress, setUserAddress, setVestingPeriod) {
+    let userAddress = await window.ethereum.selectedAddress;
+    setUserAddress(userAddress);
+
+    var abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    var vestingPeriod = await simpleCrowdsaleInstance.methods.vestingPeriod(userAddress).call();
+
+    setVestingPeriod(vestingPeriod)
+}
+export async function getVestedBalances(saleAbi, saleContractAddress, setUserAddress, setVestedBalances) {
+    let userAddress = await window.ethereum.selectedAddress;
+    setUserAddress(userAddress);
+
+    var abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    var vestedBalances = await simpleCrowdsaleInstance.methods.vestedBalances(userAddress).call();
+
+
+    var vestedBalancesFromWei = window.web3.utils.fromWei(vestedBalances, "ether");
+    setVestedBalances(vestedBalancesFromWei)
+}
 export async function buyShineTokens(
     ethAmountToSpend,
     setEthAmountToSpend,
@@ -118,7 +142,7 @@ export async function buyShineTokens(
         setMetamaskErrorCode(undefined)
 
         try {
-            
+
             let estimatedGas = await simpleCrowdsaleInstance.methods.buyTokens(userAddress).estimateGas({
                 from: userAddress,
                 value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
@@ -154,9 +178,16 @@ export async function buyShineTokens(
                 setMetamaskErrorCode("Your total amount exceeds maximum participation");
             } else if (e.code === 4001) {
                 setMetamaskErrorCode(e.message); //MetaMask Tx Signature: User denied transaction signature.
-            } else {
-                setMetamaskErrorCode("There are not enough SHN tokens left for sale anymore"); //"There are not enough SHN tokens left for sale anymore"
             }
+            else if (e.message.search("Reference to the Shine Token contract has not been set") >= 0) {
+                setMetamaskErrorCode("Reference to the Shine Token contract has not been set");
+            } else if (e.message.search("Relative cap exceeded") >= 0) {
+                setMetamaskErrorCode("Relative cap exceeded");
+            }
+            else {
+                setMetamaskErrorCode("There are not enough project tokens left for sale anymore"); //"There are not enough project tokens left for sale anymore"
+            }
+
             let searchCapExceeded = e.message.search("IndividuallyCappedCrowdsale: beneficiary's cap exceeded")
             console.log("search ", searchCapExceeded) //149
             // console.log("metamask code", metamaskErrorCode)
@@ -194,7 +225,7 @@ export function toPlainString(num) {
     return num.toLocaleString("fullwide", { useGrouping: false });
 }
 
-export function estimateReceivedShn(ethAmountToSpend,rate) {
+export function estimateReceivedShn(ethAmountToSpend, rate) {
     console.log("eth to spend", ethAmountToSpend);
     const weiAmountToSpend = window.web3.utils.toWei(ethAmountToSpend.toString(), "ether");
     console.log("wei", toPlainString(weiAmountToSpend * rate));

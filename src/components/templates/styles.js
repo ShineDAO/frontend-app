@@ -17,6 +17,9 @@ export const Heading = styled.div`
   }
 `;
 
+export const FlexBox = styled.div`
+  display: flex;
+`;
 export const InfoCards = styled.div`
   display: flex;
   margin-top: 60px;
@@ -33,16 +36,18 @@ export const StatsCard = styled.div`
   flex-direction: column;
   display: flex;
   width: 540px;
-  height: 584px;
+  height: 604px;
   justify-content: flex-start;
   border-radius: 8px;
   @media (max-width: 1200px) {
     margin-bottom: 40px;
+   
   }
   @media (max-width: 600px) {
     width: 100%;
     align-items: center;
     height: 980px;
+    
   }
   @media (max-width: 489px) {
     height: 1010px;
@@ -55,14 +60,15 @@ export const TokenCard = styled.div`
   flex-direction: column;
   display: flex;
   width: 540px;
-  height: 584px;
+  min-height:604px;
+  height: 100%;
   justify-content: flex-start;
   border-radius: 8px;
   @media (max-width: 600px) {
     width: 100%;
   }
   @media (max-width: 500px) {
-    height: 784px;
+    height: 844px;
   }
 `;
 
@@ -70,7 +76,7 @@ export const TierWrapper = styled.div`
 
   -webkit-box-shadow: ${({ highlightTier }) => (highlightTier ? '0 0 20px 9px #fada5d' : '')};
   -moz-box-shadow: ${({ highlightTier }) => (highlightTier ? '0 0 20px 9px #fada5d' : '')};
-  box-shadow: ${({ highlightTier }) => (highlightTier? '0 0 20px 9px #fada5d' : '')};
+  box-shadow: ${({ highlightTier }) => (highlightTier ? '0 0 20px 9px #fada5d' : '')};
 
   width: 462px;
   border-radius: 10px;

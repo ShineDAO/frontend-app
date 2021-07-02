@@ -3,7 +3,7 @@
     "tokenAddress": "0x12344567",
     "shortDescription": "Defi Options defi options is an open source decentralized options trading platform for Ethereum / EVM-compatible chains bringing a more capital efficient collateral allocation model and a more diversified options offer to DeFi.",
     "links": {
-        "website":"https://defioptions.github.io/DeFiOptions-frontend/#/",
+        "website": "https://defioptions.github.io/DeFiOptions-frontend/#/",
         "docs": "https://docs.defioptions.org/",
         "discord": "https://discord.gg/Mw7Akgtcka",
         "github": "https://github.com/DeFiOptions",
@@ -54,12 +54,12 @@
             "percentage": ""
         }
     },
-    "frontendDetails":{
-        "totalRaise":"$150k",
-        "incubationStage":"Seed Sale",
-        "totalSupply":"100,000,000 DOEX",
-        "chain":"Ethereum",
-        "roundAllocation":"10,000,000 DOEX",
+    "frontendDetails": {
+        "totalRaise": "$150k",
+        "incubationStage": "Seed Sale",
+        "totalSupply": "100,000,000 DOEX",
+        "chain": "Ethereum",
+        "roundAllocation": "10,000,000 DOEX",
         "rate": "$0.015 / 1 DOEX"
     },
     "metamaskDetails": {
@@ -70,7 +70,7 @@
     },
     "technicalDetails": {
         "currentStatus": "seed",
-        "tokenAddress": "0x3896cEB980df22487F008435E275333D4F3EF320",
+        "tokenAddress": "0x7f551270B61A3fd36A87716d6912D4F342344972",
         "tokenAbi": [
             {
                 "constant": true,
@@ -423,8 +423,8 @@
             }
         ],
         "seed": {
-            "saleAddress": "0x37b0C6FF97aa31B8C0FAbA001FC5912857B39575",
-            "tokensOffered": "12000000000000000000000000",
+            "saleAddress": "0xB968491afD76D9294151FE0bB0A48e8080EA21C3",
+            "tokensOffered": "10000000000000000000000000",
             "rate": 181818,
             "gas": 1500000,
             "abi": [
@@ -475,6 +475,87 @@
                 },
                 {
                     "constant": false,
+                    "inputs": [],
+                    "name": "renounceOwnership",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "owner",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "isOwner",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "vestingPeriod",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "vestedBalances",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
                     "inputs": [
                         {
                             "internalType": "address",
@@ -486,6 +567,21 @@
                     "outputs": [],
                     "payable": true,
                     "stateMutability": "payable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "newOwner",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "transferOwnership",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
                     "type": "function"
                 },
                 {
@@ -519,11 +615,6 @@
                             "internalType": "contract IERC20",
                             "name": "token",
                             "type": "address"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "relativeCap",
-                            "type": "uint256"
                         }
                     ],
                     "payable": false,
@@ -534,6 +625,25 @@
                     "payable": true,
                     "stateMutability": "payable",
                     "type": "fallback"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "previousOwner",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": true,
+                            "internalType": "address",
+                            "name": "newOwner",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "OwnershipTransferred",
+                    "type": "event"
                 },
                 {
                     "anonymous": false,
@@ -567,6 +677,93 @@
                     "type": "event"
                 },
                 {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "relativeCap",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "setRelativeCap",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "tokenAddress",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setShineTokenAddress",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "isSaleOpenForAll",
+                            "type": "bool"
+                        }
+                    ],
+                    "name": "allowAllTierAccess",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "beneficiary",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "getShineTokenBalance",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "shineBalance",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "getTier",
+                    "outputs": [
+                        {
+                            "internalType": "enum DefiOptionsSeed.Tiers",
+                            "name": "",
+                            "type": "uint8"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "pure",
+                    "type": "function"
+                },
+                {
                     "constant": true,
                     "inputs": [
                         {
@@ -585,6 +782,21 @@
                     ],
                     "payable": false,
                     "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": false,
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "beneficiary",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "withdrawTokens",
+                    "outputs": [],
+                    "payable": false,
+                    "stateMutability": "nonpayable",
                     "type": "function"
                 }
             ]

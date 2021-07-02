@@ -46,6 +46,7 @@ import {
   RightStatsCard,
   LeftStatsCard,
   TierWrapper, TitleText, StatsCardHeading,
+  FlexBox
 } from './styles';
 
 import * as utils from './utils';
@@ -64,8 +65,8 @@ export default function ProjectTemplate({ data }) {
   const project = data.projectsJson;
   console.log('project data ', project);
 
-  //const shineTokenAddress = '0xd3E104c53966Dd06E3CF62FE7C3A3EC2247c4Ade'; //Local Ganache
-  const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
+  const shineTokenAddress = '0x83a30087015E0e766BbD9772743F38940C35094D'; //Local Ganache
+  //const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
 
 
   const shineTokenAbi = ShineToken.abi;
@@ -99,6 +100,9 @@ export default function ProjectTemplate({ data }) {
   const [metamaskErrorCode, setMetamaskErrorCode] = useState();
   const [saleProgress, setSaleProgress] = useState();
   const [userAddress, setUserAddress] = useState();
+  const [vestingPeriod, setVestingPeriod] = useState();
+  const [vestedBalances, setVestedBalances] = useState();
+
 
   useEffect(() => {
     isWalletEnabled ? utils.getEthBalance(setBalance) : null;
@@ -114,6 +118,9 @@ export default function ProjectTemplate({ data }) {
       : null;
 
     isWalletEnabled ? utils.getCurrentMigrations() : null;
+    isWalletEnabled ? utils.getVestingPeriod(saleAbi, saleContractAddress, setUserAddress, setVestingPeriod) : null;
+    isWalletEnabled ? utils.getVestedBalances(saleAbi, saleContractAddress, setUserAddress, setVestedBalances) : null;
+
   }, [
     isWalletEnabled,
     isTransactionBeingProcessed,
@@ -160,6 +167,19 @@ export default function ProjectTemplate({ data }) {
   //console.log(kFormatter(-900)); // -900
   function kFormatter(num) {
     return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
+  }
+
+  function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
   }
   return (
     <Layout>
@@ -375,7 +395,7 @@ export default function ProjectTemplate({ data }) {
                   {project.technicalDetails.tokenAddress.substring(0, 6)}...{project.technicalDetails.tokenAddress.substring(project.technicalDetails.tokenAddress.length - 4)}
                 </Link>
               </TitleText>
-              <br></br>
+
 
               {!isWalletEnabled &&
                 <TierWrapper highlightTier={shineBalance >= 15000 && shineBalance < 50000}>
@@ -436,7 +456,10 @@ export default function ProjectTemplate({ data }) {
                 </Text>
               </TierWrapper>
               }
-              {isWalletEnabled && shineBalance < 15000 && "Your SHN balance is below an amount for all tiers"}
+              {isWalletEnabled && shineBalance < 15000 && <Text color="tomato" fontSize="17px" fontWeight={800}>
+                You don't have a tier. Please consider getting some SHN
+              </Text>}
+              <br></br>
               {isWalletEnabled && <Details theme={theme}>
 
 
@@ -451,7 +474,7 @@ export default function ProjectTemplate({ data }) {
 
                       <span>Connected account: {window.ethereum.selectedAddress.substring(0, 6)}...{window.ethereum.selectedAddress.substring(window.ethereum.selectedAddress.length - 4)}</span>
                       <br />
-                      {isWalletEnabled && shineBalance >= 15000 && <Text color="#aeaeae"> SHN balance: {kFormatter(shineBalance)} SHN <b>({getTier(shineBalance)})</b></Text>}
+                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: {kFormatter(shineBalance)} SHN <b>({getTier(shineBalance)})</b></Text>}
 
                       <span>ETH Balance: {balance} ETH</span>
                       <br />
@@ -487,33 +510,52 @@ export default function ProjectTemplate({ data }) {
                           <br />
                           <br />
 
-                          <ConnectButton
-                            theme={theme}
-                            onClick={() =>
-                              utils.buyShineTokens(
-                                ethAmountToSpend,
-                                setEthAmountToSpend,
-                                setShineBought,
-                                setShineBoughtAmount,
-                                setTransactionBeingProcessed,
-                                setMetamaskErrorCode,
-                                userAddress,
-                                saleAbi,
-                                saleContractAddress,
-                                gas
+                          <FlexBox>
+                            <ConnectButton
+                              theme={theme}
+                              onClick={() =>
+                                utils.buyShineTokens(
+                                  ethAmountToSpend,
+                                  setEthAmountToSpend,
+                                  setShineBought,
+                                  setShineBoughtAmount,
+                                  setTransactionBeingProcessed,
+                                  setMetamaskErrorCode,
+                                  userAddress,
+                                  saleAbi,
+                                  saleContractAddress,
+                                  gas
 
-                              )
-                            }
-                          >
-                            Buy Tokens
-                          </ConnectButton>
+                                )
+                              }
+                            >
+                              Buy Tokens
+                            </ConnectButton>
+                            <Text margin="0 0 0 10px" color="#aeaeae"> Note: 25% tokens are released immediatly, 75% is vested for 30 days </Text>
+                          </FlexBox>
                           <br />
                           <br />
+                          {isWalletEnabled && console.log("vested balances ", vestedBalances)}
+                          {vestedBalances > 0 && <FlexBox>
+                           
+                            <ConnectButton
+                              theme={theme}
+                              onClick=""
+                            >
+                              Widthdraw tokens
+                            </ConnectButton>
+                            <Text margin="0 0 0 10px" color="#aeaeae"> Vested Amount: {vestedBalances} {project.metamaskDetails.symbol} </Text>
+                            <Text margin="0 0 0 10px" color="#aeaeae"> Unlock time: {timeConverter(vestingPeriod)}</Text>
+                          </FlexBox>
+                          }
+
+
+
                         </div>
                       )}
                       {isShineBought && !isTransactionBeingProcessed && (
-                        <div>
-                          <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
+                        <div style={{"marginTop":20}}>
+                          <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} {project.metamaskDetails.symbol} tokens! (Note: 75% is vested) </h4>
                         </div>
                       )}
 
