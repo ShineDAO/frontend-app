@@ -141,6 +141,26 @@ export default function ProjectTemplate({ data }) {
     isWalletEnabled && setSaleProgress(((weiRaised / maxWeiToRaise) * 100).toFixed(2));
   }, [weiRaised]);
 
+  function getTier(shineBalance) {
+    if (shineBalance < 15000) {
+      return "No Tier"
+    } else if (shineBalance >= 15000 && shineBalance < 50000) {
+      return "Tier 1"
+    } else if (shineBalance >= 50000 && shineBalance < 200000) {
+      return "Tier 2"
+    } else if (shineBalance >= 200000 && shineBalance < 400000) {
+      return "Tier 3"
+    } else if (shineBalance >= 400000) {
+      return "Tier 4"
+    }
+  }
+  //console.log(kFormatter(1200)); // 1.2k
+  //console.log(kFormatter(-1200)); // -1.2k
+  //console.log(kFormatter(900)); // 900
+  //console.log(kFormatter(-900)); // -900
+  function kFormatter(num) {
+    return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
+  }
   return (
     <Layout>
       <SEO />
@@ -151,7 +171,7 @@ export default function ProjectTemplate({ data }) {
         {false && <Details theme={theme}>
           <SaleCard theme={theme} isWalletEnabled={isWalletEnabled}>
             Sale status
-              <StatusContainer>
+            <StatusContainer>
               &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
                 <circle cx="4" cy="4" r="4" fill="#10b981"></circle>{/* red */}
               </svg>
@@ -160,12 +180,12 @@ export default function ProjectTemplate({ data }) {
             <br />
             <UnderlinedTitle>Sale details:</UnderlinedTitle>
 
-              Total Swap amount: 7,000,000 SHN
-              <br />
-              Max participation: 1 ETH / address
-              <br />
-              Rate: ≈ $0.028 / 1 SHN
-              <br />
+            Total Swap amount: 7,000,000 SHN
+            <br />
+            Max participation: 1 ETH / address
+            <br />
+            Rate: ≈ $0.028 / 1 SHN
+            <br />
             <br />
             <ConnectButton theme={theme} onClick={() => utils.addToWatchlist(project.metamaskDetails)}>Add SHN to MetaMask</ConnectButton>
             {false && <span>ETH raised so far {ethRaised} ETH </span>}
@@ -178,7 +198,7 @@ export default function ProjectTemplate({ data }) {
 
               <Link href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
                 0x1C7ede23b1361acC098A1e357C9085D131b34a01
-                </Link>
+              </Link>
               <br></br><br></br>
             </div>
 
@@ -239,7 +259,7 @@ export default function ProjectTemplate({ data }) {
                       }
                     >
                       Buy Shine
-                      </ConnectButton>
+                    </ConnectButton>
                     <br />
                     <br />
                   </div>
@@ -281,7 +301,7 @@ export default function ProjectTemplate({ data }) {
                 <ProjectNameWrapper>
                   <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" width="60px" height="60px" />
                   <StatsCardHeading margin="0 0 0 16px" fontSize="24px" fontWeight={800} color="white">
-                    Defi Options DAO
+                    {project.title}
                   </StatsCardHeading>
                 </ProjectNameWrapper>
                 <CardHeaderTextWrapper>
@@ -300,7 +320,7 @@ export default function ProjectTemplate({ data }) {
                     Total raise
                   </Text>
                   <Text color="#3F3D56" fontWeight={800} fontSize="24px">
-                    $150k
+                    {project.frontendDetails.totalRaise}
                   </Text>
                 </FirstStatsCard>
                 <RightStatsCard>
@@ -308,7 +328,7 @@ export default function ProjectTemplate({ data }) {
                     Incubation Stage
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
-                    Seed Sale
+                    {project.frontendDetails.incubationStage}
                   </Text>
                 </RightStatsCard>
                 <LeftStatsCard>
@@ -316,7 +336,7 @@ export default function ProjectTemplate({ data }) {
                     Total supply
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
-                    100,000,000 DoD
+                    {project.frontendDetails.totalSupply}
                   </Text>
                 </LeftStatsCard>
                 <RightStatsCard>
@@ -324,7 +344,7 @@ export default function ProjectTemplate({ data }) {
                     Chain
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
-                    Ethereum
+                    {project.frontendDetails.chain}
                   </Text>
                 </RightStatsCard>
                 <LeftStatsCard>
@@ -332,7 +352,7 @@ export default function ProjectTemplate({ data }) {
                     Round allocation
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
-                    100,000,000 DoD
+                    {project.frontendDetails.roundAllocation}
                   </Text>
                 </LeftStatsCard>
                 <RightStatsCard>
@@ -340,7 +360,7 @@ export default function ProjectTemplate({ data }) {
                     Rate
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
-                    ≈ $0.01 / 1 DoD
+                    ≈ {project.frontendDetails.rate}
                   </Text>
                 </RightStatsCard>
                 <Card onClick={() => alert("Announced token is not launched yet")} borderRadius="4px" background="white" clickable width="100%" height="48px">
@@ -350,48 +370,59 @@ export default function ProjectTemplate({ data }) {
             </StatsCard>
             <TokenCard>
               <TitleText fontWeight={800} fontSize="24px" color="white">
-                Token Address
+                Token Address    <Link href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
+
+                  {project.technicalDetails.tokenAddress.substring(0, 6)}...{project.technicalDetails.tokenAddress.substring(project.technicalDetails.tokenAddress.length - 4)}
+                </Link>
               </TitleText>
-              <TierWrapper highlightTier={shineBalance >= 15000 && shineBalance < 50000}>
-                <Card width="120px" height="32px" background="#EEEEFF">
-                  <Text fontSize="18px" fontWeight={800}>
-                    TIER 1
+              <br></br>
+
+              {!isWalletEnabled &&
+                <TierWrapper highlightTier={shineBalance >= 15000 && shineBalance < 50000}>
+                  <Card width="120px" height="32px" background="#EEEEFF">
+                    <Text fontSize="18px" fontWeight={800}>
+                      TIER 1
+                    </Text>
+                  </Card>
+                  <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
+                    (&gt;15k SHN)
                   </Text>
-                </Card>
-                <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
-                  (&gt;15k SHN)
-                </Text>
-                <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                  ❔
-                </Text>
-              </TierWrapper>
-              <TierWrapper highlightTier={shineBalance >= 50000 && shineBalance < 200000}>
-                <Card width="120px" height="32px" background="#EEEEFF">
-                  <Text fontSize="18px" fontWeight={800}>
-                    TIER 2
+                  <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
+                    ❔
                   </Text>
-                </Card>
-                <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
-                  (&gt;50k SHN)
-                </Text>
-                <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                  ❔
-                </Text>
-              </TierWrapper>
-              <TierWrapper highlightTier={shineBalance >= 200000 && shineBalance < 400000}>
-                <Card width="120px" height="32px" background="#EEEEFF">
-                  <Text fontSize="18px" fontWeight={800}>
-                    TIER 3
+                </TierWrapper>
+              }
+              {!isWalletEnabled &&
+                <TierWrapper highlightTier={shineBalance >= 50000 && shineBalance < 200000}>
+                  <Card width="120px" height="32px" background="#EEEEFF">
+                    <Text fontSize="18px" fontWeight={800}>
+                      TIER 2
+                    </Text>
+                  </Card>
+                  <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
+                    (&gt;50k SHN)
                   </Text>
-                </Card>
-                <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
-                  (&gt;200k SHN)
-                </Text>
-                <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                  ≈ $2400
-                </Text>
-              </TierWrapper>
-              <TierWrapper highlightTier={shineBalance >= 400000}>
+                  <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
+                    ❔
+                  </Text>
+                </TierWrapper>
+              }
+              {!isWalletEnabled &&
+                <TierWrapper highlightTier={shineBalance >= 200000 && shineBalance < 400000}>
+                  <Card width="120px" height="32px" background="#EEEEFF">
+                    <Text fontSize="18px" fontWeight={800}>
+                      TIER 3
+                    </Text>
+                  </Card>
+                  <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
+                    (&gt;200k SHN)
+                  </Text>
+                  <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
+                    ≈ $2400
+                  </Text>
+                </TierWrapper>
+              }
+              {!isWalletEnabled && <TierWrapper highlightTier={shineBalance >= 400000}>
                 <Card width="120px" height="32px" background="#EEEEFF">
                   <Text fontSize="18px" fontWeight={800}>
                     TIER 4
@@ -404,6 +435,112 @@ export default function ProjectTemplate({ data }) {
                   ≈ $4200
                 </Text>
               </TierWrapper>
+              }
+              {isWalletEnabled && shineBalance < 15000 && "Your SHN balance is below an amount for all tiers"}
+              {isWalletEnabled && <Details theme={theme}>
+
+
+
+
+
+                {isWalletEnabled ? (
+                  <div>
+                    <Text color="#aeaeae" fontWeight={100}>
+
+
+
+                      <span>Connected account: {window.ethereum.selectedAddress.substring(0, 6)}...{window.ethereum.selectedAddress.substring(window.ethereum.selectedAddress.length - 4)}</span>
+                      <br />
+                      {isWalletEnabled && shineBalance >= 15000 && <Text color="#aeaeae"> SHN balance: {kFormatter(shineBalance)} SHN <b>({getTier(shineBalance)})</b></Text>}
+
+                      <span>ETH Balance: {balance} ETH</span>
+                      <br />
+                      <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString()} {project.metamaskDetails.symbol}</span>
+                      <br />
+                      {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
+                      <br />
+                      {weiRaised && (
+                        <div>
+                          <span>Sale progress </span>
+                          <ProgressBar animated striped variant="success" now={saleProgress} label={`${saleProgress}%`} />
+                        </div>
+                      )}
+                      <br />
+                      {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
+                      {isWalletEnabled && !isTransactionBeingProcessed && (
+                        <div>
+                          <label htmlFor="eth_amount">Enter ETH amount:</label>
+                          <br />
+                          <EthInput
+                            autoComplete="off"
+                            type="number"
+                            id="eth_amount"
+                            value={ethAmountToSpend}
+                            onChange={(e) => utils.handleChangeOfEthAmountToSpend(e.target.value, setEthAmountToSpend)}
+                          />
+                          {ethAmountToSpend && (
+                            <span>
+                              <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
+                              <span>Estimated {project.metamaskDetails.symbol} tokens to receive: {utils.estimateReceivedShn(ethAmountToSpend, rate).toLocaleString()}</span>
+                            </span>
+                          )}
+                          <br />
+                          <br />
+
+                          <ConnectButton
+                            theme={theme}
+                            onClick={() =>
+                              utils.buyShineTokens(
+                                ethAmountToSpend,
+                                setEthAmountToSpend,
+                                setShineBought,
+                                setShineBoughtAmount,
+                                setTransactionBeingProcessed,
+                                setMetamaskErrorCode,
+                                userAddress,
+                                saleAbi,
+                                saleContractAddress,
+                                gas
+
+                              )
+                            }
+                          >
+                            Buy Tokens
+                          </ConnectButton>
+                          <br />
+                          <br />
+                        </div>
+                      )}
+                      {isShineBought && !isTransactionBeingProcessed && (
+                        <div>
+                          <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
+                        </div>
+                      )}
+
+                      {isTransactionBeingProcessed && (
+                        <div>
+                          {" "}
+                          <h5>Processing </h5>
+                          <PulseLoader color={"yellow"} loading={true} size={15} margin={2} /> <br /> <br />
+                          <h5>
+                            <i>(Can take up to few minutes)</i>
+                          </h5>
+                        </div>
+                      )}
+                    </Text>
+                  </div>
+
+                ) : (
+                  <ConnectButton onClick={() => utils.loadWeb3(setWalletStatus, setBalance)} theme={theme}>CONNECT WALLET</ConnectButton>
+
+                )}
+
+              </Details>}
+
+
+
+
+
               {console.log("shine balance", shineBalance)}
               {!isWalletEnabled && (<Card
                 onClick={() => utils.loadWeb3(setWalletStatus, setBalance)}
@@ -414,7 +551,7 @@ export default function ProjectTemplate({ data }) {
                 clickable
                 width="100%"
                 height="48px"
-                margin="40px 0 0 0"
+                margin="20px 0 0 0"
               >
                 <Text fontWeight={800} color="white">
                   CONNECT WALLET
@@ -571,6 +708,14 @@ export const query = graphql`
           total
           percentage
         }
+      }
+      frontendDetails {
+        totalRaise
+        incubationStage
+        totalSupply
+        chain
+        roundAllocation
+        rate
       }
       metamaskDetails {
         address

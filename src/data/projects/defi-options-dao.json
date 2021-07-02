@@ -54,6 +54,14 @@
             "percentage": ""
         }
     },
+    "frontendDetails":{
+        "totalRaise":"$150k",
+        "incubationStage":"Seed Sale",
+        "totalSupply":"100,000,000 DOEX",
+        "chain":"Ethereum",
+        "roundAllocation":"10,000,000 DOEX",
+        "rate": "$0.015 / 1 DOEX"
+    },
     "metamaskDetails": {
         "address": "0x3896cEB980df22487F008435E275333D4F3EF320",
         "symbol": "DoD",
