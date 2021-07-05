@@ -120,6 +120,125 @@ export async function getVestedBalances(saleAbi, saleContractAddress, setUserAdd
     var vestedBalancesFromWei = window.web3.utils.fromWei(vestedBalances, "ether");
     setVestedBalances(vestedBalancesFromWei)
 }
+
+export async function getRelativeCap(saleAbi, saleContractAddress, setUserAddress, setRelativeCap) {
+    let userAddress = await window.ethereum.selectedAddress;
+    setUserAddress(userAddress);
+
+    var abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    var relativeCap = await simpleCrowdsaleInstance.methods.relativeCap().call();
+
+    setRelativeCap(relativeCap)
+}
+
+export async function getContributions(saleAbi, saleContractAddress, setUserAddress, setContributions) {
+    let userAddress = await window.ethereum.selectedAddress;
+    setUserAddress(userAddress);
+
+    var abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    var contributions = await simpleCrowdsaleInstance.methods.contributions(userAddress).call();
+
+    setContributions(window.web3.utils.fromWei(toPlainString(contributions), "ether"))
+}
+
+export async function getIsSaleOpenForAll(saleAbi, saleContractAddress, setIsSaleOpenForAll) {
+
+    var abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    var isSaleOpenForAll = await simpleCrowdsaleInstance.methods.isSaleOpenForAll().call();
+
+    setIsSaleOpenForAll(isSaleOpenForAll)
+}
+
+
+export function getTier(shineBalance) {
+    if (shineBalance < 15000) {
+        return "No Tier"
+    } else if (shineBalance >= 15000 && shineBalance < 50000) {
+        return "Tier 1"
+    } else if (shineBalance >= 50000 && shineBalance < 200000) {
+        return "Tier 2"
+    } else if (shineBalance >= 200000 && shineBalance < 400000) {
+        return "Tier 3"
+    } else if (shineBalance >= 400000) {
+        return "Tier 4"
+    }
+}
+
+export function getMaximumContribution(relativeCap, shineBalance) {
+    console.log("rc, bal", relativeCap, shineBalance)
+    let multiplier;
+    if (shineBalance >= 15000 && shineBalance < 50000) {
+        multiplier = 1
+    } else if (shineBalance >= 50000 && shineBalance < 200000) {
+        multiplier = 2
+    } else if (shineBalance >= 200000 && shineBalance < 400000) {
+        multiplier = 4
+    } else if (shineBalance >= 400000) {
+        multiplier = 8
+    }
+    let maximumContribution = window.web3.utils.fromWei(toPlainString(relativeCap * multiplier), "ether");
+    return maximumContribution
+}
+
+//console.log(kFormatter(1200)); // 1.2k
+//console.log(kFormatter(-1200)); // -1.2k
+//console.log(kFormatter(900)); // 900
+//console.log(kFormatter(-900)); // -900
+export function kFormatter(num) {
+    return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
+}
+
+
+export function timeConverter(UNIX_timestamp) {
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+    return time;
+}
+
+export async function withdrawTokens(saleAbi, saleContractAddress, userAddress,gas, setTransactionBeingProcessed, setMetamaskErrorCode,setIsTokenWithdrawn,setShineBought) {
+    let abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    setTransactionBeingProcessed(true);
+    setMetamaskErrorCode(undefined)
+
+    try {
+
+        let estimatedGas = await simpleCrowdsaleInstance.methods.withdrawTokens(userAddress).estimateGas({
+            from: userAddress,
+            gas: gas,
+        })
+
+        const receipt = await simpleCrowdsaleInstance.methods.withdrawTokens(userAddress).send({
+            from: userAddress,
+            gas: estimatedGas,
+        });
+        setIsTokenWithdrawn(true)
+
+    } catch (e) { 
+        console.log("err ", e);
+        setIsTokenWithdrawn(false);
+        setShineBought(false)
+        if (e.message.search("Vesting: the time required for vesting is not expired yet") >= 0) {
+            setMetamaskErrorCode("The time required for vesting is not expired yet");
+        }
+    }
+    setTransactionBeingProcessed(false);
+}
+
 export async function buyShineTokens(
     ethAmountToSpend,
     setEthAmountToSpend,
@@ -183,6 +302,17 @@ export async function buyShineTokens(
                 setMetamaskErrorCode("Reference to the Shine Token contract has not been set");
             } else if (e.message.search("Relative cap exceeded") >= 0) {
                 setMetamaskErrorCode("Relative cap exceeded");
+            } else if (e.message.search("Currently you are below Tier 1 level, but you need to be at least Tier3 in order to participate in the seed sale") >= 0) {
+                setMetamaskErrorCode("Currently you are below Tier 1 level, but you need to be at least Tier3 in order to participate in the seed sale")
+            } else if (e.message.search("You are Tier 1, but you need to be Tier3 in order to participate in the seed sale") >= 0) {
+                setMetamaskErrorCode("You are Tier 1, but you need to be Tier3 in order to participate in the seed sale")
+            } else if (e.message.search("You are Tier 2, but You need to be Tier3 in order to participate in the seed sale") >= 0) {
+                setMetamaskErrorCode("You are Tier 2, but You need to be Tier3 in order to participate in the seed sale")
+            }else if(e.message.search("The amount that is being bought is too small to split it partially for vesting")>=0){
+                setMetamaskErrorCode("The amount that is being bought is too small to split it partially for vesting")
+            }
+            else if(e.message.search("weiAmount is 0")>=0){
+                setMetamaskErrorCode("0 is not a valid amount, please enter another ETH amount in the input field")
             }
             else {
                 setMetamaskErrorCode("There are not enough project tokens left for sale anymore"); //"There are not enough project tokens left for sale anymore"

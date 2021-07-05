@@ -70,7 +70,7 @@
     },
     "technicalDetails": {
         "currentStatus": "seed",
-        "tokenAddress": "0x7f551270B61A3fd36A87716d6912D4F342344972",
+        "tokenAddress": "0x814002b588A9561AC51bd1636c78Ee4193e19CB4",
         "tokenAbi": [
             {
                 "constant": true,
@@ -423,7 +423,7 @@
             }
         ],
         "seed": {
-            "saleAddress": "0xB968491afD76D9294151FE0bB0A48e8080EA21C3",
+            "saleAddress": "0x84962e73Ce5bF7E636F5cB6D09e489c10DA3Fd9A",
             "tokensOffered": "10000000000000000000000000",
             "rate": 181818,
             "gas": 1500000,
@@ -460,6 +460,27 @@
                 },
                 {
                     "constant": true,
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "contributions",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
                     "inputs": [],
                     "name": "wallet",
                     "outputs": [
@@ -467,6 +488,21 @@
                             "internalType": "address payable",
                             "name": "",
                             "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "isSaleOpenForAll",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
                         }
                     ],
                     "payable": false,
@@ -506,6 +542,21 @@
                             "internalType": "bool",
                             "name": "",
                             "type": "bool"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "relativeCap",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
                         }
                     ],
                     "payable": false,
@@ -681,7 +732,7 @@
                     "inputs": [
                         {
                             "internalType": "uint256",
-                            "name": "relativeCap",
+                            "name": "_relativeCap",
                             "type": "uint256"
                         }
                     ],
@@ -711,7 +762,7 @@
                     "inputs": [
                         {
                             "internalType": "bool",
-                            "name": "isSaleOpenForAll",
+                            "name": "_isSaleOpenForAll",
                             "type": "bool"
                         }
                     ],

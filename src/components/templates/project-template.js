@@ -90,6 +90,7 @@ export default function ProjectTemplate({ data }) {
   const [shineBalance, setShineBalance] = useState();
   const [projectBalance, setProjectBalance] = useState();
   const [isShineBought, setShineBought] = useState(false);
+  const [isTokenWithdrawn, setIsTokenWithdrawn] = useState(false);
   const [shineBoughtAmount, setShineBoughtAmount] = useState(false);
   const [isTransactionBeingProcessed, setTransactionBeingProcessed] = useState(false);
   const [ethAmountToSpend, setEthAmountToSpend] = useState('');
@@ -102,6 +103,10 @@ export default function ProjectTemplate({ data }) {
   const [userAddress, setUserAddress] = useState();
   const [vestingPeriod, setVestingPeriod] = useState();
   const [vestedBalances, setVestedBalances] = useState();
+  const [relativeCap, setRelativeCap] = useState();
+  const [contributions, setContributions] = useState();
+  const [isSaleOpenForAll, setIsSaleOpenForAll] = useState();
+
 
 
   useEffect(() => {
@@ -120,11 +125,17 @@ export default function ProjectTemplate({ data }) {
     isWalletEnabled ? utils.getCurrentMigrations() : null;
     isWalletEnabled ? utils.getVestingPeriod(saleAbi, saleContractAddress, setUserAddress, setVestingPeriod) : null;
     isWalletEnabled ? utils.getVestedBalances(saleAbi, saleContractAddress, setUserAddress, setVestedBalances) : null;
+    isWalletEnabled ? utils.getRelativeCap(saleAbi, saleContractAddress, setUserAddress, setRelativeCap) : null;
+    isWalletEnabled ? utils.getContributions(saleAbi, saleContractAddress, setUserAddress, setContributions) : null;
+    isWalletEnabled ? utils.getIsSaleOpenForAll(saleAbi, saleContractAddress, setIsSaleOpenForAll) : null;
+
+
 
   }, [
     isWalletEnabled,
     isTransactionBeingProcessed,
     isShineBought,
+    isTokenWithdrawn
   ]);
 
   useEffect(() => {
@@ -144,43 +155,13 @@ export default function ProjectTemplate({ data }) {
   }, [ethAmountToSpend]);
 
   useEffect(() => {
-    console.log('wwwwwwwwww ', weiRaised);
+    console.log('sale progress 0 ', weiRaised);
+    console.log('sale progress 1', (weiRaised / maxWeiToRaise) * 100);
     isWalletEnabled && setSaleProgress(((weiRaised / maxWeiToRaise) * 100).toFixed(2));
   }, [weiRaised]);
 
-  function getTier(shineBalance) {
-    if (shineBalance < 15000) {
-      return "No Tier"
-    } else if (shineBalance >= 15000 && shineBalance < 50000) {
-      return "Tier 1"
-    } else if (shineBalance >= 50000 && shineBalance < 200000) {
-      return "Tier 2"
-    } else if (shineBalance >= 200000 && shineBalance < 400000) {
-      return "Tier 3"
-    } else if (shineBalance >= 400000) {
-      return "Tier 4"
-    }
-  }
-  //console.log(kFormatter(1200)); // 1.2k
-  //console.log(kFormatter(-1200)); // -1.2k
-  //console.log(kFormatter(900)); // 900
-  //console.log(kFormatter(-900)); // -900
-  function kFormatter(num) {
-    return Math.abs(num) > 999 ? Math.sign(num) * ((Math.abs(num) / 1000).toFixed(1)) + 'k' : Math.sign(num) * Math.abs(num)
-  }
 
-  function timeConverter(UNIX_timestamp){
-    var a = new Date(UNIX_timestamp * 1000);
-    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-    return time;
-  }
+
   return (
     <Layout>
       <SEO />
@@ -228,6 +209,7 @@ export default function ProjectTemplate({ data }) {
                 <br />
                 <span>Balance: {balance} ETH</span>
                 <br />
+                {console.log("project balance", projectBalance)}
                 <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString()} {project.metamaskDetails.symbol}</span>
                 <br />
                 {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
@@ -289,6 +271,7 @@ export default function ProjectTemplate({ data }) {
                     <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
                   </div>
                 )}
+
 
                 {isTransactionBeingProcessed && (
                   <div>
@@ -456,9 +439,11 @@ export default function ProjectTemplate({ data }) {
                 </Text>
               </TierWrapper>
               }
-              {isWalletEnabled && shineBalance < 15000 && <Text color="tomato" fontSize="17px" fontWeight={800}>
-                You don't have a tier. Please consider getting some SHN
+              {isWalletEnabled && utils.getTier(shineBalance) === "No Tier" && <Text color="tomato" fontSize="17px" fontWeight={800}>
+                You don't have a tier. Please consider getting some SHN on <b style={{ cursor: "pointer", "color": "#fada5e" }} onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", '_blank', 'noopener')}>Uniswap.</b>
               </Text>}
+              {isWalletEnabled && (utils.getTier(shineBalance) === "Tier 1" || utils.getTier(shineBalance) === "Tier 2") && !isSaleOpenForAll && <Text color="tomato" fontSize="17px" fontWeight={800}>Seed sale is not open at the moment for Tier1 and Tier2, please consider upgrading to the next tier <b style={{ cursor: "pointer", color: "#fada5e" }} onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", '_blank', 'noopener')}>here.</b></Text>
+              }
               <br></br>
               {isWalletEnabled && <Details theme={theme}>
 
@@ -474,11 +459,11 @@ export default function ProjectTemplate({ data }) {
 
                       <span>Connected account: {window.ethereum.selectedAddress.substring(0, 6)}...{window.ethereum.selectedAddress.substring(window.ethereum.selectedAddress.length - 4)}</span>
                       <br />
-                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: {kFormatter(shineBalance)} SHN <b>({getTier(shineBalance)})</b></Text>}
+                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: {Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} SHN <b style={{ color: "#f2df96" }}>({utils.getTier(shineBalance)})</b></Text>}
 
-                      <span>ETH Balance: {balance} ETH</span>
+                      <span>ETH Balance: {Number.parseFloat(balance).toLocaleString(undefined, { maximumFractionDigits: 2 })} ETH</span>
                       <br />
-                      <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString()} {project.metamaskDetails.symbol}</span>
+                      <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {project.metamaskDetails.symbol}</span>
                       <br />
                       {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
                       <br />
@@ -492,8 +477,13 @@ export default function ProjectTemplate({ data }) {
                       {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
                       {isWalletEnabled && !isTransactionBeingProcessed && (
                         <div>
+
+                          <br></br>
+
                           <label htmlFor="eth_amount">Enter ETH amount:</label>
                           <br />
+
+
                           <EthInput
                             autoComplete="off"
                             type="number"
@@ -504,9 +494,20 @@ export default function ProjectTemplate({ data }) {
                           {ethAmountToSpend && (
                             <span>
                               <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
+
                               <span>Estimated {project.metamaskDetails.symbol} tokens to receive: {utils.estimateReceivedShn(ethAmountToSpend, rate).toLocaleString()}</span>
+
+                              {false && utils.getTier(shineBalance) !== "No Tier" && <span>Current contribution: {contributions}</span>}
+
+
                             </span>
                           )}
+
+                          <br />  <br />
+                          {// relativeCap && shineBalance needed below because it takes few hundred miliseconds to load the state variables
+                          }
+                          {relativeCap && shineBalance && (ethAmountToSpend > (utils.getMaximumContribution(relativeCap, shineBalance) - contributions)) && utils.getTier(shineBalance) !== "No Tier" && <Text color="tomato">The amount that you are trying to buy exceeds the maximum contribution cap for the {utils.getTier(shineBalance)}. Your remaining maximum contribution is: <span onClick={(e) => setEthAmountToSpend(Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions).toLocaleString(undefined, { maximumFractionDigits: 5 }))} style={{ cursor: "pointer", color: "#007bff" }}>{Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions).toLocaleString(undefined, { maximumFractionDigits: 5 })} </span> ETH</Text>}
+
                           <br />
                           <br />
 
@@ -535,17 +536,18 @@ export default function ProjectTemplate({ data }) {
                           </FlexBox>
                           <br />
                           <br />
+
                           {isWalletEnabled && console.log("vested balances ", vestedBalances)}
                           {vestedBalances > 0 && <FlexBox>
-                           
+
                             <ConnectButton
                               theme={theme}
-                              onClick=""
+                              onClick={() => utils.withdrawTokens(saleAbi, saleContractAddress, userAddress, gas, setTransactionBeingProcessed, setMetamaskErrorCode, setIsTokenWithdrawn, setShineBought)}
                             >
                               Widthdraw tokens
                             </ConnectButton>
-                            <Text margin="0 0 0 10px" color="#aeaeae"> Vested Amount: {vestedBalances} {project.metamaskDetails.symbol} </Text>
-                            <Text margin="0 0 0 10px" color="#aeaeae"> Unlock time: {timeConverter(vestingPeriod)}</Text>
+                            <Text margin="0 0 0 10px" color="#aeaeae"> Vested Amount: {Number.parseFloat(vestedBalances).toLocaleString(undefined, { maximumFractionDigits: 2 })} {project.metamaskDetails.symbol} </Text>
+                            <Text margin="0 0 0 10px" color="#aeaeae"> Unlock time: {utils.timeConverter(vestingPeriod)}</Text>
                           </FlexBox>
                           }
 
@@ -554,8 +556,14 @@ export default function ProjectTemplate({ data }) {
                         </div>
                       )}
                       {isShineBought && !isTransactionBeingProcessed && (
-                        <div style={{"marginTop":20}}>
+                        <div style={{ "marginTop": 20 }}>
                           <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} {project.metamaskDetails.symbol} tokens! (Note: 75% is vested) </h4>
+                        </div>
+                      )}
+
+                      {isTokenWithdrawn && !isTransactionBeingProcessed && (
+                        <div>
+                          <h4>You have just successfully withdrawn your remaining vested {project.metamaskDetails.symbol} tokens!</h4>
                         </div>
                       )}
 
@@ -694,7 +702,7 @@ export default function ProjectTemplate({ data }) {
           )}
         </ProjectsWrapper>
       </Wrapper>
-    </Layout>
+    </Layout >
   );
 }
 
