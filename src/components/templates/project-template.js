@@ -52,7 +52,7 @@ import {
 import * as utils from './utils';
 
 import { Avatar } from '../common/Avatar';
-import DefiOptionsLogo from '../landing/UpcomingProjects/defi_options_logo.png';
+import DefiOptionsLogo from '../landing/UpcomingProjects/defi-options-dao-logo.png';
 import { Text } from '../common/Text';
 import ShineToken from '../../../static/abi/ShineToken.json';
 import { DisableColor } from '../landing/SaleDetails/styles';
