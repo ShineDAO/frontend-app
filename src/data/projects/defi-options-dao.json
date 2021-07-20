@@ -70,7 +70,7 @@
     },
     "technicalDetails": {
         "currentStatus": "seed",
-        "tokenAddress": "0x814002b588A9561AC51bd1636c78Ee4193e19CB4",
+        "tokenAddress": "0x6897Cc7815592Eb1D1010312f7930439E7222F2d",
         "tokenAbi": [
             {
                 "constant": true,
@@ -423,7 +423,7 @@
             }
         ],
         "seed": {
-            "saleAddress": "0x84962e73Ce5bF7E636F5cB6D09e489c10DA3Fd9A",
+            "saleAddress": "0xF4Dc132BDC196345f632bB047bca1C723E7bF253",
             "tokensOffered": "10000000000000000000000000",
             "rate": 181818,
             "gas": 1500000,
@@ -586,6 +586,21 @@
                 },
                 {
                     "constant": true,
+                    "inputs": [],
+                    "name": "shineToken",
+                    "outputs": [
+                        {
+                            "internalType": "contract ShineToken",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
                     "inputs": [
                         {
                             "internalType": "address",
@@ -633,6 +648,21 @@
                     "outputs": [],
                     "payable": false,
                     "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "constant": true,
+                    "inputs": [],
+                    "name": "vault",
+                    "outputs": [
+                        {
+                            "internalType": "contract __unstable__TokenVault",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "payable": false,
+                    "stateMutability": "view",
                     "type": "function"
                 },
                 {
