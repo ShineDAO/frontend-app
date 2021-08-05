@@ -115,4 +115,6 @@ export const Cards = styled.div`
 
 export const WrapperButton = styled.div`
   text-align: center;
+  display: flex;
+  justify-content: space-evenly;
 `;
