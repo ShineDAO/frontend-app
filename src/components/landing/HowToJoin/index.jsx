@@ -47,7 +47,7 @@ export const HowToJoin = () => {
                         To contribute to projects and participate in community discussions, please join our <TextLink onClick={() => window.open('https://discord.gg/QkhbP7bZrj', '_blank', 'noopener')}>Discord server.</TextLink>
                     </p>
                     <WrapperButton>
-                        <LearnButton onClick={() => window.open('https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x1c7ede23b1361acc098a1e357c9085d131b34a01&use=V2', '_blank', 'noopener')} theme={theme}>GET SHN TOKEN</LearnButton>
+                        <LearnButton onClick={() => window.open('https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28', '_blank', 'noopener')} theme={theme}>GET SHN TOKEN</LearnButton>
                         <LearnButton theme={theme} onClick={() => utils.addToWatchlist({
                             "address": "0x1C7ede23b1361acC098A1e357C9085D131b34a01", // The address that the token is at.
                             "symbol": "SHN", // A ticker symbol or shorthand, up to 5 chars.
