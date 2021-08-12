@@ -46,8 +46,12 @@ import {
   RightStatsCard,
   LeftStatsCard,
   TierWrapper, TitleText, StatsCardHeading,
-  FlexBox
+  FlexBox,
+  JoinCard,
+  Cards
+
 } from './styles';
+
 
 import * as utils from './utils';
 
@@ -379,68 +383,100 @@ export default function ProjectTemplate({ data }) {
                 </Link>
               </TitleText>
 
+              {!isWalletEnabled && <Cards>
+      
+                <JoinCard theme={theme}>
+                  <h2 theme={theme}>TIER 1</h2>
+                  <p className="frame1" theme={theme} > &#62; 15.000 SHN </p>
+                  <p className="frame2" theme={theme}>  {theme === 'light' ? '❓' : '❔'}  Seed-sale <br></br> ✅   IDO  </p>
+                  <p className="frame2">Cap/person <br></br> 1x</p>
+                </JoinCard>
+                <JoinCard theme={theme}>
+                  <h2>TIER 2</h2>
+                  <p className="frame1"> &#62; 50.000 SHN </p>
+                  <p className="frame2"> {theme === 'light' ? '❓' : '❔'}  Seed-sale <br></br> ✅   IDO </p>
+                  <p className="frame2">Cap/person <br></br>2-4x</p>
+                </JoinCard>
+                <JoinCard theme={theme}>
+                  <h2>TIER 3</h2>
+                  <p className="frame1"> &#62; 200.000 SHN </p>
+                  <p className="frame2">✅  Seed-sale  <br></br>✅   IDO</p>
+                  <p className="frame2">Cap/person <br></br> 4-8x</p>
+                </JoinCard>
+                <JoinCard theme={theme}>
+                  <h2>COMMITTEE</h2>
+                  <p className="frame1"> &#62; 400.000 SHN </p>
+                  <p className="frame2">✅  Seed-sale  <br></br>✅   IDO </p>
+                  <p className="frame2">Cap/person <br></br> 8-15x</p>
+                </JoinCard>
+              </Cards>
 
-              {!isWalletEnabled &&
-                <TierWrapper highlightTier={shineBalance >= 15000 && shineBalance < 50000}>
+              }
+              {false && <div>
+
+                {!isWalletEnabled &&
+                  <TierWrapper highlightTier={shineBalance >= 15000 && shineBalance < 50000}>
+                    <Card width="120px" height="32px" background="#EEEEFF">
+                      <Text fontSize="18px" fontWeight={800}>
+                        TIER 1
+                      </Text>
+                    </Card>
+                    <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
+                      (&gt;15k SHN)
+                    </Text>
+                    <Text color="#EEEEFF" fontSize="18px" fontWeight={800}>
+                      Not guaranteed
+                    </Text>
+                  </TierWrapper>
+                }
+                {!isWalletEnabled &&
+                  <TierWrapper highlightTier={shineBalance >= 50000 && shineBalance < 200000}>
+                    <Card width="120px" height="32px" background="#EEEEFF">
+                      <Text fontSize="18px" fontWeight={800}>
+                        TIER 2
+                      </Text>
+                    </Card>
+                    <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
+                      (&gt;50k SHN)
+                    </Text>
+                    <Text color="#EEEEFF" fontSize="18px" fontWeight={800}>
+                      Not guaranteed
+                    </Text>
+                  </TierWrapper>
+                }
+                {!isWalletEnabled &&
+                  <TierWrapper highlightTier={shineBalance >= 200000 && shineBalance < 400000}>
+                    <Card width="120px" height="32px" background="#EEEEFF">
+                      <Text fontSize="18px" fontWeight={800}>
+                        TIER 3
+                      </Text>
+                    </Card>
+                    <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
+                      (&gt;200k SHN)
+                    </Text>
+                    <Text color="#EEEEFF" fontSize="18px" fontWeight={800}>
+                      Guaranteed
+                    </Text>
+                  </TierWrapper>
+                }
+                {!isWalletEnabled && <TierWrapper highlightTier={shineBalance >= 400000}>
                   <Card width="120px" height="32px" background="#EEEEFF">
                     <Text fontSize="18px" fontWeight={800}>
-                      TIER 1
+                      TIER 4
                     </Text>
                   </Card>
                   <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
-                    (&gt;15k SHN)
+                    (&gt;400k SHN)
                   </Text>
-                  <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                    ❔
-                  </Text>
-                </TierWrapper>
-              }
-              {!isWalletEnabled &&
-                <TierWrapper highlightTier={shineBalance >= 50000 && shineBalance < 200000}>
-                  <Card width="120px" height="32px" background="#EEEEFF">
-                    <Text fontSize="18px" fontWeight={800}>
-                      TIER 2
-                    </Text>
-                  </Card>
-                  <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
-                    (&gt;50k SHN)
-                  </Text>
-                  <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                    ❔
+                  <Text color="#EEEEFF" fontSize="18px" fontWeight={800}>
+                    Guaranteed
                   </Text>
                 </TierWrapper>
-              }
-              {!isWalletEnabled &&
-                <TierWrapper highlightTier={shineBalance >= 200000 && shineBalance < 400000}>
-                  <Card width="120px" height="32px" background="#EEEEFF">
-                    <Text fontSize="18px" fontWeight={800}>
-                      TIER 3
-                    </Text>
-                  </Card>
-                  <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
-                    (&gt;200k SHN)
-                  </Text>
-                  <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                    ≈ $2400
-                  </Text>
-                </TierWrapper>
-              }
-              {!isWalletEnabled && <TierWrapper highlightTier={shineBalance >= 400000}>
-                <Card width="120px" height="32px" background="#EEEEFF">
-                  <Text fontSize="18px" fontWeight={800}>
-                    TIER 4
-                  </Text>
-                </Card>
-                <Text color="#EEEEFF" fontSize="14px" fontWeight={800}>
-                  (&gt;400k SHN)
-                </Text>
-                <Text color="#EEEEFF" fontSize="24px" fontWeight={800}>
-                  ≈ $4200
-                </Text>
-              </TierWrapper>
-              }
+                }
+              </div>}
+
               {isWalletEnabled && utils.getTier(shineBalance) === "No Tier" && <Text color="tomato" fontSize="17px" fontWeight={800}>
-                You don't have a tier. Please consider getting some SHN on <b style={{ cursor: "pointer", "color": "#fada5e" }} onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", '_blank', 'noopener')}>Uniswap.</b>
+                The amount of SHN that you have is below a minimum threshold to be placed in a tier. In order to participate in the sale, please consider getting some SHN on <b style={{ cursor: "pointer", "color": "#fada5e" }} onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", '_blank', 'noopener')}>Uniswap.</b>
               </Text>}
               {isWalletEnabled && (utils.getTier(shineBalance) === "Tier 1" || utils.getTier(shineBalance) === "Tier 2") && !isSaleOpenForAll && <Text color="tomato" fontSize="17px" fontWeight={800}>Seed sale is not open at the moment for Tier1 and Tier2, please consider upgrading to the next tier <b style={{ cursor: "pointer", color: "#fada5e" }} onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", '_blank', 'noopener')}>here.</b></Text>
               }
@@ -505,8 +541,9 @@ export default function ProjectTemplate({ data }) {
 
                           <br />  <br />
                           {// relativeCap && shineBalance needed below because it takes few hundred miliseconds to load the state variables
+                            console.log("sshhnn", shineBalance)
                           }
-                          {relativeCap && shineBalance && (ethAmountToSpend > (utils.getMaximumContribution(relativeCap, shineBalance) - contributions)) && utils.getTier(shineBalance) !== "No Tier" && <Text color="tomato">The amount that you are trying to buy exceeds the maximum contribution cap for the {utils.getTier(shineBalance)}. Your remaining maximum contribution is: <span onClick={(e) => setEthAmountToSpend(Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions).toLocaleString(undefined, { maximumFractionDigits: 5 }))} style={{ cursor: "pointer", color: "#007bff" }}>{Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions).toLocaleString(undefined, { maximumFractionDigits: 5 })} </span> ETH</Text>}
+                          {relativeCap && shineBalance && (ethAmountToSpend > (utils.getMaximumContribution(relativeCap, shineBalance) - contributions)) && utils.getTier(shineBalance) !== "No Tier" && <Text color="tomato">The amount that you are trying to buy exceeds the maximum contribution cap for your current tier which is {utils.getTier(shineBalance)}. Your remaining maximum contribution is: <span onClick={(e) => setEthAmountToSpend(Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions).toLocaleString(undefined, { maximumFractionDigits: 5 }))} style={{ cursor: "pointer", color: "#007bff" }}>{Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions).toLocaleString(undefined, { maximumFractionDigits: 5 })} </span> ETH</Text>}
 
                           <br />
                           <br />
@@ -532,7 +569,7 @@ export default function ProjectTemplate({ data }) {
                             >
                               Buy Tokens
                             </ConnectButton>
-                            <Text margin="0 0 0 10px" color="#aeaeae"> Note: 25% tokens are released immediatly, 75% is vested for 30 days </Text>
+                            <Text margin="0 0 0 10px" color="#aeaeae"> Note: 25% of the bought tokens are released immediatly, 75% is vested for 30 days.</Text>
                           </FlexBox>
                           <br />
                           <br />
@@ -601,7 +638,7 @@ export default function ProjectTemplate({ data }) {
                 clickable
                 width="100%"
                 height="48px"
-                margin="20px 0 0 0"
+                margin="5px 0 0 0"
               >
                 <Text fontWeight={800} color="white">
                   CONNECT WALLET

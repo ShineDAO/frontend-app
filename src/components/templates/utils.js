@@ -173,7 +173,10 @@ export function getTier(shineBalance) {
 export function getMaximumContribution(relativeCap, shineBalance) {
     console.log("rc, bal", relativeCap, shineBalance)
     let multiplier;
-    if (shineBalance >= 15000 && shineBalance < 50000) {
+    if(shineBalance < 1500){
+        multiplier = 0
+    }
+    else if (shineBalance >= 15000 && shineBalance < 50000) {
         multiplier = 1
     } else if (shineBalance >= 50000 && shineBalance < 200000) {
         multiplier = 2
@@ -352,6 +355,7 @@ export function handleChangeOfEthAmountToSpend(amount, setEthAmountToSpend) {
 }
 
 export function toPlainString(num) {
+    console.log("plain straing", num.toLocaleString("fullwide", { useGrouping: false }))
     return num.toLocaleString("fullwide", { useGrouping: false });
 }
 

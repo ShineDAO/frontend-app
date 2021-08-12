@@ -490,3 +490,59 @@ export const ConnectButton = styled.button`
     width: 100%;
   }
 `;
+
+export const JoinCard = styled.div`
+background: ${({ theme }) => (theme === 'dark' ? '#1E1E1E' : '#EEEEFF')};
+border: 1px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+font-weight: 800;
+box-sizing: border-box;
+width: 200px;
+border-radius: 8px;
+text-align: -webkit-center;
+margin:14px;
+
+h2 {
+  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  font-size: 14px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height:8%;
+  margin: 12px 8px 8px 8px;
+}
+.frame1 {
+  background: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 8px;
+  width: 80%;
+  height: 16%;
+  margin: 8px;
+}
+.frame2{
+  border: 2px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};;
+box-sizing: border-box;
+border-radius: 8px;
+font-weight: 600;
+font-size: 15px;
+height: 25%;
+width: 80%;
+
+margin: 8px;
+}
+
+  @media (max-width: 1200px) {
+    margin: 20px auto;
+  }
+`;
+export const Cards = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @media (max-width: 1200px) {
+    justify-content: center;
+  }
+`;
