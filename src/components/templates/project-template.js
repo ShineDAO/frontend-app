@@ -300,7 +300,7 @@ export default function ProjectTemplate({ data }) {
         <ProjectsWrapper as={Container}>
           <Heading>
             {false && <Avatar imageUrl={DefiOptionsLogo} alt="project logo" width="80px" height="80px" />}
-            <HeadingText>Project Details</HeadingText>
+            {false && <HeadingText>Project Details</HeadingText>}
           </Heading>
           <InfoCards>
             <StatsCard>
@@ -321,6 +321,9 @@ export default function ProjectTemplate({ data }) {
                   </Text>
                 </CardHeaderTextWrapper>
               </CardHeaderWrapper>
+              <Text margin="30px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">
+                    Sale details:
+                  </Text>
               <CardBottomWrapper>
                 <FirstStatsCard>
                   <Text color="#3F3D56" fontWeight={300} fontSize="20px">
@@ -374,6 +377,7 @@ export default function ProjectTemplate({ data }) {
                   <Text fontWeight={800}>ADD DOD TO METAMASK</Text>
                 </Card>
               </CardBottomWrapper>
+              
             </StatsCard>
             <TokenCard>
               <TitleText fontWeight={800} fontSize="24px" color="white">

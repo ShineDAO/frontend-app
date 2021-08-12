@@ -36,7 +36,6 @@ export const StatsCard = styled.div`
   flex-direction: column;
   display: flex;
   width: 540px;
-  height: 604px;
   justify-content: flex-start;
   border-radius: 8px;
   @media (max-width: 1200px) {
@@ -46,7 +45,7 @@ export const StatsCard = styled.div`
   @media (max-width: 600px) {
     width: 100%;
     align-items: center;
-    height: 980px;
+    height: 1060px;
     
   }
   @media (max-width: 489px) {
@@ -125,11 +124,11 @@ export const CardHeaderTextWrapper = styled.div`
 export const CardBottomWrapper = styled.div`
   background: #3f3d56;
   flex-wrap: wrap;
-  height: 336px;
-  margin: 40px 0;
+  height: 100%;
   border: 1px solid #3f3d56;
   border-radius: 4px;
   display: flex;
+  align-content: flex-end;
   width: 460px;
   @media (max-width: 600px) {
     margin-top: 20px;
