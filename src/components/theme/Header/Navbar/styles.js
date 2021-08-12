@@ -21,3 +21,13 @@ export const LogoWrapper = styled.div`
   margin-bottom:0 !important;
   height:40px !important;
 `
+
+
+export const HeadingText = styled.span`
+color: ${({ theme }) => (theme === 'dark' ? '#fff' : '#3F3D56')};
+  font-size: 20px;
+  vertical-align: middle;
+  font-weight: 550;
+  text-decoration:none; 
+  display: inline-block;
+`;
