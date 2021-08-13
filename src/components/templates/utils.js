@@ -80,6 +80,7 @@ export async function getShineBalance(setShineBalance, userAddress, tokenAbi, to
     var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
 
     var shineBalance = await tokenInst.methods.balanceOf(userAddress).call();
+    
 
     var shineBalanceFromWei = window.web3.utils.fromWei(shineBalance, "ether");
     setShineBalance(shineBalanceFromWei);

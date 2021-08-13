@@ -313,19 +313,19 @@ export default function ProjectTemplate({ data }) {
                     {project.title}
                   </StatsCardHeading>
                 </ProjectNameWrapper>
-            
+
               </CardHeaderWrapper>
               <CardHeaderTextWrapper>
-                 
-                 
-                  <TBAText color="#3F3D56" fontWeight={800}>
-                   in <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />
-                  </TBAText>
-                </CardHeaderTextWrapper>
+
+
+                <TBAText color="#3F3D56" fontWeight={800}>
+                  in <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />
+                </TBAText>
+              </CardHeaderTextWrapper>
               <Text margin="11px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">
-                    Sale details:
-                  </Text>
-                
+                Sale details:
+              </Text>
+
               <CardBottomWrapper>
                 <FirstStatsCard>
                   <Text color="#3F3D56" fontWeight={300} fontSize="20px">
@@ -379,7 +379,7 @@ export default function ProjectTemplate({ data }) {
                   <Text fontWeight={800}>ADD DOD TO METAMASK</Text>
                 </Card>
               </CardBottomWrapper>
-              
+
             </StatsCard>
             <TokenCard>
               <TitleText fontWeight={800} fontSize="24px" color="white">
@@ -390,7 +390,7 @@ export default function ProjectTemplate({ data }) {
               </TitleText>
 
               {!isWalletEnabled && <Cards>
-      
+
                 <JoinCard theme={theme}>
                   <h2 theme={theme}>TIER 1</h2>
                   <p className="frame1" theme={theme} > &#62; 15.000 SHN </p>
@@ -501,11 +501,11 @@ export default function ProjectTemplate({ data }) {
 
                       <span>Connected account: {window.ethereum.selectedAddress.substring(0, 6)}...{window.ethereum.selectedAddress.substring(window.ethereum.selectedAddress.length - 4)}</span>
                       <br />
-                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: {Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} SHN <b style={{ color: "#f2df96" }}>({utils.getTier(shineBalance)})</b></Text>}
+                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: {isNaN(Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })) ? 0 : isNaN(Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 }) )} SHN <b style={{ color: "#f2df96" }}>{utils.getTier(shineBalance)}</b></Text>}
 
                       <span>ETH Balance: {Number.parseFloat(balance).toLocaleString(undefined, { maximumFractionDigits: 2 })} ETH</span>
                       <br />
-                      <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {project.metamaskDetails.symbol}</span>
+                      <span>Project Token Balance: {isNaN(Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 }))? 0 : Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 }) } {project.metamaskDetails.symbol}</span>
                       <br />
                       {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
                       <br />
@@ -517,7 +517,7 @@ export default function ProjectTemplate({ data }) {
                       )}
                       <br />
                       {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
-                      {isWalletEnabled && !isTransactionBeingProcessed && (
+                      {isWalletEnabled && !isTransactionBeingProcessed && (new Date().getTime() > new Date('August 19, 2021 20:30:00 GMT+03:00').getTime()) &&  (
                         <div>
 
                           <br></br>
