@@ -63,7 +63,7 @@ import ShineToken from '../../../static/abi/ShineToken.json';
 import { DisableColor } from '../landing/SaleDetails/styles';
 import PulseLoader from 'react-spinners/PulseLoader';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import DateCountdown from 'react-date-countdown-timer';
+//import DateCountdown from 'react-date-countdown-timer';
 
 export default function ProjectTemplate({ data }) {
   const { theme } = useContext(ThemeContext);
@@ -319,7 +319,7 @@ export default function ProjectTemplate({ data }) {
 
 
                 <TBAText color="#3F3D56" fontWeight={800}>
-                  in <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />
+                Sale opens on August 19, 2021 16:30:00 UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
                 </TBAText>
               </CardHeaderTextWrapper>
               <Text margin="11px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">

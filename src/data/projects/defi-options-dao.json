@@ -11,8 +11,8 @@
     },
     "tokenomics": {
         "tokenDistributionImage": {
-            "light": "defi-options-token-distribution_light.png",
-            "dark": "defi-options-token-distribution_dark.png"
+            "light": "DeFi_Options_Tokenomics_1.png",
+            "dark": "DeFi_Options_Tokenomics.png"
         },
         "seedSale": {
             "total": "",
