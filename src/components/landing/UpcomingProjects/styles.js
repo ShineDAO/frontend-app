@@ -55,14 +55,33 @@ export const When = styled.div`
   justify-content: flex-start;
   background: #fada5e;
   border-radius: 4px;
-  height: 32px;
-  width: 140px;
+  
+  width:100%;
+  margin:0 auto;
+  margin-top:25px;
+  text-align: center;
   @media (max-width: 699px) {
-    margin-top: 16px;
+    margin-top: 25px;
     width: 218px;
     justify-content: center;
   }
 `;
+
+
+export const TBAText = styled.div`
+  color: ${({ color }) => color || 'black'};
+  font-weight: ${({ fontWeight }) => fontWeight || 400};
+  font-size: ${({ fontSize }) => fontSize || '16px'};
+  margin: ${({ margin }) => margin || '0'};
+
+  @media (max-width: 699px) {
+    margin-top: 25px;
+    width: 218px;
+    justify-content: center;
+    font-size: 12px;
+  }
+`;
+
 
 export const HeaderWrapper = styled.div`
   display: flex;
@@ -110,7 +129,7 @@ export const TotalRaise = styled.div`
   display: flex;
   height: 96px;
   flex-direction: column;
-  margin: 24px 0 0 0;
+  margin: 14px 0 0 0;
   padding: 16px 0 16px 24px;
   width: 218px;
   border-radius: 8px;
@@ -125,7 +144,7 @@ export const FundingStage = styled.div`
   display: flex;
   flex-direction: column;
   height: 96px;
-  margin: 24px 0 0 0;
+  margin: 14px 0 0 0;
   padding: 16px 0 16px 24px;
   width: 218px;
   border-radius: 8px;

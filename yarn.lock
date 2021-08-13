@@ -8455,9 +8455,9 @@ fastq@^1.10.0, fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
-"favicons-webpack-plugin@git+https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf":
+"favicons-webpack-plugin@https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf":
   version "0.0.9"
-  resolved "git+https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf"
+  resolved "https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf"
   dependencies:
     core-js "^2.5.7"
     favicons "^5.1.1"
@@ -14964,6 +14964,14 @@ react-bootstrap@^1.5.0:
     uncontrollable "^7.2.1"
     warning "^4.0.3"
 
+react-date-countdown-timer@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/react-date-countdown-timer/-/react-date-countdown-timer-1.0.9.tgz#cf710db1c2ab16405b307f96c15453f3b969a643"
+  integrity sha512-tpe9dw3di4QY3ZiRkwyNalNP7s872t00AmfN4SlKggcoH0f0sLkTXLoQJCEGpwhtVIn7IrW9C6S27a6rBpf7Fg==
+  dependencies:
+    prop-types "^15.7.2"
+    react "^16.4.2"
+
 react-dev-utils@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-4.2.3.tgz#5b42d9ea58d5e9e017a2f57a40a8af408a3a46fb"
@@ -15111,7 +15119,7 @@ react@15:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react@^16.11.0:
+react@^16.11.0, react@^16.4.2:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
   integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==

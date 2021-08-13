@@ -46,10 +46,9 @@ export const StatsCard = styled.div`
     width: 100%;
     align-items: center;
     height: 1060px;
-    
   }
   @media (max-width: 489px) {
-    height: 1010px;
+    height: 1050px;
   }
 `;
 
@@ -63,11 +62,13 @@ export const TokenCard = styled.div`
   height: 100%;
   justify-content: flex-start;
   border-radius: 8px;
+  
   @media (max-width: 600px) {
     width: 100%;
   }
-  @media (max-width: 500px) {
-    height: 844px;
+
+  @media (max-width: 489px) {
+    height: 1137px;
   }
 `;
 
@@ -113,11 +114,30 @@ export const CardHeaderTextWrapper = styled.div`
   border-radius: 4px;
   align-items: center;
   height: 32px;
-  width: 140px;
+  width: 100%;
   display: flex;
+  text-align:center;
+  margin-top: 17px;
   @media (max-width: 600px) {
     margin-top: 20px;
     width: 218px;
+  }
+`;
+
+
+export const TBAText = styled.div`
+  color: ${({ color }) => color || 'black'};
+  font-weight: ${({ fontWeight }) => fontWeight || 400};
+  font-size: ${({ fontSize }) => fontSize || '16px'};
+  margin: ${({ margin }) => margin || '0'};
+  text-align:center;
+  margin:0 auto;
+
+
+  @media (max-width: 699px) {
+    width: 218px;
+    justify-content: center;
+    font-size: 12px;
   }
 `;
 

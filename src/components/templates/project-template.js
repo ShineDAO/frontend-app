@@ -48,7 +48,8 @@ import {
   TierWrapper, TitleText, StatsCardHeading,
   FlexBox,
   JoinCard,
-  Cards
+  Cards,
+  TBAText
 
 } from './styles';
 
@@ -56,12 +57,13 @@ import {
 import * as utils from './utils';
 
 import { Avatar } from '../common/Avatar';
-import DefiOptionsLogo from '../landing/UpcomingProjects/defi-options-dao-logo.png';
+import DefiOptionsLogo from '../landing/UpcomingProjects/defi-options-dao-logo-new.png';
 import { Text } from '../common/Text';
 import ShineToken from '../../../static/abi/ShineToken.json';
 import { DisableColor } from '../landing/SaleDetails/styles';
 import PulseLoader from 'react-spinners/PulseLoader';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import DateCountdown from 'react-date-countdown-timer';
 
 export default function ProjectTemplate({ data }) {
   const { theme } = useContext(ThemeContext);
@@ -311,23 +313,23 @@ export default function ProjectTemplate({ data }) {
                     {project.title}
                   </StatsCardHeading>
                 </ProjectNameWrapper>
-                <CardHeaderTextWrapper>
-                  &nbsp; &nbsp;
-                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-                    <circle cx="4" cy="4" r="4" fill="#3F3D56" />
-                  </svg>
-                  <Text color="#3F3D56" fontWeight={800}>
-                    &nbsp; in TBA days
-                  </Text>
-                </CardHeaderTextWrapper>
+            
               </CardHeaderWrapper>
-              <Text margin="30px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">
+              <CardHeaderTextWrapper>
+                 
+                 
+                  <TBAText color="#3F3D56" fontWeight={800}>
+                   in <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />
+                  </TBAText>
+                </CardHeaderTextWrapper>
+              <Text margin="11px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">
                     Sale details:
                   </Text>
+                
               <CardBottomWrapper>
                 <FirstStatsCard>
                   <Text color="#3F3D56" fontWeight={300} fontSize="20px">
-                    Total raise
+                    Total Raise
                   </Text>
                   <Text color="#3F3D56" fontWeight={800} fontSize="24px">
                     {project.frontendDetails.totalRaise}
@@ -359,7 +361,7 @@ export default function ProjectTemplate({ data }) {
                 </RightStatsCard>
                 <LeftStatsCard>
                   <Text color="white" fontWeight={300} fontSize="20px">
-                    Round allocation
+                    Round Allocation
                   </Text>
                   <Text color="white" fontWeight={700} fontSize="20px">
                     {project.frontendDetails.roundAllocation}
@@ -393,25 +395,25 @@ export default function ProjectTemplate({ data }) {
                   <h2 theme={theme}>TIER 1</h2>
                   <p className="frame1" theme={theme} > &#62; 15.000 SHN </p>
                   <p className="frame2" theme={theme}>  {theme === 'light' ? '❓' : '❔'}  Seed-sale <br></br> ✅   IDO  </p>
-                  <p className="frame2">Cap/person <br></br> 1x</p>
+                  <p className="frame2">Cap/person <br></br> $1000</p>
                 </JoinCard>
                 <JoinCard theme={theme}>
                   <h2>TIER 2</h2>
                   <p className="frame1"> &#62; 50.000 SHN </p>
                   <p className="frame2"> {theme === 'light' ? '❓' : '❔'}  Seed-sale <br></br> ✅   IDO </p>
-                  <p className="frame2">Cap/person <br></br>2-4x</p>
+                  <p className="frame2">Cap/person <br></br>$2000</p>
                 </JoinCard>
                 <JoinCard theme={theme}>
                   <h2>TIER 3</h2>
                   <p className="frame1"> &#62; 200.000 SHN </p>
                   <p className="frame2">✅  Seed-sale  <br></br>✅   IDO</p>
-                  <p className="frame2">Cap/person <br></br> 4-8x</p>
+                  <p className="frame2">Cap/person <br></br> $4000</p>
                 </JoinCard>
                 <JoinCard theme={theme}>
                   <h2>COMMITTEE</h2>
                   <p className="frame1"> &#62; 400.000 SHN </p>
                   <p className="frame2">✅  Seed-sale  <br></br>✅   IDO </p>
-                  <p className="frame2">Cap/person <br></br> 8-15x</p>
+                  <p className="frame2">Cap/person <br></br> $8000</p>
                 </JoinCard>
               </Cards>
 
@@ -573,7 +575,7 @@ export default function ProjectTemplate({ data }) {
                             >
                               Buy Tokens
                             </ConnectButton>
-                            <Text margin="0 0 0 10px" color="#aeaeae"> Note: 25% of the bought tokens are released immediatly, 75% is vested for 30 days.</Text>
+                            <Text margin="0 0 0 10px" color="#aeaeae"> Note: 25% of the bought tokens are released immediatly, 75% is vested for 100 days.</Text>
                           </FlexBox>
                           <br />
                           <br />
@@ -706,7 +708,7 @@ export default function ProjectTemplate({ data }) {
               <TaskSectionTextContainer>
                 <ContributeTitle>Contribute and get rewarded</ContributeTitle>
 
-                <ContributeText>20% of projects tokens will be distributed to early contributors.</ContributeText>
+                <ContributeText>7% of projects tokens will be distributed to early contributors.</ContributeText>
               </TaskSectionTextContainer>
 
               <ConnectButtonContainer>

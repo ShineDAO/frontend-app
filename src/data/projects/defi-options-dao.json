@@ -55,12 +55,12 @@
         }
     },
     "frontendDetails": {
-        "totalRaise": "$150k",
+        "totalRaise": "$75k",
         "incubationStage": "Seed Sale",
-        "totalSupply": "100,000,000 DOEX",
+        "totalSupply": "100,000,000 DOD",
         "chain": "Ethereum",
-        "roundAllocation": "10,000,000 DOEX",
-        "rate": "$0.015 / 1 DOEX"
+        "roundAllocation": "5,000,000 DOD",
+        "rate": "$0.015 / 1 DOD"
     },
     "metamaskDetails": {
         "address": "0x3896cEB980df22487F008435E275333D4F3EF320",
