@@ -71,8 +71,8 @@ export default function ProjectTemplate({ data }) {
   const project = data.projectsJson;
   console.log('project data ', project);
 
-  const shineTokenAddress = '0x83a30087015E0e766BbD9772743F38940C35094D'; //Local Ganache
-  //const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
+  //const shineTokenAddress = '0x83a30087015E0e766BbD9772743F38940C35094D'; //Local Ganache
+  const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
 
 
   const shineTokenAbi = ShineToken.abi;
@@ -501,7 +501,7 @@ export default function ProjectTemplate({ data }) {
 
                       <span>Connected account: {window.ethereum.selectedAddress.substring(0, 6)}...{window.ethereum.selectedAddress.substring(window.ethereum.selectedAddress.length - 4)}</span>
                       <br />
-                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: {isNaN(Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })) ? 0 : isNaN(Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 }) )} SHN <b style={{ color: "#f2df96" }}>{utils.getTier(shineBalance)}</b></Text>}
+                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: { Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 }) } SHN <b style={{ color: "#f2df96" }}>{utils.getTier(shineBalance)}</b></Text>}
 
                       <span>ETH Balance: {Number.parseFloat(balance).toLocaleString(undefined, { maximumFractionDigits: 2 })} ETH</span>
                       <br />
