@@ -321,8 +321,10 @@ export default function ProjectTemplate({ data }) {
                 <TBAText color="#3F3D56" fontWeight={800}>
                 Sale opens on August 19, 2021 3:30 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
                 </TBAText>
+    
               </CardHeaderTextWrapper>
-              <Text margin="11px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">
+              <Text color="white" style={{margin:'0 auto'}}><i>for Tier1 and Tier 2 sale is opening 30 mins after (4:00 PM UTC)</i></Text>
+              <Text theme={theme} margin="11px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">
                 Sale details:
               </Text>
 
@@ -663,42 +665,42 @@ export default function ProjectTemplate({ data }) {
             <DescriptionLinksContainer>
               <TextContainer>{project.shortDescription}</TextContainer>
               <LinkContainer>
-                <RoundedLinkButton theme={theme}>
+                <RoundedLinkButton theme={theme}  onClick={() => openLink(project.links.website)}>
                   <div>
                     <Icon src={`/icons/links_${theme}.png`}></Icon>
-                    <TextRoundedLinkButton onClick={() => openLink(project.links.website)}>
+                    <TextRoundedLinkButton>
                       WEBSITE
                     </TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
-                <RoundedLinkButton theme={theme}>
+                <RoundedLinkButton theme={theme} onClick={() => openLink(project.links.docs)}>
                   <div>
                     <Icon src={`/icons/docs_${theme}.png`}></Icon>
-                    <TextRoundedLinkButton onClick={() => openLink(project.links.docs)}>DOCS</TextRoundedLinkButton>
+                    <TextRoundedLinkButton >DOCS</TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
 
-                {false && (
-                  <RoundedLinkButton theme={theme}>
+            
+                  <RoundedLinkButton theme={theme} onClick={() => openLink(project.links.alpha)}>
                     <div>
                       <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
-                      <TextRoundedLinkButton>ALPHA VERSION</TextRoundedLinkButton>
+                      <TextRoundedLinkButton >ALPHA VERSION</TextRoundedLinkButton>
                     </div>
                   </RoundedLinkButton>
-                )}
+              
 
-                <RoundedLinkButton theme={theme}>
+                <RoundedLinkButton theme={theme} onClick={() => openLink(project.links.discord)}>
                   <div>
                     <Icon src={`/icons/discord_${theme}.png`}></Icon>
-                    <TextRoundedLinkButton onClick={() => openLink(project.links.discord)}>
+                    <TextRoundedLinkButton >
                       DISCORD
                     </TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
-                <RoundedLinkButton theme={theme}>
+                <RoundedLinkButton theme={theme} onClick={() => openLink(project.links.github)}>
                   <div>
                     <Icon src={`/icons/github_${theme}.png`}></Icon>
-                    <TextRoundedLinkButton onClick={() => openLink(project.links.github)}>GITHUB</TextRoundedLinkButton>
+                    <TextRoundedLinkButton >GITHUB</TextRoundedLinkButton>
                   </div>
                 </RoundedLinkButton>
               </LinkContainer>
@@ -719,15 +721,17 @@ export default function ProjectTemplate({ data }) {
             </TasksSection>
 
             <LitepaperCard theme={theme}>
-              <h3>Tokenomics</h3>
-
-              {false && (
-                <ConnectButton theme={theme}>
-                  <DisableColor href="/Litepaper.pdf" target="_blank">
+            {true && (
+                <ConnectButton theme={theme} onClick={() => openLink(project.links.lightpaper)}>
+                  <DisableColor >
                     GO TO LITEPAPER
                   </DisableColor>
                 </ConnectButton>
               )}
+              <br></br><br></br>
+              <h3>Tokenomics</h3>
+
+            
             </LitepaperCard>
           </Details>
 
@@ -762,6 +766,8 @@ export const query = graphql`
         docs
         github
         tasks
+        lightpaper
+        alpha
       }
       tokenomics {
         tokenDistributionImage {

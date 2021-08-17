@@ -59,7 +59,10 @@ export const UpcomingProjects = () => {
                 <TBAText style={{margin:'0 auto'}} color="#3F3D56" fontWeight={800}>
                 Sale opens on August 19, 2021 3:30 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
                 </TBAText>
+                
               </When>
+              <i>for Tier1 and Tier 2 sale is opening 30 mins after (4:00 PM UTC)</i>
+
             </BottomWrapper>
           </UpcomingWrapper>
           <UpcomingWrapper theme={theme} onClick={() => window.open('https://form.typeform.com/to/OElYo1Fe', '_blank', 'noopener')}>
