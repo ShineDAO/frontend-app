@@ -319,11 +319,11 @@ export default function ProjectTemplate({ data }) {
 
 
                 <TBAText color="#3F3D56" fontWeight={800}>
-                Sale opens on August 19, 2021 3:30 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
+                Sale opens on August 19, 2021 3:00 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
                 </TBAText>
     
               </CardHeaderTextWrapper>
-              <Text color="white" style={{margin:'0 auto'}}><i>for Tier1 and Tier 2 sale is opening 30 mins after (4:00 PM UTC)</i></Text>
+              <Text color="white" style={{margin:'0 auto'}}><i>for Tier1 and Tier 2 sale is opening 30 mins after (3:30 PM UTC)</i></Text>
               <Text theme={theme} margin="11px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">
                 Sale details:
               </Text>

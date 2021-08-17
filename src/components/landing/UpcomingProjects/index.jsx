@@ -57,11 +57,11 @@ export const UpcomingProjects = () => {
                   <circle cx="4" cy="4" r="4" fill="#3F3D56" />
                 </svg>}
                 <TBAText style={{margin:'0 auto'}} color="#3F3D56" fontWeight={800}>
-                Sale opens on August 19, 2021 3:30 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
+                Sale opens on August 19, 2021 3:00 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
                 </TBAText>
                 
               </When>
-              <i>for Tier1 and Tier 2 sale is opening 30 mins after (4:00 PM UTC)</i>
+              <i>for Tier1 and Tier 2 sale is opening 30 mins after (3:30 PM UTC)</i>
 
             </BottomWrapper>
           </UpcomingWrapper>
