@@ -71,8 +71,8 @@ export default function ProjectTemplate({ data }) {
   const project = data.projectsJson;
   console.log('project data ', project);
 
-  const shineTokenAddress = '0x83a30087015E0e766BbD9772743F38940C35094D'; //Local Ganache
-  //const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
+  //const shineTokenAddress = '0x83a30087015E0e766BbD9772743F38940C35094D'; //Local Ganache
+  const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
 
 
   const shineTokenAbi = ShineToken.abi;
@@ -180,129 +180,6 @@ export default function ProjectTemplate({ data }) {
         <Header />
 
 
-        {false && <Details theme={theme}>
-          <SaleCard theme={theme} isWalletEnabled={isWalletEnabled}>
-            Sale status
-            <StatusContainer>
-              &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-                <circle cx="4" cy="4" r="4" fill="#10b981"></circle>{/* red */}
-              </svg>
-              <span>&nbsp;<b>Open</b>&nbsp;</span>
-            </StatusContainer>
-            <br />
-            <UnderlinedTitle>Sale details:</UnderlinedTitle>
-
-            Total Swap amount: 7,000,000 SHN
-            <br />
-            Max participation: 1 ETH / address
-            <br />
-            Rate: ≈ $0.028 / 1 SHN
-            <br />
-            <br />
-            <ConnectButton theme={theme} onClick={() => utils.addToWatchlist(project.metamaskDetails)}>Add SHN to MetaMask</ConnectButton>
-            {false && <span>ETH raised so far {ethRaised} ETH </span>}
-            <br />
-          </SaleCard>
-
-          <ConnectWalletCard theme={theme} isWalletEnabled={isWalletEnabled}>
-            <div>
-              <h3>Token address</h3>
-
-              <Link href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
-                0x1C7ede23b1361acC098A1e357C9085D131b34a01
-              </Link>
-              <br></br><br></br>
-            </div>
-
-            {isWalletEnabled ? (
-              <div>
-                <span>Account: {window.ethereum.selectedAddress}</span>
-                <br />
-                <span>Balance: {balance} ETH</span>
-                <br />
-                {console.log("project balance", projectBalance)}
-                <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString()} {project.metamaskDetails.symbol}</span>
-                <br />
-                {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
-                <br />
-                {weiRaised && (
-                  <div>
-                    <span>Sale progress </span>
-                    <ProgressBar animated striped variant="success" now={saleProgress} label={`${saleProgress}%`} />
-                  </div>
-                )}
-                <br />
-                {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
-                {isWalletEnabled && !isTransactionBeingProcessed && (
-                  <div>
-                    <label htmlFor="eth_amount">Enter ETH amount:</label>
-                    <br />
-                    <EthInput
-                      autoComplete="off"
-                      type="number"
-                      id="eth_amount"
-                      value={ethAmountToSpend}
-                      onChange={(e) => utils.handleChangeOfEthAmountToSpend(e.target.value, setEthAmountToSpend)}
-                    />
-                    {ethAmountToSpend && (
-                      <span>
-                        <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
-                        <span>Estimated SHN to receive: {utils.estimateReceivedShn(ethAmountToSpend, rate).toLocaleString()}</span>
-                      </span>
-                    )}
-                    <br />
-                    <br />
-
-                    <ConnectButton
-                      theme={theme}
-                      onClick={() =>
-                        utils.buyShineTokens(
-                          ethAmountToSpend,
-                          setEthAmountToSpend,
-                          setShineBought,
-                          setShineBoughtAmount,
-                          setTransactionBeingProcessed,
-                          setMetamaskErrorCode,
-                          userAddress,
-                          saleAbi,
-                          saleContractAddress,
-                          gas
-
-                        )
-                      }
-                    >
-                      Buy Shine
-                    </ConnectButton>
-                    <br />
-                    <br />
-                  </div>
-                )}
-                {isShineBought && !isTransactionBeingProcessed && (
-                  <div>
-                    <h4>You just successfully bought {Number.parseFloat(shineBoughtAmount).toLocaleString()} Shine!</h4>
-                  </div>
-                )}
-
-
-                {isTransactionBeingProcessed && (
-                  <div>
-                    {" "}
-                    <h5>Processing </h5>
-                    <PulseLoader color={"yellow"} loading={true} size={15} margin={2} /> <br /> <br />
-                    <h5>
-                      <i>(Can take up to few minutes)</i>
-                    </h5>
-                  </div>
-                )}
-              </div>
-
-            ) : (
-              <ConnectButton onClick={() => utils.loadWeb3(setWalletStatus, setBalance)} theme={theme}>CONNECT WALLET</ConnectButton>
-
-            )}
-          </ConnectWalletCard>
-        </Details>}
-
 
         <ProjectsWrapper as={Container}>
           <Heading>
@@ -382,15 +259,15 @@ export default function ProjectTemplate({ data }) {
                     ≈ {project.frontendDetails.rate}
                   </Text>
                 </RightStatsCard>
-                <Card onClick={() => alert("Announced token is not launched yet")} borderRadius="4px" background="white" clickable width="100%" height="48px">
-                  <Text fontWeight={800}>ADD DOD TO METAMASK</Text>
+                <Card onClick={() => utils.addToWatchlist(project.metamaskDetails)} borderRadius="4px" background="white" clickable width="100%" height="48px">
+                  <Text fontWeight={800}>ADD {project.metamaskDetails.symbol} TO METAMASK</Text>
                 </Card>
               </CardBottomWrapper>
 
             </StatsCard>
             <TokenCard>
               <TitleText fontWeight={800} fontSize="24px" color="white">
-                Token Address    <Link href="https://etherscan.io/address/0x1C7ede23b1361acC098A1e357C9085D131b34a01" target="_blank">
+                Token Address    <Link href={`https://etherscan.io/address/${project.technicalDetails.tokenAddress}`} target="_blank">
 
                   {project.technicalDetails.tokenAddress.substring(0, 6)}...{project.technicalDetails.tokenAddress.substring(project.technicalDetails.tokenAddress.length - 4)}
                 </Link>
@@ -517,7 +394,7 @@ export default function ProjectTemplate({ data }) {
                       <br />
                       {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
                       <br />
-                      {weiRaised && (new Date().getTime() > new Date('August 19, 2021 20:00:00 GMT+03:00').getTime()) && (
+                      {weiRaised && (new Date().getTime() > new Date("Thu, 19 Aug 2021 15:00:00 GMT").getTime()) && (
                         <div>
                           <span>Sale progress </span>
                           <ProgressBar animated striped variant="success" now={saleProgress} label={`${saleProgress}%`} />
@@ -525,12 +402,12 @@ export default function ProjectTemplate({ data }) {
                       )}
                       <br />
 
-                      {isWalletEnabled && !(new Date().getTime() > new Date('August 19, 2021 20:00:00 GMT+03:00').getTime()) && <Text color="tomato" fontSize="17px" fontWeight={800}>
+                      {isWalletEnabled && !(new Date().getTime() > new Date("Thu, 19 Aug 2021 15:00:00 GMT").getTime()) && <Text color="tomato" fontSize="17px" fontWeight={800}>
                         Sale is not open yet!
                       </Text>}
 
                       {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
-                      {isWalletEnabled && !isTransactionBeingProcessed && (new Date().getTime() > new Date('August 19, 2021 20:00:00 GMT+03:00').getTime()) && (
+                      {isWalletEnabled && !isTransactionBeingProcessed && (new Date().getTime() > new Date("Thu, 19 Aug 2021 15:00:00 GMT").getTime()) && (
                         <div>
 
                           <br></br>
@@ -760,8 +637,8 @@ export default function ProjectTemplate({ data }) {
           )}
           {console.log("user address 0", userAddress)}
           {console.log("user address 1", deployerAddress)}
-          {console.log("user address 3", userAddress == deployerAddress)}
-          {userAddress == deployerAddress && isWalletEnabled && < ConnectButtonContainer >
+          {console.log("user address 3", userAddress == deployerAddress.toLowerCase())}
+          {userAddress == deployerAddress.toLowerCase() && isWalletEnabled && < ConnectButtonContainer >
             <ConnectButton onClick={() => utils.enableAccessForTier1AndTier2(userAddress, gas, saleAbi, saleContractAddress)} theme={theme}>
               Open Sale for Tier 1 and Tier 2
             </ConnectButton>

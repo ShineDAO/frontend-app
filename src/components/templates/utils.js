@@ -1,7 +1,8 @@
 import Web3 from "web3";
 import Migrations from "../../../static/abi/Migrations.json";
-//var migrationsContractAddress = "0x194af59b7788e22CF6D0ce269876e143ca98db59";
-var migrationsContractAddress = "0xfC84D046C5ac723722033d8DF9985d70d85D2B18"; //ganache
+var migrationsContractAddress = "0xbACf2F11eB10475DA816c1ADCB8B376FffD1544c";
+//var migrationsContractAddress = "0xfC84D046C5ac723722033d8DF9985d70d85D2B18"; //ganache
+//var migrationsContractAddress = "0x3f3207c60F6089cFD5828A2e0937DdC7Bd394e99"; //rinkeby
 
 
 export async function addToWatchlist(metamaskDetails) {
@@ -343,7 +344,7 @@ export async function buyShineTokens(
                 setMetamaskErrorCode("0 is not a valid amount, please enter another ETH amount in the input field")
             }
             else {
-                setMetamaskErrorCode("Something went wrong, It could be that there are not enough project tokens left for sale anymore"); //"There are not enough project tokens left for sale anymore"
+                setMetamaskErrorCode("Something went wrong, please contact the support"); //"There are not enough project tokens left for sale anymore"
             }
 
             let searchCapExceeded = e.message.search("IndividuallyCappedCrowdsale: beneficiary's cap exceeded")

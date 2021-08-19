@@ -507,6 +507,9 @@ export const ConnectButton = styled.button`
   @media (max-width: 960px) {
     width: 100%;
   }
+  @media (max-width: 490px) {
+    height: 100%;
+  }
 `;
 
 export const JoinCard = styled.div`

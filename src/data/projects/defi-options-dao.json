@@ -65,14 +65,14 @@
         "rate": "$0.015 / 1 DOD"
     },
     "metamaskDetails": {
-        "address": "0x3896cEB980df22487F008435E275333D4F3EF320",
+        "address": "0xfc7e3cFA47fbF90310ec203F46fEe1af2771548c",
         "symbol": "DOD",
         "decimals": 18,
-        "image": ""
+        "image": "https://i.ibb.co/5r32d5R/defi-options-dao-logo.png"
     },
     "technicalDetails": {
         "currentStatus": "seed",
-        "tokenAddress": "0x68111524498387e1fB225Cd0bB9C3f649fFC24Ba",
+        "tokenAddress": "0xfc7e3cFA47fbF90310ec203F46fEe1af2771548c",
         "tokenAbi": [
             {
                 "constant": true,
@@ -425,9 +425,9 @@
             }
         ],
         "seed": {
-            "saleAddress": "0xB3cA0Ae8cCeBBFF6AECa011f969cd7B2290e7f09",
-            "deployerAddress":"0x4715ed271f05a662edd31a527763664866c44787",
-            "tokensOffered": "10000000000000000000000000",
+            "saleAddress": "0xA5b84c8229115B82F39E2B85AB468CA432833c83",
+            "deployerAddress": "0x2C90Fa8C4F45b5A36a257E81DD49b2b7AD95F214",
+            "tokensOffered": "5000000000000000000000000",
             "rate": 203333,
             "gas": 1500000,
             "abi": [
