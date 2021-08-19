@@ -201,7 +201,7 @@ export default function ProjectTemplate({ data }) {
 
 
                 <TBAText color="#3F3D56" fontWeight={800}>
-                  Sale opens on August 19, 2021 3:00 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
+                  SOLD OUT {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
                 </TBAText>
 
               </CardHeaderTextWrapper>
