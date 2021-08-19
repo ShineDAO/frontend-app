@@ -48,7 +48,7 @@ export const StatsCard = styled.div`
     height: 1060px;
   }
   @media (max-width: 489px) {
-    height: 1050px;
+    height: 1150px;
   }
 `;
 
@@ -59,7 +59,6 @@ export const TokenCard = styled.div`
   display: flex;
   width: 540px;
   min-height:604px;
-  height: 100%;
   justify-content: flex-start;
   border-radius: 8px;
   

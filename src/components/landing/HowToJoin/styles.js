@@ -117,4 +117,7 @@ export const WrapperButton = styled.div`
   text-align: center;
   display: flex;
   justify-content: space-evenly;
+  @media (max-width: 490px) {
+    flex-direction: column;
+  }
 `;

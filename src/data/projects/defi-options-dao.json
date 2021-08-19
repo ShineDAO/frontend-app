@@ -66,13 +66,13 @@
     },
     "metamaskDetails": {
         "address": "0x3896cEB980df22487F008435E275333D4F3EF320",
-        "symbol": "DoD",
+        "symbol": "DOD",
         "decimals": 18,
         "image": ""
     },
     "technicalDetails": {
         "currentStatus": "seed",
-        "tokenAddress": "0x6897Cc7815592Eb1D1010312f7930439E7222F2d",
+        "tokenAddress": "0x68111524498387e1fB225Cd0bB9C3f649fFC24Ba",
         "tokenAbi": [
             {
                 "constant": true,
@@ -425,9 +425,10 @@
             }
         ],
         "seed": {
-            "saleAddress": "0xF4Dc132BDC196345f632bB047bca1C723E7bF253",
+            "saleAddress": "0xB3cA0Ae8cCeBBFF6AECa011f969cd7B2290e7f09",
+            "deployerAddress":"0x4715ed271f05a662edd31a527763664866c44787",
             "tokensOffered": "10000000000000000000000000",
-            "rate": 181818,
+            "rate": 203333,
             "gas": 1500000,
             "abi": [
                 {

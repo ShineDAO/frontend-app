@@ -71,8 +71,8 @@ export default function ProjectTemplate({ data }) {
   const project = data.projectsJson;
   console.log('project data ', project);
 
-  //const shineTokenAddress = '0x83a30087015E0e766BbD9772743F38940C35094D'; //Local Ganache
-  const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
+  const shineTokenAddress = '0x83a30087015E0e766BbD9772743F38940C35094D'; //Local Ganache
+  //const shineTokenAddress = '0x1C7ede23b1361acC098A1e357C9085D131b34a01';
 
 
   const shineTokenAbi = ShineToken.abi;
@@ -86,6 +86,7 @@ export default function ProjectTemplate({ data }) {
   const { tokensOffered } = project.technicalDetails[currentStatus];
   const { rate } = project.technicalDetails[currentStatus];
   const { gas } = project.technicalDetails[currentStatus];
+  const { deployerAddress } = project.technicalDetails[currentStatus]
   const maxWeiToRaise = tokensOffered / rate;
   const openLink = link => {
     window.open(link, '_blank', 'noopener');
@@ -100,6 +101,7 @@ export default function ProjectTemplate({ data }) {
   const [shineBoughtAmount, setShineBoughtAmount] = useState(false);
   const [isTransactionBeingProcessed, setTransactionBeingProcessed] = useState(false);
   const [ethAmountToSpend, setEthAmountToSpend] = useState('');
+  const [shnReference, setShnReference] = useState('');
   const [currentEthPrice, setCurrentEthPrice] = useState();
   const [ethRaised, setEthRaised] = useState();
   const [weiRaised, setWeiRaised] = useState();
@@ -110,8 +112,11 @@ export default function ProjectTemplate({ data }) {
   const [vestingPeriod, setVestingPeriod] = useState();
   const [vestedBalances, setVestedBalances] = useState();
   const [relativeCap, setRelativeCap] = useState();
+  const [newRelativeCap, setNewRelativeCap] = useState(); // used for updating the new relative cap through the UI
   const [contributions, setContributions] = useState();
   const [isSaleOpenForAll, setIsSaleOpenForAll] = useState();
+  const [currentMigration, setCurrentMigration] = useState();
+
 
 
 
@@ -128,7 +133,7 @@ export default function ProjectTemplate({ data }) {
       ? utils.getUserAddressProject(setUserAddress, setProjectBalance, tokenAbi, tokenContractAddress)
       : null;
 
-    isWalletEnabled ? utils.getCurrentMigrations() : null;
+    isWalletEnabled ? utils.getCurrentMigrations(setCurrentMigration) : null;
     isWalletEnabled ? utils.getVestingPeriod(saleAbi, saleContractAddress, setUserAddress, setVestingPeriod) : null;
     isWalletEnabled ? utils.getVestedBalances(saleAbi, saleContractAddress, setUserAddress, setVestedBalances) : null;
     isWalletEnabled ? utils.getRelativeCap(saleAbi, saleContractAddress, setUserAddress, setRelativeCap) : null;
@@ -319,11 +324,11 @@ export default function ProjectTemplate({ data }) {
 
 
                 <TBAText color="#3F3D56" fontWeight={800}>
-                Sale opens on August 19, 2021 3:00 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
+                  Sale opens on August 19, 2021 3:00 PM UTC {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
                 </TBAText>
-    
+
               </CardHeaderTextWrapper>
-              <Text color="white" style={{margin:'0 auto'}}><i>for Tier1 and Tier 2 sale is opening 30 mins after (3:30 PM UTC)</i></Text>
+              <Text color="white" style={{ margin: '0 auto' }}><i>for Tier1 and Tier 2 sale is opening 30 mins after (3:30 PM UTC)</i></Text>
               <Text theme={theme} margin="11px 0px 0px 0px" color="white" fontWeight={600} fontSize="22px">
                 Sale details:
               </Text>
@@ -486,7 +491,7 @@ export default function ProjectTemplate({ data }) {
               {isWalletEnabled && utils.getTier(shineBalance) === "No Tier" && <Text color="tomato" fontSize="17px" fontWeight={800}>
                 The amount of SHN that you have is below a minimum threshold to be placed in a tier. In order to participate in the sale, please consider getting some SHN on <b style={{ cursor: "pointer", "color": "#fada5e" }} onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", '_blank', 'noopener')}>Uniswap.</b>
               </Text>}
-              {isWalletEnabled && (utils.getTier(shineBalance) === "Tier 1" || utils.getTier(shineBalance) === "Tier 2") && !isSaleOpenForAll && <Text color="tomato" fontSize="17px" fontWeight={800}>Seed sale is not open at the moment for Tier1 and Tier2, please consider upgrading to the next tier <b style={{ cursor: "pointer", color: "#fada5e" }} onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", '_blank', 'noopener')}>here.</b></Text>
+              {isWalletEnabled && (utils.getTier(shineBalance) === "Tier 1" || utils.getTier(shineBalance) === "Tier 2") && !isSaleOpenForAll && <Text color="tomato" fontSize="17px" fontWeight={800}>Seed sale is not yet open for Tier 1 and Tier 2. To get priority access please consider upgrading your tier <b style={{ cursor: "pointer", color: "#fada5e" }} onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", '_blank', 'noopener')}>here.</b></Text>
               }
               <br></br>
               {isWalletEnabled && <Details theme={theme}>
@@ -503,23 +508,29 @@ export default function ProjectTemplate({ data }) {
 
                       <span>Connected account: {window.ethereum.selectedAddress.substring(0, 6)}...{window.ethereum.selectedAddress.substring(window.ethereum.selectedAddress.length - 4)}</span>
                       <br />
-                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: { Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 }) } SHN <b style={{ color: "#f2df96" }}>{utils.getTier(shineBalance)}</b></Text>}
+                      {isWalletEnabled && <Text color="#aeaeae"> SHN balance: {Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} SHN <b style={{ color: "#f2df96" }}>{utils.getTier(shineBalance)}</b></Text>}
 
                       <span>ETH Balance: {Number.parseFloat(balance).toLocaleString(undefined, { maximumFractionDigits: 2 })} ETH</span>
                       <br />
-                      <span>Project Token Balance: {isNaN(Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 }))? 0 : Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 }) } {project.metamaskDetails.symbol}</span>
+                      {console.log("project token balance", projectBalance)}
+                      <span>Project Token Balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {project.metamaskDetails.symbol}</span>
                       <br />
                       {false && <span>SeedSale Contract Shn Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} SHN</span>}
                       <br />
-                      {weiRaised && (
+                      {weiRaised && (new Date().getTime() > new Date('August 19, 2021 20:00:00 GMT+03:00').getTime()) && (
                         <div>
                           <span>Sale progress </span>
                           <ProgressBar animated striped variant="success" now={saleProgress} label={`${saleProgress}%`} />
                         </div>
                       )}
                       <br />
+
+                      {isWalletEnabled && !(new Date().getTime() > new Date('August 19, 2021 20:00:00 GMT+03:00').getTime()) && <Text color="tomato" fontSize="17px" fontWeight={800}>
+                        Sale is not open yet!
+                      </Text>}
+
                       {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
-                      {isWalletEnabled && !isTransactionBeingProcessed && (new Date().getTime() > new Date('August 19, 2021 20:30:00 GMT+03:00').getTime()) &&  (
+                      {isWalletEnabled && !isTransactionBeingProcessed && (new Date().getTime() > new Date('August 19, 2021 20:00:00 GMT+03:00').getTime()) && (
                         <div>
 
                           <br></br>
@@ -551,7 +562,7 @@ export default function ProjectTemplate({ data }) {
                           {// relativeCap && shineBalance needed below because it takes few hundred miliseconds to load the state variables
                             console.log("sshhnn", shineBalance)
                           }
-                          {relativeCap && shineBalance && (ethAmountToSpend > (utils.getMaximumContribution(relativeCap, shineBalance) - contributions)) && utils.getTier(shineBalance) !== "No Tier" && <Text color="tomato">The amount that you are trying to buy exceeds the maximum contribution cap for your current tier which is {utils.getTier(shineBalance)}. Your remaining maximum contribution is: <span onClick={(e) => setEthAmountToSpend(Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions).toLocaleString(undefined, { maximumFractionDigits: 5 }))} style={{ cursor: "pointer", color: "#007bff" }}>{Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions).toLocaleString(undefined, { maximumFractionDigits: 5 })} </span> ETH</Text>}
+                          {relativeCap && shineBalance && (ethAmountToSpend > (utils.getMaximumContribution(relativeCap, shineBalance) - contributions)) && utils.getTier(shineBalance) !== "No Tier" && <Text color="tomato">The amount that you are trying to buy exceeds the maximum contribution cap for your current tier which is {utils.getTier(shineBalance)}. Your remaining maximum contribution is: <span onClick={(e) => setEthAmountToSpend(Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001).toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 }))} style={{ cursor: "pointer", color: "#007bff" }}>{Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001).toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 })} </span> ETH</Text>}
 
                           <br />
                           <br />
@@ -665,7 +676,7 @@ export default function ProjectTemplate({ data }) {
             <DescriptionLinksContainer>
               <TextContainer>{project.shortDescription}</TextContainer>
               <LinkContainer>
-                <RoundedLinkButton theme={theme}  onClick={() => openLink(project.links.website)}>
+                <RoundedLinkButton theme={theme} onClick={() => openLink(project.links.website)}>
                   <div>
                     <Icon src={`/icons/links_${theme}.png`}></Icon>
                     <TextRoundedLinkButton>
@@ -680,14 +691,14 @@ export default function ProjectTemplate({ data }) {
                   </div>
                 </RoundedLinkButton>
 
-            
-                  <RoundedLinkButton theme={theme} onClick={() => openLink(project.links.alpha)}>
-                    <div>
-                      <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
-                      <TextRoundedLinkButton >ALPHA VERSION</TextRoundedLinkButton>
-                    </div>
-                  </RoundedLinkButton>
-              
+
+                <RoundedLinkButton theme={theme} onClick={() => openLink(project.links.alpha)}>
+                  <div>
+                    <Icon src={`/icons/alphaversion_${theme}.png`}></Icon>
+                    <TextRoundedLinkButton >ALPHA VERSION</TextRoundedLinkButton>
+                  </div>
+                </RoundedLinkButton>
+
 
                 <RoundedLinkButton theme={theme} onClick={() => openLink(project.links.discord)}>
                   <div>
@@ -721,7 +732,7 @@ export default function ProjectTemplate({ data }) {
             </TasksSection>
 
             <LitepaperCard theme={theme}>
-            {true && (
+              {true && (
                 <ConnectButton theme={theme} onClick={() => openLink(project.links.lightpaper)}>
                   <DisableColor >
                     GO TO LITEPAPER
@@ -731,7 +742,7 @@ export default function ProjectTemplate({ data }) {
               <br></br><br></br>
               <h3>Tokenomics</h3>
 
-            
+
             </LitepaperCard>
           </Details>
 
@@ -747,6 +758,45 @@ export default function ProjectTemplate({ data }) {
               />
             </a>
           )}
+          {console.log("user address 0", userAddress)}
+          {console.log("user address 1", deployerAddress)}
+          {console.log("user address 3", userAddress == deployerAddress)}
+          {userAddress == deployerAddress && isWalletEnabled && < ConnectButtonContainer >
+            <ConnectButton onClick={() => utils.enableAccessForTier1AndTier2(userAddress, gas, saleAbi, saleContractAddress)} theme={theme}>
+              Open Sale for Tier 1 and Tier 2
+            </ConnectButton>
+            <br></br>
+            <EthInput
+              autoComplete="off"
+              type="string"
+              id="shn_reference"
+              value={shnReference}
+              onChange={(e) => utils.handleChangeOfShnReference(e.target.value, setShnReference)}
+            />
+            <ConnectButton onClick={() => utils.setShineTokenAddress(userAddress, shnReference, gas, saleAbi, saleContractAddress)} theme={theme}>
+              Set SHN Reference
+            </ConnectButton>
+
+            <br></br>
+            <EthInput
+              autoComplete="off"
+              type="number"
+              id="new_relative_cap"
+              value={newRelativeCap}
+              onChange={(e) => utils.handleChangeOfNewRelativeCap(e.target.value, setNewRelativeCap)}
+            />
+            <ConnectButton onClick={() => utils.setNewRelativeCap(userAddress, newRelativeCap, gas, saleAbi, saleContractAddress)} theme={theme}>
+              Set Relative Cap
+            </ConnectButton>
+            <br></br>
+            <label htmlFor="new_relative_cap">  Current Cap: {relativeCap}</label>
+            <br></br>
+            <label htmlFor="new_relative_cap">  Current  migration: {currentMigration}</label>
+
+
+
+          </ConnectButtonContainer>}
+
         </ProjectsWrapper>
       </Wrapper>
     </Layout >
@@ -855,6 +905,7 @@ export const query = graphql`
           gas
           rate
           saleAddress
+          deployerAddress
           tokensOffered
           abi {
             constant

@@ -1,6 +1,7 @@
 import Web3 from "web3";
 import Migrations from "../../../static/abi/Migrations.json";
-var migrationsContractAddress = "0x194af59b7788e22CF6D0ce269876e143ca98db59";
+//var migrationsContractAddress = "0x194af59b7788e22CF6D0ce269876e143ca98db59";
+var migrationsContractAddress = "0xfC84D046C5ac723722033d8DF9985d70d85D2B18"; //ganache
 
 
 export async function addToWatchlist(metamaskDetails) {
@@ -21,11 +22,12 @@ export async function addToWatchlist(metamaskDetails) {
 
     })
 }
-export async function getCurrentMigrations() {
+export async function getCurrentMigrations(setCurrentMigration) {
     let abiArray = Migrations;
     let abi = abiArray.abi;
     let migrationsInstance = new window.web3.eth.Contract(abi, migrationsContractAddress);
     let currentMigration = await migrationsInstance.methods.last_completed_migration().call();
+    setCurrentMigration(currentMigration)
     console.log("current migrations is ", currentMigration);
 }
 
@@ -37,6 +39,7 @@ export async function getUserAddressProject(setUserAddress, setProjectBalance, t
 
 export async function getUserAddress(setUserAddress, setShineBalance, tokenAbi, tokenContractAddress) {
     let userAddress = await window.ethereum.selectedAddress;
+    console.log("user address ", userAddress)
     setUserAddress(userAddress);
     await getShineBalance(setShineBalance, userAddress, tokenAbi, tokenContractAddress);
 }
@@ -80,7 +83,7 @@ export async function getShineBalance(setShineBalance, userAddress, tokenAbi, to
     var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
 
     var shineBalance = await tokenInst.methods.balanceOf(userAddress).call();
-    
+
 
     var shineBalanceFromWei = window.web3.utils.fromWei(shineBalance, "ether");
     setShineBalance(shineBalanceFromWei);
@@ -174,7 +177,7 @@ export function getTier(shineBalance) {
 export function getMaximumContribution(relativeCap, shineBalance) {
     console.log("rc, bal", relativeCap, shineBalance)
     let multiplier;
-    if(shineBalance < 1500){
+    if (shineBalance < 1500) {
         multiplier = 0
     }
     else if (shineBalance >= 15000 && shineBalance < 50000) {
@@ -212,7 +215,7 @@ export function timeConverter(UNIX_timestamp) {
     return time;
 }
 
-export async function withdrawTokens(saleAbi, saleContractAddress, userAddress,gas, setTransactionBeingProcessed, setMetamaskErrorCode,setIsTokenWithdrawn,setShineBought) {
+export async function withdrawTokens(saleAbi, saleContractAddress, userAddress, gas, setTransactionBeingProcessed, setMetamaskErrorCode, setIsTokenWithdrawn, setShineBought) {
     let abi = saleAbi;
     let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
 
@@ -232,7 +235,7 @@ export async function withdrawTokens(saleAbi, saleContractAddress, userAddress,g
         });
         setIsTokenWithdrawn(true)
 
-    } catch (e) { 
+    } catch (e) {
         console.log("err ", e);
         setIsTokenWithdrawn(false);
         setShineBought(false)
@@ -241,6 +244,27 @@ export async function withdrawTokens(saleAbi, saleContractAddress, userAddress,g
         }
     }
     setTransactionBeingProcessed(false);
+}
+export async function enableAccessForTier1AndTier2(userAddress, gas, saleAbi, saleContractAddress) {
+    let abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    try {
+        let estimatedGas = await simpleCrowdsaleInstance.methods.allowAllTierAccess(true).estimateGas({
+            from: userAddress,
+            gas: gas,
+        })
+
+        const receipt = await simpleCrowdsaleInstance.methods.allowAllTierAccess(true).send({
+            from: userAddress,
+            gas: estimatedGas,
+        });
+        console.log("receipt", receipt);
+    }
+    catch (e) {
+        console.log("err ", e);
+        console.log("Transaction rejected", e.code);
+    }
 }
 
 export async function buyShineTokens(
@@ -307,19 +331,19 @@ export async function buyShineTokens(
             } else if (e.message.search("Relative cap exceeded") >= 0) {
                 setMetamaskErrorCode("Relative cap exceeded");
             } else if (e.message.search("Currently you are below Tier 1 level, but you need to be at least Tier3 in order to participate in the seed sale") >= 0) {
-                setMetamaskErrorCode("Currently you are below Tier 1 level, but you need to be at least Tier3 in order to participate in the seed sale")
+                setMetamaskErrorCode("Currently you are below Tier 1 level, but you need to be at least Tier3 in order to have a priority access. For Tier 1 and Tier 2, sale opens at 3:30 pm UTC.")
             } else if (e.message.search("You are Tier 1, but you need to be Tier3 in order to participate in the seed sale") >= 0) {
-                setMetamaskErrorCode("You are Tier 1, but you need to be Tier3 in order to participate in the seed sale")
+                setMetamaskErrorCode("You are Tier 1, but you need to be Tier3 in order to participate in the seed sale or you can wait until 3:30 pm UTC its opened for Tier 1 and Tier 2")
             } else if (e.message.search("You are Tier 2, but You need to be Tier3 in order to participate in the seed sale") >= 0) {
-                setMetamaskErrorCode("You are Tier 2, but You need to be Tier3 in order to participate in the seed sale")
-            }else if(e.message.search("The amount that is being bought is too small to split it partially for vesting")>=0){
+                setMetamaskErrorCode("You are Tier 2, but You need to be Tier3 in order to participate in the seed sale or you can wait until 3:30 pm UTC its opened for Tier 1 and Tier 2")
+            } else if (e.message.search("The amount that is being bought is too small to split it partially for vesting") >= 0) {
                 setMetamaskErrorCode("The amount that is being bought is too small to split it partially for vesting")
             }
-            else if(e.message.search("weiAmount is 0")>=0){
+            else if (e.message.search("weiAmount is 0") >= 0) {
                 setMetamaskErrorCode("0 is not a valid amount, please enter another ETH amount in the input field")
             }
             else {
-                setMetamaskErrorCode("There are not enough project tokens left for sale anymore"); //"There are not enough project tokens left for sale anymore"
+                setMetamaskErrorCode("Something went wrong, It could be that there are not enough project tokens left for sale anymore"); //"There are not enough project tokens left for sale anymore"
             }
 
             let searchCapExceeded = e.message.search("IndividuallyCappedCrowdsale: beneficiary's cap exceeded")
@@ -355,6 +379,57 @@ export function handleChangeOfEthAmountToSpend(amount, setEthAmountToSpend) {
     setEthAmountToSpend(amount);
 }
 
+export function handleChangeOfShnReference(shnReference, setShnReference) {
+    setShnReference(shnReference);
+}
+export function handleChangeOfNewRelativeCap(newRelativeCap,setNewRelativeCap){
+    setNewRelativeCap(newRelativeCap)
+
+}
+export async function setNewRelativeCap(userAddress,newRelativeCap,gas,saleAbi,saleContractAddress){
+    let abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    try {
+        let estimatedGas = await simpleCrowdsaleInstance.methods.setRelativeCap(newRelativeCap).estimateGas({
+            from: userAddress,
+            gas: gas,
+        })
+
+        const receipt = await simpleCrowdsaleInstance.methods.setRelativeCap(newRelativeCap).send({
+            from: userAddress,
+            gas: estimatedGas,
+        });
+        console.log("receipt", receipt);
+    }
+    catch (e) {
+        console.log("err ", e);
+        console.log("Transaction rejected", e.code);
+    }
+}
+
+export async function setShineTokenAddress(userAddress,shnReference, gas, saleAbi, saleContractAddress) {
+    let abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    try {
+        let estimatedGas = await simpleCrowdsaleInstance.methods.setShineTokenAddress(shnReference).estimateGas({
+            from: userAddress,
+            gas: gas,
+        })
+
+        const receipt = await simpleCrowdsaleInstance.methods.setShineTokenAddress(shnReference).send({
+            from: userAddress,
+            gas: estimatedGas,
+        });
+        console.log("receipt", receipt);
+    }
+    catch (e) {
+        console.log("err ", e);
+        console.log("Transaction rejected", e.code);
+    }
+
+}
 export function toPlainString(num) {
     console.log("plain straing", num.toLocaleString("fullwide", { useGrouping: false }))
     return num.toLocaleString("fullwide", { useGrouping: false });
