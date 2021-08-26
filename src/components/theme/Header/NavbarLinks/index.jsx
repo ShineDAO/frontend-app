@@ -10,6 +10,7 @@ const NavbarLinks = ({ desktop }) => {
   return (
     <Wrapper desktop={desktop} theme={theme}>
       <a href="http://docs.shinedao.finance" target="_blank">DOCS</a>
+      <a href="http://forum.shinedao.finance" target="_blank">FORUM</a>
       {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
       <JoinButton
         onClick={() => window.location.href = '#about'}
