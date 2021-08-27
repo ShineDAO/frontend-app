@@ -12,7 +12,7 @@ export const Footer = () => {
     {/* <QuartCircle theme={theme} /> */}
     <FooterWrapper>
       <Details>
-        <h3>Shine DAO</h3>
+        <h3>ShineDAO</h3>
         <span>
           © All rights are reserved | {new Date().getFullYear()} | Made with&nbsp;
           <span aria-label="love" role="img">

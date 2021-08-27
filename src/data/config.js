@@ -1,13 +1,13 @@
 module.exports = {
-  defaultTitle: 'Shine DAO',
+  defaultTitle: 'ShineDAO',
   logo: '',
   author: 'ShineSquad',
   url: 'https://shinedao.finance',
-  legalName: 'Shine DAO',
+  legalName: 'ShineDAO',
   defaultDescription: 'SHINE | Community Driven DeFi Incubator',
   socialLinks: {
     twitter: 'https://twitter.com/ShineDAO_',
-    github: 'https://github.com/shine-squad/ShineToken',
+    github: 'https://github.com/ShineDAO',
     linkedin: '',
     instagram: '',
     youtube: '',
