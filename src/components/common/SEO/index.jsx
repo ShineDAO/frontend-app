@@ -66,6 +66,7 @@ export const SEO = ({ title = defaultTitle, description = defaultDescription, lo
       <meta name="twitter:site" content={social.twitter} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={Thumbnail} />
       <meta name="twitter:image:src" content={Thumbnail} />
       <script type="application/ld+json">{structuredDataOrganization}</script>
       <link rel="publisher" href={socialLinks.google} />
