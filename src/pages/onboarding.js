@@ -153,7 +153,6 @@ export default ({ location }) => {
         )}
         {isWalletEnabled && (
           <div>
-            
             <ProgressBar style={{ width: "300px" }} animated striped variant="success" now={(currentPage / 4) * 100} label={` Step ${currentPage}`} />
           </div>
         )}
@@ -234,14 +233,14 @@ function renderPage(
               <div> "Welcome back, please connect your wallet again" </div>
             ) : (
               <div>
-                <h2>Become a contributor</h2>
+                <h2 style={{ textAlign: "left" }}>Become a contributor</h2>
                 <br></br>
 
                 <p style={{ width: 900 }}>
                   In this onboarding process we are going to set up your contributor profile, so that you can start earning SHN automatically. We will introduce you to our tool
                   stack and share recourses that will allow you to understand how you can <b>get involved regardless of your background, skill level, or availability.</b>
                   <br></br>
-                  <br></br> If you’re successful in completing all the steps, you’ll earn your first 500 SHN 🌟
+                  <br></br> If you’re successful in completing all of the steps, you’ll earn your first 500 SHN 🌟
                 </p>
               </div>
             )}{" "}
