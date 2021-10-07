@@ -12,7 +12,7 @@ export const Header = () => {
   const isMobile = useIsMobile();
 
   return (
-    <Wrapper sidebar={sidebar} theme={theme} isMobile={isMobile}>
+    <Wrapper  sidebar={sidebar} theme={theme} isMobile={isMobile}>
       <Overlay sidebar={sidebar} onClick={() => toggle(!sidebar)} />
       <Navbar />
       <Hamburger sidebar={sidebar} toggle={toggle} />

@@ -4,11 +4,11 @@ import { Container } from 'components/common';
 import { Wrapper, FooterWrapper, Links, Details, QuartCircle } from './styles';
 import { social } from './social.js';
 
-export const Footer = () => {
+export const Footer = ({position,bottom, width}) => {
   const { theme } = useContext(ThemeContext);
 
     return (
-  <Wrapper>
+  <Wrapper position={position} bottom={bottom} width={width} >
     {/* <QuartCircle theme={theme} /> */}
     <FooterWrapper>
       <Details>
@@ -18,7 +18,7 @@ export const Footer = () => {
           <span aria-label="love" role="img">
             💖
           </span>
-          &nbsp;across the World
+          &nbsp;
         </span>
       </Details>
       <Links>

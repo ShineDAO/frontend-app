@@ -1,10 +1,13 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  position: relative;
+  position: ${({ position }) => (position === "absolute" ? "absolute" : "relative")};
   margin-bottom: 50px;
   padding-left: 32px;
   margin-top: 120px;
+
+  bottom: ${({ bottom }) => bottom};
+  width:${({ width }) => width};
 
   @media (max-width: 960px) {
     margin: 0;
@@ -72,8 +75,8 @@ export const Details = styled.div`
   }
   a,
   span {
-   font-color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
-   font-size: 14px;
+    font-color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
+    font-size: 14px;
   }
 
   @media (max-width: 680px) {

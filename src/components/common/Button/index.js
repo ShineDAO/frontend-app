@@ -12,11 +12,13 @@ export const Button = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: #fff;
-  background: #3f3d56;
+  background: ${({ background }) => background || "#3f3d56"};
+  visibility: ${({ isHidden }) => (isHidden == true ? "hidden" : "visible")};
+
   font-weight: bold;
   font-size: 16px;
   height: 48px;
-  width: ${({ width }) => width || '160px'};
+  width: ${({ width }) => width || "160px"};
 
   &:focus {
     outline: none;
@@ -27,8 +29,8 @@ export const Button = styled.button`
   }
 
   &:hover {
-    background: #fada5e;
-    color: #3f3d56;
+    background: ${({ backgroundHover }) => backgroundHover || "#fada5e"};
+    color: ${({ colorOnHover }) => colorOnHover || "#3f3d56"};
     text-decoration: none;
   }
 
@@ -50,7 +52,7 @@ export const Button = styled.button`
 export const JoinButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  border: 1px solid ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
   padding: 0.6rem 0;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -59,9 +61,9 @@ export const JoinButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  color: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
   background: transparent;
-  width: ${({ narrow }) => narrow ? '160px' : '240px'};
+  width: ${({ narrow }) => (narrow ? "160px" : "240px")};
   height: 48px;
   font-weight: bold;
   font-size: 16px;
@@ -74,8 +76,8 @@ export const JoinButton = styled.button`
     background: gray;
   }
   &:hover {
-    background: #FADA5E;
-    border: 1px solid #FADA5E;
+    background: #fada5e;
+    border: 1px solid #fada5e;
   }
   ${({ secondary }) =>
     secondary &&
@@ -84,8 +86,8 @@ export const JoinButton = styled.button`
 	`}
   @media (max-width: 960px) {
     margin-bottom: 20px;
-    border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
-    color: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+    border: 1px solid ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
+    color: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
   }
 `;
 
@@ -101,8 +103,8 @@ export const IntroButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
-  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  color: ${({ theme }) => (theme === "light" ? "#fff" : "#3F3D56")};
+  background: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
   width: 240px;
   height: 48px;
   font-weight: bold;
@@ -116,9 +118,9 @@ export const IntroButton = styled.button`
     background: gray;
   }
   &:hover {
-    background: #FADA5E;
-    color: #3F3D56; 
-    border: 1px solid #FADA5E;
+    background: #fada5e;
+    color: #3f3d56;
+    border: 1px solid #fada5e;
   }
 
   ${({ secondary }) =>
@@ -140,8 +142,8 @@ export const LearnButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
-  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  color: ${({ theme }) => (theme === "light" ? "#fff" : "#3F3D56")};
+  background: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
   width: 400px;
   height: 48px;
   font-weight: bold;
@@ -155,9 +157,9 @@ export const LearnButton = styled.button`
     background: gray;
   }
   &:hover {
-    background: #FADA5E;
-    color: #3F3D56; 
-    border: 1px solid #FADA5E;
+    background: #fada5e;
+    color: #3f3d56;
+    border: 1px solid #fada5e;
   }
   @media (max-width: 600px) {
     width: 100%;
