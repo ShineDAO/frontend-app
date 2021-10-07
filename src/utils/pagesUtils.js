@@ -33,7 +33,7 @@ export function decodeUrlFragment(hash, setAccessCode, setUsername, setAccId, se
 export function claimReward(accessCode, setContributorDetected, currentAccount, username, accId, avatarId, setContributorError, setRegistrationSuccess,setLoading, setTxnHash) {
   setLoading(true);
   axios
-    .get(`${process.env.SERVER_ADDRESS}/claimReward?authorization=${accessCode}&address=${currentAccount}&username=${username}&discordId=${accId}&avatarId=${avatarId}`)
+    .get(`${process.env.GATSBY_SERVER_ADDRESS}/claimReward?authorization=${accessCode}&address=${currentAccount}&username=${username}&discordId=${accId}&avatarId=${avatarId}`)
     .then(function(response) {
       if (response.data.contributorDetected == true) {
         setContributorDetected(true);
@@ -116,7 +116,7 @@ export async function switchChain() {
 
 export function verifyServer(accessCode, setTokenReward, setServerVerified) {
   axios
-    .get(`${process.env.SERVER_ADDRESS}/verifyServer?authorization=${accessCode}`)
+    .get(`${process.env.GATSBY_SERVER_ADDRESS}/verifyServer?authorization=${accessCode}`)
     .then(function(response) {
       console.log(response.data);
       setTokenReward(baseTokenReward * 2);
@@ -134,7 +134,7 @@ export function verifyServer(accessCode, setTokenReward, setServerVerified) {
 
 export function verifyMessage(accessCode, setTokenReward, setMessageVerified) {
   axios
-    .get(`${process.env.SERVER_ADDRESS}/verifyMessage?authorization=${accessCode}`)
+    .get(`${process.env.GATSBY_SERVER_ADDRESS}/verifyMessage?authorization=${accessCode}`)
     .then(function(response) {
       console.log(response.data);
       setTokenReward(baseTokenReward * 3);
@@ -226,7 +226,7 @@ function initiateAccount(accounts, currentAccount, setCurrentAccount) {
 // No need to export as the function is only used in this file
 function verifyAcc(accessCode, setUsername, setAccId, setAvatarId, setTokenReward) {
   axios
-    .get(`${process.env.SERVER_ADDRESS}/verifyAcc?authorization=${accessCode}`)
+    .get(`${process.env.GATSBY_SERVER_ADDRESS}/verifyAcc?authorization=${accessCode}`)
     .then(function(response) {
       console.log(response.data);
       setUsername(response.data.username);
