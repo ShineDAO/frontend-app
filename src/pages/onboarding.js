@@ -9,8 +9,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 
 const introductionsChannel = "https://discord.com/channels/785582893572948060/868084312455651348";
 const inviteLink = "https://discord.com/invite/QkhbP7bZrj";
-const authorizeAccountLink = `https://discord.com/api/oauth2/authorize?response_type=token&client_id=893462659737985114&state=15773059ghq9183habn&scope=identify&redirect_uri=${process.env.REDIRECT_URI}`;
-
+const authorizeAccountLink = `https://discord.com/api/oauth2/authorize?response_type=token&client_id=893462659737985114&state=15773059ghq9183habn&scope=identify&redirect_uri=${process.env.GATSBY_REDIRECT_URI}`;
 export default ({ location }) => {
   const [isWalletEnabled, setWalletStatus] = useState();
   const [contributorDetected, setContributorDetected] = useState();

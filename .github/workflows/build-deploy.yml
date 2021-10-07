@@ -30,8 +30,8 @@ jobs:
           GATSBY_PORTFOLIO_GITHUB_TOKEN: ${{ secrets.GATSBY_PORTFOLIO_GITHUB_TOKEN }}
           GATSBY_PORTFOLIO_FORMIK_ENDPOINT: ${{ secrets.GATSBY_PORTFOLIO_FORMIK_ENDPOINT }}
           GATSBY_PORTFOLIO_RECAPTCHA_KEY: ${{ secrets.GATSBY_PORTFOLIO_RECAPTCHA_KEY }}
-          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-          REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
+          GATSBY_SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+          GATSBY_REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
 
       - name: Create CNAME record
         run: echo 'shinedao.finance' > public/CNAME
