@@ -8,6 +8,8 @@ export const Wrapper = styled.div`
 
   bottom: ${({ bottom }) => bottom};
   width:${({ width }) => width};
+  height:${({ height }) => height};
+
 
   @media (max-width: 960px) {
     margin: 0;

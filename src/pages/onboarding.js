@@ -53,10 +53,10 @@ export default ({ location }) => {
   }, [chainId]);
 
   return (
-    <Layout position="absolute" bottom="4px" width="100%">
+    <Layout position="absolute" bottom="4px" width="100%" height="60px">
       <SEO />
       <Header />
-      <div style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
+      <div style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
         {false && (
           <h1>
             Contributor Onboarding/ Chain id : {chainId} and name : {chainName}
@@ -306,12 +306,9 @@ function renderPage(
                 <br></br>
                 <b>- Experience:</b> (Content / Marketing / Core Contracts / Frontend/ Partnerships / UX ,...)
                 <br></br>
-                <b>- Where do you see yourself contributing: </b> (Product and Tech Guild / Growth Guild / Hunting Guild / Infrastructure Guild )
-                <br></br>
-                <b>- Specific Skills:</b> (Copywriting, Podcasting, Java, JS, HTML, CSS, Python, Solidity, ... )
-                <br></br>
-                <b>- Bandwidth:</b> (~10 hours / week). We'd also suggest joining our weekly community call every
-                Monday 5:30 pm UTC.
+                <b>- Where do you see yourself contributing: </b> (Product and Tech Guild / Growth Guild / Hunting Guild / Infrastructure Guild )<br></br>
+                <b>- Specific Skills:</b> (Copywriting, Podcasting, Java, JS, HTML, CSS, Python, Solidity, ... )<br></br>
+                <b>- Bandwidth:</b> (~10 hours / week). We'd also suggest joining our weekly community call every Monday 5:30 pm UTC.
               </div>
               <br></br> <br></br>
               <div style={{ textAlign: "center" }}>

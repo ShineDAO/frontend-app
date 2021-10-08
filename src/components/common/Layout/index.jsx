@@ -5,14 +5,16 @@ import { Global } from "./styles";
 import "./fonts.css";
 import "./hide-overflow.css";
 
-export const Layout = ({ children,position,bottom,width }) => {
+export const Layout = ({ children, position, bottom, width, height }) => {
   const { theme } = useContext(ThemeContext);
-console.log("poss", position)
+  console.log("poss", position);
   return (
     <>
       <Global theme={theme} />
-      {children}
-      <Footer position={position} bottom={bottom} width={width} />
+      <div style={{ position: "relative", minHeight: "100vh" }}>
+        {children}
+        <Footer position={position} bottom={bottom} width={width} height={height} />
+      </div>
     </>
   );
 };

@@ -4,11 +4,11 @@ import { Container } from 'components/common';
 import { Wrapper, FooterWrapper, Links, Details, QuartCircle } from './styles';
 import { social } from './social.js';
 
-export const Footer = ({position,bottom, width}) => {
+export const Footer = ({position,bottom, width, height}) => {
   const { theme } = useContext(ThemeContext);
 
     return (
-  <Wrapper position={position} bottom={bottom} width={width} >
+  <Wrapper position={position} bottom={bottom} width={width} height={height} >
     {/* <QuartCircle theme={theme} /> */}
     <FooterWrapper>
       <Details>
