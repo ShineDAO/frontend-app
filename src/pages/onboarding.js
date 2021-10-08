@@ -194,7 +194,11 @@ function renderPage(
         {console.log("ccc ", chainId)}
         {isWalletEnabled && chainId != "0x89" && (
           <div>
-            Chain Unsupported
+            <p style={{ textAlign: "center" }}>
+              {" "}
+              Chain Unsupported!<br> </br>{" "}
+              We use Polygon/Matic chain as its much chepar to use compared to the Ethereum mainnet.
+            </p>
             <br></br>
             <Button onClick={() => pagesUtils.switchChain()}>Switch to Polygon</Button>
           </div>
