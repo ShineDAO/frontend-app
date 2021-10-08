@@ -70,7 +70,7 @@ export const UpcomingProjects = () => {
               Are you building a project?
             </h2>
             <GetAccessText>
-              <Text fontSize="20px" color={theme === 'light' ? '#3f3d56' : 'white'}>Get access to active and incentivised community of contributors from day 1 to polish your project.</Text>
+              <Text fontSize="20px" color={theme === 'light' ? '#3f3d56' : 'white'}>Get access to active and incentivised community of contributors to polish your project.</Text>
             </GetAccessText>
             <CtaWrapper>
               <JoinButton theme={theme}>

@@ -4,7 +4,7 @@ module.exports = {
   author: 'ShineSquad',
   url: 'https://shinedao.finance',
   legalName: 'ShineDAO',
-  defaultDescription: 'SHINE | Community Driven DeFi Incubator',
+  defaultDescription: 'SHINE | Community Driven Web3 Incubator',
   socialLinks: {
     twitter: 'https://twitter.com/ShineDAO_',
     github: 'https://github.com/ShineDAO',

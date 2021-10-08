@@ -24,7 +24,7 @@ export const WhoAreWe = () => {
         <Details theme={theme}>
           <h1>Are you building a project?</h1>
           <p>
-            Get access to an active and incentivized community of contributors from day 1 to polish your project.
+            Get access to an active and incentivized community of contributors to polish your project.
           </p>
           <LearnButton onClick={onScrollToContact} theme={theme}>
             LEARN MORE

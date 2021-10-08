@@ -1,7 +1,7 @@
 {
   "name": "shine-public-frontend",
   "private": true,
-  "description": "A website for the decentralized Shine token incubator",
+  "description": "ShineDAO makes it easy for contributors to get involved with new promising Web3 projects, and get rewarded with their tokens",
   "version": "0.1.2",
   "author": "Shine Squad <shine-token@protonmail.com.com>",
   "dependencies": {

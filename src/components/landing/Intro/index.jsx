@@ -25,16 +25,18 @@ export const Intro = () => {
         {isMobile ? (
           <React.Fragment>
             <Details theme={theme}>
-              <h1>Community Driven DeFi Incubator</h1>
-              <h4>ShineDAO makes it easy to invest in seed-sales and IDOs of new projects, provide support with completing missions and get rewarded with their tokens</h4>
+              <h1>Decentralised Web3 Incubator</h1>
+              <h4>ShineDAO makes it easy for contributors to get involved with new promising Web3 projects, and get rewarded with their tokens.</h4>
               <ButtonWrapper>
                 <JoinButton onClick={onJoinButtonClick} theme={theme}>
-                  BECOME CONTRIBUTOR
+                  BECOME A CONTRIBUTOR
                 </JoinButton>
 
-                <LearnButton onClick={onLearnButtonClick} theme={theme}>
-                  LEARN MORE
-                </LearnButton>
+                {false && (
+                  <LearnButton onClick={onLearnButtonClick} theme={theme}>
+                    LEARN MORE
+                  </LearnButton>
+                )}
               </ButtonWrapper>
               <LandingIllustration src={theme === "light" ? shineAnimatedRocket : shineAnimatedRocket} alt="Shine is meant to interconnect the blockchain community" />
             </Details>
@@ -42,20 +44,18 @@ export const Intro = () => {
         ) : (
           <React.Fragment>
             <Details theme={theme}>
-              <h1>Community Driven DeFi Incubator</h1>
-              <h4>
-                ShineDAO makes it easy to invest in seed-sales and IDOs of new projects,
-                <br />
-                provide support with completing missions and get rewarded with their tokens
-              </h4>
+              <h1>Decentralised Web3 Incubator</h1>
+              <h4>ShineDAO makes it easy for contributors to get involved with new promising Web3 projects, and get rewarded with their tokens.</h4>
               <ButtonWrapper>
                 <JoinButton onClick={onJoinButtonClick} theme={theme}>
-                  BECOME CONTRIBUTOR
+                  BECOME A CONTRIBUTOR
                 </JoinButton>
 
-                <IntroButton onClick={onLearnButtonClick} theme={theme}>
-                  LEARN MORE
-                </IntroButton>
+                {false && (
+                  <IntroButton onClick={onLearnButtonClick} theme={theme}>
+                    LEARN MORE
+                  </IntroButton>
+                )}
               </ButtonWrapper>
             </Details>
             <LandingIllustration src={theme === "light" ? shineAnimatedRocket : shineAnimatedRocket} alt="Shine is meant to interconnect the blockchain community" />
