@@ -112,13 +112,13 @@ export default ({ location }) => {
         {false && isWalletEnabled && username && <p>Current page {currentPage}</p>}
         <div style={{ display: "flex" }}>
           {pagesUtils.isBackButtonVisible(currentPage, isWalletEnabled, username, serverVerified, chainId == "0x89") && (
-            <Button style={{ marginRight: 15 }} background="#dc3545" backgroundHover="#f50f25" colorOnHover="#fff" onClick={() => setCurrentPage(currentPage - 1)}>
-              Back{" "}
+            <Button style={{ marginRight: 15 }} onClick={() => setCurrentPage(currentPage - 1)}>
+              BACK{" "}
             </Button>
           )}
           {pagesUtils.isNextButtonVisible(currentPage, isWalletEnabled, username, serverVerified, chainId == "0x89") && (
-            <Button style={{ marginLeft: 15 }} background="#17a2b8" backgroundHover="#04d4f5" colorOnHover="#fff" onClick={() => setCurrentPage(currentPage + 1)}>
-              Next{" "}
+            <Button style={{ marginLeft: 15 }} onClick={() => setCurrentPage(currentPage + 1)}>
+              NEXT{" "}
             </Button>
           )}
         </div>
@@ -220,7 +220,7 @@ function renderPage(
               <br></br>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 {" "}
-                <Button onClick={() => window.open(authorizeAccountLink, "_self")}>Verify Discord</Button>
+                <Button onClick={() => window.open(authorizeAccountLink, "_self")}>VERIFY DISCORD</Button>
               </div>
             </div>
           )}
@@ -232,7 +232,7 @@ function renderPage(
               <div> "Welcome back, please connect your wallet again" </div>
             ) : (
               <div>
-                <h2 style={{ textAlign: "left" }}>Become a contributor</h2>
+                <h2 style={{ textAlign: "center" }}>Become a contributor</h2>
                 <br></br>
 
                 <p style={{ width: 900 }}>
@@ -267,10 +267,10 @@ function renderPage(
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Button style={{ marginRight: 15 }} onClick={() => window.open(inviteLink, "_blank")}>
-                Join discord
+                JOIN DISCORD
               </Button>
               <Button style={{ marginLeft: 15 }} onClick={() => pagesUtils.verifyServer(accessCode, setTokenReward, setServerVerified)}>
-                Verify{" "}
+                VERIFY{" "}
               </Button>
             </div>
           </div>
@@ -302,13 +302,15 @@ function renderPage(
                 {" "}
                 <b>Please add the following info:</b>
                 <br></br>
-                <b>- Experience:</b> (Content / Marketing / Algorithms and Data Structures / Operations / etc)
+                <b>- Motivation:</b> What brings you here?
                 <br></br>
-                <b>- Where do you see yourself contributing:</b> (Backend / Frontend / Business / Marketing / Project Management etc)
+                <b>- Experience:</b> (Content / Marketing / Core Contracts / Frontend/ Partnerships / UX ,...)
                 <br></br>
-                <b>- Specific Skills:</b> (Java, JS, HTML, CSS, Python, Solidity, Scheme, Prolog, C/C++, Dune Analytics, The Graph, etc)
+                <b>- Where do you see yourself contributing: </b> (Product and Tech Guild / Growth Guild / Hunting Guild / Infrastructure Guild )
                 <br></br>
-                <b>- Bandwidth:</b> (~10 hours / week) Let us know if you wish to have 1-1 introduction to ShineDAO. We'd also suggest joining our weekly community call every
+                <b>- Specific Skills:</b> (Copywriting, Podcasting, Java, JS, HTML, CSS, Python, Solidity, ... )
+                <br></br>
+                <b>- Bandwidth:</b> (~10 hours / week). We'd also suggest joining our weekly community call every
                 Monday 5:30 pm UTC.
               </div>
               <br></br> <br></br>
@@ -328,7 +330,7 @@ function renderPage(
               <br></br>
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <Button onClick={() => pagesUtils.verifyMessage(accessCode, setTokenReward, setMessageVerified)}>Verify </Button>
+              <Button onClick={() => pagesUtils.verifyMessage(accessCode, setTokenReward, setMessageVerified)}>VERIFY </Button>
             </div>
           </div>
         )}
