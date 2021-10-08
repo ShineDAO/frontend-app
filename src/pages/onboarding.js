@@ -306,8 +306,8 @@ function renderPage(
                 <br></br>
                 <b>- Experience:</b> (Content / Marketing / Core Contracts / Frontend/ Partnerships / UX ,...)
                 <br></br>
-                <b>- Where do you see yourself contributing: </b> (Product and Tech Guild / Growth Guild / Hunting Guild / Infrastructure Guild )<br></br>
                 <b>- Specific Skills:</b> (Copywriting, Podcasting, Java, JS, HTML, CSS, Python, Solidity, ... )<br></br>
+                <b>- Where do you see yourself contributing: </b> (Product and Tech Guild / Growth Guild / Hunting Guild / Infrastructure Guild )<br></br>
                 <b>- Bandwidth:</b> (~10 hours / week). We'd also suggest joining our weekly community call every Monday 5:30 pm UTC.
               </div>
               <br></br> <br></br>
@@ -320,8 +320,8 @@ function renderPage(
                 </a>
                 <br></br>
                 To be able to understand how to get involved please check out our notion board{" "}
-                <a href="https://forum.shinedao.finance/t/community-covenant/17" target="_blank">
-                  https://forum.shinedao.finance/t/community-covenant/17
+                <a href="https://oasis-firefly-683.notion.site/ShineDAO-23d023e521934cca9d835be9f73790d7" target="_blank">
+                  https://oasis-firefly-683.notion.site/ShineDAO-23d023e521934cca9d835be9f73790d7
                 </a>
               </div>
               <br></br>
