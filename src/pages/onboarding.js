@@ -195,8 +195,7 @@ function renderPage(
         {isWalletEnabled && chainId != "0x89" && (
           <div>
             <p style={{ textAlign: "center" }}>
-              {" "}
-              Chain Unsupported!<br> </br>{" "}
+              Chain Unsupported!<br></br>
               We use Polygon/Matic chain as its much chepar to use compared to the Ethereum mainnet.
             </p>
             <br></br>
@@ -223,15 +222,13 @@ function renderPage(
               </div>
               <br></br>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                {" "}
                 <Button onClick={() => window.open(authorizeAccountLink, "_self")}>VERIFY DISCORD</Button>
               </div>
             </div>
           )}
 
         {!isWalletEnabled && (
-          <p style={{ textAlign: "center" }}>
-            {" "}
+          <div style={{ textAlign: "center" }}>
             {accessCode ? (
               <div> "Welcome back, please connect your wallet again" </div>
             ) : (
@@ -246,8 +243,8 @@ function renderPage(
                   <br></br> If you’re successful in completing all of the steps, you’ll earn your first 500 SHN 🌟
                 </p>
               </div>
-            )}{" "}
-          </p>
+            )}
+          </div>
         )}
       </div>
     );
@@ -274,7 +271,7 @@ function renderPage(
                 JOIN DISCORD
               </Button>
               <Button style={{ marginLeft: 15 }} onClick={() => pagesUtils.verifyServer(accessCode, setTokenReward, setServerVerified)}>
-                VERIFY{" "}
+                VERIFY
               </Button>
             </div>
           </div>
@@ -294,16 +291,14 @@ function renderPage(
             <h2 style={{ textAlign: "center" }}>Introduce Yourself</h2>
             <br></br>
             <div>
-              Its time to introduce yourself in the{" "}
+              Its time to introduce yourself in the
               <a href={introductionsChannel} target="_blank">
-                {" "}
                 #introductions channel
               </a>
               . When you introduce yourself in the channel, come back to this page and click verify.
               <br></br>
               <br></br>
               <div style={{ width: 900, textAlign: "left", margin: "0 auto" }}>
-                {" "}
                 <b>Please add the following info:</b>
                 <br></br>
                 <b>- Motivation:</b> What brings you here?
@@ -318,12 +313,12 @@ function renderPage(
               <div style={{ textAlign: "center" }}>
                 <h4> Here are ShineDAO's intro resources if you need more information:</h4>
                 <br></br>
-                To be able to understand what how ShineDAO works please read our documentation{" "}
+                To be able to understand what how ShineDAO works please read our documentation
                 <a href="https://docs.shinedao.finance/" target="_blank">
                   https://docs.shinedao.finance/
                 </a>
                 <br></br>
-                To be able to understand how to get involved please check out our notion board{" "}
+                To be able to understand how to get involved please check out our notion board
                 <a href="https://oasis-firefly-683.notion.site/ShineDAO-23d023e521934cca9d835be9f73790d7" target="_blank">
                   https://oasis-firefly-683.notion.site/ShineDAO-23d023e521934cca9d835be9f73790d7
                 </a>
