@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Layout, SEO, Button, Card, Text } from "components/common";
+import { Layout, SEO, Button, Card, Text, MobileDiv } from "components/common";
 import { Header } from "components/theme";
 import * as pagesUtils from "../utils/pagesUtils";
 
@@ -56,7 +56,7 @@ export default ({ location }) => {
     <Layout position="absolute" bottom="4px" width="100%" height="60px">
       <SEO />
       <Header />
-      <div style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
+      <MobileDiv style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
         {false && (
           <h1>
             Contributor Onboarding/ Chain id : {chainId} and name : {chainName}
@@ -155,7 +155,7 @@ export default ({ location }) => {
             <ProgressBar style={{ width: "300px" }} animated striped variant="success" now={(currentPage / 4) * 100} label={` Step ${currentPage}`} />
           </div>
         )}
-      </div>
+      </MobileDiv>
     </Layout>
   );
 };
@@ -193,7 +193,7 @@ function renderPage(
       <div>
         {console.log("ccc ", chainId)}
         {isWalletEnabled && chainId != "0x89" && (
-          <div>
+          <div style={{ textAlign: "center" }}>
             <p style={{ textAlign: "center" }}>
               Chain Unsupported!<br></br>
               We use Polygon/Matic chain as its much chepar to use compared to the Ethereum mainnet.
@@ -215,7 +215,7 @@ function renderPage(
               <div>
                 <h2 style={{ textAlign: "center" }}>Your Discord Account</h2>
                 <br></br>
-                <p style={{ width: 900, textAlign: "left" }}>
+                <p style={{ textAlign: "left" }}>
                   We need to pair your ETH address with your Discord account, so we can create an identity for you. This will enable contribution tracking and reward distribution
                   process. Just by being active in the discord, you will earn some SHN tokens on weekly basis.
                 </p>
@@ -236,7 +236,7 @@ function renderPage(
                 <h2 style={{ textAlign: "center" }}>Become a contributor</h2>
                 <br></br>
 
-                <p style={{ width: 900 }}>
+                <p style={{}}>
                   In this onboarding process we are going to set up your contributor profile, so that you can start earning SHN automatically. We will introduce you to our tool
                   stack and share recourses that will allow you to understand how you can <b>get involved regardless of your background, skill level, or availability.</b>
                   <br></br>
@@ -298,7 +298,7 @@ function renderPage(
               . When you introduce yourself in the channel, come back to this page and click verify.
               <br></br>
               <br></br>
-              <div style={{ width: 900, textAlign: "left", margin: "0 auto" }}>
+              <div style={{ textAlign: "left", margin: "0 auto" }}>
                 <b>Please add the following info:</b>
                 <br></br>
                 <b>- Motivation:</b> What brings you here?
@@ -313,14 +313,14 @@ function renderPage(
               <div style={{ textAlign: "center" }}>
                 <h4> Here are ShineDAO's intro resources if you need more information:</h4>
                 <br></br>
-                To be able to understand what how ShineDAO works please read our documentation
+                To be able to understand what how ShineDAO works please read our documentation&nbsp;
                 <a href="https://docs.shinedao.finance/" target="_blank">
-                  https://docs.shinedao.finance/
+                  documentation.
                 </a>
-                <br></br>
-                To be able to understand how to get involved please check out our notion board
+                <br></br> 
+                To be able to understand how to get involved please check out our notion&nbsp;
                 <a href="https://oasis-firefly-683.notion.site/ShineDAO-23d023e521934cca9d835be9f73790d7" target="_blank">
-                  https://oasis-firefly-683.notion.site/ShineDAO-23d023e521934cca9d835be9f73790d7
+                   board.
                 </a>
               </div>
               <br></br>

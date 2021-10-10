@@ -71,7 +71,7 @@ export const HowToJoin = () => {
           </p>
           <WrapperButton>
             <LearnButton onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", "_blank", "noopener")} theme={theme}>
-              GET SHN TOKEN
+              GET SHN TOKEN (ETH Mainnet)
             </LearnButton>
             <LearnButton
               theme={theme}
@@ -84,7 +84,7 @@ export const HowToJoin = () => {
                 })
               }
             >
-              Add SHN to MetaMask
+              Add SHN to MetaMask (ETH Mainnet)
             </LearnButton>
           </WrapperButton>
         </Details>
