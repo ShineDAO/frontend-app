@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[22],{"/vip":function(e,n,t){"use strict";t.r(n);var l=t("q1tI"),a=t.n(l),u=t("1Qp6"),c=t("AzQQ");n.default=function(){return a.a.createElement(u.f,null,a.a.createElement(u.h,null),a.a.createElement(c.d,null),a.a.createElement(c.f,null))}}}]);
-//# sourceMappingURL=component---src-pages-pre-sale-ii-js-e322e4bb8f7135c52224.js.map
