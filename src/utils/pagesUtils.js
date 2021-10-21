@@ -1,6 +1,6 @@
 const axios = require("axios");
 import Web3 from "web3";
-const baseTokenReward = 125;
+export const baseTokenReward = 12.5;
 
 export function isBackButtonVisible(currentPage, isWalletEnabled, username, serverVerified, correctNetwork) {
   return false; //always hide the back button for now

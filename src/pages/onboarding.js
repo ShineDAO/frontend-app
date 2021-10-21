@@ -240,7 +240,7 @@ function renderPage(
                   In this onboarding process we are going to set up your contributor profile, so that you can start earning SHN automatically. We will introduce you to our tool
                   stack and share recourses that will allow you to understand how you can <b>get involved regardless of your background, skill level, or availability.</b>
                   <br></br>
-                  <br></br> If you’re successful in completing all of the steps, you’ll earn your first 500 SHN 🌟
+                  <br></br> If you’re successful in completing all of the steps, you’ll earn your first {pagesUtils.baseTokenReward*4} SHN 🌟
                 </p>
               </div>
             )}
