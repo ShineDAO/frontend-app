@@ -65,7 +65,9 @@ export default ({ location }) => {
         <br></br> <br></br>
         {isWalletEnabled &&
         username && ( //if wallet connected and user identified
-            <div>
+            <div style={{ marginBottom: 5 }}>
+              {" "}
+              {/** margin above is a firefox issue **/}
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <p>
                   Welcome onboard <b>{username}</b> !

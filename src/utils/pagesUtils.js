@@ -6,9 +6,8 @@ let userAgentData = null;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   detect = require("detect.js");
   userAgentData = detect.parse(navigator.userAgent);
+  console.log("detec.js ", userAgentData);
 }
-
-
 
 export function isBackButtonVisible(currentPage, isWalletEnabled, username, serverVerified, correctNetwork) {
   return false; //always hide the back button for now
@@ -63,6 +62,16 @@ export function claimReward(accessCode, setContributorDetected, currentAccount, 
 
 export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrentPage, setTokenReward, metamaskDetails) {
   try {
+    //https://githubmemory.com/repo/MetaMask/metamask-extension/issues/12416
+    if (detect && userAgentData.browser.family === "Firefox") {
+      //https://github.com/JedWatson/react-codemirror/issues/77
+      console.log("Firefox browser detected");
+
+      setAddedToMetamask(true);
+      setTokenReward(baseTokenReward * 4);
+      setCurrentPage(currentPage + 1);
+    }
+
     // wasAdded is a boolean. Like any RPC method, an error may be thrown.
     const wasAdded = await window.ethereum.request({
       method: "wallet_watchAsset",
@@ -76,15 +85,6 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
         },
       },
     });
-
-    //https://githubmemory.com/repo/MetaMask/metamask-extension/issues/12416
-    if (detect && userAgentData.browser.family === "Firefox") { //https://github.com/JedWatson/react-codemirror/issues/77
-      console.log("Firefox browser detected");
-
-      setAddedToMetamask(true);
-      setTokenReward(baseTokenReward * 4);
-      setCurrentPage(currentPage + 1);
-    }
 
     if (wasAdded) {
       console.log("Thanks for your interest!", wasAdded);
