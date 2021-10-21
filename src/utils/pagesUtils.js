@@ -1,6 +1,13 @@
 const axios = require("axios");
 import Web3 from "web3";
 export const baseTokenReward = 12.5;
+var detect = require("detect.js");
+var userAgentData = detect.parse(navigator.userAgent);
+
+{
+  console.log("detect.js ", userAgentData.browser.family);
+}
+
 
 export function isBackButtonVisible(currentPage, isWalletEnabled, username, serverVerified, correctNetwork) {
   return false; //always hide the back button for now
@@ -30,7 +37,7 @@ export function decodeUrlFragment(hash, setAccessCode, setUsername, setAccId, se
   verifyAcc(result.access_token, setUsername, setAccId, setAvatarId, setTokenReward);
   setAccessCode(result.access_token);
 }
-export function claimReward(accessCode, setContributorDetected, currentAccount, username, accId, avatarId, setContributorError, setRegistrationSuccess,setLoading, setTxnHash) {
+export function claimReward(accessCode, setContributorDetected, currentAccount, username, accId, avatarId, setContributorError, setRegistrationSuccess, setLoading, setTxnHash) {
   setLoading(true);
   axios
     .get(`${process.env.GATSBY_SERVER_ADDRESS}/claimReward?authorization=${accessCode}&address=${currentAccount}&username=${username}&discordId=${accId}&avatarId=${avatarId}`)
@@ -41,7 +48,7 @@ export function claimReward(accessCode, setContributorDetected, currentAccount, 
         setContributorError(true);
       } else if (response.data.registrationSuccess == true) {
         setRegistrationSuccess(true);
-        setTxnHash(response.data.txnHash)
+        setTxnHash(response.data.txnHash);
       }
       setLoading(false);
       console.log("claim ", response.data);
@@ -69,10 +76,20 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
       },
     });
 
+    //https://githubmemory.com/repo/MetaMask/metamask-extension/issues/12416
+    if (userAgentData.browser.family === "Firefox") {
+      console.log("Firefox browser detected");
+      
+
+      setAddedToMetamask(true);
+      setTokenReward(baseTokenReward * 4);
+      setCurrentPage(currentPage + 1);
+    }
+
     if (wasAdded) {
       console.log("Thanks for your interest!", wasAdded);
       setAddedToMetamask(true);
-      setTokenReward(baseTokenReward * 4)
+      setTokenReward(baseTokenReward * 4);
       setCurrentPage(currentPage + 1);
     } else {
       console.log("Your loss!");

@@ -6666,6 +6666,11 @@ detect-port@^1.3.0:
     address "^1.0.1"
     debug "^2.6.0"
 
+detect.js@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/detect.js/-/detect.js-2.2.3.tgz#18a00621f959c5ebdcbb84267e1a75442f414ea9"
+  integrity sha1-GKAGIflZxevcu4Qmfhp1RC9BTqk=
+
 devcert@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/devcert/-/devcert-1.1.3.tgz#ff8119efae52ebf2449531b7482ae0f7211542e9"
