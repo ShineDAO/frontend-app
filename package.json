@@ -5,6 +5,7 @@
   "version": "0.1.2",
   "author": "Shine Squad <shine-token@protonmail.com.com>",
   "dependencies": {
+    "@loadable/component": "^5.15.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "detect.js": "^2.2.3",

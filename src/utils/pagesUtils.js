@@ -1,12 +1,13 @@
 const axios = require("axios");
 import Web3 from "web3";
 export const baseTokenReward = 12.5;
-var detect = require("detect.js");
-var userAgentData = detect.parse(navigator.userAgent);
-
-{
-  console.log("detect.js ", userAgentData.browser.family);
+let detect = null;
+let userAgentData = null;
+if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
+  detect = require("detect.js");
+  userAgentData = detect.parse(navigator.userAgent);
 }
+
 
 
 export function isBackButtonVisible(currentPage, isWalletEnabled, username, serverVerified, correctNetwork) {
@@ -77,9 +78,8 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
     });
 
     //https://githubmemory.com/repo/MetaMask/metamask-extension/issues/12416
-    if (userAgentData.browser.family === "Firefox") {
+    if (detect && userAgentData.browser.family === "Firefox") { //https://github.com/JedWatson/react-codemirror/issues/77
       console.log("Firefox browser detected");
-      
 
       setAddedToMetamask(true);
       setTokenReward(baseTokenReward * 4);
