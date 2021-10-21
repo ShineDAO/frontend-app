@@ -17,6 +17,10 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions  }) => {
             test: /react-date-countdown-timer/,
             use: loaders.null(),
           },
+          {
+            test: /detect.js/, //https://www.gatsbyjs.com/docs/debugging-html-builds/#how-to-check-if-code-classlanguage-textwindowcode-is-defined
+            use: loaders.null(),
+          }
         ],
       },
     })
