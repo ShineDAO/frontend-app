@@ -198,7 +198,7 @@ function renderPage(
           <div style={{ textAlign: "center" }}>
             <p style={{ textAlign: "center" }}>
               Chain Unsupported!<br></br>
-              We use Polygon/Matic chain as its much chepar to use compared to the Ethereum mainnet.
+              We use Polygon/Matic chain as its much cheaper to use compared to the Ethereum mainnet.
             </p>
             <br></br>
             <Button onClick={() => pagesUtils.switchChain()}>Switch to Polygon</Button>
