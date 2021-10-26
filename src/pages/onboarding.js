@@ -236,6 +236,7 @@ function renderPage(
             ) : (
               <div>
                 <h2 style={{ textAlign: "center" }}>Become a contributor</h2>
+                <div style={{position: "relative", paddingBottom: "56.25%", height: 0}}><iframe src="https://www.loom.com/embed/403eebe6f2e143e6889978a7e1e0cf32" frameBorder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}></iframe></div>
                 <br></br>
 
                 <p style={{}}>
