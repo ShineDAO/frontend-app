@@ -5,19 +5,21 @@ import { SubpageNews } from "./subpages/subpageNews";
 import { MoralisProvider } from "react-moralis";
 
 
+
 export default ({ location }) => {
+  
   return (
     <MoralisProvider appId="jTkB07PzkYA1pq8KpEaR3oDOApdmSpgJeCSXgJYF" serverUrl="https://fsnbzd9rxwph.usemoralis.com:2053/server">
+      <Layout position="absolute" bottom="4px" width="100%" height="60px">
+        <SEO />
+        <Header />
 
-    <Layout position="absolute" bottom="4px" width="100%" height="60px">
-      <SEO />
-      <Header />
-      <MobileDiv style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
-        <span>Hello!</span>
-        <SubpageNews></SubpageNews>
-      </MobileDiv>
-    </Layout>
+
+        <MobileDiv width="90%" background="whitesmoke" style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
+  
+          <SubpageNews></SubpageNews>
+        </MobileDiv>
+      </Layout>
     </MoralisProvider>
-
   );
 };

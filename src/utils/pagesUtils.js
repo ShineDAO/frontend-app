@@ -1,4 +1,5 @@
 const axios = require("axios");
+
 import Web3 from "web3";
 export const baseTokenReward = 12.5;
 let detect = null;
@@ -100,7 +101,32 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
 
   //
 }
+export async function switchMoralisChain(Moralis) {
+  try {
+    const web3 = await Moralis.enableWeb3();
+    const chainIdHex = await Moralis.switchNetwork("0x89");
+  } catch (switchError) {
+    // This error code indicates that the chain has not been added to MetaMask.
+    console.log("code error ", switchError);
+    if (switchError.code === 4902) {
+      console.log(" switch error");
+      try {
+        const chainId = "0x89";
+        const chainName = "Matic(Polygon) Mainnet";
+        const rpcUrls = ["https://polygon-rpc.com"];
+        const blockExplorerUrls = ["https://polygonscan.com"];
+        const nativeCurrency = { name: "MATIC", symbol: "MATIC", decimals: 18 }; /* ... */
+        await Moralis.addNetwork(chainId, chainName, nativeCurrency.name, nativeCurrency.symbol, rpcUrls[0], blockExplorerUrls[0]);
+      } catch (addError) {
+        // handle "add" error
+      }
+    }
+    // handle other "switch" errors
+  }
+}
+//NOT USED / CAN BE DELETED
 export async function switchChain() {
+  return;
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
@@ -176,7 +202,40 @@ export function chainIdToName(chainId) {
     return "Unrecognized Chain";
   }
 }
+export async function loginUser(Moralis, setWalletStatus) {
+  let user = Moralis.User.current();
+  if (!user) {
+    user = await Moralis.authenticate({ signingMessage: "Authenticate with ShineDAO" });
+  }
+  console.log("logged in user: ", user);
+  setWalletStatus(true);
+  return user;
+}
+export async function loadWeb3MoralisProvider(Moralis, setWalletStatus, setChainId, setCurrentAccount) {
+  const user = await loginUser(Moralis, setWalletStatus);
+  const web3 = await Moralis.enableWeb3();
+  const chainId = await Moralis.getChainId();
+  console.log("moralis chain ", chainId);
+  setChainId(chainId);
+  console.log("user eth address", user.get("ethAddress"));
+  setCurrentAccount(user.get("ethAddress"));
 
+  Moralis.Web3.onAccountsChanged(async function(accounts) {
+    // matic "0x89"
+    // mainnet "0x1"
+    console.log("account changed x: ", accounts[0]);
+    await Moralis.User.logOut();
+    console.log("logged out");
+    handleChainChanged();
+  });
+
+  Moralis.Web3.onChainChanged(async function(chain) {
+    console.log("chain changed x: ", chain);
+    await Moralis.User.logOut();
+    console.log("logged out");
+    handleChainChanged();
+  });
+}
 export async function loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount) {
   let chainId;
   if (window.ethereum) {

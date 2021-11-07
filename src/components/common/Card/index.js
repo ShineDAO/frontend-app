@@ -24,8 +24,9 @@ export const TitleWrap = styled.div`
 `;
 
 export const MobileDiv = styled.div`
-width: 80%;
-margin:0 auto;
+  background: ${({ background }) => background};
+  width: ${({ width }) => width || "80%"};
+  margin: 0 auto;
   @media (max-width: 960px) {
     width: 80%;
     margin: 0 auto;
