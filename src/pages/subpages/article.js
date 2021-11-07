@@ -51,3 +51,7 @@ export function Article({ title, domain, articleId, url, createdAt, author, tota
     </div>
   );
 }
+
+export default function dummy(){
+  return <></>
+}
