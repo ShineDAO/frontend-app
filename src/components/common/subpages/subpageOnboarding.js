@@ -5,7 +5,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import PulseLoader from "react-spinners/PulseLoader";
 import { MobileDiv, Button, Card, Text } from "components/common";
 import { MoralisCryptologin, SwitchToPolygon } from "./moralisCryptoLogin";
-import * as pagesUtils from "../../utils/pagesUtils";
+import * as pagesUtils from "../../../utils/pagesUtils";
 
 const introductionsChannel = "https://discord.com/channels/785582893572948060/868084312455651348";
 const inviteLink = "https://discord.com/invite/QkhbP7bZrj";
