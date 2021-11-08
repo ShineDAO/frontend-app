@@ -16,7 +16,7 @@ export default ({ location }) => {
       <Layout position="absolute" bottom="4px" width="100%" height="60px">
         <SEO />
         <Header />
-        <SubpageOnboarding></SubpageOnboarding>
+        <SubpageOnboarding location={location}></SubpageOnboarding>
       </Layout>
     </MoralisProvider>
   );

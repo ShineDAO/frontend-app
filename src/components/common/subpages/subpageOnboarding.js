@@ -11,7 +11,7 @@ const introductionsChannel = "https://discord.com/channels/785582893572948060/86
 const inviteLink = "https://discord.com/invite/QkhbP7bZrj";
 const authorizeAccountLink = `https://discord.com/api/oauth2/authorize?response_type=token&client_id=893462659737985114&state=15773059ghq9183habn&scope=identify&redirect_uri=${process.env.GATSBY_REDIRECT_URI}`;
 
-export function SubpageOnboarding() {
+export function SubpageOnboarding({ location }) {
   const { Moralis } = useMoralis();
 
   const [isWalletEnabled, setWalletStatus] = useState();
