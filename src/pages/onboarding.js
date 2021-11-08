@@ -5,7 +5,7 @@ import { MoralisProvider } from "react-moralis";
 import { Layout, SEO  } from "components/common";
 import { Header } from "components/theme";
 
-import { SubpageOnboarding } from "./subpages/subpageOnboarding";
+import { SubpageOnboarding } from "../components/common/subpages/subpageOnboarding";
 
 
 export default ({ location }) => {
@@ -16,7 +16,7 @@ export default ({ location }) => {
       <Layout position="absolute" bottom="4px" width="100%" height="60px">
         <SEO />
         <Header />
-        <SubpageOnboarding></SubpageOnboarding>
+        <SubpageOnboarding location={location}></SubpageOnboarding>
       </Layout>
     </MoralisProvider>
   );

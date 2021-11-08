@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Layout, SEO, Button, Card, Text, MobileDiv } from "components/common";
 import { Header } from "components/theme";
-import { SubpageNews } from "./subpages/subpageNews";
+import { SubpageNews } from "../components/common/subpages/subpageNews";
 import { MoralisProvider } from "react-moralis";
 
 
