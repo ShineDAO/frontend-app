@@ -30,30 +30,51 @@ export function SubpageNews() {
   const [isSubmissionVisible, setSubmissionVisibility] = useState(false);
   const [generalError, setGeneralError] = useState();
   const [generalInfo, setGeneralInfo] = useState();
+  const [ethAddress, setEthAddress] = useState();
 
   //const { fetch: getUserRoles, data: getUserRolesResult, error: getUserRolesError, isLoading: getUserRolesErrorIsLoading } = useMoralisCloudFunction(
-   // "getUserRoles",
-   // {  },
-   // { autoFetch: true }
- // );
-
+  // "getUserRoles",
+  // {  },
+  // { autoFetch: true }
+  // );
 
   const { fetch: saveArticle, data: saveArticleResult, error: saveArticleError, isLoading: saveArticleIsLoading } = useMoralisCloudFunction(
     "saveArticle",
     { title, url },
     { autoFetch: false }
   );
+
+  const {
+    fetch: onboardPreviousDataIfOldUser,
+    data: onboardPreviousDataIfOldUserResult,
+    error: onboardPreviousDataIfOldUserError,
+    isLoading: onboardPreviousDataIfOldUserIsLoading,
+  } = useMoralisCloudFunction("onboardPreviousDataIfOldUser", { ethAddress }, { autoFetch: false });
+
   useEffect(() => {
-    console.log(" here are the articles ", saveArticleResult, typeof(saveArticleResult))
-    if(saveArticleResult=="Success"){
-      console.log("also called")
-      setSubmissionVisibility(false)
-      setGeneralInfo("Article submitted successfully!")
+    if (user !== null) {
+      let address = user.get("ethAddress");
+
+      console.log(" user data 321 ", address);
+      setEthAddress(address);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (typeof ethAddress !== "undefined") {
+      console.log("eth address data ", ethAddress);
+      onboardPreviousDataIfOldUser();
+    }
+  }, [ethAddress]);
+
+  useEffect(() => {
+    console.log(" here are the articles ", saveArticleResult, typeof saveArticleResult);
+    if (saveArticleResult == "Success") {
+      console.log("also called");
+      setSubmissionVisibility(false);
+      setGeneralInfo("Article submitted successfully!");
     }
   }, [saveArticleResult]);
-
-
-
 
   const { fetch: getRankedArticles, data: rankedArticles, error: getRankedArticlesError, isLoading: onboardContributorIsLoading } = useMoralisCloudFunction(
     "getRankedArticles",
@@ -101,7 +122,7 @@ export function SubpageNews() {
     <div style={{ width: "100%" }}>
       <div style={{ boxShadow: "0px 3px 0px 0px", display: "flex", alignItems: "baseline", background: "rgb(250 218 94)", margin: "0 auto" }}>
         <span>
-          <h2 style={{ color: "rgb(54 52 54)", display: "inline", paddingLeft:10 }}>Degen News</h2>
+          <h2 style={{ color: "rgb(54 52 54)", display: "inline", paddingLeft: 10 }}>Degen News</h2>
         </span>{" "}
         <span style={{ paddingLeft: 15, paddingRight: 15 }}>|</span>
         <span onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>Submit</span>
@@ -142,10 +163,16 @@ export function SubpageNews() {
         {false && <Button onClick={() => getShnWeightedBalance()}>Get weighted SHN balance</Button>}
         {false && <Button onClick={() => onboardContributor()}>Onboard Contributor</Button>}
         {generalError && ` ${generalError}`}
-        {generalInfo && <div> {generalInfo}<br></br></div>}
+        {generalInfo && (
+          <div>
+            {" "}
+            {generalInfo}
+            <br></br>
+          </div>
+        )}
 
         {saveArticleError && `Error: ${saveArticleError}`}
-        {serviceError && <div style={{color:"tomato"}}> {serviceError}</div>}
+        {serviceError && <div style={{ color: "tomato" }}> {serviceError}</div>}
         {shnWeightedBalance &&
           shnWeightedBalance.length > 0 &&
           shnWeightedBalance.map(item => {
