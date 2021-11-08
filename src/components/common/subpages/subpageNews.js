@@ -145,7 +145,7 @@ export function SubpageNews() {
         {isAuthenticated && (
           <div>
             <br></br>
-            <h3>Welcomee {user.get("username")}, good to see you again!</h3>
+            <h3>Welcomee {user.get("username")}, submit your most interesting DeFi news!</h3>
           </div>
         )}
         {isSubmissionVisible && (
