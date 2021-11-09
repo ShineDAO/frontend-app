@@ -67,15 +67,6 @@ export function SubpageNews() {
     }
   }, [ethAddress]);
 
-  useEffect(() => {
-    console.log(" here are the articles ", saveArticleResult, typeof saveArticleResult);
-    if (saveArticleResult == "Success") {
-      console.log("also called");
-      setSubmissionVisibility(false);
-      setGeneralInfo("Article submitted successfully!");
-    }
-  }, [saveArticleResult]);
-
   const { fetch: getRankedArticles, data: rankedArticles, error: getRankedArticlesError, isLoading: onboardContributorIsLoading } = useMoralisCloudFunction(
     "getRankedArticles",
     {},
@@ -83,6 +74,16 @@ export function SubpageNews() {
       autoFetch: true,
     }
   );
+
+  useEffect(() => {
+    console.log(" here are the articles ", saveArticleResult, typeof saveArticleResult);
+    if (saveArticleResult == "Success") {
+      console.log("also called");
+      setSubmissionVisibility(false);
+      setGeneralInfo("Article submitted successfully!");
+      getRankedArticles();
+    }
+  }, [saveArticleResult]);
 
   const { fetch: onboardContributor, data: onboardContributorResponse, error: onboardContributorError, isLoading: rankedArticlesisLoading } = useMoralisCloudFunction(
     "onboardContributor",
@@ -190,6 +191,7 @@ export function SubpageNews() {
             [...rankedArticles].sort(compare).map((article, index) => {
               return (
                 <Article
+                  getRankedArticles={getRankedArticles}
                   setServiceError={setServiceError}
                   totalScore={article.totalScore}
                   key={`key-${index}`}
@@ -199,6 +201,7 @@ export function SubpageNews() {
                   articleId={article.articleId}
                   title={article.title}
                   domain={article.domain}
+                  userVotedAlready={article.userVotedAlready}
                 ></Article>
               );
             })}
