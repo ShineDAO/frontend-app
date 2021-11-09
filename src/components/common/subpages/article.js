@@ -44,7 +44,7 @@ export function Article({ title, domain, articleId, url, userVotedAlready, creat
           <img style={{ cursor: "pointer", height: 18, marginRight: 5 }} onClick={() => handleVote(articleId, submitVote, setServiceError, getRankedArticles)} src={upVote}></img>
         )}
         <Link href={url}>{title} </Link>
-        <span style={{ fontWeight: "normal", fontSize: "small" }}>({domain}) </span>
+        <span style={{ fontWeight: "normal", fontSize: "small", color: "#a2a2a2" }}>({domain}) </span>
       </div>
       <div style={{ fontSize: "small", marginBottom: 20 }}>
         <span style={{ fontWeight: "normal" }}>{parseInt(totalScore)} points </span> <span>by</span> <span style={{ fontWeight: "normal" }}> {author},</span>{" "}
