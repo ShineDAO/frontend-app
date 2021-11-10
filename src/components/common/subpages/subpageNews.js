@@ -4,6 +4,8 @@ import { Button } from "components/common";
 import { Article } from "./article";
 import { author } from "data/config";
 
+import { loadWeb3MoralisProviderLight } from "../../../utils/pagesUtils";
+
 function handleTitleChange(e, setTitle) {
   setTitle(e.target.value);
 }
@@ -17,12 +19,11 @@ function compare(a, b) {
 }
 
 export function SubpageNews() {
+  const { authenticate, isAuthenticated, user, Moralis } = useMoralis();
   const { data: articles, error, isLoading } = useMoralisQuery("Article");
   const { data: userData, error: userError, isLoading: userisLoading } = useMoralisQuery("User");
 
   //const { fetch, data:toggleOnboardingData, error: toggleOnboardingError, isLoading:toggleOnboardingDataIsLoading } = useMoralisCloudFunction("toggleOnboarding", { autoFetch: false });
-
-  const { authenticate, isAuthenticated, user } = useMoralis();
 
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
@@ -52,13 +53,19 @@ export function SubpageNews() {
   } = useMoralisCloudFunction("onboardPreviousDataIfOldUser", { ethAddress }, { autoFetch: false });
 
   useEffect(() => {
+    console.log("user 3213", user);
     if (user !== null) {
       let address = user.get("ethAddress");
 
       console.log(" user data 321 ", address);
+      getRankedArticles();
       setEthAddress(address);
     }
   }, [user]);
+
+  useEffect(() => {
+    console.log(" is authenticated ", isAuthenticated);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (typeof ethAddress !== "undefined") {
@@ -119,6 +126,11 @@ export function SubpageNews() {
       );
     }
   }
+
+  async function handleLogout() {
+    await Moralis.User.logOut();
+    window.location.reload(true);
+  }
   return (
     <div style={{ width: "100%" }}>
       <div style={{ boxShadow: "0px 3px 0px 0px", display: "flex", alignItems: "baseline", background: "rgb(250 218 94)", margin: "0 auto" }}>
@@ -127,12 +139,16 @@ export function SubpageNews() {
         </span>{" "}
         <span style={{ paddingLeft: 15, paddingRight: 15 }}>|</span>
         <span onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>Submit</span>
-        {!isAuthenticated && (
+        {!isAuthenticated ? (
           <div style={{ marginLeft: "auto" }}>
-            <Button backgroundHover="#45e25a" onClick={() => authenticate({ signingMessage: "Authenticate with Degen News!" })}>
+            <Button backgroundHover="#45e25a" onClick={() => loadWeb3MoralisProviderLight(authenticate, Moralis)}>
               Connect Wallet
             </Button>
           </div>
+        ) : (
+          <span onClick={() => handleLogout()} style={{ marginLeft: "auto", paddingRight: 8, cursor: "pointer" }}>
+            Log out
+          </span>
         )}
       </div>
 

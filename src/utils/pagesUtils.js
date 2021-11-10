@@ -211,6 +211,29 @@ export async function loginUser(Moralis, setWalletStatus) {
   setWalletStatus(true);
   return user;
 }
+
+export async function loadWeb3MoralisProviderLight(authenticate, Moralis) {
+  await authenticate({ signingMessage: "Authenticate with ShineDAO" });
+  const web3 = await Moralis.enableWeb3();
+
+  Moralis.Web3.onAccountsChanged(async function(accounts) {
+    // matic "0x89"
+    // mainnet "0x1"
+    console.log("account changed x: ", accounts[0]);
+    await Moralis.User.logOut();
+    console.log("logged out");
+    handleChainChanged();
+  });
+
+  Moralis.Web3.onChainChanged(async function(chain) {
+    console.log("chain changed x: ", chain);
+    await Moralis.User.logOut();
+    console.log("logged out");
+    handleChainChanged();
+  });
+
+}
+
 export async function loadWeb3MoralisProvider(Moralis, setWalletStatus, setChainId, setCurrentAccount) {
   const user = await loginUser(Moralis, setWalletStatus);
   const web3 = await Moralis.enableWeb3();
