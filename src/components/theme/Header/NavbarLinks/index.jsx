@@ -15,6 +15,9 @@ const NavbarLinks = ({ desktop, isInApp }) => {
       <a href="http://forum.shinedao.finance" target="_blank">
         FORUM
       </a>
+      <a href="/news" target="_blank">
+        NEWS
+      </a>
       {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
       <JoinButton onClick={() => (window.location.href = "#about")} theme={theme}>
         {
