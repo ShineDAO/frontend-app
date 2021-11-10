@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { ThemeContext } from "providers/ThemeProvider";
 import { useMoralisCloudFunction } from "react-moralis";
 import upVote from "assets/illustrations/upVote.png";
+import { SmallText } from "components/common";
 
 import { Link } from "components/common";
 
@@ -19,6 +21,8 @@ async function handleVote(articleId, submitVote, setServiceError, getRankedArtic
 }
 
 export function Article({ title, domain, articleId, url, userVotedAlready, createdAt, author, totalScore, setServiceError, getRankedArticles }) {
+  const { theme } = useContext(ThemeContext);
+
   const { fetch: submitVote, data: voteSubmittedResult, error: voteSubmitError, isLoading: voteSubmitIsLoading } = useMoralisCloudFunction(
     "voteOnArticle",
     { articleId },
@@ -46,10 +50,10 @@ export function Article({ title, domain, articleId, url, userVotedAlready, creat
         <Link href={url}>{title} </Link>
         <span style={{ fontWeight: "normal", fontSize: "small", color: "#a2a2a2" }}>({domain}) </span>
       </div>
-      <div style={{ fontSize: "small", marginBottom: 20 }}>
+      <SmallText theme={theme}>
         <span style={{ fontWeight: "normal" }}>{parseInt(totalScore)} points </span> <span>by</span> <span style={{ fontWeight: "normal" }}> {author},</span>{" "}
         <span> submitted {Number.parseFloat(hoursAgo).toFixed(2)} hours ago </span>
-      </div>
+      </SmallText>
     </div>
   );
 }

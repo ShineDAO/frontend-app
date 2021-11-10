@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMoralis, useMoralisQuery, useMoralisCloudFunction } from "react-moralis";
-import { Button } from "components/common";
+import { Button, Text } from "components/common";
 import { Article } from "./article";
 import { author } from "data/config";
 
@@ -162,7 +162,7 @@ export function SubpageNews() {
         {isAuthenticated && (
           <div>
             <br></br>
-            <h3>Welcomee {user.get("username")}, submit your most interesting DeFi news!</h3>
+            <Text fontWeight="bold" color="#181717" padding="0px 0px 0px 10px"  >Welcome {user.get("username")}, submit your most interesting DeFi news!</Text>
           </div>
         )}
         {isSubmissionVisible && (
