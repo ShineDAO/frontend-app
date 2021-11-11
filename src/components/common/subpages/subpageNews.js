@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useMoralis, useMoralisQuery, useMoralisCloudFunction } from "react-moralis";
 import { Button, Text } from "components/common";
 import { Article } from "./article";
-import { author } from "data/config";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import { loadWeb3MoralisProviderLight } from "../../../utils/pagesUtils";
 
@@ -88,6 +88,8 @@ export function SubpageNews() {
       console.log("also called");
       setSubmissionVisibility(false);
       setGeneralInfo("Article submitted successfully!");
+      setTitle("");
+      setUrl("");
       getRankedArticles();
     }
   }, [saveArticleResult]);
@@ -108,6 +110,25 @@ export function SubpageNews() {
     }
   );
 
+  const { fetch: getUserRoles, data: userRoles, error: getUserRolesError, isLoading: getUserRolesIsLoading } = useMoralisCloudFunction(
+    "getUserRoles",
+    {},
+    {
+      autoFetch: true,
+    }
+  );
+
+  useEffect(() => {
+    console.log("user roles ", userRoles);
+  }, [userRoles]);
+
+  useEffect(() => {
+    console.log("isSaveArticleLoading", saveArticleIsLoading);
+    if (saveArticleIsLoading) {
+      setSubmissionVisibility(false);
+    }
+  }, [saveArticleIsLoading]);
+
   if (error) {
     return <span>🤯</span>;
   }
@@ -125,6 +146,11 @@ export function SubpageNews() {
         "Only vaccinated people can submit an article... 😷💉 👀  Nah, we are kidding, you actually have to be contributor. Go to the ShineDAO main page to find out what that is and to complete the onboarding."
       );
     }
+
+    if (isSubmissionVisible) {
+      setGeneralInfo();
+      setSubmissionVisibility(!isSubmissionVisible);
+    }
   }
 
   async function handleLogout() {
@@ -138,7 +164,9 @@ export function SubpageNews() {
           <h2 style={{ color: "rgb(54 52 54)", display: "inline", paddingLeft: 10 }}>Degen News</h2>
         </span>{" "}
         <span style={{ paddingLeft: 15, paddingRight: 15 }}>|</span>
-        <span onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>Submit</span>
+        <span style={{ cursor: "pointer" }} onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>
+          Submit
+        </span>
         {!isAuthenticated ? (
           <div style={{ marginLeft: "auto" }}>
             <Button backgroundHover="#45e25a" onClick={() => loadWeb3MoralisProviderLight(authenticate, Moralis)}>
@@ -162,11 +190,15 @@ export function SubpageNews() {
         {isAuthenticated && (
           <div>
             <br></br>
-            <Text fontWeight="bold" color="#181717" padding="0px 0px 0px 10px"  >Welcome {user.get("username")}, submit your most interesting DeFi news!</Text>
+            <Text fontWeight="bold" color="#181717" padding="0px 0px 0px 10px">
+              Welcome {user.get("username")}, submit your most interesting DeFi news!
+            </Text>
           </div>
         )}
+        <PulseLoader style={{}} color={"#3f3d56"} loading={saveArticleIsLoading} size={15} margin={10} />
+
         {isSubmissionVisible && (
-          <div>
+          <div style={{ paddingLeft: 5 }}>
             <label htmlFor="title">Title: </label>
             <input value={title} onChange={e => handleTitleChange(e, setTitle)} type="text" id="title" name="title"></input>
             <br></br>
@@ -181,15 +213,15 @@ export function SubpageNews() {
         {false && <Button onClick={() => onboardContributor()}>Onboard Contributor</Button>}
         {generalError && ` ${generalError}`}
         {generalInfo && (
-          <div>
+          <div style={{ paddingLeft: 10 }}>
             {" "}
             {generalInfo}
             <br></br>
           </div>
         )}
 
-        {saveArticleError && `Error: ${saveArticleError}`}
-        {serviceError && <div style={{ color: "tomato" }}> {serviceError}</div>}
+        {saveArticleError && <div style={{ paddingLeft: 10, color: "tomato" }}> Error: {saveArticleError.message} </div>}
+        {serviceError && <div> {serviceError}</div>}
         {shnWeightedBalance &&
           shnWeightedBalance.length > 0 &&
           shnWeightedBalance.map(item => {
@@ -218,6 +250,7 @@ export function SubpageNews() {
                   title={article.title}
                   domain={article.domain}
                   userVotedAlready={article.userVotedAlready}
+                  userRoles={userRoles}
                 ></Article>
               );
             })}

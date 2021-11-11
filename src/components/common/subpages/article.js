@@ -8,7 +8,7 @@ import { Link } from "components/common";
 
 async function handleVote(articleId, submitVote, setServiceError, getRankedArticles) {
   console.log("article id ", articleId);
-  submitVote(articleId)
+  submitVote(articleId) // not sure if articleId param needs to be passed or it is already passed?
     .then(result => {
       console.log("result from voting", result);
       getRankedArticles();
@@ -20,13 +20,29 @@ async function handleVote(articleId, submitVote, setServiceError, getRankedArtic
     });
 }
 
-export function Article({ title, domain, articleId, url, userVotedAlready, createdAt, author, totalScore, setServiceError, getRankedArticles }) {
+async function handleDeletionOfArticle(deleteArticle, getRankedArticles) {
+  if (confirm("Are you sure that you want to delete the article")) {
+    await deleteArticle() 
+    console.log("deleted");
+    getRankedArticles();
+  }
+}
+
+export function Article({ title, domain, articleId, url, userVotedAlready, createdAt, author, totalScore, setServiceError, getRankedArticles, userRoles }) {
   const { theme } = useContext(ThemeContext);
 
   const { fetch: submitVote, data: voteSubmittedResult, error: voteSubmitError, isLoading: voteSubmitIsLoading } = useMoralisCloudFunction(
     "voteOnArticle",
     { articleId },
     { autoFetch: false }
+  );
+
+  const { fetch: deleteArticle, data: deleteArticleResult, error: deleteArticleError, isLoading: deleteArticleIsLoading } = useMoralisCloudFunction(
+    "deleteArticle",
+    { articleId },
+    {
+      autoFetch: false,
+    }
   );
 
   useEffect(() => {
@@ -53,6 +69,11 @@ export function Article({ title, domain, articleId, url, userVotedAlready, creat
       <SmallText theme={theme}>
         <span style={{ fontWeight: "normal" }}>{parseInt(totalScore)} points </span> <span>by</span> <span style={{ fontWeight: "normal" }}> {author},</span>{" "}
         <span> submitted {Number.parseFloat(hoursAgo).toFixed(2)} hours ago </span>
+        {userRoles && userRoles.includes("Moderator") && (
+          <span onClick={() => handleDeletionOfArticle(deleteArticle, getRankedArticles)} style={{ fontWeight: "bold", cursor: "pointer" }}>
+            Delete
+          </span>
+        )}
       </SmallText>
     </div>
   );
