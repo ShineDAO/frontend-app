@@ -3,6 +3,7 @@ import { ThemeContext } from "providers/ThemeProvider";
 import { useMoralisCloudFunction } from "react-moralis";
 import upVote from "assets/illustrations/upVote.png";
 import { SmallText } from "components/common";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import { Link } from "components/common";
 
@@ -22,7 +23,7 @@ async function handleVote(articleId, submitVote, setServiceError, getRankedArtic
 
 async function handleDeletionOfArticle(deleteArticle, getRankedArticles) {
   if (confirm("Are you sure that you want to delete the article")) {
-    await deleteArticle() 
+    await deleteArticle();
     console.log("deleted");
     getRankedArticles();
   }
@@ -61,7 +62,10 @@ export function Article({ title, domain, articleId, url, userVotedAlready, creat
     <div style={{ paddingLeft: 10 }}>
       <div style={{ fontWeight: "bold" }}>
         {!userVotedAlready && (
-          <img style={{ cursor: "pointer", height: 18, marginRight: 5 }} onClick={() => handleVote(articleId, submitVote, setServiceError, getRankedArticles)} src={upVote}></img>
+          <div style={{ display: "inline-block" }}>
+            <PulseLoader style={{}} color={"#3f3d56"} loading={voteSubmitIsLoading} size={3} margin={2} />
+            <img style={{ cursor: "pointer", height: 18, marginRight: 5 }} onClick={() => handleVote(articleId, submitVote, setServiceError, getRankedArticles)} src={upVote}></img>
+          </div>
         )}
         <Link href={url}>{title} </Link>
         <span style={{ fontWeight: "normal", fontSize: "small", color: "#a2a2a2" }}>({domain}) </span>
