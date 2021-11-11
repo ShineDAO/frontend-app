@@ -190,7 +190,7 @@ export function SubpageNews() {
         {isAuthenticated && (
           <div>
             <br></br>
-            <Text fontWeight="bold" color="#181717" padding="0px 0px 0px 10px">
+            <Text color="#181717" padding="0px 0px 0px 10px">
               Welcome {user.get("username")}, submit your most interesting DeFi news!
             </Text>
           </div>
