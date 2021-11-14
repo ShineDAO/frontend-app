@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Link = styled.a`
-  color: rgb(54, 52, 54);
-
+  color: #000000;
+  font-weight: 500;
 
   &:visited {
     color: #a2a2a2;

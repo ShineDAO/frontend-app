@@ -9,7 +9,7 @@ export const Text = styled.div`
 `;
 
 export const SmallText = styled.div`
-  color: ${({ color, theme }) => color || (theme === "light" ? "#181717" : "#181717")};
-  font-size: small;
-  margin-bottom: 20px;
+  color: ${({ color, theme }) => color || (theme === "light" ? "#a2a2a2" : "#a2a2a2")};
+  font-size: 9pt;
+  margin-bottom: 8px;
 `;

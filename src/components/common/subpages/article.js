@@ -29,7 +29,7 @@ async function handleDeletionOfArticle(deleteArticle, getRankedArticles) {
   }
 }
 
-export function Article({ title, domain, articleId, url, userVotedAlready, createdAt, author, totalScore, setServiceError, getRankedArticles, userRoles }) {
+export function Article({ title, domain, articleId, url, userVotedAlready, createdAt, author, totalScore, setServiceError, getRankedArticles, userRoles, index }) {
   const { theme } = useContext(ThemeContext);
 
   const { fetch: submitVote, data: voteSubmittedResult, error: voteSubmitError, isLoading: voteSubmitIsLoading } = useMoralisCloudFunction(
@@ -61,10 +61,12 @@ export function Article({ title, domain, articleId, url, userVotedAlready, creat
   return (
     <div style={{ paddingLeft: 10 }}>
       <div style={{ fontWeight: "bold" }}>
+      <h4 style={{ display: "inline-block", marginRight: 5, color: "#a2a2a2"  }}>{index+1}. </h4>
+
         {!userVotedAlready && (
           <div style={{ display: "inline-block" }}>
             <PulseLoader style={{}} color={"#3f3d56"} loading={voteSubmitIsLoading} size={3} margin={2} />
-            <img style={{ cursor: "pointer", height: 18, marginRight: 5 }} onClick={() => handleVote(articleId, submitVote, setServiceError, getRankedArticles)} src={upVote}></img>
+            <img style={{ cursor: "pointer", height: 13, marginRight: 3 }} onClick={() => handleVote(articleId, submitVote, setServiceError, getRankedArticles)} src={upVote}></img>
           </div>
         )}
         <Link href={url}>{title} </Link>

@@ -91,6 +91,7 @@ export function SubpageNews() {
       setTitle("");
       setUrl("");
       getRankedArticles();
+      window.location.reload(true); // reload the page because there is a bug with multiple submissions
     }
   }, [saveArticleResult]);
 
@@ -243,6 +244,7 @@ export function SubpageNews() {
                   setServiceError={setServiceError}
                   totalScore={article.totalScore}
                   key={`key-${index}`}
+                  index={index}
                   author={article.author}
                   url={article.url}
                   createdAt={article.createdAt}
