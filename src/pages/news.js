@@ -11,7 +11,7 @@ export default ({ location }) => {
   return (
     <MoralisProvider appId="jTkB07PzkYA1pq8KpEaR3oDOApdmSpgJeCSXgJYF" serverUrl="https://fsnbzd9rxwph.usemoralis.com:2053/server">
       <Layout position="absolute" bottom="4px" width="100%" height="60px">
-        <SEO />
+        <SEO title="Degen News" description="Hacker News for DeFi"/>
         <Header />
 
 
