@@ -384,9 +384,11 @@ export function renderPage(
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div>
               <p style={{ textAlign: "center" }}>
-                Nice job! You are almost there! <br></br> After claiming your reward, you will be an official ShineDAO's contributor. The reward will be airdropped to your address
-                on Polygon/Matic chain in few minutes.
+                Nice job! You are almost there! <br></br> You can claim your reward now by clicking on the button below and you will become an official ShineDAO's contributor. <br></br>The reward will be airdropped to your address
+                on Polygon/Matic chain in few minutes.<br></br> While you are waiting, check out the video below to understand our DAO a bit better.
               </p>
+              <div style={{position: "relative", paddingBottom: "56.25%", height: 0}}><iframe src="https://www.loom.com/embed/21aa8159a7774a349ac680e1151a73e7" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}></iframe></div>
+              <br></br>
             </div>
             <div>
               {registrationSuccess !== true && !loading && (
@@ -411,6 +413,7 @@ export function renderPage(
                 </Button>
               )}
               <br></br>
+              
               <div style={{ marginTop: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
                 {" "}
                 <PulseLoader style={{}} color={"#3f3d56"} loading={loading} size={15} margin={2} />
@@ -421,6 +424,7 @@ export function renderPage(
                 )}
               </div>
             </div>
+            
             <br></br>
             <br></br>
             {contributorDetected && !loading && (
