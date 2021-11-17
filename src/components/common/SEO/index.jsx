@@ -1,20 +1,11 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import Thumbnail from 'assets/thumbnail/shine_thumbnail.png';
-import {
-  url,
-  defaultDescription,
-  social,
-  defaultTitle,
-  socialLinks,
-  address,
-  contact,
-  legalName,
-  foundingDate,
-  logo,
-} from 'data/config';
+import React from "react";
+import Helmet from "react-helmet";
+import Thumbnail from "assets/thumbnail/shine_thumbnail.png";
+import DegenNews from "assets/illustrations/degen_news.png";
 
-export const SEO = ({ title = defaultTitle, description = defaultDescription, location = '' }) => {
+import { url, defaultDescription, social, defaultTitle, socialLinks, address, contact, legalName, foundingDate, logo } from "data/config";
+
+export const SEO = ({ title = defaultTitle, description = defaultDescription, location = "", useDegenNews = false }) => {
   const structuredDataOrganization = `{ 
 		"@context": "http://schema.org",
 		"@type": "Organization",
@@ -66,8 +57,8 @@ export const SEO = ({ title = defaultTitle, description = defaultDescription, lo
       <meta name="twitter:site" content={social.twitter} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={`https://shinedao.finance`+Thumbnail} />
-      <meta name="twitter:image:src" content={`https://shinedao.finance`+Thumbnail} />
+      <meta name="twitter:image" content={useDegenNews ? `https://shinedao.finance` + DegenNews : `https://shinedao.finance` + Thumbnail} />
+      <meta name="twitter:image:src" content={useDegenNews ? `https://shinedao.finance` + DegenNews : `https://shinedao.finance` + Thumbnail} />
       <script type="application/ld+json">{structuredDataOrganization}</script>
       <link rel="publisher" href={socialLinks.google} />
       <title>{title}</title>

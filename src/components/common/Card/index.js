@@ -28,7 +28,7 @@ export const MobileDiv = styled.div`
   width: ${({ width }) => width || "80%"};
   margin: 0 auto;
   @media (max-width: 960px) {
-    width: 80%;
+    width: ${({ mobileWidth }) => mobileWidth || "80%"};
     margin: 0 auto;
   }
 `;
