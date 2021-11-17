@@ -23,7 +23,7 @@ export const HowToJoin = () => {
               <h2 theme={theme}>TIER 1</h2>
               <p className="frame1" theme={theme}>
                 {" "}
-                &#62; 15.000 SHN{" "}
+                &#62; 15k SHN{" "}
               </p>
               <p className="frame2" theme={theme}>
                 {" "}
@@ -35,7 +35,7 @@ export const HowToJoin = () => {
             </JoinCard>
             <JoinCard theme={theme}>
               <h2>TIER 2</h2>
-              <p className="frame1"> &#62; 50.000 SHN </p>
+              <p className="frame1"> &#62; 50k </p>
               <p className="frame2">
                 {" "}
                 {theme === "light" ? "❓" : "❔"} Seed-sale <br></br> ✅ IDO{" "}
@@ -46,7 +46,7 @@ export const HowToJoin = () => {
             </JoinCard>
             <JoinCard theme={theme}>
               <h2>TIER 3</h2>
-              <p className="frame1"> &#62; 200.000 SHN </p>
+              <p className="frame1"> &#62; 200k SHN </p>
               <p className="frame2">
                 ✅ Seed-sale <br></br>✅ IDO
               </p>
@@ -56,7 +56,7 @@ export const HowToJoin = () => {
             </JoinCard>
             <JoinCard theme={theme}>
               <h2>COMMITTEE</h2>
-              <p className="frame1"> &#62; 400.000 SHN </p>
+              <p className="frame1"> &#62; 400k SHN </p>
               <p className="frame2">
                 ✅ Seed-sale <br></br>✅ IDO{" "}
               </p>
