@@ -95,13 +95,6 @@ export function SubpageNews() {
     }
   }, [saveArticleResult]);
 
-
-  useEffect(() => {
-    shnPriceData && console.log("data ", shnPriceData);
-    
-  }, [shnPriceData]);
-
-
   const { fetch: onboardContributor, data: onboardContributorResponse, error: onboardContributorError, isLoading: rankedArticlesisLoading } = useMoralisCloudFunction(
     "onboardContributor",
     {},
@@ -117,6 +110,10 @@ export function SubpageNews() {
       autoFetch: true,
     }
   );
+
+  useEffect(() => {
+    shnPriceData && console.log("data ", shnPriceData);
+  }, [shnPriceData]);
 
   const { fetch: getShnWeightedBalance, data: shnWeightedBalance, error: shnWeightedBalanceError, isLoading: shnWeightedIsLoading } = useMoralisCloudFunction(
     "getShnWeightedBalance",
@@ -184,7 +181,7 @@ export function SubpageNews() {
           Submit
         </span>
         <span style={{ paddingLeft: 15, paddingRight: 15 }}>|</span>
-        <span style={{ cursor: "pointer" }} onClick={() => window.open("https://docs.shinedao.finance/community/degen-news","_self")}>
+        <span style={{ cursor: "pointer" }} onClick={() => window.open("https://docs.shinedao.finance/community/degen-news", "_self")}>
           FAQ
         </span>
         {!isAuthenticated ? (
@@ -215,7 +212,14 @@ export function SubpageNews() {
             </Text>
             <br></br>
             <Text color="#181717" padding="0px 0px 0px 10px">
-              Current SHN price: <a style={{cursor:"pointer", color:"blue"}} onClick={( )=> window.open("https://info.quickswap.exchange/pair/0xf6467b4178d54251d253ac0095f31444f0f6efbc", "_self")} > ${parseFloat(shnPriceData).toFixed(4)}</a>
+              Current SHN price:{" "}
+              <a
+                style={{ cursor: "pointer", color: "blue" }}
+                onClick={() => window.open("https://info.quickswap.exchange/pair/0xf6467b4178d54251d253ac0095f31444f0f6efbc", "_self")}
+              >
+                {" "}
+                ${parseFloat(shnPriceData).toFixed(4)}
+              </a>
             </Text>
           </div>
         )}
