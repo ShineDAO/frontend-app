@@ -168,6 +168,10 @@ export function SubpageNews() {
         <span style={{ cursor: "pointer" }} onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>
           Submit
         </span>
+        <span style={{ paddingLeft: 15, paddingRight: 15 }}>|</span>
+        <span style={{ cursor: "pointer" }} onClick={() => window.open("https://docs.shinedao.finance/community/degen-news","_self")}>
+          FAQ
+        </span>
         {!isAuthenticated ? (
           <div style={{ marginLeft: "auto" }}>
             <Button backgroundHover="#45e25a" onClick={() => loadWeb3MoralisProviderLight(authenticate, Moralis)}>
