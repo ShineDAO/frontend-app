@@ -2,6 +2,7 @@ import React from "react";
 import Helmet from "react-helmet";
 import Thumbnail from "assets/thumbnail/shine_thumbnail.png";
 import DegenNews from "assets/illustrations/degen_news.png";
+import OGDegenNews from "assets/illustrations/og_degen_news.png";
 
 import { url, defaultDescription, social, defaultTitle, socialLinks, address, contact, legalName, foundingDate, logo } from "data/config";
 
@@ -43,13 +44,13 @@ export const SEO = ({ title = defaultTitle, description = defaultDescription, lo
   return (
     <Helmet>
       <meta name="description" content={description} />
-      <meta name="image" content={useDegenNews ? DegenNews : Thumbnail} />
+      <meta name="image" content={useDegenNews ? OGDegenNews : Thumbnail} />
 
       <meta property="og:url" content={`${url}${location}/`} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={useDegenNews ? DegenNews : Thumbnail} />
+      <meta property="og:image" content={useDegenNews ? OGDegenNews : Thumbnail} />
       <meta property="fb:app_id" content={social.facebook} />
 
       <meta name="twitter:card" content="summary" />
