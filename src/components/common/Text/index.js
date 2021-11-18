@@ -6,6 +6,12 @@ export const Text = styled.div`
   font-size: ${({ fontSize }) => fontSize || "16px"};
   margin: ${({ margin }) => margin || "0"};
   padding: ${({ padding }) => padding || "0"};
+  float: ${({ float }) => float || "none"};
+
+  @media (max-width: 960px) {
+    float: ${({ disableMobileFloat,float }) => disableMobileFloat? "none" : float};
+    
+  }
 `;
 
 export const SmallText = styled.div`

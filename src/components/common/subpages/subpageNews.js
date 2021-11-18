@@ -207,14 +207,13 @@ export function SubpageNews() {
         {isAuthenticated && shnPriceData && (
           <div>
             <br></br>
-            <Text color="#181717" padding="0px 0px 0px 10px">
+            <Text style={{display:"inline-block"}} color="#181717" padding="0px 0px 0px 10px">
               Welcome {user.get("username")}, submit your most interesting DeFi news!
             </Text>
-            <br></br>
-            <Text color="#181717" padding="0px 0px 0px 10px">
+            <Text disableMobileFloat="true" float="right" style={{display:"inline-block",  marginRight:8}} color="#ffa547" padding="0px 0px 0px 10px">
               Current SHN price:{" "}
               <a
-                style={{ cursor: "pointer", color: "blue" }}
+                style={{ cursor: "pointer", color: "#6c6c6f" }}
                 onClick={() => window.open("https://info.quickswap.exchange/pair/0xf6467b4178d54251d253ac0095f31444f0f6efbc", "_self")}
               >
                 {" "}
