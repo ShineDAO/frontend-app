@@ -95,11 +95,26 @@ export function SubpageNews() {
     }
   }, [saveArticleResult]);
 
+
+  useEffect(() => {
+    shnPriceData && console.log("data ", shnPriceData);
+    
+  }, [shnPriceData]);
+
+
   const { fetch: onboardContributor, data: onboardContributorResponse, error: onboardContributorError, isLoading: rankedArticlesisLoading } = useMoralisCloudFunction(
     "onboardContributor",
     {},
     {
       autoFetch: false,
+    }
+  );
+
+  const { fetch: getShnPrice, data: shnPriceData, error: shnPriceError, isLoading: shnPriceIsLoading } = useMoralisCloudFunction(
+    "getShnPrice",
+    {},
+    {
+      autoFetch: true,
     }
   );
 
@@ -192,11 +207,15 @@ export function SubpageNews() {
             src="https://aws1.discourse-cdn.com/standard21/uploads/shinedao/original/1X/dca391ba2f0d2a5f8487017e7deb6931b46b6288.jpeg"
           ></img>
         )}
-        {isAuthenticated && (
+        {isAuthenticated && shnPriceData && (
           <div>
             <br></br>
             <Text color="#181717" padding="0px 0px 0px 10px">
               Welcome {user.get("username")}, submit your most interesting DeFi news!
+            </Text>
+            <br></br>
+            <Text color="#181717" padding="0px 0px 0px 10px">
+              Current SHN price: <a style={{cursor:"pointer", color:"blue"}} onClick={( )=> window.open("https://info.quickswap.exchange/pair/0xf6467b4178d54251d253ac0095f31444f0f6efbc", "_self")} > ${parseFloat(shnPriceData).toFixed(4)}</a>
             </Text>
           </div>
         )}
