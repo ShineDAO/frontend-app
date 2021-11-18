@@ -143,11 +143,11 @@ export function SubpageNews() {
   }, [saveArticleIsLoading]);
 
   if (error) {
-    return <span>🤯</span>;
+    return <span>🤯 Oops, there has been some error. Please hard refresh the page to clean the storage. (Mac users: Hold down Shift and click the Reload button. Windows users: hold down Ctrl and then press F5) </span>;
   }
 
   if (isLoading) {
-    return <span>🙄</span>;
+    return <span>🙄 loading...</span>;
   }
 
   function handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError) {
