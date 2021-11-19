@@ -19,7 +19,8 @@ function compare(a, b) {
 }
 
 export function SubpageNews() {
-  const { authenticate, isAuthenticated, user, Moralis } = useMoralis();
+  const { Moralis } = useMoralis();
+  const { authenticate, isAuthenticated, user } = useMoralis();
   const { data: articles, error, isLoading } = useMoralisQuery("Article");
   const { data: userData, error: userError, isLoading: userisLoading } = useMoralisQuery("User");
 

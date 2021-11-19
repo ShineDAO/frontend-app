@@ -47,10 +47,6 @@ export function Article({ title, domain, articleId, url, userVotedAlready, creat
   );
 
   useEffect(() => {
-    console.log("url ", url)
-  }, [url]);
-
-  useEffect(() => {
     if (voteSubmitError && voteSubmitError.message == "Validation failed. Please login to continue.") {
       setServiceError("Only authenticated users can upvote. Please try to connect your wallet");
     } else if (voteSubmitError && voteSubmitError.message == "User already voted") {
