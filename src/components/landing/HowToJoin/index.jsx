@@ -71,21 +71,28 @@ export const HowToJoin = () => {
           </p>
           <WrapperButton>
             <LearnButton onClick={() => window.open("https://v2.info.uniswap.org/pair/0x165c6e50ed0ced21c0192fac26c1affb0dea5c28", "_blank", "noopener")} theme={theme}>
-              GET SHN TOKEN (ETH Mainnet)
+              GET SHN TOKEN (ETH mainnet)
             </LearnButton>
-            <LearnButton
-              theme={theme}
-              onClick={() =>
-                utils.addToWatchlist({
-                  address: "0x1C7ede23b1361acC098A1e357C9085D131b34a01", // The address that the token is at.
-                  symbol: "SHN", // A ticker symbol or shorthand, up to 5 chars.
-                  decimals: 18, // The number of decimals in the token
-                  image: "https://i.ibb.co/mRKYzwB/shine-logo-256.png", // A string url of the token logo
-                })
-              }
-            >
-              Add SHN to MetaMask (ETH Mainnet)
+
+            <LearnButton onClick={() => window.open("https://info.quickswap.exchange/token/0x53d76f967de13e7f95e90196438dce695ecfa957", "_blank", "noopener")} theme={theme}>
+              GET SHN TOKEN (Polygon/Matic network)
             </LearnButton>
+
+            {false && (
+              <LearnButton
+                theme={theme}
+                onClick={() =>
+                  utils.addToWatchlist({
+                    address: "0x1C7ede23b1361acC098A1e357C9085D131b34a01", // The address that the token is at.
+                    symbol: "SHN", // A ticker symbol or shorthand, up to 5 chars.
+                    decimals: 18, // The number of decimals in the token
+                    image: "https://i.ibb.co/mRKYzwB/shine-logo-256.png", // A string url of the token logo
+                  })
+                }
+              >
+                Add SHN to MetaMask (ETH Mainnet)
+              </LearnButton>
+            )}
           </WrapperButton>
         </Details>
       </HowToJoinWrapper>
