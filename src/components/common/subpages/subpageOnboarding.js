@@ -312,17 +312,17 @@ export function renderPage(
                 <br></br>
                 <b>- Motivation:</b> What brings you here?
                 <br></br>
-                <b>- Experience:</b> (Content / Marketing / Core Contracts / Frontend/ Partnerships / UX ,...)
+                <b>- Experience:</b> (Content / Marketing / Core Contracts / Frontend/ Partnerships / UX, ...)
                 <br></br>
-                <b>- Specific Skills:</b> (Copywriting, Podcasting, Java, JS, HTML, CSS, Python, Solidity, ... )<br></br>
+                <b>- Specific skills:</b> (Copywriting, Podcasting, Java, JS, HTML, CSS, Python, Solidity, ... )<br></br>
                 <b>- Where do you see yourself contributing: </b> (Product and Tech Guild / Growth Guild / Hunting Guild / Infrastructure Guild )<br></br>
-                <b>- Bandwidth:</b> (~10 hours / week).
+                <b>- Bandwidth:</b> (~10 hours / week)
               </div>
               <br></br> <br></br>
               <div style={{ textAlign: "center" }}>
                 <h4> Here are ShineDAO's intro resources if you need more information:</h4>
                 <br></br>
-                To be able to understand what how ShineDAO works please read our documentation&nbsp;
+                To be able to understand what how ShineDAO works please read our &nbsp;
                 <a href="https://docs.shinedao.finance/" target="_blank">
                   documentation.
                 </a>
