@@ -238,14 +238,16 @@ export function renderPage(
               <div> "Welcome back, please connect your wallet again" </div>
             ) : (
               <div>
-                <h2 style={{ textAlign: "center" }}>Become a contributor</h2>
+                <h2 style={{ textAlign: "center" }}>Join us</h2>
                 <br></br>
 
                 <p style={{}}>
-                  In this onboarding process we are going to set up your contributor profile, so that you can start earning SHN automatically. We will introduce you to our tool
-                  stack and share recourses that will allow you to understand how you can <b>get involved regardless of your background, skill level, or availability.</b>
+                  In this onboarding process we are going to set up your profile, so that you can start earning SHN automatically. We will introduce you to our tool stack and share
+                  recourses that will allow you to understand how you can <b>get involved regardless of your background, skill level, or availability.</b>
                   <br></br>
                   <br></br> If you’re successful in completing all of the steps, you’ll earn your first {pagesUtils.baseTokenReward * 4} SHN 🌟
+                  <br></br>
+                  <br></br> <i>Note: If you are a mobile user please only use the Metamask app for mobile to complete this onboarding</i>
                 </p>
               </div>
             )}
@@ -280,13 +282,6 @@ export function renderPage(
               <Button style={{ marginLeft: 15 }} onClick={() => pagesUtils.verifyServer(accessCode, setTokenReward, setServerVerified)}>
                 VERIFY
               </Button>
-              <br></br>
-              <p style={{ textAlign: "center" }}>
-                <i>
-                  Note: If you have problems on your mobile (mostly Android phones) with joining our Discord, just copy this url <i>https://discord.com/invite/QkhbP7bZrj</i>{" "}
-                  manually to a browser outside the wallet app{" "}
-                </i>
-              </p>
             </div>
           </div>
         ) : (
