@@ -389,6 +389,10 @@ export function renderPage(
               </p>
               <div style={{position: "relative", paddingBottom: "56.25%", height: 0}}><iframe src="https://www.loom.com/embed/21aa8159a7774a349ac680e1151a73e7" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}></iframe></div>
               <br></br>
+              <p  style={{ textAlign: "center" }} >
+              Thats it! You are eligible to earn additional SHN by just posting in our discord. Note that right now you have a limited access of our discord
+              For full access you need to get at least 5000 SHN and check the <b>#⭐join</b> channel in our discord.
+              </p>
             </div>
             <div>
               {registrationSuccess !== true && !loading && (
