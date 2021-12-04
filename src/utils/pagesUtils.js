@@ -99,6 +99,10 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
       setTokenReward(baseTokenReward * 4);
       setCurrentPage(currentPage + 1);
     }
+    //adding this below because coinbase wallet on mobile wallet cannot pass this step otherwise.
+    setAddedToMetamask(true);
+    setTokenReward(baseTokenReward * 4);
+    setCurrentPage(currentPage + 1);
   } catch (error) {
     console.log(error);
     //adding this below because coinbase wallet on mobile wallet cannot pass this step otherwise.

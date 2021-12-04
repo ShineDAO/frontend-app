@@ -10,7 +10,7 @@ import * as pagesUtils from "../../../utils/pagesUtils";
 const introductionsChannel = "https://discord.com/channels/785582893572948060/868084312455651348";
 const inviteLink = "https://discord.com/invite/QkhbP7bZrj";
 const authorizeAccountLink = `https://discord.com/api/oauth2/authorize?response_type=token&client_id=893462659737985114&state=15773059ghq9183habn&scope=identify&redirect_uri=${process.env.GATSBY_REDIRECT_URI}`;
-const getShnLink = "https://docs.shinedao.finance/community/shn-token"
+const getShnLink = "https://docs.shinedao.finance/community/shn-token";
 export function SubpageOnboarding({ location }) {
   const { Moralis } = useMoralis();
 
@@ -280,6 +280,13 @@ export function renderPage(
               <Button style={{ marginLeft: 15 }} onClick={() => pagesUtils.verifyServer(accessCode, setTokenReward, setServerVerified)}>
                 VERIFY
               </Button>
+              <br></br>
+              <p style={{ textAlign: "center" }}>
+                <i>
+                  Note: If you have problems on your mobile (mostly Android phones) with joining our Discord, just copy this url <i>https://discord.com/invite/QkhbP7bZrj</i>{" "}
+                  manually to a browser outside the wallet app{" "}
+                </i>
+              </p>
             </div>
           </div>
         ) : (
@@ -386,20 +393,21 @@ export function renderPage(
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div>
               <p style={{ textAlign: "center" }}>
-                Nice job! You are almost there! <br></br> To get your official <b>⭐^1 (Contributor)</b> role and to access our closed channels, you will need <b style={{ color:"blue", cursor:"pointer"}} onClick={() => window.open(getShnLink, "_blank")} >5 000 SHN</b>{" "}
+                Nice job! You are almost there! <br></br> To get your official <b>⭐^1 (Contributor)</b> role and to access our closed channels, you will need{" "}
+                <b style={{ color: "blue", cursor: "pointer" }} onClick={() => window.open(getShnLink, "_blank")}>
+                  5 000 SHN
+                </b>{" "}
                 <br></br> <br></br>
                 <p style={{ textAlign: "left" }}>
                   <b>How can you earn additional SHN</b> <br></br>
                   We are tracking engagement on your messages in Discord and Forum to distribute weekly SHN rewards. What engagement are we looking for?<br></br>- Share alpha
-                  (interesting early stage projects)<br></br> - Share interesting news<br></br> - Give feedback on ShineDAO docs, processes, website<br></br> - Ask questions<br></br> -
-                  Pitch your Web3 ideas<br></br>{" "}
+                  (interesting early stage projects)<br></br> - Share interesting news<br></br> - Give feedback on ShineDAO docs, processes, website<br></br> - Ask questions
+                  <br></br> - Pitch your Web3 ideas<br></br>{" "}
                 </p>
               </p>
 
               <br></br>
-              <p style={{ textAlign: "center" }}>
-              Thats it! You will be able to earn SHN automatically by providing value to our community. Claim your first 50 SHN bellow!
-              </p>
+              <p style={{ textAlign: "center" }}>Thats it! You will be able to earn SHN automatically by providing value to our community. Claim your first 50 SHN bellow!</p>
             </div>
             <div>
               {registrationSuccess !== true && !loading && (
