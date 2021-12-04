@@ -73,7 +73,7 @@ export function SubpageOnboarding({ location }) {
                 Welcome onboard <b>{username}</b> !
               </p>
             </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <img style={{ borderRadius: "10%", boxShadow: "0 0 7px 1px" }} src={`https://cdn.discordapp.com/avatars/${accId}/${avatarId}.png`}></img>
               <br></br> <br></br>
               <br></br>
@@ -384,14 +384,24 @@ export function renderPage(
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div>
               <p style={{ textAlign: "center" }}>
-                Nice job! You are almost there! <br></br> You can claim your reward now by clicking on the button below and you will become an official ShineDAO's contributor. <br></br>The reward will be airdropped to your address
-                on Polygon/Matic chain in few minutes.<br></br> While you are waiting, check out the video below to understand our DAO a bit better.
+                Nice job! You are almost there! <br></br> You can claim your reward now by clicking on the button below and you will become an official ShineDAO's contributor.{" "}
+                <br></br>The reward will be airdropped to your address on Polygon/Matic chain in few minutes.<br></br> While you are waiting, check out the video below to
+                understand our DAO a bit better.
               </p>
-              <div style={{position: "relative", paddingBottom: "56.25%", height: 0}}><iframe src="https://www.loom.com/embed/21aa8159a7774a349ac680e1151a73e7" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}></iframe></div>
+              <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+                <iframe
+                  src="https://www.loom.com/embed/21aa8159a7774a349ac680e1151a73e7"
+                  frameborder="0"
+                  webkitallowfullscreen
+                  mozallowfullscreen
+                  allowfullscreen
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                ></iframe>
+              </div>
               <br></br>
-              <p  style={{ textAlign: "center" }} >
-              Thats it! You are eligible to earn additional SHN by just posting in our discord. Note that right now you have a limited access of our discord
-              For full access you need to get at least 5000 SHN and check the <b>#⭐join</b> channel in our discord.
+              <p style={{ textAlign: "center" }}>
+                Thats it! You are eligible to earn additional SHN by just posting in our discord. Note that right now you have a limited access of our discord For full access you
+                need to get at least 5000 SHN and check the <b>#⭐join</b> channel in our discord.
               </p>
             </div>
             <div>
@@ -417,7 +427,7 @@ export function renderPage(
                 </Button>
               )}
               <br></br>
-              
+
               <div style={{ marginTop: 20, display: "flex", flexDirection: "column", alignItems: "center" }}>
                 {" "}
                 <PulseLoader style={{}} color={"#3f3d56"} loading={loading} size={15} margin={2} />
@@ -428,7 +438,7 @@ export function renderPage(
                 )}
               </div>
             </div>
-            
+
             <br></br>
             <br></br>
             {contributorDetected && !loading && (
