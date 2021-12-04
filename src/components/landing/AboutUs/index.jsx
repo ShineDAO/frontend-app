@@ -19,7 +19,7 @@ export const WhatIsThisAbout = () => {
   return (
     <Wrapper id="about">
       <AboutUsWrapper>
-        <h2>Become a Contributor </h2>
+        <h2>Become a Contributor ⭐^1</h2>
         <Details theme={theme}>
           <div className="what">
             <IllustrationMan src={man} alt="Towards the stars! Are you ready?" />
