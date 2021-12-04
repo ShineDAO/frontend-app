@@ -13,7 +13,7 @@ export const HowToJoin = () => {
     <Wrapper id="about">
       <HowToJoinWrapper>
         <Details theme={theme}>
-          <h1>Become a Supporter</h1>
+          <h1>Become a Supporter ⭐^2</h1>
           <p>
             By acquiring a predefined amount of Shine tokens (SHN), you are not only supporting our mission, but also get community benefits such as access to seed sales and IDOs
             of incubated projects.

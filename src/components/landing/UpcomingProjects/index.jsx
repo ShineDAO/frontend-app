@@ -33,7 +33,7 @@ export const UpcomingProjects = () => {
 
               <NameWrapper>
                 <Avatar imageUrl={DefiOptionsLogo} alt="Defi options logo" />
-                <h2>Defi Options DAO</h2>
+                <h2>DeFi Options DAO</h2>
               </NameWrapper>
 
             </HeaderWrapper>
@@ -41,13 +41,13 @@ export const UpcomingProjects = () => {
               <TotalRaise theme={theme}>
                 <Text fontSize="20px" color={theme === 'light' ? '#3f3d56' : 'white'}>Total Raise</Text>
                 <Text fontSize="24px" color={theme === 'light' ? '#3f3d56' : 'white'} fontWeight={800}>
-                  $75k
+                  TBA
                 </Text>
               </TotalRaise>
               <FundingStage theme={theme}>
                 <Text fontSize="20px" color={theme === 'light' ? '#3f3d56' : 'white'}>Funding stage</Text>
                 <Text fontSize="24px" color={theme === 'light' ? '#3f3d56' : 'white'} fontWeight={800}>
-                  Seed Sale
+                  IDO
                 </Text>
               </FundingStage>
               
@@ -57,11 +57,11 @@ export const UpcomingProjects = () => {
                   <circle cx="4" cy="4" r="4" fill="#3F3D56" />
                 </svg>}
                 <TBAText style={{margin:'0 auto'}} color="#3F3D56" fontWeight={800}>
-                SOLD OUT {false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
+                Date: TBA{false && <DateCountdown mostSignificantFigure="hour" dateTo='August 19, 2021 20:30:00 GMT+03:00' />}
                 </TBAText>
                 
               </When>
-              <i>for Tier1 and Tier 2 sale is opening 30 mins after (3:30 PM UTC)</i>
+              {false && <i>for Tier1 and Tier 2 sale is opening 30 mins after (3:30 PM UTC)</i>}
 
             </BottomWrapper>
           </UpcomingWrapper>

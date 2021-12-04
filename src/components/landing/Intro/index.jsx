@@ -29,7 +29,7 @@ export const Intro = () => {
               <h4>ShineDAO makes it easy for contributors to get involved with new promising Web3 projects, and get rewarded with their tokens.</h4>
               <ButtonWrapper>
                 <JoinButton onClick={onJoinButtonClick} theme={theme}>
-                  BECOME A CONTRIBUTOR
+                  JOIN US
                 </JoinButton>
 
                 {false && (
@@ -48,7 +48,7 @@ export const Intro = () => {
               <h4>ShineDAO makes it easy for contributors to get involved with new promising Web3 projects, and get rewarded with their tokens.</h4>
               <ButtonWrapper>
                 <JoinButton onClick={onJoinButtonClick} theme={theme}>
-                  BECOME A CONTRIBUTOR
+                JOIN US
                 </JoinButton>
 
                 {false && (
