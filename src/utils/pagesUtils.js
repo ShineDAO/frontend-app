@@ -94,6 +94,10 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
       setCurrentPage(currentPage + 1);
     } else {
       console.log("Your loss!");
+      //adding this below because coinbase wallet on mobile wallet cannot pass this step otherwise.
+      setAddedToMetamask(true);
+      setTokenReward(baseTokenReward * 4);
+      setCurrentPage(currentPage + 1);
     }
   } catch (error) {
     console.log(error);
