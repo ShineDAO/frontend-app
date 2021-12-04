@@ -10,7 +10,7 @@ import * as pagesUtils from "../../../utils/pagesUtils";
 const introductionsChannel = "https://discord.com/channels/785582893572948060/868084312455651348";
 const inviteLink = "https://discord.com/invite/QkhbP7bZrj";
 const authorizeAccountLink = `https://discord.com/api/oauth2/authorize?response_type=token&client_id=893462659737985114&state=15773059ghq9183habn&scope=identify&redirect_uri=${process.env.GATSBY_REDIRECT_URI}`;
-
+const getShnLink = "https://docs.shinedao.finance/community/shn-token"
 export function SubpageOnboarding({ location }) {
   const { Moralis } = useMoralis();
 
@@ -73,7 +73,7 @@ export function SubpageOnboarding({ location }) {
                 Welcome onboard <b>{username}</b> !
               </p>
             </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
               <img style={{ borderRadius: "10%", boxShadow: "0 0 7px 1px" }} src={`https://cdn.discordapp.com/avatars/${accId}/${avatarId}.png`}></img>
               <br></br> <br></br>
               <br></br>
@@ -222,7 +222,7 @@ export function renderPage(
                 <br></br>
                 <p style={{ textAlign: "left" }}>
                   We need to pair your ETH address with your Discord account, so we can create an identity for you. This will enable contribution tracking and reward distribution
-                  process. Just by being active in the discord, you will earn some SHN tokens on weekly basis.
+                  process. Just by being active in Discord, you will earn some SHN tokens on weekly basis.
                 </p>
               </div>
               <br></br>
@@ -265,7 +265,9 @@ export function renderPage(
                 If you haven’t yet, join our Discord server. This is our main communication tool. Once you read through <b>#🏁start-here channel</b>, please verify.
                 <br></br>
                 <br></br>
-                If you’re in the server already, you can just press verify.
+                <p style={{ textAlign: "center" }}>
+                  <i>If you’re in the server already, you can just press verify.</i>
+                </p>
               </p>
               <br></br>
               <br></br>
@@ -312,7 +314,7 @@ export function renderPage(
                 <br></br>
                 <b>- Specific Skills:</b> (Copywriting, Podcasting, Java, JS, HTML, CSS, Python, Solidity, ... )<br></br>
                 <b>- Where do you see yourself contributing: </b> (Product and Tech Guild / Growth Guild / Hunting Guild / Infrastructure Guild )<br></br>
-                <b>- Bandwidth:</b> (~10 hours / week). We'd also suggest joining our weekly community call every Monday 5:30 pm UTC.
+                <b>- Bandwidth:</b> (~10 hours / week).
               </div>
               <br></br> <br></br>
               <div style={{ textAlign: "center" }}>
@@ -384,24 +386,19 @@ export function renderPage(
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div>
               <p style={{ textAlign: "center" }}>
-                Nice job! You are almost there! <br></br> You can claim your reward now by clicking on the button below and you will become an official ShineDAO's contributor.{" "}
-                <br></br>The reward will be airdropped to your address on Polygon/Matic chain in few minutes.<br></br> While you are waiting, check out the video below to
-                understand our DAO a bit better.
+                Nice job! You are almost there! <br></br> To get your official <b>⭐^1 (Contributor)</b> role and to access our closed channels, you will need <b style={{ color:"blue", cursor:"pointer"}} onClick={() => window.open(getShnLink, "_blank")} >5 000 SHN</b>{" "}
+                <br></br> <br></br>
+                <p style={{ textAlign: "left" }}>
+                  <b>How can you earn additional SHN</b> <br></br>
+                  We are tracking engagement on your messages in Discord and Forum to distribute weekly SHN rewards. What engagement are we looking for?<br></br>- Share alpha
+                  (interesting early stage projects)<br></br> - Share interesting news<br></br> - Give feedback on ShineDAO docs, processes, website<br></br> - Ask questions<br></br> -
+                  Pitch your Web3 ideas<br></br>{" "}
+                </p>
               </p>
-              <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
-                <iframe
-                  src="https://www.loom.com/embed/21aa8159a7774a349ac680e1151a73e7"
-                  frameborder="0"
-                  webkitallowfullscreen
-                  mozallowfullscreen
-                  allowfullscreen
-                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-                ></iframe>
-              </div>
+
               <br></br>
               <p style={{ textAlign: "center" }}>
-                Thats it! You are eligible to earn additional SHN by just posting in our discord. Note that right now you have a limited access of our discord For full access you
-                need to get at least 5000 SHN and check the <b>#⭐join</b> channel in our discord.
+              Thats it! You will be able to earn SHN automatically by providing value to our community. Claim your first 50 SHN bellow!
               </p>
             </div>
             <div>
