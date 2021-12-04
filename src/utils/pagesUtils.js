@@ -97,6 +97,10 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
     }
   } catch (error) {
     console.log(error);
+    //adding this below because coinbase wallet on mobile wallet cannot pass this step otherwise.
+    setAddedToMetamask(true);
+    setTokenReward(baseTokenReward * 4);
+    setCurrentPage(currentPage + 1);
   }
 
   //
@@ -231,7 +235,6 @@ export async function loadWeb3MoralisProviderLight(authenticate, Moralis) {
     console.log("logged out");
     handleChainChanged();
   });
-
 }
 
 export async function loadWeb3MoralisProvider(Moralis, setWalletStatus, setChainId, setCurrentAccount) {
