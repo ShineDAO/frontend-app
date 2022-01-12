@@ -53,6 +53,7 @@ export const TextContainer = styled.p`
 
 
 export const DescriptionLinksContainer = styled.div`
+    width:100%;
 
     display: flex;
     @media (max-width: 960px) {

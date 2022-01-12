@@ -5,7 +5,7 @@ const Image = styled.img`
   display: block;
   border-radius: 50%;
   width: 100%;
-  height: auto;
+  height: 100%;
 `;
 
 const Wrapper = styled.div`

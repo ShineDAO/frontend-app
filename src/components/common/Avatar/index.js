@@ -3,6 +3,6 @@ import Style from './styles';
 
 export const Avatar = ({ imageUrl, alt, width, height }) => (
   <Style.Wrapper width={width} height={height}>
-    <Style.Image src={imageUrl} alt={alt} />
+    <Style.Image src={require(`assets/illustrations/projects/${imageUrl}`)} alt={alt} />
   </Style.Wrapper>
 );

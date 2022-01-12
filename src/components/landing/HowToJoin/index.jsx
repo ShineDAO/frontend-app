@@ -74,7 +74,7 @@ export const HowToJoin = () => {
               GET SHN TOKEN (ETH mainnet)
             </LearnButton>
 
-            <LearnButton onClick={() => window.open("https://info.quickswap.exchange/token/0x53d76f967de13e7f95e90196438dce695ecfa957", "_blank", "noopener")} theme={theme}>
+            <LearnButton onClick={() => window.open("https://info.quickswap.exchange/#/token/0x53d76f967de13e7f95e90196438dce695ecfa957", "_blank", "noopener")} theme={theme}>
               GET SHN TOKEN (Polygon network)
             </LearnButton>
 

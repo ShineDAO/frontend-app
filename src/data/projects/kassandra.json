@@ -1,20 +1,20 @@
 {
-  "title": "DeFi Options DAO",
-  "image":"defi-options-dao-logo-new.png",
-  "shortDescription": "Defi Options is an open source decentralized options trading platform for Ethereum / EVM-compatible chains bringing a more capital efficient collateral allocation model and a more diversified options offer to DeFi.",
+  "title": "Kassandra DAO",
+  "image":"kassandra-logo-new.png",
+  "shortDescription": "Kassandra is a decentralized autonomous organization that governs a set of tokenized data-driven investment funds, bringing a new class of investment products to the DeFi ecosystem: actively managed investment baskets without compromising the pillars of decentralization. All investment products made available through the Kassandra Protocol are permissionless, non-custodial, and actively managed by a third party.",
   "links": {
-    "website": "https://defioptions.org",
-    "discord": "https://discord.gg/Mw7Akgtcka",
-    "docs": "https://docs.defioptions.org/",
-    "github": "https://github.com/DeFiOptions",
-    "tasks": "https://www.notion.so/DeFi-Options-DAO-ef46b38ed2f14eb6b37f8a23a808d204",
-    "lightpaper": "/Lightpaper_DeFiOptionsDAO.pdf",
-    "alpha": "https://app.defioptions.org/#/"
+    "website": "https://kassandra.finance/",
+    "discord": "https://discord.com/invite/fAqpbP6tFw", 
+    "docs": "https://kassandra.finance/about", 
+    "github": "https://github.com/KassandraFinance",
+    "tasks": "", 
+    "lightpaper": "https://drive.google.com/file/d/12jxIMtBVqaY7bMbLmt52Lo0xDFUURZsb/view",
+    "alpha": "https://demo.kassandra.finance/" 
   },
   "tokenomics": {
     "tokenDistributionImage": {
-      "dark": "DeFi_Options_Tokenomics_3_1.png",
-      "light": "DeFi_Options_Tokenomics_4.png"
+      "dark": "Kassandra_Tokenomics_Dark.png",
+      "light": "Kassandra_Tokenomics_Light.png"
     },
     "seedSale": {
       "total": "",
@@ -57,12 +57,12 @@
     }
   },
   "frontendDetails": {
-    "totalRaise": "$180k",
-    "incubationStage": "IDO",
-    "totalSupply": "100M DOD",
-    "chain": "Polygon",
-    "roundAllocation": "10M DOD",
-    "rate": "$0.018 / 1 DOD"
+    "totalRaise": "$110k",
+    "incubationStage": "Private Sale",
+    "totalSupply": "100M KSAT",
+    "chain": "Polygon/Avalanche",
+    "roundAllocation": "2.25M KSAT",
+    "rate": "$0.049 / 1 KSAT"
   },
 
   "technicalDetails": {
@@ -419,32 +419,32 @@
       }
     ],
     "seed": {
-      "network": "0x1",
-      "date":"TBA",
-      "saleFinished": true,
-      "shineTokenAddress": "0x1C7ede23b1361acC098A1e357C9085D131b34a01",
-      "tokenAddress": "0xfc7e3cFA47fbF90310ec203F46fEe1af2771548c",
-      "saleAddress": "0xA5b84c8229115B82F39E2B85AB468CA432833c83",
-      "deployerAddress": "0x2C90Fa8C4F45b5A36a257E81DD49b2b7AD95F214",
-      "tokensOffered": "5000000000000000000000000",
-      "rate": 203333,
+      "network": "0x89",
+      "date":"Fri, 14 Jan 2022 15:00:00 GMT",
+      "saleFinished": false,
+      "shineTokenAddress": "0x53D76f967De13E7F95e90196438DCe695eCFA957",
+      "tokenAddress": "0x5B054D287d9Fedca11cc51C41fCdc0FF84d8b357",
+      "saleAddress": "0x7D6b97295ab8C4805252fdd6f50B27f669DDded8",
+      "deployerAddress": "0x9476B1348E7Bb2Cf99d315a285FeD16b5f0b3c11",
+      "tokensOffered": "2250000000000000000000000",
+      "rate": 47,
       "gas": 1500000,
       "caps":{
         "tier1":{
           "status":"true",
-          "amount":"1000"
+          "amount":"500"
         },
         "tier2":{
           "status":"true",
-          "amount":"2000"
+          "amount":"1000"
         },
         "tier3":{
           "status":"true",
-          "amount":"4000"
+          "amount":"2000"
         },
         "tier4":{
           "status":"true",
-          "amount":"8000"
+          "amount":"4000"
         }    
       },
       "abi": [
@@ -610,7 +610,7 @@
           "name": "shineToken",
           "outputs": [
             {
-              "internalType": "contract ShineToken",
+              "internalType": "contract KSAT",
               "name": "",
               "type": "address"
             }
@@ -855,7 +855,7 @@
           "name": "getTier",
           "outputs": [
             {
-              "internalType": "enum DefiOptionsSeed.Tiers",
+              "internalType": "enum KassandraSeed.Tiers",
               "name": "",
               "type": "uint8"
             }
@@ -902,530 +902,77 @@
         }
       ],
       "metamaskDetails": {
-        "address": "0xfc7e3cFA47fbF90310ec203F46fEe1af2771548c",
-        "symbol": "DOD",
+        "address": "",
+        "symbol": "",
         "decimals": 18,
-        "image": "https://i.ibb.co/5r32d5R/defi-options-dao-logo.png"
+        "image": ""
       }
     },
     "ido": {
-      "network": "0x539",
+      "network": "",
       "date":"TBA",
       "saleFinished": false,
-      "shineTokenAddress": "0x53D76f967De13E7F95e90196438DCe695eCFA957",
-      "tokenAddress": "0x622AE993BB3Fe2a98d63Bc4FcAD821b6ac849593",
-      "saleAddress": "0xfaC2Ad093B457A442c4af05FB267E8B1182EC482",
-      "deployerAddress": "0x661B6781352551D240AFf55205eCE2EB652143d7",
-      "tokensOffered": "10000000000000000000000000",
+      "shineTokenAddress": "",
+      "tokenAddress": "",
+      "saleAddress": "",
+      "deployerAddress": "",
+      "tokensOffered": "",
       "rate": 203333,
       "gas": 1500000,
       "caps":{
         "tier1":{
           "status":"true",
-          "amount":"1000"
+          "amount":"500"
         },
         "tier2":{
           "status":"true",
-          "amount":"2000"
+          "amount":"1000"
         },
         "tier3":{
           "status":"true",
-          "amount":"4000"
+          "amount":"2000"
         },
         "tier4":{
           "status":"true",
-          "amount":"8000"
+          "amount":"4000"
         }    
       },
       "abiPath": "",
-      "abi": [
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "rate",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "weiRaised",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "name": "contributions",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "wallet",
-          "outputs": [
-            {
-              "internalType": "address payable",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "isSaleOpenForAll",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [],
-          "name": "renounceOwnership",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "owner",
-          "outputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "isOwner",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "relativeCap",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "name": "vestingPeriod",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "shineToken",
-          "outputs": [
-            {
-              "internalType": "contract ShineToken",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "name": "vestedBalances",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            }
-          ],
-          "name": "buyTokens",
-          "outputs": [],
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "transferOwnership",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "vault",
-          "outputs": [
-            {
-              "internalType": "contract __unstable__TokenVault",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "token",
-          "outputs": [
-            {
-              "internalType": "contract IERC20",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "rate",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address payable",
-              "name": "wallet",
-              "type": "address"
-            },
-            {
-              "internalType": "contract IERC20",
-              "name": "token",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "constructor"
-        },
-        {
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "fallback"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "purchaser",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "value",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "amount",
-              "type": "uint256"
-            }
-          ],
-          "name": "TokensPurchased",
-          "type": "event"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "_relativeCap",
-              "type": "uint256"
-            }
-          ],
-          "name": "setRelativeCap",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "tokenAddress",
-              "type": "address"
-            }
-          ],
-          "name": "setShineTokenAddress",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "bool",
-              "name": "_isSaleOpenForAll",
-              "type": "bool"
-            }
-          ],
-          "name": "allowAllTierAccess",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            }
-          ],
-          "name": "getShineTokenBalance",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "shineBalance",
-              "type": "uint256"
-            }
-          ],
-          "name": "getTier",
-          "outputs": [
-            {
-              "internalType": "enum DefiOptionsSeed.Tiers",
-              "name": "",
-              "type": "uint8"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "pure",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            }
-          ],
-          "name": "getContribution",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            }
-          ],
-          "name": "withdrawTokens",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        }
-      ],
+      "abi": [],
       "metamaskDetails": {
-        "address": "0x622AE993BB3Fe2a98d63Bc4FcAD821b6ac849593",
-        "symbol": "DOD",
+        "address": "",
+        "symbol": "",
         "decimals": 18,
-        "image": "https://i.ibb.co/5r32d5R/defi-options-dao-logo.png"
+        "image": ""
       }
     },
     "ganacheSeed": {
       "network": "0x539",
-      "date":"TBA",
+      "date":"Fri, 11 Jan 2022 15:00:00 GMT",
       "saleFinished": false,
-      "shineTokenAddress": "0x1C7ede23b1361acC098A1e357C9085D131b34a01",
-      "tokenAddress": "0xfc7e3cFA47fbF90310ec203F46fEe1af2771548c",
-      "saleAddress": "0xA5b84c8229115B82F39E2B85AB468CA432833c83",
-      "deployerAddress": "0x2C90Fa8C4F45b5A36a257E81DD49b2b7AD95F214",
-      "tokensOffered": "5000000000000000000000000",
-      "rate": 203333,
+      "shineTokenAddress": "0x8638801f67E10Bc58F3EEc17D3AE7Af0bE7cF463",
+      "tokenAddress": "0x7aC31423dC3510e451b060127a2d53C20f1B134d",
+      "saleAddress": "0xd252781B7a8C302fada871c4089B2fcB00e7Eb80",
+      "deployerAddress": "0xb4455d2dBF050f2FdfE36EB76372e09Cd326bf43",
+      "tokensOffered": "2250000000000000000000000",
+      "rate": 47,
       "gas": 1500000,
       "caps":{
         "tier1":{
           "status":"true",
-          "amount":"1000"
+          "amount":"500"
         },
         "tier2":{
           "status":"true",
-          "amount":"2000"
+          "amount":"1000"
         },
         "tier3":{
           "status":"true",
-          "amount":"4000"
+          "amount":"2000"
         },
         "tier4":{
           "status":"true",
-          "amount":"8000"
+          "amount":"4000"
         }    
       },
       "abi": [
@@ -1591,7 +1138,7 @@
           "name": "shineToken",
           "outputs": [
             {
-              "internalType": "contract ShineToken",
+              "internalType": "contract KSAT",
               "name": "",
               "type": "address"
             }
@@ -1836,7 +1383,7 @@
           "name": "getTier",
           "outputs": [
             {
-              "internalType": "enum DefiOptionsSeed.Tiers",
+              "internalType": "enum KassandraSeed.Tiers",
               "name": "",
               "type": "uint8"
             }
@@ -1883,501 +1430,48 @@
         }
       ],
       "metamaskDetails": {
-        "address": "0xfc7e3cFA47fbF90310ec203F46fEe1af2771548c",
-        "symbol": "DOD",
+        "address": "",
+        "symbol": "",
         "decimals": 18,
-        "image": "https://i.ibb.co/5r32d5R/defi-options-dao-logo.png"
+        "image": ""
       }
     },
     "ganacheIdo": {
-      "network": "0x539",
+      "network": "",
       "date":"TBA",
       "saleFinished": false,
-      "shineTokenAddress": "0xFBa6A0DF9770AD23715AF95FadaDfE5A352304eB",
-      "tokenAddress": "0x622AE993BB3Fe2a98d63Bc4FcAD821b6ac849593",
-      "saleAddress": "0xfaC2Ad093B457A442c4af05FB267E8B1182EC482",
-      "deployerAddress": "0x661B6781352551D240AFf55205eCE2EB652143d7",
-      "tokensOffered": "10000000000000000000000000",
+      "shineTokenAddress": "",
+      "tokenAddress": "",
+      "saleAddress": "",
+      "deployerAddress": "",
+      "tokensOffered": "",
       "rate": 203333,
       "gas": 1500000,
       "caps":{
         "tier1":{
           "status":"true",
-          "amount":"1000"
+          "amount":"500"
         },
         "tier2":{
           "status":"true",
-          "amount":"2000"
+          "amount":"1000"
         },
         "tier3":{
           "status":"true",
-          "amount":"4000"
+          "amount":"2000"
         },
         "tier4":{
           "status":"true",
-          "amount":"8000"
+          "amount":"4000"
         }    
       },
       "abiPath": "",
-      "abi": [
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "rate",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "weiRaised",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "name": "contributions",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "wallet",
-          "outputs": [
-            {
-              "internalType": "address payable",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "isSaleOpenForAll",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [],
-          "name": "renounceOwnership",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "owner",
-          "outputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "isOwner",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "relativeCap",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "name": "vestingPeriod",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "shineToken",
-          "outputs": [
-            {
-              "internalType": "contract ShineToken",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "name": "vestedBalances",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            }
-          ],
-          "name": "buyTokens",
-          "outputs": [],
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "transferOwnership",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "vault",
-          "outputs": [
-            {
-              "internalType": "contract __unstable__TokenVault",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "token",
-          "outputs": [
-            {
-              "internalType": "contract IERC20",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "rate",
-              "type": "uint256"
-            },
-            {
-              "internalType": "address payable",
-              "name": "wallet",
-              "type": "address"
-            },
-            {
-              "internalType": "contract IERC20",
-              "name": "token",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "constructor"
-        },
-        {
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "fallback"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "purchaser",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "value",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "amount",
-              "type": "uint256"
-            }
-          ],
-          "name": "TokensPurchased",
-          "type": "event"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "_relativeCap",
-              "type": "uint256"
-            }
-          ],
-          "name": "setRelativeCap",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "tokenAddress",
-              "type": "address"
-            }
-          ],
-          "name": "setShineTokenAddress",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "bool",
-              "name": "_isSaleOpenForAll",
-              "type": "bool"
-            }
-          ],
-          "name": "allowAllTierAccess",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            }
-          ],
-          "name": "getShineTokenBalance",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "shineBalance",
-              "type": "uint256"
-            }
-          ],
-          "name": "getTier",
-          "outputs": [
-            {
-              "internalType": "enum DefiOptionsSeed.Tiers",
-              "name": "",
-              "type": "uint8"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "pure",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            }
-          ],
-          "name": "getContribution",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "beneficiary",
-              "type": "address"
-            }
-          ],
-          "name": "withdrawTokens",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        }
-      ],
+      "abi": [],
       "metamaskDetails": {
-        "address": "0x622AE993BB3Fe2a98d63Bc4FcAD821b6ac849593",
-        "symbol": "DOD",
+        "address": "",
+        "symbol": "",
         "decimals": 18,
-        "image": "https://i.ibb.co/5r32d5R/defi-options-dao-logo.png"
+        "image": ""
       }
     }
   }
