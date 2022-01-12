@@ -149,7 +149,7 @@ export default function ProjectTemplate({ data }) {
       .then(function() {
         // always executed
       });
-  }, [ethAmountToSpend,currentNetwork]);
+  }, [ethAmountToSpend, currentNetwork]);
 
   useEffect(() => {
     console.log("sale progress 0 ", weiRaised);
@@ -169,7 +169,7 @@ export default function ProjectTemplate({ data }) {
       return chainId;
     }
   }
-  function getCoingeckoName(chainId){
+  function getCoingeckoName(chainId) {
     const chainMapper = {
       "0x1": "ethereum",
       "0x89": "matic-network",
@@ -276,11 +276,15 @@ export default function ProjectTemplate({ data }) {
                     ≈ {project.frontendDetails.rate}
                   </Text>
                 </RightStatsCard>
-                {isWalletEnabled && false &&(
+                {isWalletEnabled && false && (
                   <Card onClick={() => utils.addToWatchlist(project.technicalDetails[currentStatus].metamaskDetails)} borderRadius="4px" background="white" clickable width="100%" height="48px">
                     <Text fontWeight={800}>ADD {project.technicalDetails[currentStatus].metamaskDetails.symbol} TO METAMASK</Text>
                   </Card>
                 )}
+
+                <Text color="white" fontWeight={800}>
+                  ⚠️ Please carefully read the <a target="_blank" href="https://shinedao.medium.com/jan-14th-kassandra-dao-private-sale-8b9a1c2dd41"> announcement</a> before participating!
+                </Text>
               </CardBottomWrapper>
             </StatsCard>
             <TokenCard>
@@ -482,12 +486,15 @@ export default function ProjectTemplate({ data }) {
                           <Text color="gold" fontSize="14px" fontWeight={500}>
                             <i>
                               {" "}
-                              {!project.title.includes("Kassandra") && <div>Note: if you want to access vested balances from the seed stage please click{" "}
-                              <b style={{ color: "tomato", cursor: "pointer" }} onClick={() => setCurrentStatus("seed")}>
-                                here
-                              </b>
-                              .
-                              </div>}
+                              {!project.title.includes("Kassandra") && (
+                                <div>
+                                  Note: if you want to access vested balances from the seed stage please click{" "}
+                                  <b style={{ color: "tomato", cursor: "pointer" }} onClick={() => setCurrentStatus("seed")}>
+                                    here
+                                  </b>
+                                  .
+                                </div>
+                              )}
                             </i>
                           </Text>
                         </div>
