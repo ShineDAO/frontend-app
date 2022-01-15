@@ -435,7 +435,7 @@ export default function ProjectTemplate({ data }) {
               <br></br>
               {isWalletEnabled && (
                 <Details theme={theme}>
-                  <div>
+                  <div style={{width:"100%"}}>
                     <Text color="#aeaeae" fontWeight={100}>
                       <span>Current Network: {getNetworkName(currentNetwork)}</span>
                       <br />
