@@ -432,19 +432,19 @@
       "caps":{
         "tier1":{
           "status":"true",
-          "amount":"500"
+          "amount":"1000"
         },
         "tier2":{
           "status":"true",
-          "amount":"1000"
+          "amount":"2000"
         },
         "tier3":{
           "status":"true",
-          "amount":"2000"
+          "amount":"4000"
         },
         "tier4":{
           "status":"true",
-          "amount":"4000"
+          "amount":"8000"
         }    
       },
       "abi": [
