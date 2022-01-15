@@ -290,7 +290,7 @@ export default function ProjectTemplate({ data }) {
             <TokenCard>
               <TitleText fontWeight={800} fontSize="24px" color="white">
                 Token Address{" "}
-                <Link href={`https://${currentStatus == "seed" ? "etherscan.io" : "polygonscan.com"}/address/${tokenContractAddress}`} target="_blank">
+                <Link href={`https://${project.technicalDetails[currentStatus].network == "0x1" ? "etherscan.io" : "polygonscan.com"}/address/${tokenContractAddress}`} target="_blank">
                   {tokenContractAddress.substring(0, 6)}...{tokenContractAddress.substring(tokenContractAddress.length - 4)}
                 </Link>
               </TitleText>
