@@ -282,8 +282,18 @@ export default function ProjectTemplate({ data }) {
                   </Card>
                 )}
 
+                <Text color="red" fontWeight={800}>
+                  Sale closes: Mon, 17th Jan, 12:00 PM UTC (noon)
+                </Text>
+                <br></br><br></br>
+
                 <Text color="white" fontWeight={800}>
-                  ⚠️ Please carefully read the <a target="_blank" href="https://shinedao.medium.com/jan-14th-kassandra-dao-private-sale-8b9a1c2dd41"> announcement</a> before participating!
+                  ⚠️ Please carefully read the{" "}
+                  <a target="_blank" href="https://shinedao.medium.com/jan-14th-kassandra-dao-private-sale-8b9a1c2dd41">
+                    {" "}
+                    announcement
+                  </a>{" "}
+                  before participating!
                 </Text>
               </CardBottomWrapper>
             </StatsCard>
@@ -435,7 +445,7 @@ export default function ProjectTemplate({ data }) {
               <br></br>
               {isWalletEnabled && (
                 <Details theme={theme}>
-                  <div style={{width:"100%"}}>
+                  <div style={{ width: "100%" }}>
                     <Text color="#aeaeae" fontWeight={100}>
                       <span>Current Network: {getNetworkName(currentNetwork)}</span>
                       <br />
@@ -531,10 +541,12 @@ export default function ProjectTemplate({ data }) {
                                   <span
                                     onClick={e =>
                                       setEthAmountToSpend(
-                                        Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001).toLocaleString(undefined, {
-                                          minimumFractionDigits: 5,
-                                          maximumFractionDigits: 5,
-                                        }).replace(",","")
+                                        Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001)
+                                          .toLocaleString(undefined, {
+                                            minimumFractionDigits: 5,
+                                            maximumFractionDigits: 5,
+                                          })
+                                          .replace(",", "")
                                       )
                                     }
                                     style={{ cursor: "pointer", color: "#007bff" }}
