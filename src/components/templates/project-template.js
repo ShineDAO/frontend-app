@@ -89,7 +89,7 @@ export default function ProjectTemplate({ data }) {
   const { deployerAddress } = project.technicalDetails[currentStatus];
   const maxWeiToRaise = tokensOffered / rate;
   const openLink = link => {
-    window.open(link, "_blank", "noopener");
+    window.open(link, "_self", "noopener");
   };
 
   const [isWalletEnabled, setWalletStatus] = useState();
@@ -512,6 +512,7 @@ export default function ProjectTemplate({ data }) {
                               <label htmlFor="eth_amount">Enter {getNativeTokenName(currentNetwork)} amount:</label>
                               <br />
                               <EthInput autoComplete="off" type="number" id="eth_amount" value={ethAmountToSpend} onChange={e => utils.handleChangeOfEthAmountToSpend(e.target.value, setEthAmountToSpend)} />
+                              {console.log("debug", ethAmountToSpend)}
                               {ethAmountToSpend && (
                                 <span>
                                   <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
@@ -523,7 +524,7 @@ export default function ProjectTemplate({ data }) {
                               )}
                               <br /> <br />
                               {// relativeCap && shineBalance needed below because it takes few hundred miliseconds to load the state variables
-                              console.log("sshhnn", shineBalance)}
+                              console.log("sshhnn", shineBalance, contributions)}
                               {relativeCap && shineBalance && ethAmountToSpend > utils.getMaximumContribution(relativeCap, shineBalance) - contributions && utils.getTier(shineBalance) !== "No Tier" && (
                                 <Text color="tomato">
                                   The amount that you are trying to buy exceeds the maximum contribution cap for your current tier which is {utils.getTier(shineBalance)}. Your remaining maximum contribution is:{" "}
