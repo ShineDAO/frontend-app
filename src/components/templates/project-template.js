@@ -512,7 +512,7 @@ export default function ProjectTemplate({ data }) {
                               <label htmlFor="eth_amount">Enter {getNativeTokenName(currentNetwork)} amount:</label>
                               <br />
                               <EthInput autoComplete="off" type="number" id="eth_amount" value={ethAmountToSpend} onChange={e => utils.handleChangeOfEthAmountToSpend(e.target.value, setEthAmountToSpend)} />
-                              {console.log("debug", ethAmountToSpend)}
+                              {console.log("debug", currentEthPrice, ethAmountToSpend, Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString())}
                               {ethAmountToSpend && (
                                 <span>
                                   <span> ≈ {Number.parseFloat(currentEthPrice * ethAmountToSpend).toLocaleString()} USD</span> <br />{" "}
@@ -534,7 +534,7 @@ export default function ProjectTemplate({ data }) {
                                         Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001).toLocaleString(undefined, {
                                           minimumFractionDigits: 5,
                                           maximumFractionDigits: 5,
-                                        })
+                                        }).replace(",","")
                                       )
                                     }
                                     style={{ cursor: "pointer", color: "#007bff" }}

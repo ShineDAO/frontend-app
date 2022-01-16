@@ -307,9 +307,9 @@ export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setS
       } else if (e.message.search("Relative cap exceeded") >= 0) {
         setMetamaskErrorCode("Relative cap exceeded");
       } else if (e.message.search("Currently you are below Tier 1 level, but you need to be at least Tier3 in order to participate in the seed sale") >= 0) {
-        if (currentStatus === "seed" || currentStatus=="ganacheSeed") {
+        if (currentStatus === "seed" || currentStatus == "ganacheSeed") {
           setMetamaskErrorCode("Currently you are below Tier 1 level, but you need to have at least 15 000 SHN in order to participate");
-        } else if (currentStatus === "ido" || currentStatus=="ganacheSeed") {
+        } else if (currentStatus === "ido" || currentStatus == "ganacheSeed") {
           setMetamaskErrorCode("Currently you are below Tier 1 level, but you need to be at least 15 000 SHN in order to participate");
         }
       } else if (e.message.search("You are Tier 1, but you need to be Tier3 in order to participate in the seed sale") >= 0) {
@@ -435,5 +435,6 @@ export function estimateReceivedShn(ethAmountToSpend, rate) {
 
   //const estimatedShnInWei = weiAmountToSpend * rate
   const estimatedReceivedShn = window.web3.utils.fromWei(toPlainString(weiAmountToSpend * rate), "ether");
+  console.log("www1", Number.parseFloat(estimatedReceivedShn));
   return Number.parseFloat(estimatedReceivedShn);
 }
