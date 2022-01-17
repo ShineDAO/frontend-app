@@ -421,7 +421,7 @@
     "seed": {
       "network": "0x89",
       "date":"Fri, 14 Jan 2022 15:00:00 GMT",
-      "saleFinished": false,
+      "saleFinished": true,
       "shineTokenAddress": "0x53D76f967De13E7F95e90196438DCe695eCFA957",
       "tokenAddress": "0x5B054D287d9Fedca11cc51C41fCdc0FF84d8b357",
       "saleAddress": "0x7D6b97295ab8C4805252fdd6f50B27f669DDded8",
