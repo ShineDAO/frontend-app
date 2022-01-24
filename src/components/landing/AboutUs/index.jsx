@@ -28,7 +28,7 @@ export const WhatIsThisAbout = () => {
           </div>
           <div className="why">
             <IllustrationShineNetwork3 src={theme === "light" ? shineNetwork : shineNetwork} alt="Shine will get you to the moon and beyond!" />
-            <h2>Expend Your Network</h2>
+            <h2>Expand Your Network</h2>
             <p>Meet other contributors, learn and create together.</p>
           </div>
           <div className="who">

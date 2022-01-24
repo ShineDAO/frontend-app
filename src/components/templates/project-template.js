@@ -283,7 +283,7 @@ export default function ProjectTemplate({ data }) {
                 )}
 
                 <Text color="red" fontWeight={800}>
-                  Sale closes: Mon, 17th Jan, 12:00 PM UTC (noon)
+                  Sale closed!
                 </Text>
                 <br></br><br></br>
 

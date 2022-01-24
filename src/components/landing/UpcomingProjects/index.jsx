@@ -47,7 +47,7 @@ export const UpcomingProjects = () => {
                   </svg>
                 )}
                 <TBAText style={{ margin: "0 auto" }} color="#3F3D56" fontWeight={800}>
-                  Date: Fri 14th of Jan, 3:00 PM UTC
+                  SOLD OUT
                   {false && <DateCountdown mostSignificantFigure="hour" dateTo="August 19, 2021 20:30:00 GMT+03:00" />}
                 </TBAText>
               </When>
