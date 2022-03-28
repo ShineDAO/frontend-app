@@ -6,8 +6,11 @@ import NavbarLinks from '../NavbarLinks';
 import {Wrapper, Brand, LogoWrapper, HeadingText} from './styles';
 import shineLogoV7 from 'assets/illustrations/shine-logo-v7.png';
 import useIsMobile from '../../../../hooks/useIsMobile';
+import { useLocation } from '@reach/router';
 
 const Navbar = () => {
+  const pathname = useLocation().pathname.replaceAll('/', '');;
+  console.log("location pathname ", pathname)
   const {theme} = useContext(ThemeContext);
   const isMobile = useIsMobile();
 
@@ -18,7 +21,7 @@ const Navbar = () => {
           <img width={isMobile ? '45px' : '60px'} height={isMobile ? '40px': '53px'} src={shineLogoV7} alt={theme}/><HeadingText theme={theme}>ShineDAO</HeadingText>
         </LogoWrapper>
       </Brand>
-      <NavbarLinks desktop/>
+      <NavbarLinks desktop pathname={pathname}/>
     </Wrapper>
   );
 };

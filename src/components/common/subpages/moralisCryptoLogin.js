@@ -1,5 +1,4 @@
 import React from "react";
-import { useMoralis } from "react-moralis";
 
 import { Card, Text, Button } from "components/common";
 import { loadWeb3MoralisProvider, switchMoralisChain } from "../../../utils/pagesUtils";
@@ -29,3 +28,4 @@ export function MoralisCryptologin({ setWalletStatus, setChainId, setCurrentAcco
     </Card>
   );
 }
+

@@ -1,0 +1,18 @@
+import React, { useContext, useState, useEffect } from "react";
+import { Layout, SEO, Button, Card, Text, MobileDiv } from "components/common";
+import { Header } from "components/theme";
+import { VeShnContainer } from "../components/common/subpages/veShnContainer";
+import { MoralisProvider } from "react-moralis";
+
+export default ({ location }) => {
+  return (
+    <Layout position="absolute" bottom="4px" width="100%" height="60px">
+      <SEO useDegenNews="true" title="Degen News" description="Degenerate news 4 degenerate frens" />
+      <Header />
+
+      <MobileDiv mobileWidth="100%" width="90%" background="" style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
+        <VeShnContainer></VeShnContainer>
+      </MobileDiv>
+    </Layout>
+  );
+};

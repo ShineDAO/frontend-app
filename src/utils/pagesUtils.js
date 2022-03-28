@@ -113,6 +113,8 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
 
   //
 }
+
+
 export async function switchMoralisChain(Moralis) {
   try {
     const web3 = await Moralis.enableWeb3();
@@ -136,9 +138,9 @@ export async function switchMoralisChain(Moralis) {
     // handle other "switch" errors
   }
 }
-//NOT USED / CAN BE DELETED
+
+//used in veSHN
 export async function switchChain() {
-  return;
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
@@ -315,6 +317,7 @@ export async function loadWeb3(setWalletStatus, setChainId, currentAccount, setC
 // No need to export as the function is only used in this file
 function handleChainChanged(_chainId) {
   // We recommend reloading the page, unless you must do otherwise
+  console.log("called 123")
   window.location.reload(true);
 }
 // No need to export as the function is only used in this file
