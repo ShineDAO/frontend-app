@@ -114,7 +114,6 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
   //
 }
 
-
 export async function switchMoralisChain(Moralis) {
   try {
     const web3 = await Moralis.enableWeb3();
@@ -168,6 +167,17 @@ export async function switchChain() {
       }
     }
     // handle other "switch" errors
+  }
+}
+
+export async function switchToMainnet() {
+  try {
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: "0x1" }],
+    });
+  } catch (switchError) {
+    console.log("code error 4213 ", switchError)
   }
 }
 
@@ -317,7 +327,7 @@ export async function loadWeb3(setWalletStatus, setChainId, currentAccount, setC
 // No need to export as the function is only used in this file
 function handleChainChanged(_chainId) {
   // We recommend reloading the page, unless you must do otherwise
-  console.log("called 123")
+  console.log("called 123");
   window.location.reload(true);
 }
 // No need to export as the function is only used in this file

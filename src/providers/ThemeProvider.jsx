@@ -4,6 +4,7 @@ import useDarkMode from 'hooks/useDarkMode';
 export const ThemeContext = createContext('light');
 
 export default ({ children }) => {
+
   const [theme, toggleTheme] = useDarkMode();
 
   return (

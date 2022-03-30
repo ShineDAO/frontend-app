@@ -8,6 +8,7 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import * as pagesUtils from "../../../../utils/pagesUtils";
 
+import { WalletContext } from "providers/WalletProvider";
 
 const NavbarLinks = ({ desktop, pathname
 }) => {
@@ -16,10 +17,8 @@ const NavbarLinks = ({ desktop, pathname
 
   const { theme } = useContext(ThemeContext);
 
+  const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount } = useContext(WalletContext);
 
-  const [isWalletEnabled, setWalletStatus] = useState();
-  const [chainId, setChainId] = useState(1);
-  const [currentAccount, setCurrentAccount] = useState(null);
   const options = [
     { value: '0x1', label: 'Ethereum' },
     { value: '0x89', label: 'Polygon/Matic' },
@@ -47,7 +46,11 @@ const NavbarLinks = ({ desktop, pathname
 
   function handleDropdown(option) {
     console.log("selected option", option);
-    pagesUtils.switchChain()
+    if (option.value=="0x1"){
+      pagesUtils.switchToMainnet()
+    }else if(option.value=="0x89"){
+      pagesUtils.switchChain()
+    } 
     setChainId(option.value)
   }
   return (
