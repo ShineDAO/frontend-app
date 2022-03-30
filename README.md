@@ -1,6 +1,6 @@
 # Shine is your launchpad towards the crypto stars
 
-## Features
+## Features sd
 
 - Eslint/Prettier configured
 - Scores 100% on a11y / Performance / PWA / SEO
