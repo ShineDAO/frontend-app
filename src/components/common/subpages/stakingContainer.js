@@ -31,6 +31,7 @@ export function StakingContainer({}) {
             <br></br>
             <br></br>
             <Button>CLAIM</Button>
+            <span title="amazing span"> Hello i'm a span </span > 
           </div>
         </div>
       </div>
