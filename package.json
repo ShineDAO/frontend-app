@@ -29,6 +29,7 @@
     "gatsby-source-graphql": "^2.1.21",
     "gatsby-transformer-json": "^3.6.0",
     "gatsby-transformer-sharp": "^2.2.7",
+    "icon-with-tooltip": "^2.0.0",
     "moralis": "^0.0.105",
     "prop-types": "^15.6.2",
     "react": "^16.11.0",
