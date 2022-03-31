@@ -9,7 +9,7 @@ import useIsMobile from '../../../../hooks/useIsMobile';
 import { useLocation } from '@reach/router';
 
 const Navbar = () => {
-  const pathname = useLocation().pathname.replaceAll('///g', '');;
+  const pathname = useLocation().pathname.replace(/\//g, '');
   console.log("location pathname ", pathname)
   const {theme} = useContext(ThemeContext);
   const isMobile = useIsMobile();

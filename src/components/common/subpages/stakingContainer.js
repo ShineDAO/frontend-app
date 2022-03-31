@@ -27,11 +27,13 @@ export function StakingContainer({}) {
                 <td>$525k</td>
               </tr>
             </table>
-            <Button>CHECKPOINT</Button>
-            <br></br>
-            <br></br>
+            <Button>CHECKPOINT</Button>   
+            <br></br><span> <i>After you create, add or increase the timelock you need to checkpoint in order to account the new amount for the reward.</i> </span > 
+            <br></br> <br></br> <br></br>
             <Button>CLAIM</Button>
-            <span title="amazing span"> Hello i'm a span </span > 
+            <br></br> <br></br>
+            <Text fontWeight="600">Earned so far:</Text> 0 SHN 🌟
+           
           </div>
         </div>
       </div>
