@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import { MobileDiv, Button, Card, Text } from "components/common";
-import IconWithTooltip from 'icon-with-tooltip';
+//import IconWithTooltip from 'icon-with-tooltip';
 
 export function StakingContainer({}) {
   return (
@@ -32,7 +32,7 @@ export function StakingContainer({}) {
             <br></br>
             <br></br>
             <Button>CLAIM</Button>
-            <IconWithTooltip className="test" title="test">test</IconWithTooltip>
+           {false}
           </div>
         </div>
       </div>
