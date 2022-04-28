@@ -113,6 +113,7 @@ export async function addToWatchlist(setAddedToMetamask, currentPage, setCurrent
 
   //
 }
+
 export async function switchMoralisChain(Moralis) {
   try {
     const web3 = await Moralis.enableWeb3();
@@ -136,36 +137,49 @@ export async function switchMoralisChain(Moralis) {
     // handle other "switch" errors
   }
 }
-//NOT USED / CAN BE DELETED
-export async function switchChain() {
-  return;
+
+//used in veSHN
+export async function switchChain(chainId) {
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x89" }],
+      params: [{ chainId: chainId }],
     });
   } catch (switchError) {
     // This error code indicates that the chain has not been added to MetaMask.
     console.log("code error ", switchError.code);
     if (switchError.code === 4902) {
       try {
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: "0x89",
-              chainName: "Matic(Polygon) Mainnet",
-              rpcUrls: ["https://rpc-mainnet.matic.network"],
-              blockExplorerUrls: ["https://polygonscan.com"],
-              nativeCurrency: { name: "MATIC", symbol: "MATIC", decimals: 18 } /* ... */,
-            },
-          ],
-        });
+        if (chainId == "0x89") {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x89",
+                chainName: "Matic(Polygon) Mainnet",
+                rpcUrls: ["https://rpc-mainnet.matic.network"],
+                blockExplorerUrls: ["https://polygonscan.com"],
+                nativeCurrency: { name: "MATIC", symbol: "MATIC", decimals: 18 } /* ... */,
+              },
+            ],
+          });
+        }
       } catch (addError) {
         // handle "add" error
       }
     }
     // handle other "switch" errors
+  }
+}
+
+export async function switchToMainnet() {
+  try {
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: "0x1" }],
+    });
+  } catch (switchError) {
+    console.log("code error 4213 ", switchError);
   }
 }
 
@@ -315,6 +329,7 @@ export async function loadWeb3(setWalletStatus, setChainId, currentAccount, setC
 // No need to export as the function is only used in this file
 function handleChainChanged(_chainId) {
   // We recommend reloading the page, unless you must do otherwise
+  console.log("called 123");
   window.location.reload(true);
 }
 // No need to export as the function is only used in this file

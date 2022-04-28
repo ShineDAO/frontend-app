@@ -36,6 +36,7 @@
     "react-bootstrap": "^1.5.0",
     "react-date-countdown-timer": "^1.0.9",
     "react-dom": "^16.11.0",
+    "react-dropdown": "^1.9.2",
     "react-google-recaptcha": "^1.0.5",
     "react-helmet": "^5.2.0",
     "react-moralis": "^0.2.8",

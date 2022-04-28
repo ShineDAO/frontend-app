@@ -8,6 +8,7 @@ import "./hide-overflow.css";
 export const Layout = ({ children, position, bottom, width, height }) => {
   const { theme } = useContext(ThemeContext);
   console.log("poss", position);
+
   return (
     <>
       <Global theme={theme} />

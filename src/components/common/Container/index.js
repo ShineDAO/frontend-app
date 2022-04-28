@@ -13,3 +13,17 @@ export const Container = styled.div`
     width: 1120px;
   }
 `;
+
+
+export const SliderContainer = styled.div `
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}`
+
+
+
+export const Slider = styled.input `
+  width:500px;
+}`
+
+
