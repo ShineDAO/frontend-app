@@ -838,3 +838,8 @@ export function getAddress(chainId, contract) {
     return addresses[shnAddress].hardhat;
   }
 }
+
+
+export function roundTo2Decimals(num){
+  return Math.round(num * 100) / 100
+}

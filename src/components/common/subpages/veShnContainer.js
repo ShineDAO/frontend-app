@@ -19,7 +19,8 @@ import {
   getEpoch,
   getUserPointHistory,
   getAddress,
-  checkLocked
+  checkLocked,
+  roundTo2Decimals
 } from "../../templates/utils";
 import veSHN from "../../../../static/abi/veFXS";
 import ShineToken from "../../../../static/abi/ShineToken";
@@ -172,7 +173,7 @@ export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetc
           </div>
           <div>
             <SliderContainer>
-              <span>Balance:</span> {shnBalance} SHN 🌟 (allowance {allowance} {allowance > 0 ? "true" : "false"}) <br></br> <br></br>
+              <span>Balance:</span> {roundTo2Decimals(shnBalance)} SHN 🌟 (allowance {allowance} {allowance > 0 ? "true" : "false"}) <br></br> <br></br>
               <span>{"Enter amount to lock"} </span>
               <input onChange={target => setAmountToLock(target.target.value)} value={amountToLock} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input>{" "}
               <b onClick={() => setAmountToLock(shnBalance)} style={{ cursor: "pointer" }}>
@@ -242,15 +243,15 @@ export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetc
                 {locked && (
                   <div>
                     {" "}
-                    <br></br>Locked amount: <b>{fromWei(locked.amount)} SHN</b>
+                    <br></br>Locked amount: <b>{roundTo2Decimals(fromWei(locked.amount))} SHN</b>
                     <br></br>Lock end:<b> {timeConverter(locked.end)}</b>
                     {userPointHistory && (
                       <Text>
-                        Current locked weight <b>{(parseInt(fromWei(locked.amount)) + VOTE_WEIGHT_MULTIPLIER * fromWei(userPointHistory.bias)).toFixed(2)} veSHN</b>
+                        <div><span>Current locked weight</span> <b>{(parseInt(fromWei(locked.amount)) + VOTE_WEIGHT_MULTIPLIER * fromWei(userPointHistory.bias)).toFixed(2)} veSHN</b></div>
                       </Text>
                     )}
                     {console.log("time now in seconds", new Date().getTime(), new Date(locked.end * 1000).getTime(), new Date().getTime() >= new Date(locked.end * 1000).getTime(), locked.end * 1000)}
-                    {new Date().getTime() / 100 <= new Date(locked.end * 1000).getTime() && (
+                    {new Date().getTime() / 100 >= new Date(locked.end * 1000).getTime() && (
                       <div>
                         <br></br>
                         {loadingIndicator.includes("withdraw") ? (

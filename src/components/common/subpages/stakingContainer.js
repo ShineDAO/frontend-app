@@ -18,6 +18,7 @@ import {
   getTotalShnSupply,
   fromWei,
   getAddress,
+  roundTo2Decimals,
 } from "../../templates/utils";
 import { MobileDiv, Button, Card, Text } from "components/common";
 import PulseLoader from "react-spinners/PulseLoader";
@@ -45,7 +46,6 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
   const [userAddress, setUserAddress] = useState();
   const [shinePrice, setShinePrice] = useState();
   const [tvl, setTvl] = useState();
-  
 
   //useEffect(() => {
   //  setVeShnYieldDistributorAddress(getAddress(chainId, "veShnYieldDistributorAddress"));
@@ -73,7 +73,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
       }
       getSupply();
     }
-  }, [isWalletEnabled, refetchData,chainId]);
+  }, [isWalletEnabled, refetchData, chainId]);
 
   useEffect(() => {
     axios
@@ -113,26 +113,26 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
           <div>
             <table>
               <tbody>
-              <tr>
-                <th>APR Base/Max</th>
-                {isWalletEnabled && (
-                  <th>
-                    {(((fromWei(yieldRate) * 365 * 86400) / fromWei(totalVeShnParticipating)) * 100) / 4}% / {((fromWei(yieldRate) * 365 * 86400) / fromWei(totalVeShnParticipating)) * 100}%
-                  </th>
-                )}
-              </tr>
-              <tr>
-                <td>TVL</td>
-                <td>${tvl}</td>
-              </tr>
-              <tr>
-                <td>% of SHN locked</td>
-                <td>{isWalletEnabled && (fromWei(totalShnSupply) / 21000000) * 100}%</td>
-              </tr>
-              <tr>
-                <td>User veSHN Checkpointed</td>
-                <td>{isWalletEnabled && fromWei(userVeShnCheckpointed)}</td>
-              </tr>
+                <tr>
+                  <th>APR Base/Max</th>
+                  {isWalletEnabled && (
+                    <th>
+                      { roundTo2Decimals((((fromWei(yieldRate) * 365 * 86400) / fromWei(totalVeShnParticipating)) * 100) / 4)}% / {roundTo2Decimals(((fromWei(yieldRate) * 365 * 86400) / fromWei(totalVeShnParticipating)) * 100 )}%
+                    </th>
+                  )}
+                </tr>
+                <tr>
+                  <td>TVL</td>
+                  <td>${roundTo2Decimals(tvl)}</td>
+                </tr>
+                <tr>
+                  <td>% of SHN locked</td>
+                  <td>{isWalletEnabled && roundTo2Decimals((fromWei(totalShnSupply) / 21000000) * 100)}%</td>
+                </tr>
+                <tr>
+                  <td>User veSHN Checkpointed</td>
+                  <td>{isWalletEnabled && roundTo2Decimals(fromWei(userVeShnCheckpointed))}</td>
+                </tr>
               </tbody>
             </table>
             {loadingIndicator.includes("rewardCheckpoint") ? (
@@ -145,10 +145,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
               isWalletEnabled && <Button onClick={() => handleRewardCheckpoint()}>CHECKPOINT</Button>
             )}
             <br></br>
-            <span>
-              {" "}
-              {isWalletEnabled && <i>After you create, add or increase the timelock you need to checkpoint in order to account the new amount for the reward.</i>}{" "}
-            </span>
+            <span> {isWalletEnabled && <i>After you create, add or increase the timelock you need to checkpoint in order to account the new amount for the reward.</i>} </span>
             <br></br> <br></br> <br></br>
             {loadingIndicator.includes("claim") ? (
               <div>
