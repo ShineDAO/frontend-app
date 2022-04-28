@@ -19,9 +19,12 @@ const NavbarLinks = ({ desktop, pathname
 
   const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount } = useContext(WalletContext);
 
+ 
   const options = [
     { value: '0x1', label: 'Ethereum' },
     { value: '0x89', label: 'Polygon/Matic' },
+    { value: '0x13881', label: 'Mumbai testnet'}
+    
   ];
 
   let defaultOption
@@ -29,7 +32,10 @@ const NavbarLinks = ({ desktop, pathname
      defaultOption = options[0];
   }else if(chainId=="0x89"){
      defaultOption = options[1];
-  }else{
+  }else if(chainId== "0x13881"){
+    defaultOption = options[2]
+  }
+  else{
      defaultOption = {value:'', label:"Chain unrecognized"}
   }
   
@@ -49,8 +55,10 @@ const NavbarLinks = ({ desktop, pathname
     if (option.value=="0x1"){
       pagesUtils.switchToMainnet()
     }else if(option.value=="0x89"){
-      pagesUtils.switchChain()
-    } 
+      pagesUtils.switchChain("0x89")
+    } else if(option.value=="0x13881"){
+      pagesUtils.switchChain("0x13881")
+    }
     setChainId(option.value)
   }
   return (

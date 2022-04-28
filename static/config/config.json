@@ -1,0 +1,6 @@
+{
+  "controllerAddress": { "main": "0xMAIN-shnAddress", "matic": "0x4faeee1ecf32a8e2979edd8189950a1dd1cf68be", "mumbai": "0x4faeee1ecf32a8e2979edd8189950a1dd1cf68be", "hardhat": "0x4faeee1ecf32a8e2979edd8189950a1dd1cf68be" },
+  "shnAddress": { "main": "0xMAIN-shnAddress", "matic": "0x5FbDB2315678afecb367f032d93F642f64180aa3", "mumbai": "0x2be63a8f27f7a8868Cc50791BdB2F32ca3dD9436", "hardhat": "0x5FbDB2315678afecb367f032d93F642f64180aa3" },
+  "veShnAddress": { "main": "0xMAIN-veShnAddress", "matic": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", "mumbai": "0xA2822Ec695A9B072E47Cf2F08EF0D3dd12e45500", "hardhat": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512" },
+  "veShnYieldDistributorAddress": { "main": "0xMAIN-veShnAddress", "matic": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0", "mumbai": "0x36Cf9b60E46739b1dd6E243ee7d09298BB7e7Fc2", "hardhat": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0" }
+}

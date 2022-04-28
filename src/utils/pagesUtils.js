@@ -139,29 +139,31 @@ export async function switchMoralisChain(Moralis) {
 }
 
 //used in veSHN
-export async function switchChain() {
+export async function switchChain(chainId) {
   try {
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x89" }],
+      params: [{ chainId: chainId }],
     });
   } catch (switchError) {
     // This error code indicates that the chain has not been added to MetaMask.
     console.log("code error ", switchError.code);
     if (switchError.code === 4902) {
       try {
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: "0x89",
-              chainName: "Matic(Polygon) Mainnet",
-              rpcUrls: ["https://rpc-mainnet.matic.network"],
-              blockExplorerUrls: ["https://polygonscan.com"],
-              nativeCurrency: { name: "MATIC", symbol: "MATIC", decimals: 18 } /* ... */,
-            },
-          ],
-        });
+        if (chainId == "0x89") {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x89",
+                chainName: "Matic(Polygon) Mainnet",
+                rpcUrls: ["https://rpc-mainnet.matic.network"],
+                blockExplorerUrls: ["https://polygonscan.com"],
+                nativeCurrency: { name: "MATIC", symbol: "MATIC", decimals: 18 } /* ... */,
+              },
+            ],
+          });
+        }
       } catch (addError) {
         // handle "add" error
       }
@@ -177,7 +179,7 @@ export async function switchToMainnet() {
       params: [{ chainId: "0x1" }],
     });
   } catch (switchError) {
-    console.log("code error 4213 ", switchError)
+    console.log("code error 4213 ", switchError);
   }
 }
 
