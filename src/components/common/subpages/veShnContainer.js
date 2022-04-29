@@ -20,7 +20,7 @@ import {
   getUserPointHistory,
   getAddress,
   checkLocked,
-  roundTo2Decimals
+  roundTo2Decimals,
 } from "../../templates/utils";
 import veSHN from "../../../../static/abi/veFXS";
 import ShineToken from "../../../../static/abi/ShineToken";
@@ -28,15 +28,12 @@ import ShineToken from "../../../../static/abi/ShineToken";
 const MAXTIME = 4 * 365 * 86400; // 4 years
 const VOTE_WEIGHT_MULTIPLIER = 4 - 1; // 4x gives 300% boost at 4 years
 
-
-
-export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetchData,loadingIndicator,setLoadingIndicator }) {
+export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator }) {
   //const [shnAddress, setShnAddress] = useState(getAddress(chainId,"shnAddress")); //not used becuase it doesnt work
   //const [veShnAddress, setVeShnAddress] = useState(getAddress(chainId,"veShnAddress"));
 
+  console.log("chainxxx ", chainId, getAddress(chainId, "shnAddress"));
 
-  console.log("chainxxx ", chainId, getAddress(chainId,"shnAddress"))
-  
   const [locked, setLocked] = useState();
   const [shnBalance, setShnBalance] = useState(0);
   const [amountToLock, setAmountToLock] = useState(0);
@@ -56,11 +53,10 @@ export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetc
   //    setVeShnAddress(getAddress(chainId,"veShnAddress"))
   //}, [chainId]); not used because it didnt work as expected
 
-
   useEffect(() => {
     if (isWalletEnabled == true) {
       async function updateHistory() {
-        getUserPointHistory(setUserPointHistory, await getOnlyUserAddress(), getAddress(chainId,"veShnAddress"), veSHN.abi);
+        getUserPointHistory(setUserPointHistory, await getOnlyUserAddress(), getAddress(chainId, "veShnAddress"), veSHN.abi);
       }
       updateHistory();
     }
@@ -77,18 +73,18 @@ export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetc
   }, [desiredLockTimestamp, amountToLock]);
 
   useEffect(() => {
-    console.log("data ", isWalletEnabled, chainId, getAddress(chainId,"veShnAddress"));
+    console.log("data ", isWalletEnabled, chainId, getAddress(chainId, "veShnAddress"));
     if (isWalletEnabled == true) {
       async function getLocked() {
         setUserAddress(await getOnlyUserAddress());
-        const lockedBalance = await checkLocked(await getOnlyUserAddress(),getAddress(chainId,"veShnAddress"), veSHN.abi);
+        const lockedBalance = await checkLocked(await getOnlyUserAddress(), getAddress(chainId, "veShnAddress"), veSHN.abi);
         console.log("queried balance", lockedBalance);
         console.log("refetchData ", refetchData);
-        console.log("chainY ", getAddress(chainId,"shnAddress"));
+        console.log("chainY ", getAddress(chainId, "shnAddress"));
         setLocked(lockedBalance);
-        getShineBalance(setShnBalance, await getOnlyUserAddress(), ShineToken.abi, getAddress(chainId,"shnAddress"));
-        getAllowance(setAllowance, getAddress(chainId,"veShnAddress"), await getOnlyUserAddress(), ShineToken.abi, getAddress(chainId,"shnAddress"));
-        getEpoch(setEpoch, getAddress(chainId,"veShnAddress"), veSHN.abi);
+        getShineBalance(setShnBalance, await getOnlyUserAddress(), ShineToken.abi, getAddress(chainId, "shnAddress"));
+        getAllowance(setAllowance, getAddress(chainId, "veShnAddress"), await getOnlyUserAddress(), ShineToken.abi, getAddress(chainId, "shnAddress"));
+        getEpoch(setEpoch, getAddress(chainId, "veShnAddress"), veSHN.abi);
       }
       getLocked();
     }
@@ -107,12 +103,10 @@ export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetc
     setSliderValue(e.target.value);
   }
 
-  
-
   async function handleCreateLock() {
     setLockError(false);
     setLoadingIndicator(loadingIndicator.concat(["createLock"]));
-    await createVeShnLock(userAddress, veSHN.abi, getAddress(chainId,"veShnAddress"), amountToLock, desiredLockTimestamp, loadingIndicator, setLoadingIndicator, setLockError, setRefetchData);
+    await createVeShnLock(userAddress, veSHN.abi, getAddress(chainId, "veShnAddress"), amountToLock, desiredLockTimestamp, loadingIndicator, setLoadingIndicator, setLockError, setRefetchData);
   }
 
   function timeConverter(UNIX_timestamp) {
@@ -132,29 +126,59 @@ export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetc
 
   async function handleApprove() {
     setLoadingIndicator(loadingIndicator.concat(["approve"]));
-    await veShnApprove(userAddress, getAddress(chainId,"veShnAddress"), setAllowance, loadingIndicator, setLoadingIndicator, ShineToken.abi, getAddress(chainId,"shnAddress"));
+    await veShnApprove(userAddress, getAddress(chainId, "veShnAddress"), setAllowance, loadingIndicator, setLoadingIndicator, ShineToken.abi, getAddress(chainId, "shnAddress"));
   }
 
   async function handleAmountIncrease() {
     setLockError(false);
     setLoadingIndicator(loadingIndicator.concat(["increaseLockAmount"]));
-    await increaseAmountOfLockedShn(userAddress, amountToLock, getAddress(chainId,"veShnAddress"), veSHN.abi, setLockError, setLocked, loadingIndicator, setLoadingIndicator, setShnBalance, setRefetchData, ShineToken.abi, getAddress(chainId,"shnAddress"));
+    await increaseAmountOfLockedShn(userAddress, amountToLock, getAddress(chainId, "veShnAddress"), veSHN.abi, setLockError, setLocked, loadingIndicator, setLoadingIndicator, setShnBalance, setRefetchData, ShineToken.abi, getAddress(chainId, "shnAddress"));
   }
 
   async function handleUnlockTimeIncrease() {
     setLockError(false);
     setLoadingIndicator(loadingIndicator.concat(["increaseLockTime"]));
-    await increaseUnlockTimeForLockedShn(userAddress, desiredLockTimestamp, getAddress(chainId,"veShnAddress"), veSHN.abi, setLockError, setLocked, loadingIndicator, setLoadingIndicator, setRefetchData);
+    await increaseUnlockTimeForLockedShn(userAddress, desiredLockTimestamp, getAddress(chainId, "veShnAddress"), veSHN.abi, setLockError, setLocked, loadingIndicator, setLoadingIndicator, setRefetchData);
   }
   async function handleCheckpoint() {
     setLoadingIndicator(loadingIndicator.concat(["veShnCheckpoint"]));
-    await veShnCheckpoint(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId,"veShnAddress"), veSHN.abi);
+    await veShnCheckpoint(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "veShnAddress"), veSHN.abi);
   }
 
   async function handleWithdraw() {
     setLockError(false);
     setLoadingIndicator(loadingIndicator.concat(["withdraw"]));
-    await withdrawShnFromVeShn(userAddress,loadingIndicator, setLoadingIndicator, getAddress(chainId,"veShnAddress"), veSHN.abi, setLockError);
+    await withdrawShnFromVeShn(userAddress, loadingIndicator, setLoadingIndicator, getAddress(chainId, "veShnAddress"), veSHN.abi, setLockError);
+  }
+
+  function checkIsValidNumber(str) {
+    var numberRegex = /^[0-9.]*$/;
+    if (str == "") {
+      return false;
+    } else if (str.match(numberRegex)) {
+      return true;
+      console.log("**Its Valid number");
+    } else {
+      return false;
+      console.log("Its not Valid number");
+    }
+  }
+  function handleAmountToLock(amount, setAmountToLock) {
+    console.log("typee ", checkIsValidNumber(amount), amount);
+    if (checkIsValidNumber(amount)) {
+      setAmountToLock(amount);
+    } else {
+      setAmountToLock(0);
+    }
+  }
+
+  function filterAmountToLock(amountToLock) {
+    console.log("filteredAmount ", amountToLock, typeof amountToLock);
+    let filteredString = amountToLock;
+    while (filteredString[0] == "0") {
+      filteredString = filteredString.substring(1);
+    }
+    return filteredString;
   }
   return (
     <div style={{ textAlign: "center" }}>
@@ -175,7 +199,7 @@ export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetc
             <SliderContainer>
               <span>Balance:</span> {roundTo2Decimals(shnBalance)} SHN 🌟 (allowance {allowance} {allowance > 0 ? "true" : "false"}) <br></br> <br></br>
               <span>{"Enter amount to lock"} </span>
-              <input onChange={target => setAmountToLock(target.target.value)} value={amountToLock} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input>{" "}
+              <input onChange={target => handleAmountToLock(target.target.value, setAmountToLock)} value={filterAmountToLock(amountToLock)} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input>{" "}
               <b onClick={() => setAmountToLock(shnBalance)} style={{ cursor: "pointer" }}>
                 MAX
               </b>{" "}
@@ -247,7 +271,9 @@ export function VeShnContainer({ isWalletEnabled,chainId, refetchData, setRefetc
                     <br></br>Lock end:<b> {timeConverter(locked.end)}</b>
                     {userPointHistory && (
                       <Text>
-                        <div><span>Current locked weight</span> <b>{(parseInt(fromWei(locked.amount)) + VOTE_WEIGHT_MULTIPLIER * fromWei(userPointHistory.bias)).toFixed(2)} veSHN</b></div>
+                        <div>
+                          <span>Current locked weight</span> <b>{(parseInt(fromWei(locked.amount)) + VOTE_WEIGHT_MULTIPLIER * fromWei(userPointHistory.bias)).toFixed(2)} veSHN</b>
+                        </div>
                       </Text>
                     )}
                     {console.log("time now in seconds", new Date().getTime(), new Date(locked.end * 1000).getTime(), new Date().getTime() >= new Date(locked.end * 1000).getTime(), locked.end * 1000)}
