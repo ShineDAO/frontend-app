@@ -266,9 +266,9 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
               <div>
                 {locked && (
                   <div>
-                    {" "}
+                    {console.log("locked end ", locked.end, typeof(locked.end), locked.end==0)}
                     <br></br>Locked amount: <b>{roundTo2Decimals(fromWei(locked.amount))} SHN</b>
-                    <br></br>Lock end:<b> {timeConverter(locked.end)}</b>
+                    {locked.end != 0 && <div>Lock end:<b> {timeConverter(locked.end)}</b></div>}
                     {userPointHistory && (
                       <Text>
                         <div>
@@ -277,7 +277,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                       </Text>
                     )}
                     {console.log("time now in seconds", new Date().getTime(), new Date(locked.end * 1000).getTime(), new Date().getTime() >= new Date(locked.end * 1000).getTime(), locked.end * 1000)}
-                    {new Date().getTime() / 100 >= new Date(locked.end * 1000).getTime() && (
+                    {locked.end != 0 && (new Date().getTime() / 100 >= new Date(locked.end * 1000).getTime()) && (
                       <div>
                         <br></br>
                         {loadingIndicator.includes("withdraw") ? (
@@ -313,7 +313,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                     <i>Confirming transaction, please wait.</i>
                   </div>
                 ) : (
-                  isWalletEnabled && <Button onClick={() => handleCheckpoint()}>Checkpoint</Button>
+                  isWalletEnabled &&  userAddress === getAddress(chainId, "controllerAddress") &&  (<Button onClick={() => handleCheckpoint()}>Checkpoint</Button>)
                 )}
               </div>
             )}
