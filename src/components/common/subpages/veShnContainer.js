@@ -69,6 +69,10 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
       let bias = slope * (desiredLockTimestamp - new Date().getTime() / 1000);
       setEstimatedBias(bias);
       console.log("estimated Slope and bias ", slope, bias, toWei(amountToLock), amountToLock, desiredLockTimestamp);
+      console.log("lower timestamp ",new Date(desiredLockTimestamp* 1000).getTime(), new Date(locked.end * 1000).getTime(), locked.end, locked.end != 0 && new Date(desiredLockTimestamp*1000).getTime()  <= new Date(locked.end * 1000).getTime())
+      if (locked.end != 0 && new Date(desiredLockTimestamp * 1000).getTime()  <= new Date(locked.end * 1000).getTime()) {
+        setLockError("The time on the lock can only be increased.");
+      }
     }
   }, [desiredLockTimestamp, amountToLock]);
 
@@ -95,8 +99,15 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
       var datum = Date.parse(strDate);
       return datum / 1000;
     }
-    let targetDate = new Date(Date.now() + sliderValue * 24 * 60 * 60 * 1000);
-    setDesiredLockTimestamp(toTimestamp(targetDate));
+    if (sliderValue >= 7) {
+      let targetDate = new Date(Date.now() + sliderValue * 24 * 60 * 60 * 1000);
+      setDesiredLockTimestamp(toTimestamp(targetDate));
+      setLockError(false);
+    } else {
+      setLockError("Minimum lock duration is 7 days");
+      let targetDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+      setDesiredLockTimestamp(toTimestamp(targetDate));
+    }
   }, [sliderValue]);
 
   function handleChange(e) {
@@ -168,7 +179,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
     if (checkIsValidNumber(amount)) {
       setAmountToLock(amount);
     } else {
-      setAmountToLock(0);
+      setAmountToLock("0");
     }
   }
 
@@ -197,12 +208,26 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
           </div>
           <div>
             <SliderContainer>
-              <span>Balance:</span> {roundTo2Decimals(shnBalance)} SHN 🌟 (allowance {allowance} {allowance > 0 ? "true" : "false"}) <br></br> <br></br>
+              <span>Balance:</span> {roundTo2Decimals(shnBalance)} SHN 🌟   { false && allowance}  <br></br> <br></br>
               <span>{"Enter amount to lock"} </span>
               <input onChange={target => handleAmountToLock(target.target.value, setAmountToLock)} value={filterAmountToLock(amountToLock)} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input>{" "}
               <b onClick={() => setAmountToLock(shnBalance)} style={{ cursor: "pointer" }}>
                 MAX
-              </b>{" "}
+              </b>
+              <br></br>
+              <br></br>
+              {locked &&
+                locked.amount > 0 &&
+                (loadingIndicator.includes("increaseLockAmount") ? (
+                  <div>
+                    <PulseLoader color={"gold"} loading={true} size={15} margin={2} />
+                    <br></br>
+                    <i>Confirming transaction, please wait.</i>
+                  </div>
+                ) : (
+                  allowance != 0 && <Button onClick={() => handleAmountIncrease()}>Increase Amount</Button>
+                ))}
+              <br></br>
               <br></br>
               <br></br>
               <Slider type="range" min="7" max="1460" value={sliderValue} onChange={handleChange}></Slider>
@@ -230,17 +255,6 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
             <br></br>
             {locked && locked.amount > 0 ? (
               <div>
-                {loadingIndicator.includes("increaseLockAmount") ? (
-                  <div>
-                    <PulseLoader color={"gold"} loading={true} size={15} margin={2} />
-                    <br></br>
-                    <i>Confirming transaction, please wait.</i>
-                  </div>
-                ) : (
-                  <Button onClick={() => handleAmountIncrease()}>Increase Amount</Button>
-                )}
-                <br></br>
-                <br></br>
                 {loadingIndicator.includes("increaseLockTime") ? (
                   <div>
                     <PulseLoader color={"gold"} loading={true} size={15} margin={2} />
@@ -248,7 +262,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                     <i>Confirming transaction, please wait.</i>
                   </div>
                 ) : (
-                  <Button onClick={() => handleUnlockTimeIncrease()}>Increase Lock Time</Button>
+                  allowance != 0 &&  <Button onClick={() => handleUnlockTimeIncrease()}>Increase Lock Time</Button>
                 )}
               </div>
             ) : allowance != 0 && loadingIndicator.includes("createLock") ? (
@@ -261,14 +275,19 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
               isWalletEnabled && <Button onClick={() => handleCreateLock()}>Create Lock</Button>
             )}
             <br></br>
-            {estimatedBias && <Text> = {(parseInt(amountToLock) + VOTE_WEIGHT_MULTIPLIER * fromWei(estimatedBias)).toFixed(2)} veSHN</Text>}
+            {console.log("amount to lock ", amountToLock, typeof amountToLock, amountToLock == 0, amountToLock == "0", amountToLock != "0")}
+            {amountToLock != "0" && estimatedBias && <Text> = {(parseInt(amountToLock) + VOTE_WEIGHT_MULTIPLIER * fromWei(estimatedBias)).toFixed(2)} veSHN</Text>}
             {true && (
               <div>
                 {locked && (
                   <div>
-                    {console.log("locked end ", locked.end, typeof(locked.end), locked.end==0)}
+                    {console.log("locked end ", locked.end, typeof locked.end, locked.end == 0)}
                     <br></br>Locked amount: <b>{roundTo2Decimals(fromWei(locked.amount))} SHN</b>
-                    {locked.end != 0 && <div>Lock end:<b> {timeConverter(locked.end)}</b></div>}
+                    {locked.end != 0 && (
+                      <div>
+                        Lock end:<b> {timeConverter(locked.end)}</b>
+                      </div>
+                    )}
                     {userPointHistory && (
                       <Text>
                         <div>
@@ -277,7 +296,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                       </Text>
                     )}
                     {console.log("time now in seconds", new Date().getTime(), new Date(locked.end * 1000).getTime(), new Date().getTime() >= new Date(locked.end * 1000).getTime(), locked.end * 1000)}
-                    {locked.end != 0 && (new Date().getTime() / 100 >= new Date(locked.end * 1000).getTime()) && (
+                    {locked.end != 0 && new Date().getTime() / 100 >= new Date(locked.end * 1000).getTime() && (
                       <div>
                         <br></br>
                         {loadingIndicator.includes("withdraw") ? (
@@ -313,7 +332,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                     <i>Confirming transaction, please wait.</i>
                   </div>
                 ) : (
-                  isWalletEnabled &&  userAddress === getAddress(chainId, "controllerAddress") &&  (<Button onClick={() => handleCheckpoint()}>Checkpoint</Button>)
+                  isWalletEnabled && userAddress === getAddress(chainId, "controllerAddress") && <Button onClick={() => handleCheckpoint()}>Checkpoint</Button>
                 )}
               </div>
             )}
