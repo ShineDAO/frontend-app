@@ -748,7 +748,7 @@ export async function increaseUnlockTimeForLockedShn(userAddress, desiredLockTim
     setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
   } catch (e) {
     if (e.message.includes("Can only increase lock duration")) {
-      setLockError("Can only increase lock duration.");
+      setLockError("Please increase lock duration.");
     }
     console.log("create lock error ", e);
     let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "increaseLockTime"); // none is default when there is nothing
