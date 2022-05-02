@@ -229,7 +229,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                 ))}
               <br></br>
               <br></br>
-              <br></br>
+              <br></br><br></br>
               <Slider type="range" min="7" max="1460" value={sliderValue} onChange={handleChange}></Slider>
               <input onChange={handleChange} value={sliderValue} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 35 }}></input>
               <span>{" Days "} </span>
@@ -248,11 +248,10 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                 </div>
               ) : (
                 <div>
-                  <Button onClick={() => handleApprove()}>Approve</Button>
+                  <Button onClick={() => handleApprove()}>Approve</Button><br></br><br></br>
                 </div>
               ))}
-            <br></br>
-            <br></br>
+            
             {locked && locked.amount > 0 ? (
               <div>
                 {loadingIndicator.includes("increaseLockTime") ? (
