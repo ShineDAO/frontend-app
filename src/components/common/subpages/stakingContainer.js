@@ -46,6 +46,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
   const [userAddress, setUserAddress] = useState();
   const [shinePrice, setShinePrice] = useState();
   const [tvl, setTvl] = useState();
+  const [successMessage, setSuccessMessage] = useState({ location: "", text: "" }); //location rewardClaim/
 
   //useEffect(() => {
   //  setVeShnYieldDistributorAddress(getAddress(chainId, "veShnYieldDistributorAddress"));
@@ -99,7 +100,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
   }
   async function handleClaim() {
     setLoadingIndicator(loadingIndicator.concat(["claim"]));
-    await getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "veShnYieldDistributorAddress"), veShnYieldDistributor.abi);
+    await getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "veShnYieldDistributorAddress"), veShnYieldDistributor.abi, setSuccessMessage);
   }
   return (
     <div style={{ textAlign: "center" }}>
@@ -117,7 +118,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                   <th>APR Base/Max</th>
                   {isWalletEnabled && (
                     <th>
-                      { roundTo2Decimals((((fromWei(yieldRate) * 365 * 86400) / fromWei(totalVeShnParticipating)) * 100) / 4)}% / {roundTo2Decimals(((fromWei(yieldRate) * 365 * 86400) / fromWei(totalVeShnParticipating)) * 100 )}%
+                      {roundTo2Decimals((((fromWei(yieldRate) * 365 * 86400) / fromWei(totalVeShnParticipating)) * 100) / 4)}% / {roundTo2Decimals(((fromWei(yieldRate) * 365 * 86400) / fromWei(totalVeShnParticipating)) * 100)}%
                     </th>
                   )}
                 </tr>
@@ -154,14 +155,19 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                 <i>Confirming transaction, please wait.</i>
               </div>
             ) : (
-              isWalletEnabled && <Button onClick={() => handleClaim()}>CLAIM</Button>
+              isWalletEnabled && successMessage.location != "rewardClaim"  && <Button onClick={() => handleClaim()}>CLAIM</Button>
             )}
             <br></br> <br></br>
-            {isWalletEnabled && (
-              <Text fontWeight="600">
-                Earned so far: {fromWei(earned)} SHN 🌟 (${shinePrice * fromWei(earned)})
-              </Text>
-            )}
+            {isWalletEnabled &&
+              (successMessage.location != "rewardClaim" ? (
+                <Text fontWeight="600">
+                  Earned so far: {fromWei(earned)} SHN 🌟 (${shinePrice * fromWei(earned)})
+                </Text>
+              ) : (
+                <Text color="green" fontWeight="600">
+                  Reward claimed!
+                </Text>
+              ))}
           </div>
         </div>
       </div>

@@ -639,7 +639,7 @@ export async function rewardCheckpoint(userAddress, loadingIndicator, setLoading
   }
 }
 
-export async function getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi) {
+export async function getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi,setSuccessMessage) {
   var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
 
   try {
@@ -654,6 +654,7 @@ export async function getYield(userAddress, loadingIndicator, setLoadingIndicato
     });
     console.log("receipt", receipt);
     let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "claim"); // none is default when there is nothing
+    setSuccessMessage({location:"rewardClaim"})
     setLoadingIndicator(currentLoadingIndicator);
     setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
   } catch (e) {
@@ -819,7 +820,7 @@ export async function createVeShnLock(userAddress, veShnAbi, veShnAddress, amoun
     console.log("create lock error ", e);
     let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "createLock"); // none is default when there is nothing
     setLoadingIndicator(currentLoadingIndicator);
-    setLockError("Lock could not be created, please check the amount of SHN that you have and are locking.");
+    setLockError("Lock could not be created, please check the amount of SHN that you are locking. Additionally check that you have approved the contract.");
   }
 }
 import addresses from "../../../static/config/config";
