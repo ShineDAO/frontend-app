@@ -7,11 +7,12 @@ import { JoinButton } from "../../../common";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import * as pagesUtils from "../../../../utils/pagesUtils";
+import { useLocation } from '@reach/router';
 
 import { WalletContext } from "providers/WalletProvider";
 
-const NavbarLinks = ({ desktop, pathname
-}) => {
+const NavbarLinks = ({ desktop }) => {
+  const pathname = useLocation().pathname.replace(/\//g, '');
   console.log("pathname ", pathname);
   console.log("pathname true ", pathname == "veSHN");
 
@@ -19,28 +20,22 @@ const NavbarLinks = ({ desktop, pathname
 
   const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount } = useContext(WalletContext);
 
- 
   const options = [
-    { value: '0x1', label: 'Ethereum' },
-    { value: '0x89', label: 'Polygon/Matic' },
-    { value: '0x13881', label: 'Mumbai testnet'}
-    
+    { value: "0x1", label: "Ethereum" },
+    { value: "0x89", label: "Polygon/Matic" },
+    { value: "0x13881", label: "Mumbai testnet" },
   ];
 
-  let defaultOption
-  if (chainId=="0x1"){
-     defaultOption = options[0];
-  }else if(chainId=="0x89"){
-     defaultOption = options[1];
-  }else if(chainId== "0x13881"){
-    defaultOption = options[2]
+  let defaultOption;
+  if (chainId == "0x1") {
+    defaultOption = options[0];
+  } else if (chainId == "0x89") {
+    defaultOption = options[1];
+  } else if (chainId == "0x13881") {
+    defaultOption = options[2];
+  } else {
+    defaultOption = { value: "", label: "Chain unrecognized" };
   }
-  else{
-     defaultOption = {value:'', label:"Chain unrecognized"}
-  }
-  
-
-
 
   function manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount) {
     if (pathname != "veSHN") {
@@ -52,14 +47,14 @@ const NavbarLinks = ({ desktop, pathname
 
   function handleDropdown(option) {
     console.log("selected option", option);
-    if (option.value=="0x1"){
-      pagesUtils.switchToMainnet()
-    }else if(option.value=="0x89"){
-      pagesUtils.switchChain("0x89")
-    } else if(option.value=="0x13881"){
-      pagesUtils.switchChain("0x13881")
+    if (option.value == "0x1") {
+      pagesUtils.switchToMainnet();
+    } else if (option.value == "0x89") {
+      pagesUtils.switchChain("0x89");
+    } else if (option.value == "0x13881") {
+      pagesUtils.switchChain("0x13881");
     }
-    setChainId(option.value)
+    setChainId(option.value);
   }
   return (
     <Wrapper desktop={desktop} theme={theme}>

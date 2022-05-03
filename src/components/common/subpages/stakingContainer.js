@@ -104,7 +104,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
   }
   return (
     <div style={{ textAlign: "center" }}>
-      <div style={{ width: "80%" }}>
+      <div style={{ width: "65%", margin: "0 auto" }}>
         <div>
           <div>
             <br></br>
@@ -155,7 +155,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                 <i>Confirming transaction, please wait.</i>
               </div>
             ) : (
-              isWalletEnabled && successMessage.location != "rewardClaim"  && <Button onClick={() => handleClaim()}>CLAIM</Button>
+              isWalletEnabled && successMessage.location != "rewardClaim" && <Button onClick={() => handleClaim()}>CLAIM</Button>
             )}
             <br></br> <br></br>
             {isWalletEnabled &&
