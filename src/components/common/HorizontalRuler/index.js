@@ -6,4 +6,5 @@ export const HorizontalRuler = styled.hr`
   background-color: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
   border-color: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
   margin-top: ${({ marginTop }) => marginTop || "50px"};
+  margin: 0 auto;
 `;

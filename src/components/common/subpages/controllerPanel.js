@@ -82,6 +82,7 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
   return (
     <div>
       {" "}
+      <br></br>
       <HorizontalRuler theme={theme}></HorizontalRuler>
       {console.log("controllerAddress ", getAddress(chainId, "controllerAddress"))}
       {userAddress === getAddress(chainId, "controllerAddress") && (

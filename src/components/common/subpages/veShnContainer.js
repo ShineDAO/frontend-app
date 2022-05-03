@@ -193,7 +193,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
   }
   return (
     <div style={{ textAlign: "center" }}>
-      <div style={{ width: "80%" }}>
+      <div style={{ width: "65%", margin:"0 auto" }}>
         <div>
           <div>
             <br></br>
