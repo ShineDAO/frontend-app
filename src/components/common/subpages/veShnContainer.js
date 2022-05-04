@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { ThemeContext } from "providers/ThemeProvider";
 
 import { SliderContainer, Slider } from "components/common/Container/index";
 import { MobileDiv, Button, Card, Text } from "components/common";
@@ -31,6 +32,7 @@ const VOTE_WEIGHT_MULTIPLIER = 4 - 1; // 4x gives 300% boost at 4 years
 export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator }) {
   //const [shnAddress, setShnAddress] = useState(getAddress(chainId,"shnAddress")); //not used becuase it doesnt work
   //const [veShnAddress, setVeShnAddress] = useState(getAddress(chainId,"veShnAddress"));
+  const { theme } = useContext(ThemeContext);
 
   console.log("chainxxx ", chainId, getAddress(chainId, "shnAddress"));
 
@@ -197,7 +199,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
         <div>
           <div>
             <br></br>
-            <Text fontWeight="600">veSHN</Text>
+            <Text theme={theme} fontWeight="600">veSHN</Text>
             <p>
               veSHN is a governance modelled after Curve's veCRV and Frax's veFXS vote escrow model where the users with longer lock time receive higher weighted voting power. For more info please check the{" "}
               <a href="https://docs.shinedao.finance/community/shn-token/veshn" target="_self">
@@ -236,7 +238,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
               {sliderValue > 1460 && <Text color="red">Maximum allowed lock time is 4 Years / 1460 days</Text>}
               {lockError && <Text color="red"> {lockError}</Text>}
             </SliderContainer>{" "}
-            <Text>Please select the lock time:</Text>
+            <Text theme={theme} >Please select the lock time:</Text>
             <br></br>
             {console.log("loading indicator ", loadingIndicator)}
             {allowance == 0 &&
@@ -275,7 +277,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
             )}
             <br></br>
             {console.log("amount to lock ", amountToLock, typeof amountToLock, amountToLock == 0, amountToLock == "0", amountToLock != "0")}
-            {amountToLock != "0" && estimatedBias && <Text> = {(parseInt(amountToLock) + VOTE_WEIGHT_MULTIPLIER * fromWei(estimatedBias)).toFixed(2)} veSHN</Text>}
+            {amountToLock != "0" && estimatedBias && <Text theme={theme} > = {(parseInt(amountToLock) + VOTE_WEIGHT_MULTIPLIER * fromWei(estimatedBias)).toFixed(2)} veSHN</Text>}
             {true && (
               <div>
                 {locked && (
@@ -288,7 +290,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                       </div>
                     )}
                     {userPointHistory && (
-                      <Text>
+                      <Text theme={theme} >
                         <div>
                           <span>Current locked weight</span> <b>{(parseInt(fromWei(locked.amount)) + VOTE_WEIGHT_MULTIPLIER * fromWei(userPointHistory.bias)).toFixed(2)} veSHN</b>
                         </div>
