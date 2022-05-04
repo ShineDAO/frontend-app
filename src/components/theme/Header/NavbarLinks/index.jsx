@@ -58,6 +58,9 @@ const NavbarLinks = ({ desktop }) => {
   }
   return (
     <Wrapper desktop={desktop} theme={theme}>
+       <a href="https://shinedao.finance/veSHN/" target="_blank">
+        STAKE
+      </a>
       <a href="http://docs.shinedao.finance" target="_blank">
         DOCS
       </a>
