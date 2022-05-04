@@ -143,10 +143,10 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                 <i>Confirming transaction, please wait.</i>
               </div>
             ) : (
-              isWalletEnabled && <Button onClick={() => handleRewardCheckpoint()}>CHECKPOINT</Button>
+              isWalletEnabled && <Button onClick={() => handleRewardCheckpoint()}>STAKE</Button>
             )}
             <br></br>
-            <span> {isWalletEnabled && <i>After you create, add or increase the timelock you need to checkpoint in order to account the new amount for the reward.</i>} </span>
+            <span> {isWalletEnabled && <i>After you create, add or increase the timelock you need to <b>stake</b> again in order to account the new amount for the reward.</i>} </span>
             <br></br> <br></br> <br></br>
             {loadingIndicator.includes("claim") ? (
               <div>
