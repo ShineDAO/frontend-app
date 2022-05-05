@@ -74,8 +74,8 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
       setEstimatedSlope(slope);
       let bias = slope * (desiredLockTimestamp - new Date().getTime() / 1000);
       setEstimatedBias(bias);
-      console.log("estimated Slope and bias ", slope, bias, toWei(amountToLock), amountToLock, desiredLockTimestamp);
-      console.log("lower timestamp ",new Date(desiredLockTimestamp* 1000).getTime(), new Date(locked.end * 1000).getTime(), locked.end, locked.end != 0 && new Date(desiredLockTimestamp*1000).getTime()  <= new Date(locked.end * 1000).getTime())
+      //console.log("estimated Slope and bias ", slope, bias, toWei(amountToLock), amountToLock, desiredLockTimestamp);
+      //console.log("lower timestamp ",new Date(desiredLockTimestamp* 1000).getTime(), new Date(locked.end * 1000).getTime(), locked.end, locked.end != 0 && new Date(desiredLockTimestamp*1000).getTime()  <= new Date(locked.end * 1000).getTime())
       if (locked.end != 0 && new Date(desiredLockTimestamp * 1000).getTime()  <= new Date(locked.end * 1000).getTime()) {
         setLockError("The time on the lock can only be increased.");
       }
@@ -237,7 +237,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
         <div>
           <div>
             <br></br>
-            <Text theme={theme} fontWeight="600">veSHN</Text>
+            <Text fontWeight="600">veSHN</Text>
             <p>
             veSHN contract allows users to lock & stake their SHN to get SEED access, SHN yield, project token distribution and governance rights. Benefits are proportional to the lock time. Find more info here:{" "}
               <a href="https://docs.shinedao.finance/community/shn-token/veshn" target="_self">
@@ -276,7 +276,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
               {sliderValue > 1460 && <Text color="red">Maximum allowed lock time is 4 Years / 1460 days</Text>}
               {lockError && <Text color="red"> {lockError}</Text>}
             </SliderContainer>{" "}
-            <Text theme={theme} >Please select the lock time:</Text>
+            <Text >Please select the lock time:</Text>
             <br></br>
             {console.log("loading indicator ", loadingIndicator)}
             {allowance == 0 &&
@@ -315,7 +315,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
             )}
             <br></br>
             {console.log("amount to lock ", amountToLock, typeof amountToLock, amountToLock == 0, amountToLock == "0", amountToLock != "0")}
-            {amountToLock != "0" && estimatedBias && <Text theme={theme} > = {(parseInt(amountToLock) + VOTE_WEIGHT_MULTIPLIER * fromWei(estimatedBias)).toFixed(2)} veSHN</Text>}
+            {amountToLock != "0" && estimatedBias && <Text > = {(parseInt(amountToLock) + VOTE_WEIGHT_MULTIPLIER * fromWei(estimatedBias)).toFixed(2)} veSHN</Text>}
             {true && (
               <div>
                 {locked && (
@@ -328,7 +328,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                       </div>
                     )}
                     {userPointHistory && (
-                      <Text theme={theme} >
+                      <Text>
                         <div>
                           <span>Current locked weight</span> <b>{(parseInt(fromWei(locked.amount)) + VOTE_WEIGHT_MULTIPLIER * fromWei(userPointHistory.bias)).toFixed(2)} veSHN</b>
                         </div>
