@@ -35,7 +35,7 @@ export default ({ location }) => {
             </Text>
             <br></br>
             <p style={{ marginLeft: 80, marginRight: 80 }}>
-              In order to save on the gas fees, veSHN is only available when Polygon/Matic network is selected. If you have your Shine (SHN) on the Eth mainnet, please bridge them over to Polygon/Matic network by following these{" "}
+            veSHN is only available on Polygon (Matic) Network. If you have SHN on the Ethereum Mainnet, please bridge them by following these{" "}
               <a target="_self" href="https://shinedao.medium.com/shine-bridge-to-matic-is-live-df10f2b1d620">
                 instructions
               </a>

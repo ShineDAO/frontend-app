@@ -53,6 +53,29 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
   //  setVeShnAddress(getAddress(chainId, "veShnAddress"));
   //}, [chainId]);
 
+  const useAudio = url => {
+    const [audio] = useState(new Audio(url));
+    const [playing, setPlaying] = useState(false);
+  
+    const toggle = () => setPlaying(!playing);
+  
+    useEffect(() => {
+        playing ? audio.play() : audio.pause();
+      },
+      [playing]
+    );
+  
+    useEffect(() => {
+      audio.addEventListener('ended', () => setPlaying(false));
+      return () => {
+        audio.removeEventListener('ended', () => setPlaying(false));
+      };
+    }, []);
+  
+    return [playing, toggle];
+  };
+  const [playing, toggle] = useAudio("https://themushroomkingdom.net/sounds/wav/sm64/sm64_exit_course_pause_menu.wav");
+
   useEffect(() => {
     if (isWalletEnabled == true) {
       async function getSupply() {
@@ -100,7 +123,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
   }
   async function handleClaim() {
     setLoadingIndicator(loadingIndicator.concat(["claim"]));
-    await getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "veShnYieldDistributorAddress"), veShnYieldDistributor.abi, setSuccessMessage);
+    await getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "veShnYieldDistributorAddress"), veShnYieldDistributor.abi, setSuccessMessage, toggle);
   }
   return (
     <div style={{ textAlign: "center" }}>
