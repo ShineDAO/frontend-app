@@ -639,7 +639,7 @@ export async function rewardCheckpoint(userAddress, loadingIndicator, setLoading
   }
 }
 
-export async function getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi,setSuccessMessage) {
+export async function getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi,setSuccessMessage,toggle) {
   var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
 
   try {
@@ -654,6 +654,7 @@ export async function getYield(userAddress, loadingIndicator, setLoadingIndicato
     });
     console.log("receipt", receipt);
     let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "claim"); // none is default when there is nothing
+    toggle() // plays sound when yield is collected
     setSuccessMessage({location:"rewardClaim"})
     setLoadingIndicator(currentLoadingIndicator);
     setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched

@@ -4,6 +4,7 @@ import { ThemeContext } from "providers/ThemeProvider";
 import { SliderContainer, Slider } from "components/common/Container/index";
 import { MobileDiv, Button, Card, Text } from "components/common";
 import PulseLoader from "react-spinners/PulseLoader";
+const axios = require("axios");
 
 import {
   createVeShnLock,
@@ -50,6 +51,9 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
   const [estimatedBias, setEstimatedBias] = useState();
   const [userAddress, setUserAddress] = useState();
 
+  const [shinePrice, setShinePrice] = useState(0);
+
+
   //useEffect(() => {
   //    setShnAddress(getAddress(chainId,"shnAddress"))
   //    setVeShnAddress(getAddress(chainId,"veShnAddress"))
@@ -78,6 +82,22 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
     }
   }, [desiredLockTimestamp, amountToLock]);
 
+  async function getUsdValue(setShinePrice){
+    axios
+    .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=shinedao")
+    .then(function(response) {
+      // handle success
+      //console.log("priceeee ", response.data[0].current_price)
+      setShinePrice(response.data[0].current_price);
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function() {
+      // always executed
+    });
+  }
   useEffect(() => {
     console.log("data ", isWalletEnabled, chainId, getAddress(chainId, "veShnAddress"));
     if (isWalletEnabled == true) {
@@ -91,10 +111,28 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
         getShineBalance(setShnBalance, await getOnlyUserAddress(), ShineToken.abi, getAddress(chainId, "shnAddress"));
         getAllowance(setAllowance, getAddress(chainId, "veShnAddress"), await getOnlyUserAddress(), ShineToken.abi, getAddress(chainId, "shnAddress"));
         getEpoch(setEpoch, getAddress(chainId, "veShnAddress"), veSHN.abi);
+        await getUsdValue(setShinePrice)
       }
       getLocked();
     }
   }, [isWalletEnabled, refetchData, chainId]);
+
+  useEffect(() => {
+    axios
+      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=shinedao")
+      .then(function(response) {
+        // handle success
+        console.log("shine price ", response.data[0].current_price, fromWei(totalShnSupply));
+        setShinePrice(response.data[0].current_price);
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function() {
+        // always executed
+      });
+  }, [refetchData]);
 
   useEffect(() => {
     function toTimestamp(strDate) {
@@ -201,7 +239,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
             <br></br>
             <Text theme={theme} fontWeight="600">veSHN</Text>
             <p>
-              veSHN is a governance modelled after Curve's veCRV and Frax's veFXS vote escrow model where the users with longer lock time receive higher weighted voting power. For more info please check the{" "}
+            veSHN contract allows users to lock & stake their SHN to get SEED access, SHN yield, project token distribution and governance rights. Benefits are proportional to the lock time. Find more info here:{" "}
               <a href="https://docs.shinedao.finance/community/shn-token/veshn" target="_self">
                 docs
               </a>
@@ -210,7 +248,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
           </div>
           <div>
             <SliderContainer>
-              <span>Balance:</span> {roundTo2Decimals(shnBalance)} SHN 🌟   { false && allowance}  <br></br> <br></br>
+              <span>Balance:</span> {roundTo2Decimals(shnBalance)} SHN 🌟  ($ { roundTo2Decimals(shinePrice*shnBalance)})  { false && allowance}  <br></br> <br></br>
               <span>{"Enter amount to lock"} </span>
               <input onChange={target => handleAmountToLock(target.target.value, setAmountToLock)} value={filterAmountToLock(amountToLock)} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input>{" "}
               <b onClick={() => setAmountToLock(shnBalance)} style={{ cursor: "pointer" }}>
