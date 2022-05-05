@@ -30,7 +30,7 @@ export default ({ location }) => {
         ) : (
           <div style={{ textAlign: "center", marginTop: 80 }}>
             <br></br>
-            <Text fontWeight="600" color="red">
+            <Text fontWeight="600">
               Chain unsupported
             </Text>
             <br></br>
