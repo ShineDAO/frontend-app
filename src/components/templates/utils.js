@@ -428,20 +428,20 @@ export async function setShineTokenAddress(userAddress, shnReference, gas, saleA
   }
 }
 export function toPlainString(num) {
-  console.log("plain straing", num.toLocaleString("fullwide", { useGrouping: false }));
+  //console.log("plain straing", num.toLocaleString("fullwide", { useGrouping: false }));
   return num.toLocaleString("fullwide", { useGrouping: false });
 }
 
 export function estimateReceivedShn(ethAmountToSpend, rate) {
-  console.log("eth to spend", ethAmountToSpend);
+  //console.log("eth to spend", ethAmountToSpend);
   const weiAmountToSpend = window.web3.utils.toWei(ethAmountToSpend.toString(), "ether");
-  console.log("wei", toPlainString(weiAmountToSpend * rate));
+  //console.log("wei", toPlainString(weiAmountToSpend * rate));
 
-  console.log("www", weiAmountToSpend * rate);
+  //console.log("www", weiAmountToSpend * rate);
 
   //const estimatedShnInWei = weiAmountToSpend * rate
   const estimatedReceivedShn = window.web3.utils.fromWei(toPlainString(weiAmountToSpend * rate), "ether");
-  console.log("www1", Number.parseFloat(estimatedReceivedShn));
+  //console.log("www1", Number.parseFloat(estimatedReceivedShn));
   return Number.parseFloat(estimatedReceivedShn);
 }
 
@@ -792,6 +792,8 @@ export async function veShnApprove(userAddress, veShnAddress, setAllowance, load
     setLoadingIndicator(currentLoadingIndicator);
   } catch (e) {
     console.log("create lock error ", e);
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "approve"); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
   }
 }
 
@@ -835,9 +837,9 @@ export function getAddress(chainId, contract) {
   let chain = chainIdContainer[chainId];
   console.log("chainx ", chain, typeof chain, addresses[contract][chain]);
   if (typeof chain != "undefined") {
-    return addresses[contract][chain];
+    return addresses[contract][chain].toLowerCase();
   } else {
-    return addresses[shnAddress].hardhat;
+    return addresses[shnAddress].hardhat.toLowerCase();
   }
 }
 

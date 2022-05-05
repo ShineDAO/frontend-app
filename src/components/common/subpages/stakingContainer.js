@@ -184,7 +184,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
             {isWalletEnabled &&
               (successMessage.location != "rewardClaim" ? (
                 <Text fontWeight="600">
-                  Earned so far: {fromWei(earned)} SHN 🌟 (${shinePrice * fromWei(earned)})
+                  Earned so far: {roundTo2Decimals(fromWei(earned))} SHN 🌟 (${shinePrice ? roundTo2Decimals(shinePrice * fromWei(earned)) : 0})
                 </Text>
               ) : (
                 <Text color="green" fontWeight="600">
