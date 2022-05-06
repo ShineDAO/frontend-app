@@ -154,7 +154,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                   <td>{isWalletEnabled && roundTo2Decimals((fromWei(totalShnSupply) / 21000000) * 100)}%</td>
                 </tr>
                 <tr>
-                  <td>User veSHN Checkpointed</td>
+                  <td>User veSHN Staked</td>
                   <td>{isWalletEnabled && roundTo2Decimals(fromWei(userVeShnCheckpointed))}</td>
                 </tr>
               </tbody>
