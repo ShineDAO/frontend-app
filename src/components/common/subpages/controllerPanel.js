@@ -130,7 +130,7 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
               </tr>
 
               <tr>
-                <td>User veSHN Checkpointed</td>
+                <td>User veSHN Staked</td>
                 <td>{isWalletEnabled && fromWei(userVeShnCheckpointed)}</td>
               </tr>
               <tr>
