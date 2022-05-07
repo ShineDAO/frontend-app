@@ -332,6 +332,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                         <div>
                           <span>Current locked weight</span> <b>{(parseInt(fromWei(locked.amount)) + VOTE_WEIGHT_MULTIPLIER * fromWei(userPointHistory.bias)).toFixed(2)} veSHN</b>
                         </div>
+                        <i>Sometimes you need to refresh the page to see the latest data.</i>
                       </Text>
                     )}
                     {console.log("time now in seconds", new Date().getTime(), new Date(locked.end * 1000).getTime(), new Date().getTime() >= new Date(locked.end * 1000).getTime(), locked.end * 1000)}
