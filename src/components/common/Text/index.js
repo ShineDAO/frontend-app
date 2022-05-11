@@ -19,3 +19,13 @@ export const SmallText = styled.div`
   font-size: 9pt;
   margin-bottom: 8px;
 `;
+
+
+export const DegenNewsTitle = styled.h2`
+  color: rgb(54 52 54);
+  display: inline;
+  
+  @media (min-width: 960px) {
+    padding-left: 10px;
+  }
+`;

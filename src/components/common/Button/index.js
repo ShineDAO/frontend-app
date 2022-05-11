@@ -40,7 +40,7 @@ export const Button = styled.button`
     left: 0px;
     top: 0px;
     border-radius: 4px;
-    margin-bottom: 20px;
+    margin-bottom: ${({ marginBottom }) => marginBottom || "20px"};;
   }
   ${({ secondary }) =>
     secondary &&

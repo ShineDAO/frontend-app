@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMoralis, useMoralisQuery, useMoralisCloudFunction } from "react-moralis";
-import { Button, Text } from "components/common";
+import { Button, Text, DegenNewsTitle } from "components/common";
 import { Article } from "./article";
 import PulseLoader from "react-spinners/PulseLoader";
 
@@ -173,21 +173,21 @@ export function SubpageNews() {
   }
   return (
     <div style={{ width: "100%" }}>
-      <div style={{ boxShadow: "0px 3px 0px 0px", display: "flex", alignItems: "baseline", background: "rgb(250 218 94)", margin: "0 auto" }}>
+      <div style={{ boxShadow: "0px 3px 0px 0px", display: "flex", alignItems: "center", background: "rgb(250 218 94)", margin: "0 auto" }}>
         <span>
-          <h2 style={{ color: "rgb(54 52 54)", display: "inline", paddingLeft: 10 }}>Degen News</h2>
+          <DegenNewsTitle>Degen News</DegenNewsTitle> 
         </span>{" "}
-        <span style={{ paddingLeft: 15, paddingRight: 15 }}>|</span>
+        <span style={{ paddingLeft: 10, paddingRight: 10 }}>|</span>
         <span style={{ cursor: "pointer" }} onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>
           Submit
         </span>
-        <span style={{ paddingLeft: 15, paddingRight: 15 }}>|</span>
+        <span style={{ paddingLeft: 10, paddingRight: 10 }}>|</span>
         <span style={{ cursor: "pointer" }} onClick={() => window.open("https://docs.shinedao.finance/community/degen-news", "_self")}>
           FAQ
         </span>
         {!isAuthenticated ? (
           <div style={{ marginLeft: "auto" }}>
-            <Button backgroundHover="#45e25a" onClick={() => loadWeb3MoralisProviderLight(authenticate, Moralis)}>
+            <Button marginBottom="0px" backgroundHover="#45e25a" onClick={() => loadWeb3MoralisProviderLight(authenticate, Moralis)}>
               Connect Wallet
             </Button>
           </div>
