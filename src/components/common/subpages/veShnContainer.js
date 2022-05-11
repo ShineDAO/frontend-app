@@ -122,7 +122,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
       .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=shinedao")
       .then(function(response) {
         // handle success
-        console.log("shine price ", response.data[0].current_price, fromWei(totalShnSupply));
+        //console.log("shine price ", response.data[0].current_price, fromWei(totalShnSupply));
         setShinePrice(response.data[0].current_price);
       })
       .catch(function(error) {
