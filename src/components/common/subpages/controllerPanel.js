@@ -19,12 +19,16 @@ import {
   getOnlyUserAddress,
   sync,
   getAddress,
+  notifyReward,
+  veShnYieldDistributorApprove
 } from "../../templates/utils";
 import PulseLoader from "react-spinners/PulseLoader";
 
 import { ThemeContext } from "providers/ThemeProvider";
 import veShnYieldDistributor from "../../../../static/abi/veFXSYieldDistributorV4";
 import veSHN from "../../../../static/abi/veFXS";
+import SHN from "../../../../static/abi/ShineToken";
+
 
 export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator }) {
   //const [veShnYieldDistributorAddress, setVeShnYieldDistributorAddress] = useState(getAddress(chainId, "veShnYieldDistributorAddress"));
@@ -45,6 +49,13 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
   const [earned, setEarned] = useState("");
   const [userAddress, setUserAddress] = useState();
   const [shinePrice, setShinePrice] = useState();
+  const [rewardToAdd, setRewardToAdd] = useState();
+  const [successMessage, setSuccessMessage] = useState();
+
+  const [amountToApprove, setAmountToApprove] = useState();
+
+
+  
 
   //useEffect(() => {
   //  setVeShnYieldDistributorAddress(getAddress(chainId, "veShnYieldDistributorAddress"));
@@ -79,6 +90,21 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
     await sync(await getOnlyUserAddress(), setRefetchData, loadingIndicator, setLoadingIndicator, veShnYieldDistributor.abi, getAddress(chainId, "veShnYieldDistributorAddress"));
   }
 
+  function handleRewardChange(notifyRewardAmount) {
+    setRewardToAdd(notifyRewardAmount);
+  }
+
+  function handleNotifyReward(notifyRewardAmount){
+    notifyReward(userAddress,loadingIndicator,setLoadingIndicator,setRefetchData,getAddress(chainId, "veShnYieldDistributorAddress"),veShnYieldDistributor.abi,setSuccessMessage,notifyRewardAmount)
+  }
+
+  function handleApprove(amountToApprove){
+    setAmountToApprove(amountToApprove)
+  }
+
+  function handleAmountToApprove(amountToApprove){
+    veShnYieldDistributorApprove(userAddress,getAddress(chainId, "veShnYieldDistributorAddress"),loadingIndicator,setLoadingIndicator,SHN.abi,getAddress(chainId, "shnAddress"))
+  }
   return (
     <div>
       {" "}
@@ -154,6 +180,10 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
               </tr>
             </tbody>
           </table>
+          <br></br> <Button onClick={() => handleAmountToApprove(rewardToAdd)}>Approve Contract</Button><br></br><br></br>
+          <input onChange={target => handleRewardChange(target.target.value)} value={rewardToAdd} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input> <br></br><br></br> <Button onClick={() => handleNotifyReward(rewardToAdd)}>Notify Reward</Button>
+          <br></br><br></br>
+         
         </div>
       )}
     </div>

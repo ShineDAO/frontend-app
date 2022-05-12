@@ -847,3 +847,59 @@ export function getAddress(chainId, contract) {
 export function roundTo2Decimals(num){
   return Math.round(num * 100) / 100
 }
+
+
+export async function notifyReward(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi,setSuccessMessage,rewardAmount) {
+  var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
+  console.log("reward amm ", rewardAmount)
+  try {
+    let rewardInWei = window.web3.utils.toWei(rewardAmount.toString(), "ether")
+    let estimatedGas = await veShnYieldDistributorInstance.methods.notifyRewardAmount(rewardInWei).estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+
+    const receipt = await veShnYieldDistributorInstance.methods.notifyRewardAmount(rewardInWei).send({
+      from: userAddress,
+      gas: estimatedGas,
+    });
+    console.log("receipt", receipt);
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "claim"); // none is default when there is nothing
+    setSuccessMessage({location:"rewardClaim"})
+    setLoadingIndicator(currentLoadingIndicator);
+    setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
+  } catch (e) {
+    console.log("err ", e);
+    console.log("Transaction rejected", e.code);
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "claim"); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+  }
+}
+
+
+
+export async function veShnYieldDistributorApprove(userAddress, veShnYieldDistributorAddress, loadingIndicator, setLoadingIndicator, shineAbi, shnAddress) {
+  var SHN = new window.web3.eth.Contract(shineAbi, shnAddress);
+
+  try {
+    let estimatedGas = await SHN.methods.approve(veShnYieldDistributorAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").estimateGas({
+      from: userAddress,
+      //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
+      //gas: gas,
+    });
+
+    console.log("estimated gas for lock", estimatedGas);
+    const receipt = await SHN.methods.approve(veShnYieldDistributorAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").send({
+      from: userAddress,
+      //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
+      gas: estimatedGas,
+    });
+    console.log("receipt ", receipt);
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "approve"); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+  } catch (e) {
+    console.log("create lock error ", e);
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "approve"); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+  }
+}
