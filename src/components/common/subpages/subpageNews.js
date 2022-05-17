@@ -40,18 +40,13 @@ export function SubpageNews() {
   // { autoFetch: true }
   // );
 
-  const { fetch: saveArticle, data: saveArticleResult, error: saveArticleError, isLoading: saveArticleIsLoading } = useMoralisCloudFunction(
-    "saveArticle",
-    { title, url },
+  const { fetch: saveArticle, data: saveArticleResult, error: saveArticleError, isLoading: saveArticleIsLoading } = useMoralisCloudFunction("saveArticle", { title, url }, { autoFetch: false });
+
+  const { fetch: onboardPreviousDataIfOldUser, data: onboardPreviousDataIfOldUserResult, error: onboardPreviousDataIfOldUserError, isLoading: onboardPreviousDataIfOldUserIsLoading } = useMoralisCloudFunction(
+    "onboardPreviousDataIfOldUser",
+    { ethAddress },
     { autoFetch: false }
   );
-
-  const {
-    fetch: onboardPreviousDataIfOldUser,
-    data: onboardPreviousDataIfOldUserResult,
-    error: onboardPreviousDataIfOldUserError,
-    isLoading: onboardPreviousDataIfOldUserIsLoading,
-  } = useMoralisCloudFunction("onboardPreviousDataIfOldUser", { ethAddress }, { autoFetch: false });
 
   useEffect(() => {
     console.log("user 3213", user);
@@ -156,9 +151,7 @@ export function SubpageNews() {
     if (isAuthenticated) {
       setSubmissionVisibility(true);
     } else {
-      setGeneralError(
-        "Only vaccinated people can submit an article... 😷💉 👀  Nah, we are kidding, you actually have to be contributor. Go to the ShineDAO main page to find out what that is and to complete the onboarding."
-      );
+      setGeneralError("Please connect your wallet in order to be able to post");
     }
 
     if (isSubmissionVisible) {
@@ -171,11 +164,14 @@ export function SubpageNews() {
     await Moralis.User.logOut();
     window.location.reload(true);
   }
+  function substringAddress(address){
+    return `${address.substring(0,6)}...${address.substring(address.length - 4)}`
+  }
   return (
     <div style={{ width: "100%" }}>
       <div style={{ boxShadow: "0px 3px 0px 0px", display: "flex", alignItems: "center", background: "rgb(250 218 94)", margin: "0 auto" }}>
         <span>
-          <DegenNewsTitle>Degen News</DegenNewsTitle> 
+          <DegenNewsTitle>Degen News</DegenNewsTitle>
         </span>{" "}
         <span style={{ paddingLeft: 10, paddingRight: 10 }}>|</span>
         <span style={{ cursor: "pointer" }} onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>
@@ -199,24 +195,20 @@ export function SubpageNews() {
       </div>
 
       <div>
-        {false && (
-          <img
-            style={{ height: 190, marginTop: 0, float: "right" }}
-            src="https://aws1.discourse-cdn.com/standard21/uploads/shinedao/original/1X/dca391ba2f0d2a5f8487017e7deb6931b46b6288.jpeg"
-          ></img>
-        )}
+        {false && <img style={{ height: 190, marginTop: 0, float: "right" }} src="https://aws1.discourse-cdn.com/standard21/uploads/shinedao/original/1X/dca391ba2f0d2a5f8487017e7deb6931b46b6288.jpeg"></img>}
         {isAuthenticated && shnPriceData && (
           <div>
             <br></br>
-            <Text style={{display:"inline-block"}} color="#181717" padding="0px 0px 0px 10px">
-              Welcome {user.get("username")}, submit your most interesting DeFi news!
+            {console.log("discordId and type", user.get("discordId"), "undefined" == typeof user.get("discordId"), user.get("ethAddress").substring(0,6))}
+            <Text style={{ display: "inline-block" }} color="#181717" padding="0px 0px 0px 10px">
+              {
+                //if user is not onboarded we show his eth address
+              }
+              Welcome <b>{"undefined" == typeof user.get("discordId") ? substringAddress(user.get("ethAddress")) : user.get("username")}</b> ! Submit your most interesting DeFi news! {"undefined" == typeof user.get("discordId") && <div>NOTE: To set up a proper username and to join the Discord community, please complete the <a href="https://shinedao.finance/onboarding">onboarding.</a></div> }
             </Text>
-            <Text disableMobileFloat="true" float="right" style={{display:"inline-block",  marginRight:8}} color="#ffa547" padding="0px 0px 0px 10px">
+            <Text disableMobileFloat="true" float="right" style={{ display: "inline-block", marginRight: 8 }} color="#ffa547" padding="0px 0px 0px 10px">
               Current SHN price:{" "}
-              <a
-                style={{ cursor: "pointer", color: "#6c6c6f" }}
-                onClick={() => window.open("https://info.quickswap.exchange/pair/0xf6467b4178d54251d253ac0095f31444f0f6efbc", "_self")}
-              >
+              <a style={{ cursor: "pointer", color: "#6c6c6f" }} onClick={() => window.open("https://info.quickswap.exchange/pair/0xf6467b4178d54251d253ac0095f31444f0f6efbc", "_self")}>
                 {" "}
                 ${parseFloat(shnPriceData).toFixed(4)}
               </a>
@@ -228,10 +220,10 @@ export function SubpageNews() {
         {isSubmissionVisible && (
           <div style={{ paddingLeft: 5 }}>
             <label htmlFor="title">Title: </label>
-            <input value={title} onChange={e => handleTitleChange(e, setTitle)} type="text" id="title" name="title"></input>
+            <input style={{width:260}} value={title} onChange={e => handleTitleChange(e, setTitle)} type="text" id="title" name="title"></input>
             <br></br>
             <label htmlFor="url">URL: </label>
-            <input value={url} onChange={e => handleUrlChange(e, setUrl)} type="text" id="url" name="url"></input>
+            <input style={{width:260}} value={url} onChange={e => handleUrlChange(e, setUrl)} type="text" id="url" name="url"></input>
             <br></br>
             <Button onClick={() => !saveArticleIsLoading && saveArticle()}>Submit</Button>
           </div>

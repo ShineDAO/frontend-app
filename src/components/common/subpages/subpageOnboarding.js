@@ -74,7 +74,7 @@ export function SubpageOnboarding({ location }) {
               </p>
             </div>
             <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
-              <img style={{ borderRadius: "10%", boxShadow: "0 0 7px 1px" }} src={`https://cdn.discordapp.com/avatars/${accId}/${avatarId}.png`}></img>
+              {(avatarId !== null || avatarId !== "null") && <img style={{ borderRadius: "10%", boxShadow: "0 0 7px 1px" }} src={`https://cdn.discordapp.com/avatars/${accId}/${avatarId}.png`}></img>}
               <br></br> <br></br>
               <br></br>
             </div>
@@ -127,17 +127,7 @@ export function SubpageOnboarding({ location }) {
       {!isWalletEnabled && (
         <div style={{ width: "220px" }}>
           {false && (
-            <Card
-              onClick={() => pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount)}
-              borderRadius="4px"
-              border="1px solid white"
-              color="white"
-              background="#1E1E1E"
-              clickable
-              width="100%"
-              height="48px"
-              margin="5px 0 0 0"
-            >
+            <Card onClick={() => pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount)} borderRadius="4px" border="1px solid white" color="white" background="#1E1E1E" clickable width="100%" height="48px" margin="5px 0 0 0">
               <Text fontWeight={800} color="white">
                 CONNECT WALLET
               </Text>
@@ -208,9 +198,7 @@ export function renderPage(
           </div>
         )}
         <br></br>
-        {isWalletEnabled && chainId == "137" && username && (
-          <div>Just by verifying discord you got yourself some free SHN. You can redeem them at the end. Please, continue with the next steps.</div>
-        ) //if wallet connected and user identified
+        {isWalletEnabled && chainId == "137" && username && <div>Just by verifying discord you got yourself some free SHN. You can redeem them at the end. Please, continue with the next steps.</div> //if wallet connected and user identified
         }
 
         {isWalletEnabled &&
@@ -221,8 +209,8 @@ export function renderPage(
                 <h2 style={{ textAlign: "center" }}>Your Discord Account</h2>
                 <br></br>
                 <p style={{ textAlign: "left" }}>
-                  We need to pair your ETH address with your Discord account, so we can create an identity for you. This will enable contribution tracking and reward distribution
-                  process. Just by being active in Discord, you will earn some SHN tokens on weekly basis.
+                  We need to pair your ETH address with your Discord account, so we can create an identity for you. This will enable contribution tracking and reward distribution process. Just by being active in Discord, you will earn some SHN tokens on weekly
+                  basis.
                 </p>
               </div>
               <br></br>
@@ -242,8 +230,8 @@ export function renderPage(
                 <br></br>
 
                 <p style={{}}>
-                  In this onboarding process we are going to set up your profile, so that you can start earning SHN automatically. We will introduce you to our tool stack and share
-                  recourses that will allow you to understand how you can <b>get involved regardless of your background, skill level, or availability.</b>
+                  In this onboarding process we are going to set up your profile, so that you can start earning SHN automatically. We will introduce you to our tool stack and share recourses that will allow you to understand how you can{" "}
+                  <b>get involved regardless of your background, skill level, or availability.</b>
                   <br></br>
                   <br></br> If you’re successful in completing all of the steps, you’ll earn your first {pagesUtils.baseTokenReward * 4} SHN 🌟
                   <br></br>
@@ -395,8 +383,8 @@ export function renderPage(
                 <br></br> <br></br>
                 <p style={{ textAlign: "left" }}>
                   <b>How can you earn additional SHN</b> <br></br>
-                  We are tracking engagement on your messages in Discord and Forum to distribute weekly SHN rewards. What engagement are we looking for?<br></br>- Share alpha
-                  (interesting early stage projects)<br></br> - Share interesting news<br></br> - Give feedback on ShineDAO docs, processes, website<br></br> - Ask questions
+                  We are tracking engagement on your messages in Discord and Forum to distribute weekly SHN rewards. What engagement are we looking for?<br></br>- Share alpha (interesting early stage projects)<br></br> - Share interesting news<br></br> - Give
+                  feedback on ShineDAO docs, processes, website<br></br> - Ask questions
                   <br></br> - Pitch your Web3 ideas<br></br>{" "}
                 </p>
               </p>
@@ -406,23 +394,7 @@ export function renderPage(
             </div>
             <div>
               {registrationSuccess !== true && !loading && (
-                <Button
-                  style={{ width: "200px" }}
-                  onClick={() =>
-                    pagesUtils.claimReward(
-                      accessCode,
-                      setContributorDetected,
-                      currentAccount,
-                      username,
-                      accId,
-                      avatarId,
-                      setContributorError,
-                      setRegistrationSuccess,
-                      setLoading,
-                      setTxnHash
-                    )
-                  }
-                >
+                <Button style={{ width: "200px" }} onClick={() => pagesUtils.claimReward(accessCode, setContributorDetected, currentAccount, username, accId, avatarId, setContributorError, setRegistrationSuccess, setLoading, setTxnHash)}>
                   Claim your SHN tokens{" "}
                 </Button>
               )}
@@ -441,9 +413,7 @@ export function renderPage(
 
             <br></br>
             <br></br>
-            {contributorDetected && !loading && (
-              <p style={{ textAlign: "center" }}>It seems you are already a contributor. Only people who are not contributors can become contributors.</p>
-            )}
+            {contributorDetected && !loading && <p style={{ textAlign: "center" }}>It seems you are already a contributor. Only people who are not contributors can become contributors.</p>}
 
             {contributorError === true && <p style={{ textAlign: "center" }}>Something went wrong. Plese try again later.</p>}
 
