@@ -316,7 +316,7 @@ export function renderPage(
                 </a>
                 <br></br>
                 To be able to understand how to get involved please check out our notion&nbsp;
-                <a href="https://oasis-firefly-683.notion.site/ShineDAO-23d023e521934cca9d835be9f73790d7" target="_blank">
+                <a href="https://oasis-firefly-683.notion.site/ShineDAO-Q2-22-76e3f02a11e24a12ba19b988f25679db" target="_blank">
                   board.
                 </a>
               </div>
