@@ -3,6 +3,7 @@ import { useMoralis, useMoralisQuery, useMoralisCloudFunction } from "react-mora
 import { Button, Text, DegenNewsTitle } from "components/common";
 import { Article } from "./article";
 import PulseLoader from "react-spinners/PulseLoader";
+import { HorizontalRuler } from "components/common/HorizontalRuler";
 
 import { loadWeb3MoralisProviderLight } from "../../../utils/pagesUtils";
 
@@ -164,8 +165,8 @@ export function SubpageNews() {
     await Moralis.User.logOut();
     window.location.reload(true);
   }
-  function substringAddress(address){
-    return `${address.substring(0,6)}...${address.substring(address.length - 4)}`
+  function substringAddress(address) {
+    return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
   }
   return (
     <div style={{ width: "100%" }}>
@@ -199,12 +200,17 @@ export function SubpageNews() {
         {isAuthenticated && shnPriceData && (
           <div>
             <br></br>
-            {console.log("discordId and type", user.get("discordId"), "undefined" == typeof user.get("discordId"), user.get("ethAddress").substring(0,6))}
+            {console.log("discordId and type", user.get("discordId"), "undefined" == typeof user.get("discordId"), user.get("ethAddress").substring(0, 6))}
             <Text style={{ display: "inline-block" }} color="#181717" padding="0px 0px 0px 10px">
               {
                 //if user is not onboarded we show his eth address
               }
-              Welcome <b>{"undefined" == typeof user.get("discordId") ? substringAddress(user.get("ethAddress")) : user.get("username")}</b> ! Submit your most interesting DeFi news! {"undefined" == typeof user.get("discordId") && <div>NOTE: To set up a proper username and to join the Discord community, please complete the <a href="https://shinedao.finance/onboarding">onboarding.</a></div> }
+              Welcome <b>{"undefined" == typeof user.get("discordId") ? substringAddress(user.get("ethAddress")) : user.get("username")}</b> ! Submit your most interesting DeFi news!{" "}
+              {"undefined" == typeof user.get("discordId") && (
+                <div>
+                  NOTE: To set up a proper username and to join the Discord community, please complete the <a href="https://shinedao.finance/onboarding">onboarding.</a>
+                </div>
+              )}
             </Text>
             <Text disableMobileFloat="true" float="right" style={{ display: "inline-block", marginRight: 8 }} color="#ffa547" padding="0px 0px 0px 10px">
               Current SHN price:{" "}
@@ -220,10 +226,10 @@ export function SubpageNews() {
         {isSubmissionVisible && (
           <div style={{ paddingLeft: 5 }}>
             <label htmlFor="title">Title: </label>
-            <input style={{width:260}} value={title} onChange={e => handleTitleChange(e, setTitle)} type="text" id="title" name="title"></input>
+            <input style={{ width: 260 }} value={title} onChange={e => handleTitleChange(e, setTitle)} type="text" id="title" name="title"></input>
             <br></br>
             <label htmlFor="url">URL: </label>
-            <input style={{width:260}} value={url} onChange={e => handleUrlChange(e, setUrl)} type="text" id="url" name="url"></input>
+            <input style={{ width: 260 }} value={url} onChange={e => handleUrlChange(e, setUrl)} type="text" id="url" name="url"></input>
             <br></br>
             <Button onClick={() => !saveArticleIsLoading && saveArticle()}>Submit</Button>
           </div>
@@ -257,23 +263,32 @@ export function SubpageNews() {
           {rankedArticles &&
             rankedArticles.length != 0 &&
             [...rankedArticles].sort(compare).map((article, index) => {
-              return (
-                <Article
-                  getRankedArticles={getRankedArticles}
-                  setServiceError={setServiceError}
-                  totalScore={article.totalScore}
-                  key={`key-${index}`}
-                  index={index}
-                  author={article.author}
-                  url={article.url}
-                  createdAt={article.createdAt}
-                  articleId={article.articleId}
-                  title={article.title}
-                  domain={article.domain}
-                  userVotedAlready={article.userVotedAlready}
-                  userRoles={userRoles}
-                ></Article>
-              );
+              if (index == 3) {
+                return (
+                  <div>
+                    <i><Text color="tomato" style={{float:"right", paddingRight:10, paddingLeft:10, paddingBottom:10}}>If your article gets ranked in the top 3, you get rewarded with $SHN tokens</Text></i>
+                    <HorizontalRuler marginBottom="5px" opacity="83%" height="3px" width="99%" color="red"></HorizontalRuler>
+                  </div>
+                );
+              } else {
+                return (
+                  <Article
+                    getRankedArticles={getRankedArticles}
+                    setServiceError={setServiceError}
+                    totalScore={article.totalScore}
+                    key={`key-${index}`}
+                    index={index}
+                    author={article.author}
+                    url={article.url}
+                    createdAt={article.createdAt}
+                    articleId={article.articleId}
+                    title={article.title}
+                    domain={article.domain}
+                    userVotedAlready={article.userVotedAlready}
+                    userRoles={userRoles}
+                  ></Article>
+                );
+              }
             })}
         </div>
       </div>
