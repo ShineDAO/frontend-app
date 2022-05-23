@@ -60,7 +60,7 @@
     "reset": "rm -rf .cache/ public/",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
     "fix:sharp": "rm -r node_modules/sharp; yarn install --check-files",
-    "gh-pages": "rm -fr docs/; mkdir docs; yarn autoclean; gatsby build --prefix-paths; cp -r public/ docs/;echo 'shinedao.finance' > docs/CNAME"
+    "gh-pages": "rm -fr docs/; mkdir docs; yarn autoclean; gatsby build --prefix-paths; cp -r public/ docs/;echo 'app.shinedao.finance' > docs/CNAME"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
