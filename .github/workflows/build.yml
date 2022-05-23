@@ -34,6 +34,6 @@ jobs:
           GATSBY_REDIRECT_URI: ${{ secrets.GATSBY_REDIRECT_URI }}
 
       - name: Create CNAME record
-        run: echo 'shinedao.finance' > public/CNAME
+        run: echo 'app.shinedao.finance' > public/CNAME
 
    
