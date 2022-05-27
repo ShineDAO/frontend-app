@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import useDarkMode from 'hooks/useDarkMode';
 
-export const ThemeContext = createContext('light');
+export const ThemeContext = createContext('dark');
 
 export default ({ children }) => {
 
