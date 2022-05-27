@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     <Wrapper as={Container} isMobile={isMobile}>
-      <Brand as={Link} to="/" theme={theme}>
+      <Brand as={Link} to="https://shinedao.finance" theme={theme}>
         <LogoWrapper>
           <img height={isMobile ? '40px': '53px'} src={shineDaoLogoModern} alt={theme}/><HeadingText theme={theme}></HeadingText>
         </LogoWrapper>
