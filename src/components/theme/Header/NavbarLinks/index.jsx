@@ -58,18 +58,21 @@ const NavbarLinks = ({ desktop }) => {
     setChainId(option.value);
   }
   return (
+    <div>
+
+    
     <Wrapper desktop={desktop} theme={theme}>
        <a href="https://app.shinedao.finance/veSHN/" target="_blank">
-        STAKE
+        Stake
       </a>
       <a href="http://docs.shinedao.finance" target="_blank">
-        DOCS
+        Docs
       </a>
       <a href="http://forum.shinedao.finance" target="_blank">
-        FORUM
+        Forum
       </a>
       <a href="/news" target="_blank">
-        NEWS
+        News
       </a>
       {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
       {isWalletEnabled == true && currentAccount != null ? (
@@ -82,11 +85,13 @@ const NavbarLinks = ({ desktop }) => {
         </div>
       ) : (
         <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount)} theme={theme}>
-          {pathname == "veSHN" ? "CONNECT WALLET" : "SEE UPCOMING PROJECTS"}
+          {pathname == "veSHN" ? "Connect Wallet" : "See Upcoming Projects"}
         </JoinButton>
       )}
       <ToggleTheme />
     </Wrapper>
+    </div>
+    
   );
 };
 

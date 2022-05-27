@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 2px;
   border: none;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -11,8 +11,8 @@ export const Button = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #fff;
-  background: ${({ background }) => background || "#3f3d56"};
+  color: #000000;
+  background: ${({ background }) => background || "#F3F669"};
   visibility: ${({ isHidden }) => (isHidden == true ? "hidden" : "visible")};
 
   font-weight: bold;
@@ -29,7 +29,7 @@ export const Button = styled.button`
   }
 
   &:hover {
-    background: ${({ backgroundHover }) => backgroundHover || "#fada5e"};
+    background: ${({ backgroundHover }) => backgroundHover || "#ECEE52"};
     color: ${({ colorOnHover }) => colorOnHover || "#3f3d56"};
     text-decoration: none;
   }
@@ -47,12 +47,14 @@ export const Button = styled.button`
     `
 		background: #001F3F;
 	`}
-`;
+`
+// removed from JoinBUtton
+//  border: 1px solid ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
 
 export const JoinButton = styled.button`
   cursor: pointer;
-  border-radius: 4px;
-  border: 1px solid ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
+  border-color: #202020;
+  border-radius: 2px;
   padding: 0.6rem 0;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -62,7 +64,7 @@ export const JoinButton = styled.button`
   -ms-user-select: none;
   user-select: none;
   color: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
-  background: transparent;
+  background: #202020;
   width: ${({ narrow }) => (narrow ? "160px" : "240px")};
   height: 48px;
   font-weight: bold;
@@ -76,8 +78,8 @@ export const JoinButton = styled.button`
     background: gray;
   }
   &:hover {
-    background: #fada5e;
-    border: 1px solid #fada5e;
+    background: #2C2C2C;
+    
   }
   ${({ secondary }) =>
     secondary &&

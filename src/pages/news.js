@@ -11,7 +11,7 @@ export default ({ location }) => {
         <SEO useDegenNews="true" title="Degen News" description="Degenerate news 4 degenerate frens" />
         {false && <Header />}
         <div style={{ marginTop: 6 }}></div>
-        <MobileDiv mobileWidth="100%" width="90%" background="whitesmoke" style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
+        <MobileDiv mobileWidth="100%" width="90%" background="#000000" style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
           <SubpageNews></SubpageNews>
         </MobileDiv>
       </Layout>

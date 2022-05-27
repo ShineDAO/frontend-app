@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMoralis, useMoralisQuery, useMoralisCloudFunction } from "react-moralis";
-import { Button, Text, DegenNewsTitle } from "components/common";
+import { Button, Text, DegenNewsTitle, DegenNewsTitleContainer} from "components/common";
 import { Article } from "./article";
 import PulseLoader from "react-spinners/PulseLoader";
 import { HorizontalRuler } from "components/common/HorizontalRuler";
@@ -169,17 +169,17 @@ export function SubpageNews() {
     return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
   }
   return (
-    <div style={{ width: "100%" }}>
-      <div style={{ boxShadow: "0px 3px 0px 0px", display: "flex", alignItems: "center", background: "rgb(250 218 94)", margin: "0 auto" }}>
-        <span>
+    <div style={{ width: "100%", fontFamily:"Roboto" }}>
+      <div style={{ display: "flex", alignItems: "center", background: "rgb(250 218 94)", margin: "0 auto" }}>
+        <DegenNewsTitleContainer>
           <DegenNewsTitle>Degen News</DegenNewsTitle>
-        </span>{" "}
-        <span style={{ paddingLeft: 10, paddingRight: 10 }}>|</span>
-        <span style={{ cursor: "pointer" }} onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>
+        </DegenNewsTitleContainer>{" "}
+        <span style={{ paddingLeft: 10, paddingRight: 10, color:"#000000"  }}>|</span>
+        <span style={{ cursor: "pointer", color:"#000000" }} onClick={() => handleNavBarSumbit(isAuthenticated, setSubmissionVisibility, setGeneralError)}>
           Submit
         </span>
-        <span style={{ paddingLeft: 10, paddingRight: 10 }}>|</span>
-        <span style={{ cursor: "pointer" }} onClick={() => window.open("https://docs.shinedao.finance/community/degen-news", "_self")}>
+        <span style={{ paddingLeft: 10, paddingRight: 10, color:"#000000" }}>|</span>
+        <span style={{ cursor: "pointer", color:"#000000"  }} onClick={() => window.open("https://docs.shinedao.finance/community/degen-news", "_self")}>
           FAQ
         </span>
         {!isAuthenticated ? (
@@ -189,7 +189,7 @@ export function SubpageNews() {
             </Button>
           </div>
         ) : (
-          <span onClick={() => handleLogout()} style={{ marginLeft: "auto", paddingRight: 8, cursor: "pointer" }}>
+          <span onClick={() => handleLogout()} style={{ marginLeft: "auto", paddingRight: 8, cursor: "pointer",  color:"#000000" }}>
             Log out
           </span>
         )}
@@ -201,14 +201,14 @@ export function SubpageNews() {
           <div>
             <br></br>
             {console.log("discordId and type", user.get("discordId"), "undefined" == typeof user.get("discordId"), user.get("ethAddress").substring(0, 6))}
-            <Text style={{ display: "inline-block" }} color="#181717" padding="0px 0px 0px 10px">
+            <Text style={{ display: "inline-block" }} color="#ffffff" padding="0px 0px 0px 10px">
               {
                 //if user is not onboarded we show his eth address
               }
               Welcome <b>{"undefined" == typeof user.get("discordId") ? substringAddress(user.get("ethAddress")) : user.get("username")}</b> ! Submit your most interesting DeFi news!{" "}
               {"undefined" == typeof user.get("discordId") && (
                 <div>
-                  NOTE: To set up a proper username and to join the Discord community, please complete the <a href="https://shinedao.finance/onboarding">onboarding.</a>
+                  NOTE: To set up a proper username and to join the Discord community, please complete the <a href="https://app.shinedao.finance/onboarding">onboarding.</a>
                 </div>
               )}
             </Text>

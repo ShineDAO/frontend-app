@@ -28,4 +28,15 @@ export const DegenNewsTitle = styled.h2`
   @media (min-width: 960px) {
     padding-left: 10px;
   }
+  @media (max-width: 960px) {
+    font-size:large;
+  }
+`;
+
+export const DegenNewsTitleContainer = styled.span`
+
+  @media (max-width: 960px) {
+    width:44%;
+    text-align:center;
+  }
 `;

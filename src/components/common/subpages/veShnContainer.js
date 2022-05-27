@@ -237,7 +237,8 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
         <div>
           <div>
             <br></br>
-            <Text fontWeight="600">veSHN</Text>
+            <Text fontSize="22px" fontWeight="600">veSHN Locking</Text>
+            <br></br>
             <p>
             veSHN contract allows users to lock & stake their SHN to get SEED access, SHN yield, project token distribution and governance rights. Benefits are proportional to the lock time. Find more info here:{" "}
               <a href="https://docs.shinedao.finance/community/shn-token/veshn" target="_self">
@@ -273,8 +274,8 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
               <Slider type="range" min="7" max="1460" value={sliderValue} onChange={handleChange}></Slider>
               <input onChange={handleChange} value={sliderValue} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 35 }}></input>
               <span>{" Days "} </span>
-              {sliderValue > 1460 && <Text color="red">Maximum allowed lock time is 4 Years / 1460 days</Text>}
-              {lockError && <Text color="red"> {lockError}</Text>}
+              {sliderValue > 1460 && <Text color="#4F4FC8">Maximum allowed lock time is 4 Years / 1460 days</Text>}
+              {lockError && <Text color="#4F4FC8"> {lockError}</Text>}
             </SliderContainer>{" "}
             <Text >Please select the lock time:</Text>
             <br></br>

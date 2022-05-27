@@ -5,6 +5,9 @@ import {Container} from 'components/common';
 import NavbarLinks from '../NavbarLinks';
 import {Wrapper, Brand, LogoWrapper, HeadingText} from './styles';
 import shineLogoV7 from 'assets/illustrations/shine-logo-v7.png';
+
+import shineDaoLogoModern from 'assets/illustrations/shinedao-logo-modern.png';
+
 import useIsMobile from '../../../../hooks/useIsMobile';
 
 const Navbar = () => {
@@ -16,7 +19,7 @@ const Navbar = () => {
     <Wrapper as={Container} isMobile={isMobile}>
       <Brand as={Link} to="/" theme={theme}>
         <LogoWrapper>
-          <img width={isMobile ? '45px' : '60px'} height={isMobile ? '40px': '53px'} src={shineLogoV7} alt={theme}/><HeadingText theme={theme}>ShineDAO</HeadingText>
+          <img height={isMobile ? '40px': '53px'} src={shineDaoLogoModern} alt={theme}/><HeadingText theme={theme}></HeadingText>
         </LogoWrapper>
       </Brand>
       <NavbarLinks desktop />
