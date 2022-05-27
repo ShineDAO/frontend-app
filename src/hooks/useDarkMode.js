@@ -24,7 +24,7 @@ export default () => {
     } else if (prefersDarkMode) {
       setTheme('dark');
     } else {
-      setTheme('light');
+      setTheme('dark');
     }
   }, [prefersDarkMode]);
 
