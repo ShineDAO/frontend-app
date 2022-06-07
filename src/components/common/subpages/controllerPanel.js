@@ -20,7 +20,7 @@ import {
   sync,
   getAddress,
   notifyReward,
-  veShnYieldDistributorApprove
+  veShnYieldDistributorApprove,
 } from "../../templates/utils";
 import PulseLoader from "react-spinners/PulseLoader";
 
@@ -29,8 +29,7 @@ import veShnYieldDistributor from "../../../../static/abi/veFXSYieldDistributorV
 import veSHN from "../../../../static/abi/veFXS";
 import SHN from "../../../../static/abi/ShineToken";
 
-
-export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator }) {
+export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator, rewardAddressesDropdown }) {
   //const [veShnYieldDistributorAddress, setVeShnYieldDistributorAddress] = useState(getAddress(chainId, "veShnYieldDistributorAddress"));
   //const [veShnAddress, setVeShnAddress] = useState(getAddress(chainId, "veShnAddress"));
 
@@ -53,9 +52,6 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
   const [successMessage, setSuccessMessage] = useState();
 
   const [amountToApprove, setAmountToApprove] = useState();
-
-
-  
 
   //useEffect(() => {
   //  setVeShnYieldDistributorAddress(getAddress(chainId, "veShnYieldDistributorAddress"));
@@ -94,16 +90,20 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
     setRewardToAdd(notifyRewardAmount);
   }
 
-  function handleNotifyReward(notifyRewardAmount){
-    notifyReward(userAddress,loadingIndicator,setLoadingIndicator,setRefetchData,getAddress(chainId, "veShnYieldDistributorAddress"),veShnYieldDistributor.abi,setSuccessMessage,notifyRewardAmount)
+  function handleNotifyReward(notifyRewardAmount) {
+    notifyReward(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "veShnYieldDistributorAddress"), veShnYieldDistributor.abi, setSuccessMessage, notifyRewardAmount);
   }
 
-  function handleApprove(amountToApprove){
-    setAmountToApprove(amountToApprove)
+  function handleApprove(amountToApprove) {
+    setAmountToApprove(amountToApprove);
   }
 
-  function handleAmountToApprove(amountToApprove){
-    veShnYieldDistributorApprove(userAddress,getAddress(chainId, "veShnYieldDistributorAddress"),loadingIndicator,setLoadingIndicator,SHN.abi,getAddress(chainId, "shnAddress"))
+  function handleAmountToApprove(addressToApprove) {
+    veShnYieldDistributorApprove(userAddress, getAddress(chainId, "veShnYieldDistributorAddress"), loadingIndicator, setLoadingIndicator, SHN.abi, getAddress(chainId, "shnAddress"));
+  }
+
+  function handleDropdownAddressChange(value){
+    console.log("handleDropdownAddressChange ", value)
   }
   return (
     <div>
@@ -180,10 +180,19 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
               </tr>
             </tbody>
           </table>
-          <br></br> <Button onClick={() => handleAmountToApprove(rewardToAdd)}>Approve Contract</Button><br></br><br></br>
-          <input onChange={target => handleRewardChange(target.target.value)} value={rewardToAdd} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input> <br></br><br></br> <Button onClick={() => handleNotifyReward(rewardToAdd)}>Notify Reward</Button>
-          <br></br><br></br>
-         
+          <br></br> <Button onClick={() => handleAmountToApprove(rewardToAdd)}>Approve Contract</Button>
+          <br></br>
+          <br></br>
+          <select onChange={target => handleDropdownAddressChange(target.target.value)} name="reward-addresses" id="reward-addresses">
+            {rewardAddressesDropdown &&
+              rewardAddressesDropdown.map(item => {
+                return <option value={item}>{item}</option>;
+              })}
+          </select>
+          <input onChange={target => handleRewardChange(target.target.value)} value={rewardToAdd} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input> <br></br>
+          <br></br> <Button onClick={() => handleNotifyReward(rewardToAdd)}>Notify Reward</Button>
+          <br></br>
+          <br></br>
         </div>
       )}
     </div>

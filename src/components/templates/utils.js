@@ -613,8 +613,57 @@ export async function veShnCheckpoint(userAddress, loadingIndicator, setLoadingI
     setLoadingIndicator(currentLoadingIndicator);
   }
 }
+export async function getRewardAddresses(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, GeneralCheckpointAddress, GeneralCheckpointAddressAbi) {
+  var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAddressAbi, GeneralCheckpointAddress);
 
-export async function rewardCheckpoint(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi) {
+  try {
+    let estimatedGas = await GeneralCheckpointInstance.methods.getCount().estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+    let addresses = [];
+    const count = await GeneralCheckpointInstance.methods.getCount().call();
+    for (let i = 0; i < count; i++) {
+      addresses.push((await GeneralCheckpointInstance.methods.data(i).call()).toLowerCase());
+    }
+
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "rewardCheckpoint"); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+    setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
+    return addresses;
+  } catch (e) {
+    console.log("err ", e);
+    console.log("Transaction rejected", e.code);
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "rewardCheckpoint"); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+  }
+}
+export async function rewardCheckpoint(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, GeneralCheckpointAddress, GeneralCheckpointAddressAbi) {
+  var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAddressAbi, GeneralCheckpointAddress);
+
+  try {
+    let estimatedGas = await GeneralCheckpointInstance.methods.checkpointUserToAllContracts(userAddress).estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+
+    const receipt = await GeneralCheckpointInstance.methods.checkpointUserToAllContracts(userAddress).send({
+      from: userAddress,
+      gas: estimatedGas,
+    });
+    console.log("receipt", receipt);
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "rewardCheckpoint"); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+    setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
+  } catch (e) {
+    console.log("err ", e);
+    console.log("Transaction rejected", e.code);
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "rewardCheckpoint"); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+  }
+}
+// this function was deprecated as additional abstraction was introduced i.e. we mantain a list of all reward contracts and checkpoint into all of them in a loop.
+export async function rewardCheckpoint_DEPRECATED(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi) {
   var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
 
   try {
@@ -639,7 +688,7 @@ export async function rewardCheckpoint(userAddress, loadingIndicator, setLoading
   }
 }
 
-export async function getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi,setSuccessMessage,toggle) {
+export async function getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi, setSuccessMessage, toggle) {
   var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
 
   try {
@@ -654,8 +703,8 @@ export async function getYield(userAddress, loadingIndicator, setLoadingIndicato
     });
     console.log("receipt", receipt);
     let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "claim"); // none is default when there is nothing
-    toggle() // plays sound when yield is collected
-    setSuccessMessage({location:"rewardClaim"})
+    toggle(); // plays sound when yield is collected
+    setSuccessMessage({ location: "rewardClaim" });
     setLoadingIndicator(currentLoadingIndicator);
     setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
   } catch (e) {
@@ -843,17 +892,15 @@ export function getAddress(chainId, contract) {
   }
 }
 
-
-export function roundTo2Decimals(num){
-  return Math.round(num * 100) / 100
+export function roundTo2Decimals(num) {
+  return Math.round(num * 100) / 100;
 }
 
-
-export async function notifyReward(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi,setSuccessMessage,rewardAmount) {
+export async function notifyReward(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi, setSuccessMessage, rewardAmount) {
   var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
-  console.log("reward amm ", rewardAmount)
+  console.log("reward amm ", rewardAmount);
   try {
-    let rewardInWei = window.web3.utils.toWei(rewardAmount.toString(), "ether")
+    let rewardInWei = window.web3.utils.toWei(rewardAmount.toString(), "ether");
     let estimatedGas = await veShnYieldDistributorInstance.methods.notifyRewardAmount(rewardInWei).estimateGas({
       from: userAddress,
     });
@@ -865,7 +912,7 @@ export async function notifyReward(userAddress, loadingIndicator, setLoadingIndi
     });
     console.log("receipt", receipt);
     let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "claim"); // none is default when there is nothing
-    setSuccessMessage({location:"rewardClaim"})
+    setSuccessMessage({ location: "rewardClaim" });
     setLoadingIndicator(currentLoadingIndicator);
     setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
   } catch (e) {
@@ -875,8 +922,6 @@ export async function notifyReward(userAddress, loadingIndicator, setLoadingIndi
     setLoadingIndicator(currentLoadingIndicator);
   }
 }
-
-
 
 export async function veShnYieldDistributorApprove(userAddress, veShnYieldDistributorAddress, loadingIndicator, setLoadingIndicator, shineAbi, shnAddress) {
   var SHN = new window.web3.eth.Contract(shineAbi, shnAddress);

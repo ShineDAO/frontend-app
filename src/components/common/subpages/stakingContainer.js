@@ -19,15 +19,17 @@ import {
   fromWei,
   getAddress,
   roundTo2Decimals,
+  getRewardAddresses,
 } from "../../templates/utils";
 import { MobileDiv, Button, Card, Text } from "components/common";
 import PulseLoader from "react-spinners/PulseLoader";
 
 import veSHN from "../../../../static/abi/veFXS";
 import veShnYieldDistributor from "../../../../static/abi/veFXSYieldDistributorV4";
+import GeneralCheckpoint from "../../../../static/abi/GeneralCheckpoint";
 const axios = require("axios");
 
-export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator }) {
+export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator, setRewardAddressesDropdown }) {
   //const [veShnYieldDistributorAddress, setVeShnYieldDistributorAddress] = useState(getAddress(chainId, "veShnYieldDistributorAddress"));
   //const [veShnAddress, setVeShnAddress] = useState(getAddress(chainId, "veShnAddress")); //didnt work as expected
 
@@ -47,6 +49,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
   const [shinePrice, setShinePrice] = useState();
   const [tvl, setTvl] = useState();
   const [successMessage, setSuccessMessage] = useState({ location: "", text: "" }); //location rewardClaim/
+  const [rewardAddresses, setRewardAddresses] = useState();
 
   //useEffect(() => {
   //  setVeShnYieldDistributorAddress(getAddress(chainId, "veShnYieldDistributorAddress"));
@@ -56,22 +59,20 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
   const useAudio = url => {
     const [audio] = useState(new Audio(url));
     const [playing, setPlaying] = useState(false);
-  
+
     const toggle = () => setPlaying(!playing);
-  
+
     useEffect(() => {
-        playing ? audio.play() : audio.pause();
-      },
-      [playing]
-    );
-  
+      playing ? audio.play() : audio.pause();
+    }, [playing]);
+
     useEffect(() => {
-      audio.addEventListener('ended', () => setPlaying(false));
+      audio.addEventListener("ended", () => setPlaying(false));
       return () => {
-        audio.removeEventListener('ended', () => setPlaying(false));
+        audio.removeEventListener("ended", () => setPlaying(false));
       };
     }, []);
-  
+
     return [playing, toggle];
   };
   const [playing, toggle] = useAudio("https://themushroomkingdom.net/sounds/wav/sm64/sm64_exit_course_pause_menu.wav");
@@ -94,10 +95,17 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
         setFractionParticipating(await getFractionParticipating(veShnYieldDistributor.abi, getAddress(chainId, "veShnYieldDistributorAddress")));
         setYieldPerVeShn(await getYieldPerVeShn(await getOnlyUserAddress(), veShnYieldDistributor.abi, getAddress(chainId, "veShnYieldDistributorAddress")));
         setEarned(await getEarned(await getOnlyUserAddress(), veShnYieldDistributor.abi, getAddress(chainId, "veShnYieldDistributorAddress")));
+        setRewardAddresses(await getRewardAddresses(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "GeneralCheckpointAddress"), GeneralCheckpoint.abi));
       }
       getSupply();
     }
   }, [isWalletEnabled, refetchData, chainId]);
+
+  useEffect(() => {
+    if (typeof rewardAddresses != "undefined") {
+      setRewardAddressesDropdown(rewardAddresses); //dropdown is used for notifying reward in the control panel
+    }
+  }, [rewardAddresses]);
 
   useEffect(() => {
     axios
@@ -119,6 +127,10 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
 
   async function handleRewardCheckpoint() {
     setLoadingIndicator(loadingIndicator.concat(["rewardCheckpoint"]));
+    await rewardCheckpoint(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "GeneralCheckpointAddress"), GeneralCheckpoint.abi);
+  }
+  async function handleRewardCheckpoint_DEPRECATED() {
+    setLoadingIndicator(loadingIndicator.concat(["rewardCheckpoint"]));
     await rewardCheckpoint(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, getAddress(chainId, "veShnYieldDistributorAddress"), veShnYieldDistributor.abi);
   }
   async function handleClaim() {
@@ -131,7 +143,10 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
         <div>
           <div>
             <br></br>
-            <Text fontSize="22px" fontWeight="600">veSHN Staking</Text><br></br>
+            <Text fontSize="22px" fontWeight="600">
+              veSHN Staking
+            </Text>
+            <br></br>
             <p>If you have locked your SHN and got veSHN, you are eligible for veSHN staking.</p>
           </div>
           <div>
@@ -169,23 +184,41 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
               isWalletEnabled && <Button onClick={() => handleRewardCheckpoint()}>STAKE</Button>
             )}
             <br></br>
-            <span> {isWalletEnabled && <i>After you create, add or increase the timelock you need to <b>stake</b> again in order to account the new amount for the reward.</i>} </span>
+            <span>
+              {" "}
+              {isWalletEnabled && (
+                <i>
+                  After you create, add or increase the timelock you need to <b>stake</b> again in order to account the new amount for the reward.
+                </i>
+              )}{" "}
+            </span>
             <br></br> <br></br> <br></br>
-            {loadingIndicator.includes("claim") ? (
-              <div>
-                <PulseLoader color={"gold"} loading={true} size={15} margin={2} />
-                <br></br>
-                <i>Confirming transaction, please wait.</i>
-              </div>
-            ) : (
-              isWalletEnabled && successMessage.location != "rewardClaim" && <Button onClick={() => handleClaim()}>CLAIM</Button>
-            )}
-            <br></br> <br></br>
+            {
+              //console.log("reward addresses length", rewardAddresses.length)}
+            }
+            <Text fontWeight="800">Earned so far {typeof rewardAddresses !== "undefined" && rewardAddresses.length}</Text>
+            <br></br>
             {isWalletEnabled &&
               (successMessage.location != "rewardClaim" ? (
-                <Text fontWeight="600">
-                  Earned so far: {roundTo2Decimals(fromWei(earned))} SHN 🌟 (${shinePrice ? roundTo2Decimals(shinePrice * fromWei(earned)) : 0})
-                </Text>
+                typeof rewardAddresses !== "undefined" &&
+                rewardAddresses.map(item => {
+                  return (
+                    <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+                      <Text fontWeight="600">
+                        {roundTo2Decimals(fromWei(earned))} SHN 🌟 (${shinePrice ? roundTo2Decimals(shinePrice * fromWei(earned)) : 0})
+                      </Text>
+                      {loadingIndicator.includes("claim") ? (
+                        <div>
+                          <PulseLoader color={"gold"} loading={true} size={15} margin={2} />
+                          <br></br>
+                          <i>Confirming transaction, please wait.</i>
+                        </div>
+                      ) : (
+                        isWalletEnabled && successMessage.location != "rewardClaim" && <Button onClick={() => handleClaim()}>CLAIM</Button>
+                      )}
+                    </div>
+                  );
+                })
               ) : (
                 <Text color="green" fontWeight="600">
                   Reward claimed!
