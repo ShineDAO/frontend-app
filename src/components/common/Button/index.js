@@ -16,7 +16,8 @@ export const Button = styled.button`
   visibility: ${({ isHidden }) => (isHidden == true ? "hidden" : "visible")};
 
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
+  font-family: ClashGrotesk-Regular;
   height: 48px;
   width: ${({ width }) => width || "160px"};
 
@@ -68,8 +69,8 @@ export const JoinButton = styled.button`
   width: ${({ narrow }) => (narrow ? "160px" : "240px")};
   height: 48px;
   font-weight: bold;
-  font-size: 16px;
-
+  font-size: 18px;
+  font-family: ClashGrotesk-Regular;
   &:focus {
     outline: none;
   }
