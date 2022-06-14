@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   cursor: pointer;
-  border-radius: 2px;
   border: none;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -54,8 +53,7 @@ export const Button = styled.button`
 
 export const JoinButton = styled.button`
   cursor: pointer;
-  border-color: #202020;
-  border-radius: 2px;
+  border: none;
   padding: 0.6rem 0;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
@@ -64,8 +62,8 @@ export const JoinButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
-  background: #202020;
+  color: #000000;
+  background: ${({ background }) => background || "#F3F669"};
   width: ${({ narrow }) => (narrow ? "160px" : "240px")};
   height: 48px;
   font-weight: bold;
@@ -79,8 +77,9 @@ export const JoinButton = styled.button`
     background: gray;
   }
   &:hover {
-    background: #2C2C2C;
-    
+    background: ${({ backgroundHover }) => backgroundHover || "#ECEE52"};
+    color: ${({ colorOnHover }) => colorOnHover || "#3f3d56"};
+    text-decoration: none;
   }
   ${({ secondary }) =>
     secondary &&
@@ -96,7 +95,6 @@ export const JoinButton = styled.button`
 
 export const IntroButton = styled.button`
   cursor: pointer;
-  border-radius: 4px;
   padding: 0.6rem 0;
   border: 1px solid white;
   -webkit-appearance: none;
@@ -135,9 +133,9 @@ export const IntroButton = styled.button`
 
 export const LearnButton = styled.button`
   cursor: pointer;
-  border-radius: 4px;
   padding: 0.6rem 0;
-  border: 1px solid white;
+  border: 1px solid;
+  margin: 1px;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -145,8 +143,8 @@ export const LearnButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: ${({ theme }) => (theme === "light" ? "#fff" : "#3F3D56")};
-  background: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
+  color: #000000;
+  background: ${({ background }) => background || "#F3F669"};
   width: 400px;
   height: 48px;
   font-weight: bold;
