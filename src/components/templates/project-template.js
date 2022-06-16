@@ -310,8 +310,7 @@ export default function ProjectTemplate({ data }) {
                   <JoinCard theme={theme}>
                     <h2>TIER 1</h2>
                     <p className="frame1" theme={theme}>
-                      {" "}
-                      &#62; 15k veSHN{" "}
+                      &#62; 15k veSHN
                     </p>
                     {/* <p className="frame2" theme={theme}>
                       {" "}

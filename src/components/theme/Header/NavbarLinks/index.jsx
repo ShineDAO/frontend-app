@@ -74,9 +74,6 @@ const NavbarLinks = ({ desktop }) => {
       <a href="/news" target="_blank">
         News
       </a>
-      <a href="/seed-sale" target="_blank">
-        Seed
-      </a>
       {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
       {isWalletEnabled == true && currentAccount != null ? (
         <div style={{ display: "flex", alignItems: "center" }}>
