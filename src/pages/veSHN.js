@@ -13,7 +13,7 @@ export default ({ location }) => {
   const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
   console.log("isWalletEnabled Container1 ", isWalletEnabled);
   console.log("chainId Container 1", chainId);
-
+ 
   return (
     <Layout position="absolute" bottom="4px" width="100%" height="60px">
       <SEO title="veSHN" description="veSHN staking" />
