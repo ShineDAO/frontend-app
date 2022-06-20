@@ -26,7 +26,7 @@
     "gatsby-plugin-sitemap": "^2.0.3",
     "gatsby-plugin-styled-components": "^3.0.4",
     "gatsby-source-filesystem": "^2.1.35",
-    "gatsby-source-graphql": "^2.1.21",
+    "gatsby-source-graphql": "^4.16.0",
     "gatsby-transformer-json": "^3.6.0",
     "gatsby-transformer-sharp": "^2.2.7",
     "moralis": "^0.0.105",
