@@ -81,4 +81,7 @@ import { Wrapper, Grid, Item, Content, Stats, Languages } from './styles';
 //     </Wrapper>
 //   );
 // };
+<<<<<<< HEAD
 
+=======
+>>>>>>> cc432814f5dd4fb7257fb10a8f1eb423f26be033

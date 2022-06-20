@@ -131,7 +131,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
         <div>
           <div>
             <br></br>
-            <Text fontSize="22px" fontWeight="600">veSHN Staking</Text><br></br>
+            <Text fontSize="26px" fontWeight="600" fontFamily="ClashGrotesk-Regular">veSHN Staking</Text><br></br>
             <p>If you have locked your SHN and got veSHN, you are eligible for veSHN staking.</p>
           </div>
           <div>

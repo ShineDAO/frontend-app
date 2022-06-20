@@ -54,7 +54,6 @@ export const When = styled.div`
   align-items: center;
   justify-content: flex-start;
   background: #fada5e;
-  border-radius: 4px;
   
   width:100%;
   margin:0 auto;
@@ -132,7 +131,6 @@ export const TotalRaise = styled.div`
   margin: 14px 0 0 0;
   padding: 16px 0 16px 24px;
   width: 218px;
-  border-radius: 8px;
 `;
 
 export const FundingStage = styled.div`
@@ -147,7 +145,6 @@ export const FundingStage = styled.div`
   margin: 14px 0 0 0;
   padding: 16px 0 16px 24px;
   width: 218px;
-  border-radius: 8px;
 `;
 
 export const UpcomingWrapper = styled.div`
@@ -159,7 +156,6 @@ export const UpcomingWrapper = styled.div`
   flex-direction: column;
   margin: 40px 0 0 0;
   padding: 40px;
-  border-radius: 8px;
   width: 540px;
   @media (max-width: 960px) {
     flex-direction: column;

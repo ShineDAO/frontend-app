@@ -12,7 +12,7 @@ export const Layout = ({ children, position, bottom, width, height }) => {
   return (
     <>
       <Global theme={theme} />
-      <div style={{ position: "relative", minHeight: "100vh" }}>
+      <div style={{ position: "relative", minHeight: "100vh" , fontFamily: 'ClashGrotesk-Regular'}}>
         {children}
         <Footer position={position} bottom={bottom} width={width} height={height} />
       </div>
