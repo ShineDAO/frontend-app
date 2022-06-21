@@ -7,7 +7,7 @@ import { HorizontalRuler } from "components/common/HorizontalRuler";
 import { ThemeContext } from "providers/ThemeProvider";
 import { WalletContext } from "providers/WalletProvider";
 import { ControllerPanel } from "components/common/subpages/controllerPanel";
-
+ 
 export default ({ location }) => {
   const { theme } = useContext(ThemeContext);
   const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
