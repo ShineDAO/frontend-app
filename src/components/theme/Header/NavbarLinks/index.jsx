@@ -23,7 +23,7 @@ const NavbarLinks = ({ desktop }) => {
   const options = [
     { value: "0x1", label: "Ethereum" },
     { value: "0x89", label: "Polygon/Matic" },
-    //{ value: "0x13881", label: "Mumbai testnet" },
+    { value: "0x13881", label: "Mumbai testnet" },
   ];
 
   let defaultOption;
@@ -31,9 +31,9 @@ const NavbarLinks = ({ desktop }) => {
     defaultOption = options[0];
   } else if (chainId == "0x89") {
     defaultOption = options[1];
-  }// else if (chainId == "0x13881") {
-   // defaultOption = options[2];
-  //} 
+  }else if (chainId == "0x13881") {
+    defaultOption = options[2];
+  } 
   else {
     defaultOption = { value: "", label: "Chain unrecognized" };
   }

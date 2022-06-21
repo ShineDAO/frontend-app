@@ -531,6 +531,7 @@ export async function getYieldPerVeShn(userAddress, veShnYieldDistributorAbi, ve
 export async function getEarned(userAddress, veShnYieldDistributorAbi, veShnYieldDistributorAddress) {
   var veShnYield = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
   var earned = await veShnYield.methods.earned(userAddress).call();
+  console.log("earned call ", earned);
   return earned;
 }
 
@@ -575,6 +576,28 @@ export async function getUserVeShnCheckpointed(userAddress, veShnYieldDistributo
   var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
   var userVeShnCheckpointed = await veShnYieldDistributorInstance.methods.userVeFXSCheckpointed(userAddress).call();
   return userVeShnCheckpointed;
+}
+
+export async function getUserVeShnCheckpointedInAllAddresses(userAddress, veShnYieldDistributorAbi, GeneralCheckpointAddress, GeneralCheckpointAddressAbi) {
+  //var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
+  //var userVeShnCheckpointed = await veShnYieldDistributorInstance.methods.userVeFXSCheckpointed(userAddress).call();
+  //return userVeShnCheckpointed;
+
+  var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAddressAbi, GeneralCheckpointAddress);
+
+  let addresses = [];
+  let userVeShnCheckpointedInAllContracts = [];
+  const count = await GeneralCheckpointInstance.methods.getCount().call();
+  for (let i = 0; i < count; i++) {
+    let addr = (await GeneralCheckpointInstance.methods.data(i).call()).toLowerCase();
+    addresses.push(addr);
+
+    var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, addr);
+    var userVeShnCheckpointed = await veShnYieldDistributorInstance.methods.userVeFXSCheckpointed(userAddress).call();
+    userVeShnCheckpointedInAllContracts.push(userVeShnCheckpointed);
+  }
+  console.log("userVeShnCheckpointedInAllContracts ", userVeShnCheckpointedInAllContracts);
+  return userVeShnCheckpointedInAllContracts;
 }
 
 export async function getUserVeShnEndpointCheckpointed(userAddress, veShnYieldDistributorAbi, veShnYieldDistributorAddress) {
@@ -638,6 +661,7 @@ export async function getRewardAddresses(userAddress, loadingIndicator, setLoadi
     setLoadingIndicator(currentLoadingIndicator);
   }
 }
+
 export async function rewardCheckpoint(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, GeneralCheckpointAddress, GeneralCheckpointAddressAbi) {
   var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAddressAbi, GeneralCheckpointAddress);
 
@@ -688,8 +712,117 @@ export async function rewardCheckpoint_DEPRECATED(userAddress, loadingIndicator,
   }
 }
 
-export async function getYield(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi, setSuccessMessage, toggle) {
-  var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
+export async function getRewardTokenSymbols(userAddress, loadingIndicator, setLoadingIndicator, setRefetchData, GeneralCheckpointAddress, GeneralCheckpointAddressAbi, veShnYieldDistributorAbi, tokenAbi) {
+  var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAddressAbi, GeneralCheckpointAddress);
+
+  try {
+    let estimatedGas = await GeneralCheckpointInstance.methods.getCount().estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+    let addresses = [];
+    let emittedTokenAddresses = [];
+    let tokenSymbols = [];
+    const count = await GeneralCheckpointInstance.methods.getCount().call();
+    for (let i = 0; i < count; i++) {
+      let addr = (await GeneralCheckpointInstance.methods.data(i).call()).toLowerCase();
+      addresses.push(addr);
+
+      var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, addr);
+      let emm_addr = (await veShnYieldDistributorInstance.methods.emitted_token_address().call()).toLowerCase();
+      emittedTokenAddresses.push(emm_addr);
+      var tokenInst = new window.web3.eth.Contract(tokenAbi, emm_addr);
+      let tokenSymbol = await tokenInst.methods.symbol().call();
+      tokenSymbols.push(tokenSymbol);
+      console.log("tokenSymbol ", tokenSymbol);
+    }
+
+    //let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "rewardCheckpoint"); // none is default when there is nothing
+    //setLoadingIndicator(currentLoadingIndicator);
+    setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
+    //console.log("emittedTokenAddresses ", emittedTokenAddresses)
+    return tokenSymbols;
+  } catch (e) {
+    console.log("err ", e);
+    console.log("Transaction rejected", e.code);
+    //let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "rewardCheckpoint"); // none is default when there is nothing
+    //setLoadingIndicator(currentLoadingIndicator);
+  }
+}
+
+export async function getDataForControlPanel(userAddress, GeneralCheckpointAddress, GeneralCheckpointAddressAbi, veShnYieldDistributorAbi) {
+  var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAddressAbi, GeneralCheckpointAddress);
+
+  let totalVeShnParticipating_arr = [];
+  let yieldPerVeShnStored_arr = [];
+  let yieldPerVeShn_arr = [];
+  let totalVeShnSupplyStored_arr = [];
+  let userVeShnCheckpointed_arr = [];
+  let yieldRate_arr = [];
+  let periodFinish_arr = [];
+  let lastUpdateTime_arr = [];
+  let userVeShnEndpointCheckpointed_arr = [];
+  let fractionParticipating_arr = [];
+  let earned_arr = [];
+  const count = await GeneralCheckpointInstance.methods.getCount().call();
+  for (let i = 0; i < count; i++) {
+    let addr = (await GeneralCheckpointInstance.methods.data(i).call()).toLowerCase();
+
+    var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, addr);
+    let totalVeShnParticipating = (await veShnYieldDistributorInstance.methods.totalVeFXSParticipating().call()).toLowerCase();
+    totalVeShnParticipating_arr.push(totalVeShnParticipating);
+
+    let yieldRate = (await veShnYieldDistributorInstance.methods.yieldRate().call()).toLowerCase();
+    yieldRate_arr.push(yieldRate);
+
+    let yieldPerVeShnStored = (await veShnYieldDistributorInstance.methods.yieldPerVeFXSStored().call()).toLowerCase();
+    yieldPerVeShnStored_arr.push(yieldPerVeShnStored);
+
+    let totalVeShnSupplyStored = (await veShnYieldDistributorInstance.methods.totalVeFXSSupplyStored().call()).toLowerCase();
+    totalVeShnSupplyStored_arr.push(totalVeShnSupplyStored);
+
+    let userVeShnCheckpointed = (await veShnYieldDistributorInstance.methods.userVeFXSCheckpointed(userAddress).call()).toLowerCase();
+    userVeShnCheckpointed_arr.push(userVeShnCheckpointed);
+
+    let userVeShnEndpointCheckpointed = (await veShnYieldDistributorInstance.methods.userVeFXSEndpointCheckpointed(userAddress).call()).toLowerCase();
+    userVeShnEndpointCheckpointed_arr.push(userVeShnEndpointCheckpointed);
+
+    let periodFinish = (await veShnYieldDistributorInstance.methods.periodFinish().call()).toLowerCase();
+    periodFinish_arr.push(periodFinish);
+
+    let lastUpdateTime = (await veShnYieldDistributorInstance.methods.lastUpdateTime().call()).toLowerCase();
+    lastUpdateTime_arr.push(lastUpdateTime);
+
+    let yieldPerVeShn = (await veShnYieldDistributorInstance.methods.yieldPerVeFXS().call()).toLowerCase();
+    yieldPerVeShn_arr.push(yieldPerVeShn);
+
+    let fractionParticipating = (await veShnYieldDistributorInstance.methods.fractionParticipating().call()).toLowerCase();
+    fractionParticipating_arr.push(fractionParticipating);
+
+    let earned = (await veShnYieldDistributorInstance.methods.earned(userAddress).call()).toLowerCase();
+    earned_arr.push(earned);
+  }
+
+  //setRefetchData(true); // after every successful transaction, the data on the frontend needs to be refetched
+  return {
+    yieldRate_arr,
+    yieldPerVeShn_arr,
+    earned_arr,
+    fractionParticipating_arr,
+    periodFinish_arr,
+    lastUpdateTime_arr,
+    yieldPerVeShnStored_arr,
+    totalVeShnSupplyStored_arr,
+    userVeShnCheckpointed_arr,
+    totalVeShnParticipating_arr,
+    userVeShnEndpointCheckpointed_arr,
+  };
+}
+
+export async function getYield(rewardAddress, userAddress, loadingIndicator, setLoadingIndicator, index, setRefetchData, veShnYieldDistributorAddress, veShnYieldDistributorAbi, setSuccessMessage, toggle) {
+  var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, rewardAddress);
+  console.log("reward address ", rewardAddress);
+  console.log("user address getyield", userAddress);
 
   try {
     let estimatedGas = await veShnYieldDistributorInstance.methods.getYield().estimateGas({
@@ -702,7 +835,7 @@ export async function getYield(userAddress, loadingIndicator, setLoadingIndicato
       gas: estimatedGas,
     });
     console.log("receipt", receipt);
-    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "claim"); // none is default when there is nothing
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `claim-${index}`); // none is default when there is nothing
     toggle(); // plays sound when yield is collected
     setSuccessMessage({ location: "rewardClaim" });
     setLoadingIndicator(currentLoadingIndicator);
@@ -710,7 +843,7 @@ export async function getYield(userAddress, loadingIndicator, setLoadingIndicato
   } catch (e) {
     console.log("err ", e);
     console.log("Transaction rejected", e.code);
-    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "claim"); // none is default when there is nothing
+    let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `claim-${index}`); // none is default when there is nothing
     setLoadingIndicator(currentLoadingIndicator);
   }
 }
@@ -923,18 +1056,20 @@ export async function notifyReward(userAddress, loadingIndicator, setLoadingIndi
   }
 }
 
-export async function veShnYieldDistributorApprove(userAddress, veShnYieldDistributorAddress, loadingIndicator, setLoadingIndicator, shineAbi, shnAddress) {
-  var SHN = new window.web3.eth.Contract(shineAbi, shnAddress);
+export async function veShnYieldDistributorApprove(userAddress, veShnYieldDistributorAbi, veShnYieldDistributorAddress, loadingIndicator, setLoadingIndicator, shineAbi) {
+  var veShnYieldDistributorInstance = new window.web3.eth.Contract(veShnYieldDistributorAbi, veShnYieldDistributorAddress);
+  let emm_addr = (await veShnYieldDistributorInstance.methods.emitted_token_address().call()).toLowerCase();
+  var tokenInstance = new window.web3.eth.Contract(shineAbi, emm_addr);
 
   try {
-    let estimatedGas = await SHN.methods.approve(veShnYieldDistributorAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").estimateGas({
+    let estimatedGas = await tokenInstance.methods.approve(veShnYieldDistributorAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").estimateGas({
       from: userAddress,
       //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
       //gas: gas,
     });
 
     console.log("estimated gas for lock", estimatedGas);
-    const receipt = await SHN.methods.approve(veShnYieldDistributorAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").send({
+    const receipt = await tokenInstance.methods.approve(veShnYieldDistributorAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").send({
       from: userAddress,
       //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
       gas: estimatedGas,
@@ -946,5 +1081,41 @@ export async function veShnYieldDistributorApprove(userAddress, veShnYieldDistri
     console.log("create lock error ", e);
     let currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== "approve"); // none is default when there is nothing
     setLoadingIndicator(currentLoadingIndicator);
+  }
+}
+
+export async function removeRewardContract(userAddress, addressToRemove, generalCheckpointAddress, GeneralCheckpointAbi, veShnYieldDistributorAbi) {
+  var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAbi, generalCheckpointAddress);
+  try {
+    let estimatedGas = await GeneralCheckpointInstance.methods.deleteRewardAddress(addressToRemove).estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+
+    const receipt = await GeneralCheckpointInstance.methods.deleteRewardAddress(addressToRemove).send({
+      from: userAddress,
+      gas: estimatedGas,
+    });
+    console.log("receipt", receipt);
+  } catch (e) {
+    console.log("Error while removing Contract Address ", e);
+  }
+}
+
+export async function deployNewRewardContract(userAddress, emittedTokenAddress, timelockAddress,veShnAddress,GeneralCheckpointAbi,generalCheckpointAddress) {
+  var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAbi, generalCheckpointAddress);
+  try {
+    let estimatedGas = await GeneralCheckpointInstance.methods.deployNewRewardContract(userAddress,emittedTokenAddress, timelockAddress,veShnAddress).estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+
+    const receipt = await GeneralCheckpointInstance.methods.deployNewRewardContract(userAddress,emittedTokenAddress, timelockAddress,veShnAddress).send({
+      from: userAddress,
+      gas: estimatedGas,
+    });
+    console.log("receipt", receipt);
+  } catch (e) {
+    console.log("Error while deploying new Reward Contract Address ", e);
   }
 }

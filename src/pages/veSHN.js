@@ -14,7 +14,7 @@ export default ({ location }) => {
   console.log("isWalletEnabled Container1 ", isWalletEnabled);
   console.log("chainId Container 1", chainId);
   const [rewardAddressesDropdown, setRewardAddressesDropdown] = useState();
-
+  const [tokenSymbolsForDropdown, setTokenSymbolsForDropdown] = useState();
   return (
     <Layout position="absolute" bottom="4px" width="100%" height="60px">
       <SEO title="veSHN" description="veSHN staking" />
@@ -25,10 +25,10 @@ export default ({ location }) => {
           <div>
             <br></br>  <br></br>
             <HorizontalRuler theme={theme}></HorizontalRuler>
-            <VeShnContainer isWalletEnabled={isWalletEnabled} chainId={chainId} refetchData={refetchData} setRefetchData={setRefetchData} loadingIndicator={loadingIndicator} setLoadingIndicator={setLoadingIndicator}></VeShnContainer>
+            <VeShnContainer  isWalletEnabled={isWalletEnabled} chainId={chainId} refetchData={refetchData} setRefetchData={setRefetchData} loadingIndicator={loadingIndicator} setLoadingIndicator={setLoadingIndicator}></VeShnContainer>
             <HorizontalRuler theme={theme}></HorizontalRuler>
-            <StakingContainer setRewardAddressesDropdown={setRewardAddressesDropdown} isWalletEnabled={isWalletEnabled} chainId={chainId} refetchData={refetchData} setRefetchData={setRefetchData} loadingIndicator={loadingIndicator} setLoadingIndicator={setLoadingIndicator}></StakingContainer>
-            <ControllerPanel rewardAddressesDropdown={rewardAddressesDropdown} isWalletEnabled={isWalletEnabled} chainId={chainId} refetchData={refetchData} setRefetchData={setRefetchData} loadingIndicator={loadingIndicator} setLoadingIndicator={setLoadingIndicator}></ControllerPanel>
+            <StakingContainer setTokenSymbolsForDropdown={setTokenSymbolsForDropdown} setRewardAddressesDropdown={setRewardAddressesDropdown} isWalletEnabled={isWalletEnabled} chainId={chainId} refetchData={refetchData} setRefetchData={setRefetchData} loadingIndicator={loadingIndicator} setLoadingIndicator={setLoadingIndicator}></StakingContainer>
+            <ControllerPanel rewardAddressesDropdown={rewardAddressesDropdown} tokenSymbolsForDropdown={tokenSymbolsForDropdown} isWalletEnabled={isWalletEnabled} chainId={chainId} refetchData={refetchData} setRefetchData={setRefetchData} loadingIndicator={loadingIndicator} setLoadingIndicator={setLoadingIndicator}></ControllerPanel>
           </div>
         ) : (
           <div style={{ textAlign: "center", marginTop: 80 }}>
