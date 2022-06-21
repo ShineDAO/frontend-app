@@ -57,20 +57,18 @@ export const Details = styled.div`
 `;
 
 export const JoinCard = styled.div`
-background: ${({ theme }) => (theme === 'dark' ? '#1E1E1E' : '#EEEEFF')};
+background: ${({ theme }) => (theme === 'dark' ? '#000000' : '#EEEEFF')};
 border: 1px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
 font-weight: 800;
 box-sizing: border-box;
 height: 383px;
 width: 250px;
-border-radius: 8px;
 text-align: -webkit-center;
 
 h2 {
   background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
   color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
   font-size: 24px;
-  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,8 +77,8 @@ h2 {
   margin: 24px 16px 16px 16px;
 }
 .frame1 {
-  background: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
-  border-radius: 8px;
+  background: ${({ theme }) => (theme === 'light' ? '#fff' : '#000000')};
+  border: 1px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#FFFFFF')};
   font-size: 24px;
   padding: 16px;
   width: 202px;
@@ -88,16 +86,14 @@ h2 {
   margin: 16px;
 }
 .frame2{
-  border: 2px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};;
-box-sizing: border-box;
-border-radius: 8px;
-font-weight: 600;
-font-size: 20px;
-line-height: 32px;
-height: 96px;
-width: 202px;
-padding: 16px;
-margin: 16px;
+  border: 2px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 32px;
+  height: 96px;
+  width: 202px;
+  padding: 16px;
+  margin: 16px;
 }
 
   @media (max-width: 1200px) {

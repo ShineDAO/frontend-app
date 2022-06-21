@@ -26,6 +26,7 @@ import {
 } from "../../templates/utils";
 import veSHN from "../../../../static/abi/veFXS";
 import ShineToken from "../../../../static/abi/ShineToken";
+import { FontStyles } from "components/common";
 
 const MAXTIME = 4 * 365 * 86400; // 4 years
 const VOTE_WEIGHT_MULTIPLIER = 4 - 1; // 4x gives 300% boost at 4 years
@@ -237,7 +238,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
         <div>
           <div>
             <br></br>
-            <Text fontSize="22px" fontWeight="600">veSHN Locking</Text>
+            <Text fontSize="26px" fontWeight="600" fontFamily="ClashGrotesk-Regular">veSHN Locking</Text>
             <br></br>
             <p>
             veSHN contract allows users to lock & stake their SHN to get SEED access, SHN yield, project token distribution and governance rights. Benefits are proportional to the lock time. Find more info here:{" "}

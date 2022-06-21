@@ -5,6 +5,8 @@ import { UpcomingProjects } from '../components/landing/UpcomingProjects';
 import { Stages } from '../components/landing/Stages';
 import { HowToJoin } from '../components/landing/HowToJoin';
  
+import '../assets/Fonts/WEB/css/clash-grotesk.css';
+
 export default () => (
   <Layout>
     <SEO />

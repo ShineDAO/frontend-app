@@ -308,48 +308,47 @@ export default function ProjectTemplate({ data }) {
               {!isWalletEnabled && (
                 <Cards>
                   <JoinCard theme={theme}>
-                    <h2 theme={theme}>TIER 1</h2>
+                    <h2>TIER 1</h2>
                     <p className="frame1" theme={theme}>
-                      {" "}
-                      &#62; 15k SHN{" "}
+                      &#62; 15k veSHN
                     </p>
-                    <p className="frame2" theme={theme}>
+                    {/* <p className="frame2" theme={theme}>
                       {" "}
-                      {/* {false && theme === "light" ? "❓" : "❔"}  {false && "Seed-sale" } */}
-                      {false && "Seed-sale"} <br></br> ✅ Private Sale{" "}
-                    </p>
+                      {false && theme === "light" ? "❓" : "❔"}  {false && "Seed-sale" } */}
+                      {/* {false && "Seed-sale"} <br></br> ✅ Private Sale{" "} */}
+                    {/* </p> */}
                     <p className="frame2">
                       Cap/person <br></br> ${project.technicalDetails[currentStatus].caps.tier1.amount}
                     </p>
                   </JoinCard>
                   <JoinCard theme={theme}>
                     <h2>TIER 2</h2>
-                    <p className="frame1"> &#62; 50.000 SHN </p>
-                    <p className="frame2">
+                    <p className="frame1"> &#62; 50k veSHN </p>
+                    {/* <p className="frame2">
                       {" "}
-                      {/* {false && theme === "light" ? "❓" : "❔"}  {false && "Seed-sale" } */}
+                      {false && theme === "light" ? "❓" : "❔"}  {false && "Seed-sale" }
                       <br></br> ✅ Private Sale{" "}
-                    </p>
+                    </p> */}
                     <p className="frame2">
                       Cap/person <br></br>${project.technicalDetails[currentStatus].caps.tier2.amount}
                     </p>
                   </JoinCard>
                   <JoinCard theme={theme}>
                     <h2>TIER 3</h2>
-                    <p className="frame1"> &#62; 200k SHN </p>
-                    <p className="frame2">
+                    <p className="frame1"> &#62; 200k veSHN </p>
+                    {/* <p className="frame2">
                       {false && "✅ Seed-sale"} <br></br>✅ Private Sale
-                    </p>
+                    </p> */}
                     <p className="frame2">
                       Cap/person <br></br> ${project.technicalDetails[currentStatus].caps.tier3.amount}
                     </p>
                   </JoinCard>
                   <JoinCard theme={theme}>
                     <h2>COMMITTEE</h2>
-                    <p className="frame1"> &#62; 400k SHN </p>
-                    <p className="frame2">
+                    <p className="frame1"> &#62; 400k veSHN </p>
+                    {/* <p className="frame2">
                       {false && "✅ Seed-sale"} <br></br>✅ Private Sale
-                    </p>
+                    </p> */}
                     <p className="frame2">
                       Cap/person <br></br> ${project.technicalDetails[currentStatus].caps.tier4.amount}
                     </p>
@@ -629,8 +628,8 @@ export default function ProjectTemplate({ data }) {
 
               {console.log("shine balance", shineBalance)}
               {!isWalletEnabled && (
-                <Card onClick={() => utils.loadWeb3(setWalletStatus, setBalance, setCurrentNetwork)} borderRadius="4px" border="1px solid white" color="white" background="#1E1E1E" clickable width="100%" height="48px" margin="5px 0 0 0">
-                  <Text fontWeight={800} color="white">
+                <Card onClick={() => utils.loadWeb3(setWalletStatus, setBalance, setCurrentNetwork)} borderRadius="4px" border="1px solid white" color="white" background="#F3F669" clickable width="100%" height="48px" margin="5px 0 0 0">
+                  <Text fontWeight={800} color="black" fontSize="18px">
                     CONNECT WALLET
                   </Text>
                 </Card>
