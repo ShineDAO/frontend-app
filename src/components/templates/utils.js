@@ -877,7 +877,6 @@ export async function notifyReward(userAddress, loadingIndicator, setLoadingIndi
 }
 
 
-
 export async function veShnYieldDistributorApprove(userAddress, veShnYieldDistributorAddress, loadingIndicator, setLoadingIndicator, shineAbi, shnAddress) {
   var SHN = new window.web3.eth.Contract(shineAbi, shnAddress);
 
