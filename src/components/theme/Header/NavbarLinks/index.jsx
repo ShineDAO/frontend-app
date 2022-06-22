@@ -85,7 +85,7 @@ const NavbarLinks = ({ desktop }) => {
         </div>
       ) : (
         <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount)} theme={theme}>
-          {pathname == "veSHN" ? "Connect Wallet" : "See Upcoming Projects"}
+          {pathname == "veSHN" || "kassandra" ? "Connect Wallet" : "See Upcoming Projects"}
         </JoinButton>
       )}
       <ToggleTheme />
