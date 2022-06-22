@@ -1,6 +1,6 @@
 module.exports = {
   defaultTitle: 'ShineDAO',
-  logo: '',
+  logo: 'newlogo.png',
   author: 'ShineSquad',
   url: 'https://shinedao.finance',
   legalName: 'ShineDAO',
