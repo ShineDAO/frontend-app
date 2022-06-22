@@ -54,7 +54,7 @@ export const StatsCard = styled.div`
 
 export const TokenCard = styled.div`
   background: #1e1e1e;
-  padding: 40px;
+  padding: 40px 20px;
   flex-direction: column;
   display: flex;
   width: 540px;
@@ -175,7 +175,6 @@ export const FirstStatsCard = styled.div`
   margin: 0 22px 22px 0;
   padding: 16px 0 16px 24px;
   width: 218px;
-  border-radius: 8px;
   @media (max-width: 600px) {
     margin: 0 0 22px 0;
   }
@@ -192,7 +191,6 @@ export const RightStatsCard = styled.div`
   margin: 0 0 22px 0;
   padding: 16px 0 16px 24px;
   width: 218px;
-  border-radius: 8px;
 `;
 
 export const LeftStatsCard = styled.div`
@@ -206,7 +204,6 @@ export const LeftStatsCard = styled.div`
   margin: 0 22px 22px 0;
   padding: 16px 0 16px 24px;
   width: 218px;
-  border-radius: 8px;
   @media (max-width: 600px) {
     margin: 0 0 22px 0;
   }
@@ -268,7 +265,6 @@ export const ProjectsWrapper = styled.div`
 export const LitepaperCard = styled.div`
   margin: 0 auto;
   margin-top: 80px;
-  border-radius: 30px;
   box-sizing: border-box;
   left: 160px;
   display: flex;
@@ -469,7 +465,6 @@ export const ColorTitle = styled.h4`
 
 export const ConnectButton = styled.button`
   cursor: pointer;
-  border-radius: 4px;
   padding: 0.6rem 0;
   border: 1px solid white;
   -webkit-appearance: none;
@@ -479,8 +474,8 @@ export const ConnectButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
-  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  color: #000000;
+  background: ${({ background }) => background || "#F3F669"};
   width: 240px;
   height: 48px;
   font-weight: bold;
@@ -513,55 +508,40 @@ export const ConnectButton = styled.button`
 `;
 
 export const JoinCard = styled.div`
-background: ${({ theme }) => (theme === 'dark' ? '#1E1E1E' : '#EEEEFF')};
-border: 1px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
+background: ${({ theme }) => (theme === 'dark' ? '#000000' : '#EEEEFF')};
+border: 3px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#FFFFFF')};
 font-weight: 800;
 box-sizing: border-box;
-width: 200px;
-border-radius: 8px;
-text-align: -webkit-center;
-margin:14px;
+width: 245px;
+margin:20px 0px 10px 0px;
+padding:6px 0px 0px 15px;
 
-h2 {
-  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
-  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
-  font-size: 14px;
-  border-radius: 4px;
+h2 { 
+  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#322ad1')};
+  font-size: 20px;
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 80%;
-  height:8%;
-  margin: 12px 8px 8px 8px;
+  margin: 6px 8px;
 }
 .frame1 {
-  background: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
-  border-radius: 8px;
-  font-size: 14px;
-  padding: 8px;
-  width: 80%;
-  height: 16%;
-  margin: 8px;
+  font-size: 26px;
+  margin: 4px 0px 0px;
 }
 .frame2{
-  border: 2px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};;
 box-sizing: border-box;
-border-radius: 8px;
 font-weight: 600;
-font-size: 15px;
-height: 25%;
-width: 80%;
-
-margin: 8px;
+font-size: 18px;
 }
 
   @media (max-width: 1200px) {
-    margin: 20px auto;
+    margin: 0px auto;
   }
 `;
 export const Cards = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 30px;
   flex-wrap: wrap;
   @media (max-width: 1200px) {
     justify-content: center;

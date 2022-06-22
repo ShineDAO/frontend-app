@@ -100,7 +100,6 @@ export const Link = styled.a`
 `;
 
 export const ConnectWalletCard = styled.div`
-  border-radius: 33px;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
   box-sizing: border-box;
@@ -127,7 +126,6 @@ export const ConnectWalletCard = styled.div`
 `;
 
 export const SaleCard = styled.div`
-  border-radius: 33px;
   border:1px solid #f5f5f538;
   padding: 40px;
   background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
@@ -203,9 +201,8 @@ export const ColorTitle = styled.h4`
 
 export const ConnectButton = styled.button`
   cursor: pointer;
-  border-radius: 4px;
   padding: 0.6rem 0;
-  border: 1px solid white;
+  border: 1px solid;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -213,12 +210,12 @@ export const ConnectButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#3F3D56')};
-  background: ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#fff')};
+  color: #000000;
+  background: ${({ background }) => background || "#F3F669"};
   width: 240px;
   height: 48px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
 
   &:focus {
     outline: none;

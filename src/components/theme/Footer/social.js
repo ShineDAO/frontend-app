@@ -1,10 +1,10 @@
-import Discord from '../../../assets/icons/Discord.svg'
+import Discord from '../../../assets/icons/discord.svg'
 import DiscordLightTheme from '../../../assets/icons/Discord-light-theme.svg'
-import Telegram from '../../../assets/icons/Telegram.svg'
+import Telegram from '../../../assets/icons/telegram.svg'
 import TelegramLightTheme from '../../../assets/icons/Telegram-light-theme.svg'
-import GitHub from '../../../assets/icons/GitHub.svg'
+import GitHub from '../../../assets/icons/github.svg'
 import GitHubLightTheme from '../../../assets/icons/GitHub-light-theme.svg'
-import Twitter from '../../../assets/icons/Twitter.svg'
+import Twitter from '../../../assets/icons/twitter.svg'
 import TwitterLightTheme from '../../../assets/icons/Twitter-light-theme.svg'
 
 export const social = [
