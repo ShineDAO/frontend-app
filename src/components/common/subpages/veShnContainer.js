@@ -234,7 +234,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
   }
   return (
     <div style={{ textAlign: "center" }}>
-      <div style={{ width: "65%", margin:"0 auto" }}>
+      <div style={{ width: "85%", margin:"0 auto" }}>
         <div>
           <div>
             <br></br>
@@ -374,7 +374,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                     <i>Confirming transaction, please wait.</i>
                   </div>
                 ) : (
-                  isWalletEnabled && userAddress === getAddress(chainId, "controllerAddress") && <Button onClick={() => handleCheckpoint()}>Checkpoint</Button>
+                  isWalletEnabled && userAddress === getAddress(chainId, "controllerAddress") && <Button style={{marginBottom:10}} onClick={() => handleCheckpoint()}>Checkpoint</Button>
                 )}
               </div>
             )}
