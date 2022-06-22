@@ -223,9 +223,13 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
           <br></br>
           <HorizontalRuler theme={theme}></HorizontalRuler>
           <br></br>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <label for="emitted-token-address">Emitted token address. </label>
-            <input name="emitted-token-address" onChange={target => setEmittedTokenAddress(target.target.value.toLocaleLowerCase())} value={emittedTokenAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input> <br></br>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Text fontSize="26px" fontWeight="600" fontFamily="ClashGrotesk-Regular">
+              New Reward Contract
+            </Text><br></br><br></br>
+            <input name="emitted-token-address" onChange={target => setEmittedTokenAddress(target.target.value.toLocaleLowerCase())} value={emittedTokenAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "69%" }}></input>{" "}
+            <label for="emitted-token-address">Enter address of the reward token: </label>
+            <br></br>
             <Button onClick={async () => handleRewardContractDeploy(await getOnlyUserAddress(), emittedTokenAddress, await getOnlyUserAddress(), getAddress(chainId, "veShnAddress"))}>Deploy new reward contract</Button>
             <br></br>
             <i>Note that you need to notify the reward into the deployed contract soon after deploying. Otherwise the UI will be broken.</i>
