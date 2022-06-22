@@ -15,7 +15,7 @@ export const Button = styled.button`
   visibility: ${({ isHidden }) => (isHidden == true ? "hidden" : "visible")};
 
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
   font-family: ClashGrotesk-Regular;
   height: 48px;
   width: ${({ width }) => width || "160px"};

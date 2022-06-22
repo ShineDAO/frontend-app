@@ -280,7 +280,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                 <i>Confirming transaction, please wait.</i>
               </div>
             ) : (
-              isWalletEnabled && <Button onClick={() => handleRewardCheckpoint()}>STAKE</Button>
+              isWalletEnabled && <Button onClick={() => handleRewardCheckpoint()}>Stake</Button>
             )}
             <br></br>
             <span>
@@ -315,7 +315,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                           isWalletEnabled &&
                           successMessage.location != "rewardClaim" && (
                             <Button style={{ width: 150 }} onClick={() => handleClaim(rewardAddresses[index], index)}>
-                              CLAIM
+                              Claim
                             </Button>
                           )
                         )}
