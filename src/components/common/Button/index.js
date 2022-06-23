@@ -88,8 +88,7 @@ export const JoinButton = styled.button`
 	`}
   @media (max-width: 960px) {
     margin-bottom: 20px;
-    border: 1px solid ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
-    color: ${({ theme }) => (theme === "light" ? "#3F3D56" : "#fff")};
+    color: #000000;
   }
 `;
 

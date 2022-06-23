@@ -31,13 +31,13 @@ export const InfoCards = styled.div`
 `;
 
 export const StatsCard = styled.div`
-  background: #3f3d56;
+  background: #4f4fc8;
   padding: 40px;
   flex-direction: column;
   display: flex;
   width: 540px;
   justify-content: flex-start;
-  border-radius: 8px;
+  border-radius: 0px;
   @media (max-width: 1200px) {
     margin-bottom: 40px;
    
@@ -60,7 +60,7 @@ export const TokenCard = styled.div`
   width: 540px;
   min-height:604px;
   justify-content: flex-start;
-  border-radius: 8px;
+  border-radius: 0px;
   
   @media (max-width: 600px) {
     width: 100%;
@@ -108,9 +108,8 @@ export const CardHeaderWrapper = styled.div`
 `;
 
 export const CardHeaderTextWrapper = styled.div`
-  border: 1px solid #3f3d56;
-  background: #fada5e;
-  border-radius: 4px;
+  background: black;
+  border-radius: 0px;
   align-items: center;
   height: 32px;
   width: 100%;
@@ -141,10 +140,9 @@ export const TBAText = styled.div`
 `;
 
 export const CardBottomWrapper = styled.div`
-  background: #3f3d56;
+  background: #4f4fc8;
   flex-wrap: wrap;
   height: 100%;
-  border: 1px solid #3f3d56;
   border-radius: 4px;
   display: flex;
   align-content: flex-end;
@@ -466,7 +464,6 @@ export const ColorTitle = styled.h4`
 export const ConnectButton = styled.button`
   cursor: pointer;
   padding: 0.6rem 0;
-  border: 1px solid white;
   -webkit-appearance: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -488,10 +485,12 @@ export const ConnectButton = styled.button`
   &:disabled {
     background: gray;
   }
+ 
+
   &:hover {
-    background: #fada5e;
-    color: #3f3d56;
-    border: 1px solid #fada5e;
+    background: ${({ backgroundHover }) => backgroundHover || "#ECEE52"};
+    color: ${({ colorOnHover }) => colorOnHover || "#3f3d56"};
+    text-decoration: none;
   }
 
   ${({ secondary }) =>

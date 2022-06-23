@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "providers/ThemeProvider";
 
-import { Layout, SEO, Container, Card } from "components/common";
+import { Layout, SEO, Container, Card, JoinButton} from "components/common";
 import { Header } from "components/theme";
 import axios from "axios";
 import { graphql } from "gatsby";
@@ -216,7 +216,7 @@ export default function ProjectTemplate({ data }) {
                 </ProjectNameWrapper>
               </CardHeaderWrapper>
               <CardHeaderTextWrapper>
-                <TBAText color="#3F3D56" fontWeight={800}>
+                <TBAText color="white" fontWeight={800}>
                   {date} {false && <DateCountdown mostSignificantFigure="hour" dateTo="August 19, 2021 20:30:00 GMT+03:00" />}
                 </TBAText>
               </CardHeaderTextWrapper>
@@ -699,9 +699,9 @@ export default function ProjectTemplate({ data }) {
 
             <LitepaperCard theme={theme}>
               {true && (
-                <ConnectButton theme={theme} onClick={() => openLink(project.links.lightpaper)}>
+                <JoinButton theme={theme} onClick={() => openLink(project.links.lightpaper)}>
                   <DisableColor>GO TO LITEPAPER</DisableColor>
-                </ConnectButton>
+                </JoinButton>
               )}
               <br></br>
               <br></br>

@@ -10,7 +10,6 @@ export const RoundedLinkButton = styled.div`
   padding-top:2px;
   padding-bottom:2px; 
 
-  border: 1px solid ${({ theme }) => (theme === 'light' ? '#3F3D56' : '#EEEEFF')};
   box-sizing: border-box;
   border-radius: 200px;
 
