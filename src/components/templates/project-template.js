@@ -289,7 +289,7 @@ export default function ProjectTemplate({ data }) {
 
                 <Text color="white" fontWeight={800}>
                   ⚠️ Please carefully read the{" "}
-                  <a target="_blank" href="https://shinedao.medium.com/jan-14th-kassandra-dao-private-sale-8b9a1c2dd41">
+                  <a style={{color:"#f4f669"}}target="_blank" href="https://shinedao.medium.com/jan-14th-kassandra-dao-private-sale-8b9a1c2dd41">
                     {" "}
                     announcement
                   </a>{" "}
