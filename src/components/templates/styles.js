@@ -53,7 +53,7 @@ export const StatsCard = styled.div`
 `;
 
 export const TokenCard = styled.div`
-  background: #1e1e1e;
+  background: #000000;
   padding: 40px 20px;
   flex-direction: column;
   display: flex;
