@@ -33,7 +33,7 @@ import veShnYieldDistributor from "../../../../static/abi/veFXSYieldDistributorV
 import GeneralCheckpoint from "../../../../static/abi/GeneralCheckpoint";
 const axios = require("axios");
 
-export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator, setRewardAddressesDropdown,setTokenSymbolsForDropdown }) {
+export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator, setRewardAddressesDropdown, setTokenSymbolsForDropdown }) {
   //const [veShnYieldDistributorAddress, setVeShnYieldDistributorAddress] = useState(getAddress(chainId, "veShnYieldDistributorAddress"));
   //const [veShnAddress, setVeShnAddress] = useState(getAddress(chainId, "veShnAddress")); //didnt work as expected
 
@@ -211,6 +211,11 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
             <br></br>
             <p>If you have locked your SHN and got veSHN, you are eligible for veSHN staking.</p>
           </div>
+          {isWalletEnabled ? <div style={{fontSize:"large", color:"#5f7bcc"}}>
+            <span>Total Value Locked: ${roundTo2Decimals(tvl)}</span>
+            <br></br>
+            <span>% of SHN locked: {roundTo2Decimals((fromWei(totalShnSupply) / 21000000) * 100)}%</span><br></br><br></br>
+          </div>:<span style={{color:"#5f7bcc"}}>Connect your wallet to see the stats.</span>}
           <div>
             <table>
               <tbody>
@@ -263,14 +268,8 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                       return <td key={`token-symbol-${index}`}>{tokenSymbols[index]}</td>;
                     })}
                 </tr>
-                <tr>
-                  <td>TVL</td>
-                  <td>${roundTo2Decimals(tvl)}</td>
-                </tr>
-                <tr>
-                  <td>% of SHN locked</td>
-                  <td>{isWalletEnabled && roundTo2Decimals((fromWei(totalShnSupply) / 21000000) * 100)}%</td>
-                </tr>
+                <tr></tr>
+                <tr></tr>
               </tbody>
             </table>
             {loadingIndicator.includes("rewardCheckpoint") ? (
@@ -292,7 +291,7 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
               )}{" "}
             </span>
             <br></br> <br></br> <br></br>
-            <Text fontWeight="800">Earned so far:</Text>
+            {isWalletEnabled && <Text fontWeight="800">Earned so far:</Text>}
             <br></br>
             <div>
               {isWalletEnabled &&
