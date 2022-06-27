@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "name": "shine-public-frontend",
+  "description": null,
+  "icons": {
+    "60": "/icons-45c9b54af72fc077839282f0230fd68e/firefox_app_60x60.png",
+    "128": "/icons-45c9b54af72fc077839282f0230fd68e/firefox_app_128x128.png",
+    "512": "/icons-45c9b54af72fc077839282f0230fd68e/firefox_app_512x512.png"
+  },
+  "developer": {
+    "name": null,
+    "url": null
+  }
+}
