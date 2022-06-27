@@ -1,7 +1,24 @@
 import React, { useState, useContext, useEffect } from "react";
 import { HorizontalRuler } from "components/common/HorizontalRuler";
 import { MobileDiv, Button, Card, Text } from "components/common";
-import { timeConverter, getTotalShnSupply, fromWei, getOnlyUserAddress, sync, getAddress, notifyReward, veShnYieldDistributorApprove, getDataForControlPanel, removeRewardContract, deployNewRewardContract } from "../../templates/utils";
+import {
+  timeConverter,
+  getTotalShnSupply,
+  fromWei,
+  toWei,
+  getOnlyUserAddress,
+  sync,
+  getAddress,
+  notifyReward,
+  veShnYieldDistributorApprove,
+  getDataForControlPanel,
+  removeRewardContract,
+  deployNewRewardContract,
+  checkLocked,
+  dateDiff,
+  depositFor,
+  roundTo2Decimals
+} from "../../templates/utils";
 import PulseLoader from "react-spinners/PulseLoader";
 
 import { ThemeContext } from "providers/ThemeProvider";
@@ -23,6 +40,9 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
   const [dataForAdminPanel, setDataForAdminPanel] = useState();
 
   const [emittedTokenAddress, setEmittedTokenAddress] = useState();
+  const [userAddressToCheck, setUserAddressToCheck] = useState();
+  const [lockedBalanceOfUser, setLockedBalanceOfUser] = useState();
+  const [depositForAmount, setDepositForAmount] = useState(0);
 
   useEffect(() => {
     if (isWalletEnabled == true) {
@@ -71,6 +91,16 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
 
   function handleRewardContractDeploy(ownerAddress, emittedTokenAddress, timelockAddress, veShnAddress) {
     deployNewRewardContract(ownerAddress, emittedTokenAddress, timelockAddress, veShnAddress, GeneralCheckpoint.abi, getAddress(chainId, "GeneralCheckpointAddress"));
+  }
+
+  async function getUserLockDetails(address) {
+    setUserAddressToCheck(address);
+    const lockedBalance = await checkLocked(address, getAddress(chainId, "veShnAddress"), veSHN.abi);
+    setLockedBalanceOfUser(lockedBalance);
+  }
+
+  async function handleDepositFor(depositAddress, amount) {
+    await depositFor(userAddress, depositAddress, amount, getAddress(chainId, "veShnAddress"), veSHN.abi);
   }
   return (
     <div>
@@ -226,13 +256,39 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Text fontSize="26px" fontWeight="600" fontFamily="ClashGrotesk-Regular">
               New Reward Contract
-            </Text><br></br><br></br>
+            </Text>
+            <br></br>
+            <br></br>
             <input name="emitted-token-address" onChange={target => setEmittedTokenAddress(target.target.value.toLocaleLowerCase())} value={emittedTokenAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "69%" }}></input>{" "}
             <label for="emitted-token-address">Enter address of the reward token: </label>
             <br></br>
             <Button onClick={async () => handleRewardContractDeploy(await getOnlyUserAddress(), emittedTokenAddress, await getOnlyUserAddress(), getAddress(chainId, "veShnAddress"))}>Deploy new reward contract</Button>
             <br></br>
             <i>Note that you need to notify the reward into the deployed contract soon after deploying. Otherwise the UI will be broken.</i>
+          </div>
+          <div>
+            <HorizontalRuler theme={theme}></HorizontalRuler>
+            <br></br>
+            <Text fontSize="26px" fontWeight="600" fontFamily="ClashGrotesk-Regular">
+              Deposit veSHN for someone else
+            </Text>
+            <br></br>
+            <br></br>
+            <label for="deposit-for-address">Address:</label>
+            <input name="deposit-for-address" onChange={target => getUserLockDetails(target.target.value.toLocaleLowerCase())} value={userAddressToCheck} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "40%" }}></input>{" "}
+            {lockedBalanceOfUser && lockedBalanceOfUser.end != 0 && (
+              <div>
+                Lock amount:<b> {roundTo2Decimals(fromWei(lockedBalanceOfUser.amount))}</b><br></br>
+                Lock end:<b> {timeConverter(lockedBalanceOfUser.end)}</b>
+                <br></br>
+                Lock end in years from now: { dateDiff(new Date(), new Date(timeConverter(lockedBalanceOfUser.end)))} years <br></br> <br></br>
+                <label for="deposit-for-amount">SHN Amount:</label>
+                <input name="deposit-for-amount" onChange={target => setDepositForAmount(toWei(target.target.value))} value={fromWei(depositForAmount)} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "40%" }}></input>
+                <br></br>
+                <br></br>
+                <Button onClick={async () => handleDepositFor(userAddressToCheck, depositForAmount)}>Deposit veSHN For</Button>
+              </div>
+            )}
           </div>
         </div>
       )}
