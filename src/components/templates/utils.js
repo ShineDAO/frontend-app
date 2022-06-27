@@ -1102,20 +1102,44 @@ export async function removeRewardContract(userAddress, addressToRemove, general
   }
 }
 
-export async function deployNewRewardContract(userAddress, emittedTokenAddress, timelockAddress,veShnAddress,GeneralCheckpointAbi,generalCheckpointAddress) {
+export async function deployNewRewardContract(userAddress, emittedTokenAddress, timelockAddress, veShnAddress, GeneralCheckpointAbi, generalCheckpointAddress) {
   var GeneralCheckpointInstance = new window.web3.eth.Contract(GeneralCheckpointAbi, generalCheckpointAddress);
   try {
-    let estimatedGas = await GeneralCheckpointInstance.methods.deployNewRewardContract(userAddress,emittedTokenAddress, timelockAddress,veShnAddress).estimateGas({
+    let estimatedGas = await GeneralCheckpointInstance.methods.deployNewRewardContract(userAddress, emittedTokenAddress, timelockAddress, veShnAddress).estimateGas({
       from: userAddress,
     });
     console.log("estimated gas for sync", estimatedGas);
 
-    const receipt = await GeneralCheckpointInstance.methods.deployNewRewardContract(userAddress,emittedTokenAddress, timelockAddress,veShnAddress).send({
+    const receipt = await GeneralCheckpointInstance.methods.deployNewRewardContract(userAddress, emittedTokenAddress, timelockAddress, veShnAddress).send({
       from: userAddress,
       gas: estimatedGas,
     });
     console.log("receipt", receipt);
   } catch (e) {
     console.log("Error while deploying new Reward Contract Address ", e);
+  }
+}
+
+export function dateDiff(d1, d2) {
+  return new Number((d2.getTime() - d1.getTime()) / 31536000000).toFixed(2);
+}
+
+export async function depositFor(userAddress, depositAddress, amount, veShnAddress, veShnAbi) {
+  var veShnInstance = new window.web3.eth.Contract(veShnAbi, veShnAddress);
+
+  try {
+    let estimatedGas = await veShnInstance.methods.deposit_for(depositAddress,amount).estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+
+    const receipt = await veShnInstance.methods.deposit_for(depositAddress,amount).send({
+      from: userAddress,
+      gas: estimatedGas,
+    });
+    console.log("receipt", receipt);
+  } catch (e) {
+    console.log("err ", e);
+    console.log("Transaction rejected", e.code);
   }
 }
