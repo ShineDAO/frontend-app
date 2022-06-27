@@ -43,7 +43,7 @@ export const StatsCard = styled.div`
    
   }
   @media (max-width: 600px) {
-    width: 100%;
+    width: 120%;
     align-items: center;
     height: 1060px;
   }

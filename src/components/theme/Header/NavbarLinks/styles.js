@@ -42,7 +42,7 @@ export const Wrapper = styled.div`
       : `
 			padding: 3rem;
 			display: flex;
-			flex-direction: column;
+			flex-direction: column-reverse;
 
 			a {
 					margin-bottom: 1rem;

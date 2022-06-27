@@ -7,12 +7,12 @@ import { JoinButton } from "../../../common";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import * as pagesUtils from "../../../../utils/pagesUtils";
-import { useLocation } from '@reach/router';
+import { useLocation } from "@reach/router";
 
 import { WalletContext } from "providers/WalletProvider";
 
 const NavbarLinks = ({ desktop }) => {
-  const pathname = useLocation().pathname.replace(/\//g, '');
+  const pathname = useLocation().pathname.replace(/\//g, "");
   console.log("pathname ", pathname);
   console.log("pathname true ", pathname == "veSHN");
 
@@ -31,10 +31,9 @@ const NavbarLinks = ({ desktop }) => {
     defaultOption = options[0];
   } else if (chainId == "0x89") {
     defaultOption = options[1];
-  }else if (chainId == "0x13881") {
+  } else if (chainId == "0x13881") {
     defaultOption = options[2];
-  } 
-  else {
+  } else {
     defaultOption = { value: "", label: "Chain unrecognized" };
   }
 
@@ -59,42 +58,39 @@ const NavbarLinks = ({ desktop }) => {
   }
   return (
     <div>
-
-    
-    <Wrapper desktop={desktop} theme={theme}>
-       <a href="https://app.shinedao.finance/veSHN/" target="_blank">
-        Stake
-      </a>
-      <a href="http://docs.shinedao.finance" target="_blank">
-        Docs
-      </a>
-      <a href="http://forum.shinedao.finance" target="_blank">
-        Forum
-      </a>
-      <a href="/news" target="_blank">
-        News
-      </a>
-      <a href="/kassandra" target="_blank">
-        SEED
-      </a>
-      {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
-      {isWalletEnabled == true && currentAccount != null ? (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Dropdown className="dropDownWrapper" options={options} onChange={option => handleDropdown(option)} value={defaultOption} placeholder="Please select the chain" />
-          <div style={{ marginLeft: 5 }}>
-            {currentAccount.substring(0, 6)}...
-            {currentAccount.substring(currentAccount.length - 4)}
+      <Wrapper desktop={desktop} theme={theme}>
+        <a href="https://app.shinedao.finance/veSHN/" target="_blank">
+          Stake
+        </a>
+        <a href="/kassandra" target="_blank">
+          SEED
+        </a>
+        <a style={{marginRight:80}} href="/news" target="_blank">
+          News
+        </a>
+        <a href="http://docs.shinedao.finance" target="_blank">
+          Docs
+        </a>
+        <a href="http://forum.shinedao.finance" target="_blank">
+          Forum
+        </a>
+        {/*<a href="https://shinedao.finance/Litepaper.pdf" target="_blank">Litepaper</a>*/}
+        {isWalletEnabled == true && currentAccount != null ? (
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Dropdown className="dropDownWrapper" options={options} onChange={option => handleDropdown(option)} value={defaultOption} placeholder="Please select the chain" />
+            <div style={{ marginLeft: 5 }}>
+              {currentAccount.substring(0, 6)}...
+              {currentAccount.substring(currentAccount.length - 4)}
+            </div>
           </div>
-        </div>
-      ) : (
-        <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount)} theme={theme}>
-          {pathname == "veSHN" ? "Connect Wallet" : "See Upcoming Projects"}
-        </JoinButton>
-      )}
-      <ToggleTheme />
-    </Wrapper>
+        ) : (pathname == "veSHN" &&
+          <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount)} theme={theme}>
+            {pathname == "veSHN" ? "Connect Wallet" : "See Upcoming Projects"}
+          </JoinButton>
+        )}
+        <ToggleTheme />
+      </Wrapper>
     </div>
-    
   );
 };
 

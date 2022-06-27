@@ -31,11 +31,11 @@ export default ({ location }) => {
             <ControllerPanel rewardAddressesDropdown={rewardAddressesDropdown} tokenSymbolsForDropdown={tokenSymbolsForDropdown} isWalletEnabled={isWalletEnabled} chainId={chainId} refetchData={refetchData} setRefetchData={setRefetchData} loadingIndicator={loadingIndicator} setLoadingIndicator={setLoadingIndicator}></ControllerPanel>
           </div>
         ) : (
-          <div style={{ textAlign: "center", marginTop: 80 }}>
+          <div style={{ textAlign: "center" }}>
             <br></br>
-            <Text fontWeight="600">Chain unsupported</Text>
+            <Text style={{marginTop: 80 }} fontWeight="600">Chain unsupported</Text>
             <br></br>
-            <p style={{ marginLeft: 80, marginRight: 80 }}>
+            <p style={{ marginLeft: 80, marginRight: 80,}}>
               veSHN is only available on Polygon (Matic) Network. If you have SHN on the Ethereum Mainnet, please bridge them by following these{" "}
               <a target="_self" href="https://shinedao.medium.com/shine-bridge-to-matic-is-live-df10f2b1d620">
                 instructions

@@ -344,7 +344,7 @@ export default function ProjectTemplate({ data }) {
                     </p>
                   </JoinCard>
                   <JoinCard theme={theme}>
-                    <h2>COMMITTEE</h2>
+                    <h2>TIER 4</h2>
                     <p className="frame1"> &#62; 400k veSHN </p>
                     {/* <p className="frame2">
                       {false && "✅ Seed-sale"} <br></br>✅ Private Sale
