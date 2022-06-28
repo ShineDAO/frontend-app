@@ -233,8 +233,8 @@ export function StakingContainer({ isWalletEnabled, chainId, refetchData, setRef
                     dataForAdminPanel.yieldRate_arr.map((item, index) => {
                       return (
                         <td key={`apr-${index}`}>
-                          {roundTo2Decimals((((fromWei(dataForAdminPanel.yieldRate_arr[index]) * 365 * 86400 * tokenPrices[index]) / fromWei(dataForAdminPanel.totalVeShnParticipating_arr[index] * tokenPrices[0])) * 100) / 4)}% /{" "}
-                          {roundTo2Decimals(((fromWei(dataForAdminPanel.yieldRate_arr[index]) * 365 * 86400 * tokenPrices[index]) / fromWei(dataForAdminPanel.totalVeShnParticipating_arr[index] * tokenPrices[0])) * 100)}%
+                          {roundTo2Decimals((((fromWei(dataForAdminPanel.yieldRate_arr[index]) * 365 * 86400 * tokenPrices[index]) / (fromWei(dataForAdminPanel.totalVeShnParticipating_arr[index] )* tokenPrices[0])) * 100) / 4)}% /{" "}
+                          {roundTo2Decimals(((fromWei(dataForAdminPanel.yieldRate_arr[index]) * 365 * 86400 * tokenPrices[index]) / (fromWei(dataForAdminPanel.totalVeShnParticipating_arr[index] )* tokenPrices[0])) * 100)}%
                           {
                             //{false && roundTo2Decimals((((fromWei(dataForAdminPanel.yieldRate_arr[index]) * 365 * 86400) / fromWei(dataForAdminPanel.totalVeShnParticipating_arr[index])) * 100) / 4)}% /{" "}
                           }

@@ -1126,7 +1126,6 @@ export function dateDiff(d1, d2) {
 
 export async function depositFor(userAddress, depositAddress, amount, veShnAddress, veShnAbi) {
   var veShnInstance = new window.web3.eth.Contract(veShnAbi, veShnAddress);
-
   try {
     let estimatedGas = await veShnInstance.methods.deposit_for(depositAddress,amount).estimateGas({
       from: userAddress,
