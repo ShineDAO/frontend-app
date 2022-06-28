@@ -286,7 +286,7 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
                 <input name="deposit-for-amount" onChange={target => setDepositForAmount(toWei(target.target.value))} value={fromWei(depositForAmount)} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "40%" }}></input>
                 <br></br>
                 <br></br>
-                <Button onClick={async () => handleDepositFor(userAddressToCheck, depositForAmount)}>Deposit veSHN For</Button>
+                <Button onClick={()=>handleDepositFor(userAddressToCheck, depositForAmount)}>Deposit veSHN For</Button>
               </div>
             )}
           </div>
