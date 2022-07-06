@@ -1124,15 +1124,15 @@ export function dateDiff(d1, d2) {
   return new Number((d2.getTime() - d1.getTime()) / 31536000000).toFixed(2);
 }
 
-export async function depositFor(userAddress, depositAddress, amount, veShnAddress, veShnAbi) {
-  var veShnInstance = new window.web3.eth.Contract(veShnAbi, veShnAddress);
+export async function depositFor(userAddress, depositAddress, amount, veShnAddress, generalCheckpointAddress, generalCheckpointAbi, shnAddress) {
+  var generalCheckpointInstance = new window.web3.eth.Contract(generalCheckpointAbi, generalCheckpointAddress);
   try {
-    let estimatedGas = await veShnInstance.methods.deposit_for(depositAddress,amount).estimateGas({
+    let estimatedGas = await generalCheckpointInstance.methods.depositFor(userAddress, depositAddress, amount, shnAddress, veShnAddress).estimateGas({
       from: userAddress,
     });
     console.log("estimated gas for sync", estimatedGas);
 
-    const receipt = await veShnInstance.methods.deposit_for(depositAddress,amount).send({
+    const receipt = await generalCheckpointInstance.methods.depositFor(userAddress, depositAddress, amount, shnAddress, veShnAddress).send({
       from: userAddress,
       gas: estimatedGas,
     });
@@ -1140,5 +1140,27 @@ export async function depositFor(userAddress, depositAddress, amount, veShnAddre
   } catch (e) {
     console.log("err ", e);
     console.log("Transaction rejected", e.code);
+  }
+}
+
+export async function generalCheckpointApprove(userAddress, generalCheckpointAddress, shineAbi, shnAddress) {
+  var tokenInstance = new window.web3.eth.Contract(shineAbi, shnAddress);
+
+  try {
+    let estimatedGas = await tokenInstance.methods.approve(generalCheckpointAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").estimateGas({
+      from: userAddress,
+      //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
+      //gas: gas,
+    });
+
+    console.log("estimated gas for lock", estimatedGas);
+    const receipt = await tokenInstance.methods.approve(generalCheckpointAddress, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").send({
+      from: userAddress,
+      //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
+      gas: estimatedGas,
+    });
+    console.log("receipt ", receipt);
+  } catch (e) {
+    console.log("approve error", e);
   }
 }

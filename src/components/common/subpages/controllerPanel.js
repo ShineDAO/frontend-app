@@ -17,7 +17,8 @@ import {
   checkLocked,
   dateDiff,
   depositFor,
-  roundTo2Decimals
+  roundTo2Decimals,
+  generalCheckpointApprove
 } from "../../templates/utils";
 import PulseLoader from "react-spinners/PulseLoader";
 
@@ -100,8 +101,13 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
   }
 
   async function handleDepositFor(depositAddress, amount) {
-    await depositFor(userAddress, depositAddress, amount, getAddress(chainId, "veShnAddress"), veSHN.abi);
+    await depositFor(userAddress, depositAddress, amount, getAddress(chainId, "veShnAddress"), getAddress(chainId, "GeneralCheckpointAddress"), GeneralCheckpoint.abi, getAddress(chainId, "shnAddress"));
   }
+  async function handleCheckpointApprove() {
+    await generalCheckpointApprove(userAddress, getAddress(chainId, "GeneralCheckpointAddress"), SHN.abi, getAddress(chainId, "shnAddress"))
+  }
+
+  
   return (
     <div>
       {" "}
@@ -278,15 +284,17 @@ export function ControllerPanel({ isWalletEnabled, chainId, refetchData, setRefe
             <input name="deposit-for-address" onChange={target => getUserLockDetails(target.target.value.toLocaleLowerCase())} value={userAddressToCheck} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "40%" }}></input>{" "}
             {lockedBalanceOfUser && lockedBalanceOfUser.end != 0 && (
               <div>
-                Lock amount:<b> {roundTo2Decimals(fromWei(lockedBalanceOfUser.amount))}</b><br></br>
+                Lock amount:<b> {roundTo2Decimals(fromWei(lockedBalanceOfUser.amount))}</b>
+                <br></br>
                 Lock end:<b> {timeConverter(lockedBalanceOfUser.end)}</b>
                 <br></br>
-                Lock end in years from now: { dateDiff(new Date(), new Date(timeConverter(lockedBalanceOfUser.end)))} years <br></br> <br></br>
+                Lock end in years from now: {dateDiff(new Date(), new Date(timeConverter(lockedBalanceOfUser.end)))} years <br></br> <br></br>
                 <label for="deposit-for-amount">SHN Amount:</label>
                 <input name="deposit-for-amount" onChange={target => setDepositForAmount(toWei(target.target.value))} value={fromWei(depositForAmount)} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "40%" }}></input>
-                <br></br>
-                <br></br>
-                <Button onClick={()=>handleDepositFor(userAddressToCheck, depositForAmount)}>Deposit veSHN For</Button>
+                <br></br> <br></br>
+                <Button onClick={() => handleCheckpointApprove()}>Approve</Button>
+                <br></br> <br></br>
+                <Button onClick={() => handleDepositFor(userAddressToCheck, depositForAmount)}>Deposit veSHN For</Button>
               </div>
             )}
           </div>
