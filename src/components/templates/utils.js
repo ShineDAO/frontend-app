@@ -3,6 +3,8 @@ import Migrations from "../../../static/abi/Migrations.json";
 var migrationsContractAddress = "0xbACf2F11eB10475DA816c1ADCB8B376FffD1544c";
 //var migrationsContractAddress = "0xfC84D046C5ac723722033d8DF9985d70d85D2B18"; //ganache
 //var migrationsContractAddress = "0x3f3207c60F6089cFD5828A2e0937DdC7Bd394e99"; //rinkeby
+import axios from "axios";
+export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export async function addToWatchlist(metamaskDetails) {
   console.log("details ", metamaskDetails);
@@ -105,6 +107,33 @@ export async function getProjectBalance(setProjectBalance, userAddress, tokenAbi
   setProjectBalance(projectBalanceFromWei);
 }
 
+export async function getTokenBalance(userAddress, tokenAbi, tokenContractAddress) {
+  var abiToken = tokenAbi;
+  var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
+
+  var projectBalance = await tokenInst.methods.balanceOf(userAddress).call();
+
+  var projectBalanceFromWei = window.web3.utils.fromWei(projectBalance, "ether");
+  return projectBalanceFromWei;
+}
+
+export async function getNftBalance(userAddress, tokenAbi, tokenContractAddress) {
+  var abiToken = tokenAbi;
+  var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
+
+  var projectBalance = await tokenInst.methods.balanceOf(userAddress).call();
+  return projectBalance;
+}
+
+async function getNttBalanceAndValidity(userAddress, tokenAbi, tokenContractAddress) {
+  var abiToken = tokenAbi;
+  var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
+
+  var nttBalance = await tokenInst.methods.balanceOf(userAddress).call();
+  var hasValidNtt = await tokenInst.methods.hasValid(userAddress).call();
+  return { nttBalance: parseInt(nttBalance), hasValidNtt };
+}
+
 export async function getVestingPeriod(saleAbi, saleContractAddress, setUserAddress, setVestingPeriod) {
   let userAddress = await window.ethereum.selectedAddress;
   setUserAddress(userAddress);
@@ -175,7 +204,20 @@ export function getTier(shineBalance) {
     return "Tier 4";
   }
 }
-
+export function getCustomTier(tokenBalance, tier1, tier2, tier3, tier4) {
+  console.log("custom tier", tokenBalance, tier1, tier2, tier3, tier4);
+  if (tokenBalance < tier1) {
+    return "No Tier";
+  } else if (tokenBalance >= tier1 && tokenBalance < tier2) {
+    return "Tier 1";
+  } else if (tokenBalance >= tier2 && tokenBalance < tier3) {
+    return "Tier 2";
+  } else if (tokenBalance >= tier3 && tokenBalance < tier4) {
+    return "Tier 3";
+  } else if (tokenBalance >= tier4) {
+    return "Tier 4";
+  }
+}
 export function getMaximumContribution(relativeCap, shineBalance) {
   console.log("rc, bal", relativeCap, shineBalance);
   let multiplier;
@@ -216,7 +258,7 @@ export function timeConverter(UNIX_timestamp) {
   return time;
 }
 
-export async function withdrawTokens(saleAbi, saleContractAddress, userAddress, gas, setTransactionBeingProcessed, setMetamaskErrorCode, setIsTokenWithdrawn, setShineBought) {
+export async function withdrawTokens(saleAbi, saleContractAddress, userAddress, setTransactionBeingProcessed, setMetamaskErrorCode, setIsTokenWithdrawn, setShineBought) {
   let abi = saleAbi;
   let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
 
@@ -226,7 +268,6 @@ export async function withdrawTokens(saleAbi, saleContractAddress, userAddress, 
   try {
     let estimatedGas = await simpleCrowdsaleInstance.methods.withdrawTokens(userAddress).estimateGas({
       from: userAddress,
-      gas: gas,
     });
 
     const receipt = await simpleCrowdsaleInstance.methods.withdrawTokens(userAddress).send({
@@ -265,7 +306,7 @@ export async function enableAccessForTier1AndTier2(userAddress, gas, saleAbi, sa
   }
 }
 
-export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, gas, currentStatus) {
+export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, currentStatus, setRefetchData) {
   if (ethAmountToSpend !== "") {
     //disable button if no amount is entered
     let abi = saleAbi;
@@ -278,7 +319,6 @@ export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setS
       let estimatedGas = await simpleCrowdsaleInstance.methods.buyTokens(userAddress).estimateGas({
         from: userAddress,
         value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
-        gas: gas,
       });
       //let estimatedGas = 100000;
 
@@ -294,6 +334,78 @@ export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setS
       var amountBoughtInWei = receipt.events.TokensPurchased.returnValues.amount;
       var amountBoughtInTKNs = window.web3.utils.fromWei(amountBoughtInWei, "ether");
 
+      setRefetchData(true);
+      setShineBought(true);
+      setShineBoughtAmount(amountBoughtInTKNs);
+      setEthAmountToSpend("");
+    } catch (e) {
+      setShineBought(false);
+      console.log("err ", e);
+      console.log("User rejected transaction", e.code);
+
+      if (e.message.search("insufficient funds for transfer") >= 0) {
+        setMetamaskErrorCode("The amount that you are trying to buy, exceeds the amount that you have available in your wallet");
+      } else if (e.message.search("IndividuallyCappedCrowdsale: beneficiary's cap exceeded") >= 0) {
+        setMetamaskErrorCode("Your total amount exceeds maximum participation");
+      } else if (e.code === 4001) {
+        setMetamaskErrorCode(e.message); //MetaMask Tx Signature: User denied transaction signature.
+      } else if (e.message.search("Reference to the Shine Token contract has not been set") >= 0) {
+        setMetamaskErrorCode("Reference to the Shine Token contract has not been set");
+      } else if (e.message.search("Relative cap exceeded") >= 0) {
+        setMetamaskErrorCode("Relative cap exceeded");
+      } else if (e.message.search("Currently you are below Tier 1 level, but you need to be at least Tier3 in order to participate in the seed sale") >= 0) {
+        if (currentStatus === "seed" || currentStatus == "ganacheSeed") {
+          setMetamaskErrorCode("Currently you are below Tier 1 level, but you need to have at least 15 000 SHN in order to participate");
+        } else if (currentStatus === "ido" || currentStatus == "ganacheSeed") {
+          setMetamaskErrorCode("Currently you are below Tier 1 level, but you need to be at least 15 000 SHN in order to participate");
+        }
+      } else if (e.message.search("You are Tier 1, but you need to be Tier3 in order to participate in the seed sale") >= 0) {
+        setMetamaskErrorCode("You are Tier 1, but you need to be Tier3 in order to participate in the seed sale or you can wait until 3:30 pm UTC its opened for Tier 1 and Tier 2");
+      } else if (e.message.search("You are Tier 2, but You need to be Tier3 in order to participate in the seed sale") >= 0) {
+        setMetamaskErrorCode("You are Tier 2, but You need to be Tier3 in order to participate in the seed sale or you can wait until 3:30 pm UTC its opened for Tier 1 and Tier 2");
+      } else if (e.message.search("The amount that is being bought is too small to split it partially for vesting") >= 0) {
+        setMetamaskErrorCode("The amount that is being bought is too small to split it partially for vesting");
+      } else if (e.message.search("weiAmount is 0") >= 0) {
+        setMetamaskErrorCode("0 is not a valid amount, please enter another ETH amount in the input field");
+      } else {
+        setMetamaskErrorCode("Something went wrong, please contact the support"); //"There are not enough project tokens left for sale anymore"
+      }
+
+      let searchCapExceeded = e.message.search("IndividuallyCappedCrowdsale: beneficiary's cap exceeded");
+      console.log("search ", searchCapExceeded); //149
+      // console.log("metamask code", metamaskErrorCode)
+    }
+    setTransactionBeingProcessed(false);
+  }
+}
+
+export async function swapTokenWithToken(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, currentStatus, setRefetchData) {
+  if (ethAmountToSpend !== "") {
+    //disable button if no amount is entered
+    let abi = saleAbi;
+    let simpleCrowdsaleInstance = new window.web3.eth.Contract(abi, saleContractAddress);
+
+    setTransactionBeingProcessed(true);
+    setMetamaskErrorCode(undefined);
+
+    try {
+      let estimatedGas = await simpleCrowdsaleInstance.methods.buyTokensWithToken(userAddress, toWei(ethAmountToSpend)).estimateGas({
+        from: userAddress,
+      });
+      //let estimatedGas = 100000;
+
+      console.log("estimated gas ", estimatedGas);
+
+      console.log("eth amount to spend", ethAmountToSpend);
+      const receipt = await simpleCrowdsaleInstance.methods.buyTokensWithToken(userAddress, toWei(ethAmountToSpend)).send({
+        from: userAddress,
+        gas: estimatedGas,
+      });
+      console.log("receipt", receipt);
+      var amountBoughtInWei = receipt.events.TokensPurchased.returnValues.amount;
+      var amountBoughtInTKNs = window.web3.utils.fromWei(amountBoughtInWei, "ether");
+
+      setRefetchData(true);
       setShineBought(true);
       setShineBoughtAmount(amountBoughtInTKNs);
       setEthAmountToSpend("");
@@ -342,6 +454,7 @@ function handleChainChanged(_chainId) {
   // We recommend reloading the page, unless you must do otherwise
   window.location.reload(true);
 }
+
 export async function loadWeb3(setWalletStatus, setBalance, setCurrentNetwork) {
   if (window.ethereum) {
     console.log("load 1", window.web3);
@@ -432,8 +545,19 @@ export function toPlainString(num) {
   return num.toLocaleString("fullwide", { useGrouping: false });
 }
 
+export function estimateReceivedTokens(ethAmountToSpend, rate) {
+  const weiAmountToSpend = window.web3.utils.toWei(ethAmountToSpend.toString(), "ether");
+  //console.log("wei", toPlainString(weiAmountToSpend * rate));
+
+  //console.log("www", weiAmountToSpend * rate);
+
+  //const estimatedShnInWei = weiAmountToSpend * rate
+  const estimatedReceivedShn = window.web3.utils.fromWei(toPlainString(weiAmountToSpend * rate), "ether");
+  //console.log("www1", Number.parseFloat(estimatedReceivedShn));
+  return Number.parseFloat(estimatedReceivedShn);
+}
 export function estimateReceivedShn(ethAmountToSpend, rate) {
-  //console.log("eth to spend", ethAmountToSpend);
+  console.log("eth to spend", ethAmountToSpend, rate);
   const weiAmountToSpend = window.web3.utils.toWei(ethAmountToSpend.toString(), "ether");
   //console.log("wei", toPlainString(weiAmountToSpend * rate));
 
@@ -451,15 +575,16 @@ export function fromWei(amountInWei) {
 }
 
 export function toWei(amountInBaseUnit) {
+  console.log("convertedRate11 ", amountInBaseUnit);
   const amountInWei = window.web3.utils.toWei(amountInBaseUnit.toString(), "ether");
   return amountInWei.toString();
 }
 
-export async function getAllowance(setAllowance, veShnAddress, userAddress, tokenAbi, tokenContractAddress) {
+export async function getAllowance(setAllowance, targetContract, userAddress, tokenAbi, tokenContractAddress) {
   var abiToken = tokenAbi;
   var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
 
-  var allowance = await tokenInst.methods.allowance(userAddress, veShnAddress).call();
+  var allowance = await tokenInst.methods.allowance(userAddress, targetContract).call();
   setAllowance(allowance);
 }
 
@@ -1014,7 +1139,7 @@ export function getAddress(chainId, contract) {
     "0x1": "main",
     "0x89": "matic",
     "0x13881": "mumbai",
-    "0x539": "hardhat",
+    "0x7a69": "hardhat",
   };
   let chain = chainIdContainer[chainId];
   console.log("chainx ", chain, typeof chain, addresses[contract][chain]);
@@ -1022,6 +1147,23 @@ export function getAddress(chainId, contract) {
     return addresses[contract][chain].toLowerCase();
   } else {
     return addresses[shnAddress].hardhat.toLowerCase();
+  }
+}
+
+import dealsConfig from "../../../static/config/dealsConfig";
+export function getTokenAddressFromDealsConfig(chainId, tokenName) {
+  let chainIdContainer = {
+    "0x1": "main",
+    "0x89": "matic",
+    "0x13881": "mumbai",
+    "0x7a69": "hardhat",
+  };
+  let chain = chainIdContainer[chainId];
+  console.log("chainx ", chain, typeof chain, dealsConfig[tokenName][chain]);
+  if (typeof chain != "undefined") {
+    return dealsConfig[tokenName][chain].toLowerCase();
+  } else {
+    return dealsConfig["usdc"].hardhat.toLowerCase();
   }
 }
 
@@ -1164,3 +1306,501 @@ export async function generalCheckpointApprove(userAddress, generalCheckpointAdd
     console.log("approve error", e);
   }
 }
+async function setAccessNft(userAddress, SeedAbi, seedAddress, nftAddress, nftCap) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  let estimatedGas = await seedInstance.methods.setAccessNFT(nftAddress, nftCap).estimateGas({
+    from: userAddress,
+  });
+  console.log("estimated gas for sync", estimatedGas);
+
+  const receipt = await seedInstance.methods.setAccessNFT(nftAddress, nftCap).send({
+    from: userAddress,
+    gas: estimatedGas,
+  });
+  console.log("NFT access token set", receipt);
+}
+
+async function setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCap) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  let estimatedGas = await seedInstance.methods.setAccessNTT(nttAddress, nttCap).estimateGas({
+    from: userAddress,
+  });
+  console.log("estimated gas for sync", estimatedGas);
+
+  const receipt = await seedInstance.methods.setAccessNTT(nftAddress, nftCap).send({
+    from: userAddress,
+    gas: estimatedGas,
+  });
+  console.log("NTT access token set", receipt);
+}
+async function setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  let estimatedGas = await seedInstance.methods.setWhitelistedAddresses(whitelistedAddresses, capsForWhitelistedAddresses, true).estimateGas({
+    from: userAddress,
+  });
+  console.log("estimated gas for sync", estimatedGas);
+
+  const receipt = await seedInstance.methods.setWhitelistedAddresses(whitelistedAddresses, capsForWhitelistedAddresses, true).send({
+    from: userAddress,
+    gas: estimatedGas,
+  });
+  console.log("Whitelisted addresses set", receipt);
+}
+
+async function setAccessToken(userAddress, SeedAbi, seedAddress, accessTokenAddress, accessTokenAmountTier1, accessTokenAmountTier2, accessTokenAmountTier3, accessTokenAmountTier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  console.log("access token ", userAddress, seedInstance, accessTokenAddress, accessTokenAmountTier1, accessTokenAmountTier2, accessTokenAmountTier3, accessTokenAmountTier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap);
+  let estimatedGas = await seedInstance.methods.setAccessToken(accessTokenAddress, accessTokenAmountTier1, accessTokenAmountTier2, accessTokenAmountTier3, accessTokenAmountTier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap).estimateGas({
+    from: userAddress,
+  });
+  console.log("estimated gas for sync", estimatedGas);
+
+  const receipt = await seedInstance.methods.setAccessToken(accessTokenAddress, accessTokenAmountTier1, accessTokenAmountTier2, accessTokenAmountTier3, accessTokenAmountTier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap).send({
+    from: userAddress,
+    gas: estimatedGas,
+  });
+  console.log("access token set", receipt);
+}
+
+async function setVesting(userAddress, SeedAbi, seedAddress, cliffDuration, vestingDuration, percentageVested) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  let estimatedGas = await seedInstance.methods.setVesting(true, cliffDuration, vestingDuration, percentageVested).estimateGas({
+    from: userAddress,
+  });
+  console.log("estimated gas for sync", estimatedGas);
+
+  const receipt = await seedInstance.methods.setVesting(true, cliffDuration, vestingDuration, percentageVested).send({
+    from: userAddress,
+    gas: estimatedGas,
+  });
+  console.log("Whitelisted addresses set", receipt);
+}
+
+export async function setVisibility(userAddress, SeedAbi, seedAddress, visibility) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  let estimatedGas = await seedInstance.methods.setDealVisibility(true).estimateGas({
+    from: userAddress,
+  });
+  console.log("estimated gas for sync", estimatedGas);
+
+  const receipt = await seedInstance.methods.setDealVisibility(true).send({
+    from: userAddress,
+    gas: estimatedGas,
+  });
+  console.log("Deal visiblity set", receipt);
+}
+
+export async function deployTokens(userAddress, SeedAbi, offeredTokenAddress, seedAddress, amount) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  let estimatedGas = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).estimateGas({
+    from: userAddress,
+  });
+  console.log("estimated gas for sync", estimatedGas);
+
+  const receipt = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).send({
+    from: userAddress,
+    gas: estimatedGas,
+  });
+  console.log("Tokens added", receipt);
+}
+
+export async function deployNewSeed(
+  userAddress,
+  offeredTokenAddress,
+  acceptedTokenAddress,
+  SeedFactoryAbi,
+  SeedAbi,
+  seedFactoryAddress,
+  amount,
+  rate,
+  cliffDuration,
+  vestingDuration,
+  percentageVested,
+  startTime,
+  endTime,
+  accessTokenAddress,
+  accessTokenAmountTier1,
+  accessTokenAmountTier2,
+  accessTokenAmountTier3,
+  accessTokenAmountTier4,
+  tier1Cap,
+  tier2Cap,
+  tier3Cap,
+  tier4Cap,
+  title,
+  accessMechanism,
+  whitelistedAddresses,
+  capsForWhitelistedAddresses,
+  nftAddress,
+  nftCap,
+  nttAddress,
+  nttCap,
+  distributionMechanism,
+  visibility
+) {
+  console.log(userAddress, offeredTokenAddress, seedFactoryAddress, parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), visibility);
+  var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
+  try {
+    //1000000000000000000000000
+    let estimatedGas = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), amount, userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+
+    //vestingEnabled,cliffDuration, vestingDuration,percentageVested,
+
+    const receipt = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), amount, userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).send({
+      from: userAddress,
+      gas: estimatedGas,
+    });
+
+    if (accessMechanism != "open") {
+      if (accessMechanism == "whitelist") {
+        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+        await setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses);
+      } else if (accessMechanism == "nft-gate") {
+        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+        console.log("address of deployed contract ", seedAddress);
+        await setAccessNft(userAddress, SeedAbi, seedAddres, nftAddress, nftCap);
+      } else if (accessMechanism == "ntt-gate") {
+        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+        console.log("address of deployed contract ", seedAddress);
+        await setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCap);
+      } else if (accessMechanism == "token-gate-tiers") {
+        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+        console.log("address of deployed contract ", seedAddress);
+        await setAccessToken(userAddress, SeedAbi, seedAddress, accessTokenAddress, accessTokenAmountTier1, accessTokenAmountTier2, accessTokenAmountTier3, accessTokenAmountTier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap);
+      }
+    }
+    if (distributionMechanism != "instant") {
+      if (distributionMechanism == "lock") {
+        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+        await setVesting(userAddress, SeedAbi, seedAddress, vestingDuration, vestingDuration, percentageVested); // in case of locks without no linear vesting, cliff and vesting duration are the same.
+      } else if ((distributionMechanism = "linear-vesting")) {
+        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+        await setVesting(userAddress, SeedAbi, seedAddress, cliffDuration, vestingDuration, percentageVested);
+      }
+    }
+    if (visibility == "public") {
+      let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+      await setVisibility(userAddress, SeedAbi, seedAddress, visibility);
+    }
+
+    await deployTokens(userAddress, SeedAbi, offeredTokenAddress, seedAddress, amount);
+
+    console.log("receipt", receipt);
+  } catch (e) {
+    console.log("Error while deploying new Seed contract ", e);
+  }
+}
+
+export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFactoryAddress, erc20Abi) {
+  console.log("user address seed ", userAddress);
+  const SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
+
+  const count = await SeedFactoryInstance.methods.getCount().call();
+  const seedSalesData = [];
+
+  for (let i = 0; i < count; i++) {
+    let seedAddress = (await SeedFactoryInstance.methods.data(i).call()).toLowerCase();
+    let seedInstance = new window.web3.eth.Contract(seedAbi, seedAddress);
+    let offeredTokenAddress = await seedInstance.methods.token().call();
+    let acceptedTokenAddress = await seedInstance.methods.acceptedToken().call();
+    let rate = await seedInstance.methods.rate().call();
+    let vestedBalance = await seedInstance.methods.vestedBalances(userAddress).call();
+    let vestingPeriod = await seedInstance.methods.vestingPeriod(userAddress).call();
+    let cliffPeriod = await seedInstance.methods.cliffPeriod(userAddress).call();
+    let startTime = await seedInstance.methods.startTime().call();
+    let endTime = await seedInstance.methods.endTime().call();
+    let weiRaised = await seedInstance.methods.weiRaised().call();
+    let name = await seedInstance.methods.name().call();
+    let createdTimestamp = await seedInstance.methods.createdTimestamp().call();
+    let totalOffered = await seedInstance.methods.totalOffered().call();
+
+    let tier1 = await seedInstance.methods.tier1().call();
+    let tier2 = await seedInstance.methods.tier2().call();
+    let tier3 = await seedInstance.methods.tier3().call();
+    let tier4 = await seedInstance.methods.tier4().call();
+
+    let tier1Cap = await seedInstance.methods.tier1Cap().call();
+    let tier2Cap = await seedInstance.methods.tier2Cap().call();
+    let tier3Cap = await seedInstance.methods.tier3Cap().call();
+    let tier4Cap = await seedInstance.methods.tier4Cap().call();
+
+    let capPerAddressEnabled = await seedInstance.methods.capPerAddressEnabled().call();
+    let capPerAddress = await seedInstance.methods.capPerAddress(userAddress).call();
+
+    let accessNFT = await seedInstance.methods.accessNFT().call();
+    let accessNTT = await seedInstance.methods.accessNTT().call();
+    let accessToken = await seedInstance.methods.accessToken().call();
+
+    let vestingEnabled = await seedInstance.methods.vestingEnabled().call();
+    let cliffDuration = parseInt(await seedInstance.methods.cliffDuration().call());
+    let vestingDuration = parseInt(await seedInstance.methods.vestingDuration().call());
+    let percentageVested = await seedInstance.methods.percentageVested().call();
+
+    let dealVisibility = await seedInstance.methods.dealVisibility().call();
+
+    let distributionMechanism = "instant";
+    if (vestingEnabled) {
+      if (cliffDuration == vestingDuration) {
+        distributionMechanism = "lock";
+      } else if (vestingDuration > cliffDuration) {
+        distributionMechanism = "linear-vesting";
+      }
+    }
+
+    let accessMechanism = "open";
+    let accessTokenSymbol, accessTokenBalance, capForNFT, capForNTT, nftBalance, nttBalance, hasValidNtt;
+
+    if (capPerAddressEnabled == true) {
+      accessMechanism = "whitelist";
+    } else if (accessNFT != ZERO_ADDRESS) {
+      accessMechanism = "nft-gate";
+      nftBalance = await getNftBalance(userAddress, erc721Abi, accessNFT);
+      capForNFT = await seedInstance.methods.capForNFT().call();
+    } else if (accessNTT != ZERO_ADDRESS) {
+      accessMechanism = "ntt-gate";
+      capForNTT = await seedInstance.methods.capForNTT().call();
+      ({ nttBalance, hasValidNtt } = await getNttBalanceAndValidity(userAddress, erc4671Abi, accessNTT));
+    } else if (accessToken != ZERO_ADDRESS) {
+      accessMechanism = "token-gate-tiers";
+      let accessErc20Instance = new window.web3.eth.Contract(erc20Abi, accessToken);
+      accessTokenSymbol = await accessErc20Instance.methods.symbol().call();
+      accessTokenBalance = await getTokenBalance(userAddress, erc20Abi, accessToken);
+    }
+
+    let rewardPerSecond = vestedBalance / (vestingPeriod - cliffPeriod);
+    console.log("token address ()", offeredTokenAddress);
+
+    let erc20Instance = new window.web3.eth.Contract(erc20Abi, offeredTokenAddress);
+    let offeredTokenName = await erc20Instance.methods.name().call();
+    let offeredTokenSymbol = await erc20Instance.methods.symbol().call();
+    let offeredTokenTotalSupply = await erc20Instance.methods.totalSupply().call();
+
+    let acceptedTokenName;
+    let acceptedTokenSymbol;
+    let acceptedTokenBalance;
+    if (acceptedTokenAddress != ZERO_ADDRESS) {
+      let acceptedErc20Instance = new window.web3.eth.Contract(erc20Abi, acceptedTokenAddress);
+      acceptedTokenName = await acceptedErc20Instance.methods.name().call();
+      acceptedTokenSymbol = await acceptedErc20Instance.methods.symbol().call();
+      acceptedTokenBalance = await acceptedErc20Instance.methods.balanceOf(userAddress).call();
+      //let acceptedTokenTotalSupply = await erc20Instance.methods.totalSupply().call();
+    }
+
+    seedSalesData.push({
+      offeredTokenName,
+      offeredTokenAddress,
+      acceptedTokenAddress,
+      acceptedTokenBalance,
+      seedAddress,
+      rate,
+      offeredTokenSymbol,
+      weiRaised,
+      offeredTokenTotalSupply,
+      vestedBalance,
+      vestingPeriod,
+      cliffPeriod,
+      rewardPerSecond,
+      startTime,
+      endTime,
+      name,
+      accessMechanism,
+      distributionMechanism,
+      percentageVested,
+      capPerAddressEnabled,
+      accessNFT,
+      accessNTT,
+      accessToken,
+      capPerAddress,
+      dealVisibility,
+      vestingDuration,
+      cliffDuration,
+      acceptedTokenName,
+      acceptedTokenSymbol,
+      tier1,
+      tier2,
+      tier3,
+      tier4,
+      tier1Cap,
+      tier2Cap,
+      tier3Cap,
+      tier4Cap,
+      createdTimestamp,
+      totalOffered,
+      accessTokenSymbol,
+      accessTokenBalance,
+      capForNTT,
+      capForNFT,
+      nftBalance,
+      nttBalance,
+      hasValidNtt,
+      //acceptedTokenTotalSupply
+    });
+  }
+  return seedSalesData;
+}
+
+export async function checkApprovalStatus(userAddress, tokenAbi, tokenAddress, addressOfContractToApprove, amount, setApprovalStatus) {
+  let parsedAmount = parseInt(amount);
+
+  var tokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress);
+  const amountApproved = await tokenInstance.methods.allowance(userAddress, addressOfContractToApprove).call();
+  console.log("tex ", parsedAmount, typeof parsedAmount, parsedAmount != 0, fromWei(amountApproved), typeof fromWei(amountApproved));
+  if (fromWei(amountApproved) >= parsedAmount) {
+    setApprovalStatus(false);
+  } else {
+    console.log("tex mex");
+    setApprovalStatus(true); // display approve button
+  }
+}
+
+export async function approveContract(userAddress, tokenAbi, tokenAddress, addressOfContractToApprove, amount = "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", setApprovalStatus) {
+  console.log("token add", tokenAddress, addressOfContractToApprove);
+  var tokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress);
+
+  try {
+    let estimatedGas = await tokenInstance.methods.approve(addressOfContractToApprove, amount).estimateGas({
+      from: userAddress,
+      //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
+      //gas: gas,
+    });
+
+    console.log("estimated gas for approval", estimatedGas);
+    const receipt = await tokenInstance.methods.approve(addressOfContractToApprove, amount).send({
+      from: userAddress,
+      //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
+      gas: estimatedGas,
+    });
+
+    setApprovalStatus(false);
+
+    console.log("receipt ", receipt);
+  } catch (e) {
+    console.log("create lock error ", e);
+  }
+}
+export function getTokenRatio(tokenA, tokenB) {
+  const rate = tokenB / tokenA;
+  return (rate * 1000000000000000000000000).toLocaleString("fullwide", { useGrouping: false }); // multiplication with 1000000000000000000000000 is there in order to support fixed float operations. For example without it, some tokens ratios could not be offered. Lets say 1USDC for 0.1TKNx rate would be 0.1 which is not supported in Solidity. More info: https://github.com/CementDAO/Fixidity/blob/master/contracts/FixidityLib.sol
+}
+
+export function fromFixed(tokenRatio) {
+  return tokenRatio / 1000000000000000000000000;
+}
+
+export function getTokenRate(nativeTokenPriceInUsd, offeredTokenPriceInUsd) {
+  console.log("token rates ", nativeTokenPriceInUsd, offeredTokenPriceInUsd);
+  const oneUsdInWei = 1000000000000000000 / nativeTokenPriceInUsd;
+  console.log("oneUsdInWei ", oneUsdInWei);
+  const oneOfferedTokenInWei = oneUsdInWei * offeredTokenPriceInUsd;
+  console.log("oneOfferedTokenInWei ", oneOfferedTokenInWei);
+
+  const rate = Math.pow(10, 18) / oneOfferedTokenInWei;
+  //const rate = Math.pow((Math.pow(10, 18) / oneOfferedTokenInWei)*10,24);
+  console.log("rate ", rate * 1000000000000000000000000);
+  return (rate * 1000000000000000000000000).toLocaleString("fullwide", { useGrouping: false }); // multiplication with 1000000000000000000000000 is there in order to support fixed float operations. For example without it, some tokens ratios could not be offered. Lets say 1USDC for 0.1TKNx rate would be 0.1 which is not supported in Solidity. More info: https://github.com/CementDAO/Fixidity/blob/master/contracts/FixidityLib.sol
+}
+
+export function getRateInUsd(rate, nativeTokenPriceInUsd) {
+  console.log("rate in usd 111", rate, nativeTokenPriceInUsd);
+  return 1 / (rate / nativeTokenPriceInUsd);
+}
+
+export async function getNativeTokenPrice(chainId) {
+  const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${getCoingeckoName(chainId)}`);
+  return response.data[0].current_price;
+}
+
+export function getCoingeckoName(chainId) {
+  const chainMapper = {
+    "0x1": "ethereum",
+    "0x89": "matic-network",
+    "0x539": "matic-network",
+  };
+  if (chainMapper[chainId]) {
+    return chainMapper[chainId];
+  } else {
+    return "ethereum";
+  }
+}
+
+export function getNetworkName(chainId) {
+  const chainMapper = {
+    "0x1": "Ethereum",
+    "0x89": "Polygon/Matic",
+    "0x7a69": "Localhost",
+  };
+  if (chainMapper[chainId]) {
+    return chainMapper[chainId];
+  } else {
+    return chainId;
+  }
+}
+export function substringAddress(address) {
+  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+}
+
+export const erc721Abi = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_owner",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+export const erc4671Abi = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
+    name: "hasValid",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];

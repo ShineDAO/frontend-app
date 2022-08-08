@@ -21,6 +21,12 @@ export const SmallText = styled.div`
   margin-bottom: 8px;
 `;
 
+export const SmallerText = styled.span`
+  color: ${({ color, theme }) => color || (theme === "light" ? "#a2a2a2" : "#a2a2a2")};
+  font-size: 9pt;
+  margin-bottom: 8px;
+`;
+
 
 export const DegenNewsTitle = styled.h2`
   color: rgb(54 52 54);

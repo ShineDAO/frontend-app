@@ -23,7 +23,7 @@ export const SliderContainer = styled.div `
 
 
 export const Slider = styled.input `
-  width:267px;
+width: ${({ width }) => width || "267px"};
 }`
 
 

@@ -6,6 +6,8 @@ export default ({ children }) => {
 
   const [isWalletEnabled, setWalletStatus] = useState();
   const [chainId, setChainId] = useState("0x89");
+  const [nativeBalance, setNativeBalance] = useState();
+  const [nativeTokenName, setNativeTokenName] = useState();
   const [currentAccount, setCurrentAccount] = useState(null);
   const [refetchData, setRefetchData] = useState(false);
   const [loadingIndicator, setLoadingIndicator] = useState(["none"]);
@@ -23,7 +25,11 @@ export default ({ children }) => {
         refetchData,
         setRefetchData,
         loadingIndicator,
-        setLoadingIndicator
+        setLoadingIndicator,
+        nativeBalance,
+        setNativeBalance,
+        nativeTokenName,
+        setNativeTokenName
       }}
     >
       {children}

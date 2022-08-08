@@ -54,6 +54,8 @@ import {
   TBAText,
 } from "./styles";
 
+
+
 import * as utils from "./utils";
 
 import { Avatar } from "../common/Avatar";
@@ -584,7 +586,7 @@ export default function ProjectTemplate({ data }) {
                       {isWalletEnabled && console.log("vested balances ", vestedBalances)}
                       {vestedBalances > 0 && currentNetwork === project.technicalDetails[currentStatus].network && (
                         <FlexBox>
-                          <ConnectButton theme={theme} onClick={() => utils.withdrawTokens(saleAbi, saleContractAddress, userAddress, gas, setTransactionBeingProcessed, setMetamaskErrorCode, setIsTokenWithdrawn, setShineBought)}>
+                          <ConnectButton theme={theme} onClick={() => utils.withdrawTokens(saleAbi, saleContractAddress, userAddress, setTransactionBeingProcessed, setMetamaskErrorCode, setIsTokenWithdrawn, setShineBought)}>
                             Widthdraw tokens
                           </ConnectButton>
                           <Text margin="0 0 0 10px" color="#aeaeae">

@@ -14,6 +14,7 @@ export const Card = styled.div`
   border: none;
   padding: ${({ padding }) => padding || "0"};
   margin: ${({ margin }) => margin || "0"};
+  border: ${({ border }) => border || "none"};
 `;
 
 export const TitleWrap = styled.div`
