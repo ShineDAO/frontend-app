@@ -338,7 +338,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                       </Text>
                     )}
                     {console.log("time now in seconds", new Date().getTime(), new Date(locked.end * 1000).getTime(), new Date().getTime() >= new Date(locked.end * 1000).getTime(), locked.end * 1000)}
-                    {locked.end != 0 && new Date().getTime() / 100 >= new Date(locked.end * 1000).getTime() && (
+                    {locked.end != 0 && new Date().getTime() >= new Date(locked.end * 1000).getTime() && (
                       <div>
                         <br></br>
                         {loadingIndicator.includes("withdraw") ? (
