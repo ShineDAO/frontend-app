@@ -14,5 +14,6 @@ export const TableR = styled.tr`
 `;
 
 export const TableLabel = styled.div`
+  border-radius: 5px;
   background: ${({ selected }) => (selected ? "green" : "gray")};
 `;

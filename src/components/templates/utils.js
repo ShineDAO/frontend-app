@@ -5,6 +5,7 @@ var migrationsContractAddress = "0xbACf2F11eB10475DA816c1ADCB8B376FffD1544c";
 //var migrationsContractAddress = "0x3f3207c60F6089cFD5828A2e0937DdC7Bd394e99"; //rinkeby
 import axios from "axios";
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+import ERC20 from "../../../static/abi/ShineToken";
 
 export async function addToWatchlist(metamaskDetails) {
   console.log("details ", metamaskDetails);
@@ -1327,7 +1328,7 @@ async function setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCa
   });
   console.log("estimated gas for sync", estimatedGas);
 
-  const receipt = await seedInstance.methods.setAccessNTT(nftAddress, nftCap).send({
+  const receipt = await seedInstance.methods.setAccessNTT(nttAddress, nttCap).send({
     from: userAddress,
     gas: estimatedGas,
   });
@@ -1391,6 +1392,8 @@ export async function setVisibility(userAddress, SeedAbi, seedAddress, visibilit
 }
 
 export async function deployTokens(userAddress, SeedAbi, offeredTokenAddress, seedAddress, amount) {
+  await approveContract(userAddress, ERC20.abi, offeredTokenAddress, seedAddress, amount);
+
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
   let estimatedGas = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).estimateGas({
     from: userAddress,
@@ -1433,6 +1436,7 @@ export async function deployNewSeed(
   capsForWhitelistedAddresses,
   nftAddress,
   nftCap,
+  requireKyc,
   nttAddress,
   nttCap,
   distributionMechanism,
@@ -1442,47 +1446,45 @@ export async function deployNewSeed(
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
   try {
     //1000000000000000000000000
-    let estimatedGas = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), amount, userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).estimateGas({
+    let estimatedGas = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).estimateGas({
       from: userAddress,
     });
     console.log("estimated gas for sync", estimatedGas);
 
     //vestingEnabled,cliffDuration, vestingDuration,percentageVested,
 
-    const receipt = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), amount, userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).send({
+    const receipt = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).send({
       from: userAddress,
       gas: estimatedGas,
     });
 
+    let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
     if (accessMechanism != "open") {
       if (accessMechanism == "whitelist") {
-        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
         await setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses);
       } else if (accessMechanism == "nft-gate") {
-        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
         console.log("address of deployed contract ", seedAddress);
         await setAccessNft(userAddress, SeedAbi, seedAddres, nftAddress, nftCap);
       } else if (accessMechanism == "ntt-gate") {
-        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
         console.log("address of deployed contract ", seedAddress);
         await setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCap);
       } else if (accessMechanism == "token-gate-tiers") {
-        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
         console.log("address of deployed contract ", seedAddress);
         await setAccessToken(userAddress, SeedAbi, seedAddress, accessTokenAddress, accessTokenAmountTier1, accessTokenAmountTier2, accessTokenAmountTier3, accessTokenAmountTier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap);
       }
     }
+    if (requireKyc) {
+      console.log("address of deployed contract ", seedAddress);
+      await setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCap);
+    }
     if (distributionMechanism != "instant") {
       if (distributionMechanism == "lock") {
-        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
         await setVesting(userAddress, SeedAbi, seedAddress, vestingDuration, vestingDuration, percentageVested); // in case of locks without no linear vesting, cliff and vesting duration are the same.
       } else if ((distributionMechanism = "linear-vesting")) {
-        let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
         await setVesting(userAddress, SeedAbi, seedAddress, cliffDuration, vestingDuration, percentageVested);
       }
     }
     if (visibility == "public") {
-      let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
       await setVisibility(userAddress, SeedAbi, seedAddress, visibility);
     }
 
@@ -1551,7 +1553,7 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
     }
 
     let accessMechanism = "open";
-    let accessTokenSymbol, accessTokenBalance, capForNFT, capForNTT, nftBalance, nttBalance, hasValidNtt;
+    let accessTokenSymbol, accessTokenBalance, capForNFT, nftBalance;
 
     if (capPerAddressEnabled == true) {
       accessMechanism = "whitelist";
@@ -1559,15 +1561,18 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       accessMechanism = "nft-gate";
       nftBalance = await getNftBalance(userAddress, erc721Abi, accessNFT);
       capForNFT = await seedInstance.methods.capForNFT().call();
-    } else if (accessNTT != ZERO_ADDRESS) {
-      accessMechanism = "ntt-gate";
-      capForNTT = await seedInstance.methods.capForNTT().call();
-      ({ nttBalance, hasValidNtt } = await getNttBalanceAndValidity(userAddress, erc4671Abi, accessNTT));
     } else if (accessToken != ZERO_ADDRESS) {
       accessMechanism = "token-gate-tiers";
       let accessErc20Instance = new window.web3.eth.Contract(erc20Abi, accessToken);
       accessTokenSymbol = await accessErc20Instance.methods.symbol().call();
       accessTokenBalance = await getTokenBalance(userAddress, erc20Abi, accessToken);
+    }
+    let kycEnabled = false;
+    let nttBalance, hasValidNtt, capForNTT;
+    if (accessNTT != ZERO_ADDRESS) {
+      kycEnabled = true;
+      capForNTT = await seedInstance.methods.capForNTT().call();
+      ({ nttBalance, hasValidNtt } = await getNttBalanceAndValidity(userAddress, erc4671Abi, accessNTT));
     }
 
     let rewardPerSecond = vestedBalance / (vestingPeriod - cliffPeriod);
@@ -1636,6 +1641,7 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       nftBalance,
       nttBalance,
       hasValidNtt,
+      kycEnabled,
       //acceptedTokenTotalSupply
     });
   }

@@ -42,6 +42,10 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
   const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, refetchData, setRefetchData } = useContext(WalletContext);
 
   //const [userAddress, setUserAddress] = useState();
+  const [cardVisible, setCardVisible] = useState(false);
+  const [dealsVisible, setDealsVisible] = useState(true);
+  const [formVisible, setFormVisible] = useState(false);
+
   const [title, setTitle] = useState("");
 
   const [nativeTokenUsed, setNativeTokenUsed] = useState(true);
@@ -52,6 +56,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
   const [visibility, setVisibility] = useState("private");
 
   const [acceptedTokenAddress, setAcceptedTokenAddress] = useState();
+  const [requireKyc, setRequireKyc] = useState(false);
 
   const [offeredTokenAddress, setOfferedTokenAddress] = useState();
   const [tokenAmount, setTokenAMount] = useState();
@@ -68,11 +73,11 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
 
   const [whitelistedAddresses, setWhitelistedAddresses] = useState();
   const [capsForWhitelistedAddresses, setcapsForWhitelistedAddresses] = useState();
-  const [nftCap, setNftCap] = useState();
-  const [nttCap, setNttCap] = useState();
+  const [nftCap, setNftCap] = useState(0);
+  const [nttCap, setNttCap] = useState(0);
 
   const [nftAddress, setAccessNftAddress] = useState();
-  const [nttAddress, setAccessNttAddress] = useState();
+  const [nttAddress, setAccessNttAddress] = useState("0x1780bCf4103D3F501463AD3414c7f4b654bb7aFd");
 
   const [accessTokenAddress, setAccessTokenAddress] = useState();
   const [accessTokenAmountTier1, setAccessTokenAmountTier1] = useState(0);
@@ -91,7 +96,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
   const [vestingDuration, setVestingDuration] = useState(5184000);
   const [percentageVested, setPercentageVested] = useState(100);
 
-  const seedFactoryAddress = "0x8F4ec854Dd12F1fe79500a1f53D0cbB30f9b6134";
+  const seedFactoryAddress = "0x3fdc08D815cc4ED3B7F69Ee246716f2C8bCD6b07";
 
   useEffect(() => {
     if (isWalletEnabled == true && currentAccount != null) {
@@ -129,8 +134,17 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
     setConvertedRate(getTokenRatio(tokenAmount, maxRaise));
   }, [tokenAmount, maxRaise]);
 
-  async function handleNewSeedDeploy(offeredTokenAddress) {
-    console.log("convertedRate", rate, convertedRate, fromFixed(convertedRate), offeredTokenAddress, tokenAmount);
+  async function handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddressArg) {
+    let acceptedTokenAddress;
+
+    if (acceptedTokenAddressArg == "" || typeof acceptedTokenAddressArg == "undefined") {
+      acceptedTokenAddress = ZERO_ADDRESS;
+    } else {
+      acceptedTokenAddress = acceptedTokenAddressArg;
+    }
+
+    console.log("convertedRate", rate, convertedRate, fromFixed(convertedRate), offeredTokenAddress, tokenAmount, acceptedTokenAddress);
+
     await deployNewSeed(
       currentAccount,
       offeredTokenAddress,
@@ -159,7 +173,8 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
       whitelistedAddresses,
       capsForWhitelistedAddresses,
       nftAddress,
-      nftCap,
+      toWei(nftCap),
+      requireKyc,
       nttAddress,
       nttCap,
       distributionMechanism,
@@ -169,6 +184,8 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
 
   function handleSeedClick(index) {
     if (index != seedIndex) {
+      setCardVisible(true);
+      setDealsVisible(false);
       setSeedIndex(index);
     } else {
       setSeedIndex();
@@ -178,8 +195,8 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
     await approveContract(currentAccount, ERC20.abi, offeredTokenAddress, seedFactoryAddress);
   }
 
-  function getTransactionCount(accessMechanism, distributionMechanism, visibility) {
-    let count = 1;
+  function getTransactionCount(accessMechanism, distributionMechanism, visibility, requireKyc) {
+    let count = 2;
     if (accessMechanism != "open") {
       count++;
     }
@@ -189,31 +206,35 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
     if (visibility == "public") {
       count++;
     }
+    if (requireKyc) {
+      count++;
+    }
     return count;
   }
 
-  function getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap) {
+  function getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap) {
     console.log("eligible ", accessMechanism);
     if (accessMechanism == "open") {
       return (
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
-          <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Eligible</div>
-          <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Open Access</div>
+          <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Open Access</div>
+          {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
         </div>
       );
     } else if (accessMechanism == "whitelist") {
       if (capPerAddressEnabled && capPerAddress > 0) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Eligible</div>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Whitelist</div>
+            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Whitelist</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
         );
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Non-Eligible</div>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Whitelist</div>
+            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Private</div>
+            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Whitelist</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
         );
       }
@@ -221,15 +242,16 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
       if (nftBalance > 0) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Eligible</div>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NFT Gate</div>
+            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NFT Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
         );
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Non-Eligible</div>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NFT Gate</div>
+            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Private</div>
+            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NFT Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
         );
       }
@@ -237,15 +259,16 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
       if (nttBalance > 0 && hasValidNtt) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Eligible</div>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NTT Gate</div>
+            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NTT Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
         );
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Non-Eligible</div>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NTT Gate</div>
+            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Private</div>
+            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NTT Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
         );
       }
@@ -253,15 +276,16 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
       if (fromWei(accessTokenBalance) > fromWei(tier1Cap)) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Eligible</div>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
+            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
         );
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Non-Eligible</div>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
+            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Private</div>
+            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
         );
       }
@@ -297,445 +321,466 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
     let offeredTokenKey = data.target.getAttribute("data-token");
     setSelectedTokenKey(offeredTokenKey);
     if (offeredTokenKey == "custom") {
-      setOfferedTokenAddress("");
+      setAcceptedTokenAddress("");
       setIsListedCustomTokenUsed(false);
       setNativeTokenUsed(false);
     } else if (offeredTokenKey == "native") {
       setNativeTokenUsed(true);
-      setOfferedTokenAddress("");
+      setAcceptedTokenAddress("");
       setIsListedCustomTokenUsed(true);
     } else {
       setIsListedCustomTokenUsed(true);
-      setOfferedTokenAddress(getTokenAddressFromDealsConfig(chainId, offeredTokenKey));
+      setAcceptedTokenAddress(getTokenAddressFromDealsConfig(chainId, offeredTokenKey));
       setNativeTokenUsed(false);
     }
+  }
+
+  function handleKycCheckbox(requireKyc) {
+    setNttCap("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+    setRequireKyc(!requireKyc);
   }
 
   return (
     <div>
       {console.log("isVestingenabled  ", typeof vestingEnabled, vestingEnabled)}
       {console.log("converted rate ", convertedRate)}
-      <div style={{ margin: "0 auto", width: "40vw", marginTop: "44px", border: "1px solid whitesmoke" }}>
-        <div>
-          <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
-            {" "}
-            <h2>Title</h2>
+      {formVisible && (
+        <div style={{ display: "flex", flexDirection: "column", paddingTop: 50, alignItems: "center" }}>
+          <div onClick={() => setFormVisible(false)} style={{ cursor: "pointer", paddingBottom: 0 }}>
+            <h3>← Go Back</h3>
           </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <input name="title" onChange={target => typeof target.target.value !== "undefined" && setTitle(target.target.value)} value={title} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "80%" }}></input>{" "}
-          </div>
-          <br></br>
-          <div style={{ background: "#4f4fc8" }}>
-            <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
-              <h2>Tokens</h2>
-            </div>
-           
-              <div>
-                <table>
-                  <TableR>
-                    <TableD>
-                      {" "}
-                      <label for="accepted-erc20-token-address">Offered token address: (A)</label>
-                    </TableD>
-                    <TableD>
-                      <label for="emitted-token-amount">Enter amount: </label>
-                    </TableD>
-                  </TableR>
-                  <TableR>
-                    <TableD>
-                      {" "}
-                      <input
-                        name="accepted-erc20-token-address"
-                        onChange={target => typeof target.target.value !== "undefined" && setAcceptedTokenAddress(target.target.value.toLocaleLowerCase())}
-                        value={acceptedTokenAddress}
-                        style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}
-                      ></input>{" "}
-                    </TableD>
-                    <TableD>
-                      <input
-                        name="emitted-token-amount"
-                        onChange={target => typeof target.target.value !== "undefined" && setTokenAMount(target.target.value.toLocaleLowerCase())}
-                        value={tokenAmount}
-                        style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}
-                      ></input>{" "}
-                    </TableD>
-                  </TableR>
-                  <br></br>
-                  <TableR>
-                    <TableD>
-                      <label for="emitted-token-address">Token to accept payment in: (B)</label>
-                    </TableD>
-                    <TableD>
-                      <label for="">Enter amount (Max Raise) </label>
-                    </TableD>
-                  </TableR>
-                  <TableR>
-                    {
-                      <TableD visibility={isListedCustomTokenUsed ? "hidden" : "visible"} style={{ paddingLeft: 0 }}>
-                        <input name="emitted-token-address" onChange={target => setOfferedTokenAddress(target.target.value.toLocaleLowerCase())} value={offeredTokenAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}></input>{" "}
-                      </TableD>
-                    }
-
-                    <TableD style={{ paddingLeft: 0 }}>
-                      <input name="max-raise" onChange={target => setMaxRaise(target.target.value.toLocaleLowerCase())} value={maxRaise} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}
-                    </TableD>
-                  </TableR>
-                  <TableR>
-                    <TableD>
-                      <div style={{ display: "flex", justifyContent: "center" }}>
-                        <TableLabel selected={selectedTokenKey == "native"} onClick={e => handleOfferedTokenAddress(e)} data-token="native" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
-                          {nativeTokenName}
-                        </TableLabel>
-                        <TableLabel selected={selectedTokenKey == "usdc"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdc" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
-                          USDC
-                        </TableLabel>
-                        <TableLabel selected={selectedTokenKey == "usdt"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdt" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
-                          USDT
-                        </TableLabel>
-                        <TableLabel selected={selectedTokenKey == "dai"} onClick={e => handleOfferedTokenAddress(e)} data-token="dai" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
-                          DAI
-                        </TableLabel>
-                        <TableLabel selected={selectedTokenKey == "frax"} onClick={e => handleOfferedTokenAddress(e)} data-token="frax" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
-                          FRAX
-                        </TableLabel>
-                        <TableLabel selected={selectedTokenKey == "veShn"} onClick={e => handleOfferedTokenAddress(e)} data-token="veShn" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
-                          veSHN
-                        </TableLabel>
-                        <TableLabel selected={selectedTokenKey == "custom"} onClick={e => handleOfferedTokenAddress(e)} data-token="custom" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
-                          Custom Address
-                        </TableLabel>
-                      </div>
-                    </TableD>
-                  </TableR>
-                </table>
-
-                <br></br>
-              </div>
-            
-            <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-              <label for="rate">Token rate B/A </label>
-
-              {false && (
-                <input
-                  name="rate"
-                  onChange={target => typeof target.target.value !== "undefined" && setRate(target.target.value.toLocaleLowerCase())}
-                  value={rate}
-                  style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "69%", float: "right" }}
-                ></input>
-              )}
-              <h4>{fromFixed(convertedRate)}</h4>
-            </div>
-            <br></br>
-      
-          </div>
-
-          <div>
-            <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
-              <h2>Schedule</h2>
-            </div>
+          <div style={{ margin: "0 auto", width: "40vw", marginTop: "25px", border: "1px solid whitesmoke" }}>
             <div>
-              <table>
-                <TableR>
-                  <TableD>
-                    <label for="start-time">Enter start timestamp:</label> 
-                  </TableD>
-                  <TableD>
-                    <label for="end-time">Enter end timestamp:</label>
-                  </TableD>
-                </TableR>
-                <TableR>
-                  <TableD>
-                    {" "}
-                    <input name="start-time" onChange={target => setStartTime(target.target.value.toLocaleLowerCase())} value={startTime} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
-                  </TableD>
-                  <TableD>
-                    {" "}
-                    <input name="end-time" onChange={target => setEndTime(target.target.value.toLocaleLowerCase())} value={endTime} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
-                  </TableD>
-                </TableR>
-              </table>
-            </div>
-          </div>
-          <div style={{ background: "#4f4fc8" }}>
-            <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
-              <h2>Access</h2>
-            </div>
-            <table>
-              <TableR>
-                <div style={{ display: "flex", justifyContent: "center" }} onChange={event => setAccessMechanism(event.target.value)}>
-                  <td>
-                    <input type="radio" checked={accessMechanism === "open"} value="open" name="access" /> Open
-                  </td>
-                  <td>
-                    <input type="radio" checked={accessMechanism === "whitelist"} value="whitelist" name="access" /> Whitelist
-                  </td>
-                  <td>
-                    <input type="radio" checked={accessMechanism === "nft-gate"} value="nft-gate" name="access" /> NFT Gate{" "}
-                  </td>
-                  <td>
-                    <input type="radio" checked={accessMechanism === "ntt-gate"} value="ntt-gate" name="access" /> NTT Gate{" "}
-                  </td>
-                  <td>
-                    <input type="radio" checked={accessMechanism === "token-gate-tiers"} value="token-gate-tiers" name="access" /> Token Gate + Tiers{" "}
-                  </td>
-                </div>
-              </TableR>
-              {accessMechanism == "whitelist" && (
-                <div>
-                  <table>
-                    <br></br>
-                    <TableR>
-                      {" "}
-                      <TableD> Whitelist Addresses (comma separated) </TableD>
-                    </TableR>
-                    <TableR>
-                      {" "}
-                      <TableD>
-                        <input name="whitelist-addresses" onChange={target => setWhitelistedAddresses(target.target.value.toLocaleLowerCase())} value={whitelistedAddresses} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
-                      </TableD>
-                    </TableR>
-                    <br></br>
-                    <TableR>
-                      <TableD>Cap/Address (comma separated)</TableD>
-                    </TableR>
-                    <TableR>
-                      {" "}
-                      <TableD>
-                        <input name="whitelisted-addresses-cap" onChange={target => setcapsForWhitelistedAddresses(target.target.value.toLocaleLowerCase())} value={capsForWhitelistedAddresses} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
-                      </TableD>
-                    </TableR>
-                  </table>
-                </div>
-              )}
-              {accessMechanism == "nft-gate" && (
-                <div>
-                  <table>
-                    <br></br>
-                    <TableR>
-                      {" "}
-                      <TableD>
-                        <label for="NFT-address">Enter NFT address:</label>
-                      </TableD>
-                    </TableR>
-                    <TableR>
-                      <TableD>
-                        {" "}
-                        <input name="NFT-address" onChange={target => setAccessNftAddress(target.target.value.toLocaleLowerCase())} value={nftAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
-                      </TableD>
-                    </TableR>
-                    <br></br>
-                    <TableR>
-                      <TableD>NFT Cap</TableD>
-                    </TableR>
-                    <TableR>
-                      <TableD>
-                        {" "}
-                        <input name="NFT-cap" onChange={target => setNftCap(target.target.value.toLocaleLowerCase())} value={nftCap} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
-                      </TableD>
-                    </TableR>
-                  </table>
-                </div>
-              )}
-              {accessMechanism == "ntt-gate" && (
-                <div>
-                  <table>
-                    <br></br>
-                    <TableR>
-                      <TableD>
-                        {" "}
-                        <label for="NFT-address">Enter NTT address:</label>
-                      </TableD>
-                    </TableR>
-                    <TableR>
-                      <TableD>
-                        {" "}
-                        <input name="NFT-address" onChange={target => setAccessNttAddress(target.target.value.toLocaleLowerCase())} value={nttAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
-                      </TableD>
-                    </TableR>
-                    <br></br>
-                    <TableR>
-                      <TableD>NTT Cap</TableD>
-                    </TableR>
-                    <TableR>
-                      <TableD>
-                        {" "}
-                        <input name="NTT-cap" onChange={target => setNttCap(target.target.value.toLocaleLowerCase())} value={nttCap} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
-                      </TableD>
-                    </TableR>
-                  </table>
-                </div>
-              )}
-
-              {accessMechanism == "token-gate-tiers" && (
-                <div>
-                  <label for="access-token-address">Enter access token address:</label>
-                  <input
-                    name="access-token-address"
-                    onChange={target => setAccessTokenAddress(target.target.value.toLocaleLowerCase())}
-                    value={accessTokenAddress}
-                    style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "67%", float: "right" }}
-                  ></input>{" "}
-                  <br></br>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <label for="tier-1-access-token">Tier 1 needs: </label>
-                    <input
-                      name="tier-1-access-token"
-                      onChange={target => setAccessTokenAmountTier1(target.target.value.toLocaleLowerCase())}
-                      value={accessTokenAmountTier1}
-                      style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
-                    ></input>
-                    <label for="tier-1-max-contribution"> access tokens and max contribution is: </label>
-                    <input name="tier-1-max-contribution" onChange={target => setTier1Cap(target.target.value.toLocaleLowerCase())} value={tier1Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
-                    <br></br>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <label for="tier-2-access-token">Tier 2 needs: </label>
-                    <input
-                      name="tier-2-access-token"
-                      onChange={target => setAccessTokenAmountTier2(target.target.value.toLocaleLowerCase())}
-                      value={accessTokenAmountTier2}
-                      style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
-                    ></input>
-                    <label for="tier-2-max-contribution"> access tokens and max contribution is: </label>
-                    <input name="tier-2-max-contribution" onChange={target => setTier2Cap(target.target.value.toLocaleLowerCase())} value={tier2Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
-
-                    <br></br>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <label for="tier-3-access-token">Tier 3 needs: </label>
-                    <input
-                      name="tier-3-access-token"
-                      onChange={target => setAccessTokenAmountTier3(target.target.value.toLocaleLowerCase())}
-                      value={accessTokenAmountTier3}
-                      style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
-                    ></input>
-                    <label for="tier-3-max-contribution"> access tokens and max contribution is: </label>
-                    <input name="tier-3-max-contribution" onChange={target => setTier3Cap(target.target.value.toLocaleLowerCase())} value={tier3Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
-
-                    <br></br>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <label for="tier-4-access-token">Tier 4 needs:</label>
-                    <input
-                      name="tier-4-access-token"
-                      onChange={target => setAccessTokenAmountTier4(target.target.value.toLocaleLowerCase())}
-                      value={accessTokenAmountTier4}
-                      style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
-                    ></input>
-                    <label for="tier-4-max-contribution"> access tokens and max contribution is: </label>
-                    <input name="tier-4-max-contribution" onChange={target => setTier4Cap(target.target.value.toLocaleLowerCase())} value={tier4Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
-                  </div>
-                </div>
-              )}
-            </table>
-          </div>
-          <div>
-            <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
-              <h2>Distribution</h2>
-            </div>
-            <table>
-              <TableR>
-                <div style={{ display: "flex", justifyContent: "space-evenly" }} onChange={event => setDistributionMechanism(event.target.value)}>
-                  <TableD>
-                    <input type="radio" checked={distributionMechanism === "instant"} value="instant" name="distribution" /> Instant
-                  </TableD>
-                  <TableD>
-                    <input type="radio" checked={distributionMechanism === "lock"} value="lock" name="distribution" /> Lock
-                  </TableD>
-                  <TableD>
-                    <input type="radio" checked={distributionMechanism === "linear-vesting"} value="linear-vesting" name="distribution" /> Linear vesting
-                  </TableD>
-                </div>
-              </TableR>
-            </table>
-            {distributionMechanism == "instant" && (
+              <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
+                {" "}
+                <h2>Title</h2>
+              </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
-                All tokens are released instantly<br></br>
-                <br></br>
+                <input name="title" onChange={target => typeof target.target.value !== "undefined" && setTitle(target.target.value)} value={title} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "80%" }}></input>{" "}
               </div>
-            )}
-            {distributionMechanism == "lock" && (
-              <div>
-                <table>
-                  <TableR>
-                    <TableD>% Locked</TableD>
-                    <TableD>Seconds Locked</TableD>
-                  </TableR>
-                  <TableR>
-                    <TableD>
-                      {" "}
-                      <Slider type="range" min="0" max="100" value={percentageVested} onChange={event => setPercentageVested(event.target.value)}></Slider>
-                    </TableD>
-                    <TableD>
-                      {" "}
-                      <input name="locked-until" onChange={target => setLockedUntil(target.target.value.toLocaleLowerCase())} value={lockedUntil} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
-                    </TableD>
-                  </TableR>
-                </table>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  {percentageVested}% of the tokens are going to be vested {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
+              <br></br>
+              <div style={{ background: "#4f4fc8" }}>
+                <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
+                  <h2>Tokens</h2>
+                </div>
+
+                <div>
+                  <table>
+                    <TableR>
+                      <TableD>
+                        {" "}
+                        <label for="offered-erc20-token-address">Offered token address: (A)</label>
+                      </TableD>
+                      <TableD>
+                        <label for="emitted-token-amount">Enter amount: </label>
+                      </TableD>
+                    </TableR>
+                    <TableR>
+                      <TableD>
+                        {" "}
+                        <input
+                          name="offered-erc20-token-address"
+                          onChange={target => typeof target.target.value !== "undefined" && setOfferedTokenAddress(target.target.value.toLocaleLowerCase())}
+                          value={offeredTokenAddress}
+                          style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}
+                        ></input>{" "}
+                      </TableD>
+                      <TableD>
+                        <input
+                          name="accepted-token-amount"
+                          onChange={target => typeof target.target.value !== "undefined" && setTokenAMount(target.target.value.toLocaleLowerCase())}
+                          value={tokenAmount}
+                          style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}
+                        ></input>{" "}
+                      </TableD>
+                    </TableR>
+                    <br></br>
+                    <TableR>
+                      <TableD>
+                        <label for="accepted-token-address">Token to accept payment in: (B)</label>
+                      </TableD>
+                      <TableD>
+                        <label for="">Enter amount (Max Raise) </label>
+                      </TableD>
+                    </TableR>
+                    <TableR>
+                      {
+                        <TableD visibility={isListedCustomTokenUsed ? "hidden" : "visible"} style={{ paddingLeft: 0 }}>
+                          <input name="accepted-token-address" onChange={target => setAcceptedTokenAddress(target.target.value.toLocaleLowerCase())} value={acceptedTokenAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}></input>{" "}
+                        </TableD>
+                      }
+
+                      <TableD style={{ paddingLeft: 0 }}>
+                        <input name="max-raise" onChange={target => setMaxRaise(target.target.value.toLocaleLowerCase())} value={maxRaise} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}
+                      </TableD>
+                    </TableR>
+                    <TableR>
+                      <TableD>
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                          <TableLabel selected={selectedTokenKey == "native"} onClick={e => handleOfferedTokenAddress(e)} data-token="native" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                            {nativeTokenName}
+                          </TableLabel>
+                          <TableLabel selected={selectedTokenKey == "usdc"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdc" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                            USDC
+                          </TableLabel>
+                          <TableLabel selected={selectedTokenKey == "usdt"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdt" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                            USDT
+                          </TableLabel>
+                          <TableLabel selected={selectedTokenKey == "dai"} onClick={e => handleOfferedTokenAddress(e)} data-token="dai" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                            DAI
+                          </TableLabel>
+                          <TableLabel selected={selectedTokenKey == "frax"} onClick={e => handleOfferedTokenAddress(e)} data-token="frax" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                            FRAX
+                          </TableLabel>
+                          <TableLabel selected={selectedTokenKey == "shn"} onClick={e => handleOfferedTokenAddress(e)} data-token="shn" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                            SHN
+                          </TableLabel>
+                          <TableLabel selected={selectedTokenKey == "custom"} onClick={e => handleOfferedTokenAddress(e)} data-token="custom" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                            Custom Address
+                          </TableLabel>
+                        </div>
+                      </TableD>
+                    </TableR>
+                  </table>
+
+                  <br></br>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+                  <label for="rate">Token rate B/A </label>
+
+                  {false && (
+                    <input
+                      name="rate"
+                      onChange={target => typeof target.target.value !== "undefined" && setRate(target.target.value.toLocaleLowerCase())}
+                      value={rate}
+                      style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "69%", float: "right" }}
+                    ></input>
+                  )}
+                  <h4>{fromFixed(convertedRate)}</h4>
                 </div>
                 <br></br>
-                <br></br>
               </div>
-            )}
-            {distributionMechanism == "linear-vesting" && (
+
               <div>
+                <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
+                  <h2>Schedule</h2>
+                </div>
+                <div>
+                  <table>
+                    <TableR>
+                      <TableD>
+                        <label for="start-time">Enter start timestamp:</label> 
+                      </TableD>
+                      <TableD>
+                        <label for="end-time">Enter end timestamp:</label>
+                      </TableD>
+                    </TableR>
+                    <TableR>
+                      <TableD>
+                        {" "}
+                        <input name="start-time" onChange={target => setStartTime(target.target.value.toLocaleLowerCase())} value={startTime} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
+                      </TableD>
+                      <TableD>
+                        {" "}
+                        <input name="end-time" onChange={target => setEndTime(target.target.value.toLocaleLowerCase())} value={endTime} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
+                      </TableD>
+                    </TableR>
+                  </table>
+                </div>
+              </div>
+              <div style={{ background: "#4f4fc8" }}>
+                <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
+                  <h2>Access</h2>
+                </div>
                 <table>
                   <TableR>
-                    <TableD>% Locked</TableD>
-                    <TableD>Cliff duration</TableD>
-                    <TableD>Vest duration</TableD>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <td>
+                        <input type="radio" onChange={event => setAccessMechanism(event.target.value)} checked={accessMechanism === "open"} value="open" name="access" /> Open
+                      </td>
+                      <td>
+                        <input type="radio" onChange={event => setAccessMechanism(event.target.value)} checked={accessMechanism === "whitelist"} value="whitelist" name="access" /> Whitelist
+                      </td>
+                      <td>
+                        <input type="radio" onChange={event => setAccessMechanism(event.target.value)} checked={accessMechanism === "nft-gate"} value="nft-gate" name="access" /> NFT Gate{" "}
+                      </td>
+
+                      <td>
+                        <input type="radio" onChange={event => setAccessMechanism(event.target.value)} checked={accessMechanism === "token-gate-tiers"} value="token-gate-tiers" name="access" /> Token Gate + Tiers{" "}
+                      </td>
+
+                      <td>
+                        <input type="checkbox" checked={requireKyc} onChange={() => handleKycCheckbox(requireKyc)} /> Require KYC{" "}
+                      </td>
+                    </div>
                   </TableR>
+                  {accessMechanism == "whitelist" && (
+                    <div>
+                      <table>
+                        <br></br>
+                        <TableR>
+                          {" "}
+                          <TableD> Whitelist Addresses (comma separated) </TableD>
+                        </TableR>
+                        <TableR>
+                          {" "}
+                          <TableD>
+                            <input name="whitelist-addresses" onChange={target => setWhitelistedAddresses(target.target.value.toLocaleLowerCase())} value={whitelistedAddresses} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
+                          </TableD>
+                        </TableR>
+                        <br></br>
+                        <TableR>
+                          <TableD>Cap/Address (comma separated)</TableD>
+                        </TableR>
+                        <TableR>
+                          {" "}
+                          <TableD>
+                            <input
+                              name="whitelisted-addresses-cap"
+                              onChange={target => setcapsForWhitelistedAddresses(target.target.value.toLocaleLowerCase())}
+                              value={capsForWhitelistedAddresses}
+                              style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}
+                            ></input>
+                          </TableD>
+                        </TableR>
+                      </table>
+                    </div>
+                  )}
+                  {accessMechanism == "nft-gate" && (
+                    <div>
+                      <table>
+                        <br></br>
+                        <TableR>
+                          {" "}
+                          <TableD>
+                            <label for="NFT-address">Enter NFT address:</label>
+                          </TableD>
+                        </TableR>
+                        <TableR>
+                          <TableD>
+                            {" "}
+                            <input name="NFT-address" onChange={target => setAccessNftAddress(target.target.value.toLocaleLowerCase())} value={nftAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
+                          </TableD>
+                        </TableR>
+                        <br></br>
+                        <TableR>
+                          <TableD>NFT Cap</TableD>
+                        </TableR>
+                        <TableR>
+                          <TableD>
+                            {" "}
+                            <input name="NFT-cap" onChange={target => setNftCap(target.target.value.toLocaleLowerCase())} value={nftCap} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
+                          </TableD>
+                        </TableR>
+                      </table>
+                    </div>
+                  )}
+                  {accessMechanism == "ntt-gate" && (
+                    <div>
+                      <table>
+                        <br></br>
+                        <TableR>
+                          <TableD>
+                            {" "}
+                            <label for="NFT-address">Enter NTT address:</label>
+                          </TableD>
+                        </TableR>
+                        <TableR>
+                          <TableD>
+                            {" "}
+                            <input name="NFT-address" onChange={target => setAccessNttAddress(target.target.value.toLocaleLowerCase())} value={nttAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
+                          </TableD>
+                        </TableR>
+                        <br></br>
+                        <TableR>
+                          <TableD>NTT Cap</TableD>
+                        </TableR>
+                        <TableR>
+                          <TableD>
+                            {" "}
+                            <input name="NTT-cap" onChange={target => setNttCap(target.target.value.toLocaleLowerCase())} value={nttCap} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
+                          </TableD>
+                        </TableR>
+                      </table>
+                    </div>
+                  )}
+
+                  {accessMechanism == "token-gate-tiers" && (
+                    <div>
+                      <label for="access-token-address">Enter access token address:</label>
+                      <input
+                        name="access-token-address"
+                        onChange={target => setAccessTokenAddress(target.target.value.toLocaleLowerCase())}
+                        value={accessTokenAddress}
+                        style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "67%", float: "right" }}
+                      ></input>{" "}
+                      <br></br>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <label for="tier-1-access-token">Tier 1 needs: </label>
+                        <input
+                          name="tier-1-access-token"
+                          onChange={target => setAccessTokenAmountTier1(target.target.value.toLocaleLowerCase())}
+                          value={accessTokenAmountTier1}
+                          style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
+                        ></input>
+                        <label for="tier-1-max-contribution"> access tokens and max contribution is: </label>
+                        <input name="tier-1-max-contribution" onChange={target => setTier1Cap(target.target.value.toLocaleLowerCase())} value={tier1Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
+                        <br></br>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <label for="tier-2-access-token">Tier 2 needs: </label>
+                        <input
+                          name="tier-2-access-token"
+                          onChange={target => setAccessTokenAmountTier2(target.target.value.toLocaleLowerCase())}
+                          value={accessTokenAmountTier2}
+                          style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
+                        ></input>
+                        <label for="tier-2-max-contribution"> access tokens and max contribution is: </label>
+                        <input name="tier-2-max-contribution" onChange={target => setTier2Cap(target.target.value.toLocaleLowerCase())} value={tier2Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
+
+                        <br></br>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <label for="tier-3-access-token">Tier 3 needs: </label>
+                        <input
+                          name="tier-3-access-token"
+                          onChange={target => setAccessTokenAmountTier3(target.target.value.toLocaleLowerCase())}
+                          value={accessTokenAmountTier3}
+                          style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
+                        ></input>
+                        <label for="tier-3-max-contribution"> access tokens and max contribution is: </label>
+                        <input name="tier-3-max-contribution" onChange={target => setTier3Cap(target.target.value.toLocaleLowerCase())} value={tier3Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
+
+                        <br></br>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <label for="tier-4-access-token">Tier 4 needs:</label>
+                        <input
+                          name="tier-4-access-token"
+                          onChange={target => setAccessTokenAmountTier4(target.target.value.toLocaleLowerCase())}
+                          value={accessTokenAmountTier4}
+                          style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
+                        ></input>
+                        <label for="tier-4-max-contribution"> access tokens and max contribution is: </label>
+                        <input name="tier-4-max-contribution" onChange={target => setTier4Cap(target.target.value.toLocaleLowerCase())} value={tier4Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
+                      </div>
+                    </div>
+                  )}
+                </table>
+              </div>
+              <div>
+                <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
+                  <h2>Distribution</h2>
+                </div>
+                <table>
                   <TableR>
-                    <TableD>
-                      {" "}
-                      <Slider width="120px" type="range" min="0" max="100" value={percentageVested} onChange={event => setPercentageVested(event.target.value)}></Slider>
-                    </TableD>
-                    <TableD>
-                      {" "}
-                      <input name="cliff-timestamp" onChange={target => setCliffDuration(target.target.value.toLocaleLowerCase())} value={cliffDuration} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}
-                    </TableD>
-                    <TableD>
-                      {" "}
-                      <input name="vesting-duration" onChange={target => setVestingDuration(target.target.value.toLocaleLowerCase())} value={vestingDuration} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}
-                    </TableD>
+                    <div style={{ display: "flex", justifyContent: "space-evenly" }} onChange={event => setDistributionMechanism(event.target.value)}>
+                      <TableD>
+                        <input type="radio" checked={distributionMechanism === "instant"} value="instant" name="distribution" /> Instant
+                      </TableD>
+                      <TableD>
+                        <input type="radio" checked={distributionMechanism === "lock"} value="lock" name="distribution" /> Lock
+                      </TableD>
+                      <TableD>
+                        <input type="radio" checked={distributionMechanism === "linear-vesting"} value="linear-vesting" name="distribution" /> Linear vesting
+                      </TableD>
+                    </div>
                   </TableR>
                 </table>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  {percentageVested}% of the tokens are going to be vested {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
-                </div>
-                <br></br>
-                <br></br>
+                {distributionMechanism == "instant" && (
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    All tokens are released instantly<br></br>
+                    <br></br>
+                  </div>
+                )}
+                {distributionMechanism == "lock" && (
+                  <div>
+                    <table>
+                      <TableR>
+                        <TableD>% Locked</TableD>
+                        <TableD>Seconds Locked</TableD>
+                      </TableR>
+                      <TableR>
+                        <TableD>
+                          {" "}
+                          <Slider type="range" min="0" max="100" value={percentageVested} onChange={event => setPercentageVested(event.target.value)}></Slider>
+                        </TableD>
+                        <TableD>
+                          {" "}
+                          <input name="locked-until" onChange={target => setLockedUntil(target.target.value.toLocaleLowerCase())} value={lockedUntil} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
+                        </TableD>
+                      </TableR>
+                    </table>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      {percentageVested}% of the tokens are going to be vested {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
+                    </div>
+                    <br></br>
+                    <br></br>
+                  </div>
+                )}
+                {distributionMechanism == "linear-vesting" && (
+                  <div>
+                    <table>
+                      <TableR>
+                        <TableD>% Locked</TableD>
+                        <TableD>Cliff duration</TableD>
+                        <TableD>Vest duration</TableD>
+                      </TableR>
+                      <TableR>
+                        <TableD>
+                          {" "}
+                          <Slider width="120px" type="range" min="0" max="100" value={percentageVested} onChange={event => setPercentageVested(event.target.value)}></Slider>
+                        </TableD>
+                        <TableD>
+                          {" "}
+                          <input name="cliff-timestamp" onChange={target => setCliffDuration(target.target.value.toLocaleLowerCase())} value={cliffDuration} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}
+                        </TableD>
+                        <TableD>
+                          {" "}
+                          <input name="vesting-duration" onChange={target => setVestingDuration(target.target.value.toLocaleLowerCase())} value={vestingDuration} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}
+                        </TableD>
+                      </TableR>
+                    </table>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      {percentageVested}% of the tokens are going to be vested {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
+                    </div>
+                    <br></br>
+                    <br></br>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-          <div style={{ background: "#4f4fc8" }}>
-            <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
-              <h2>Visibility</h2>
-            </div>
-            <div style={{ display: "flex", justifyContent: "center" }} onChange={event => setVisibility(event.target.value)}>
-              <td>
-                <input type="radio" checked={visibility === "public"} value="public" name="visibility" /> Public
-              </td>
-              <td>
-                <input type="radio" checked={visibility === "private"} value="private" name="visibility" /> Private
-              </td>
-            </div>
-          </div>
+              <div style={{ background: "#4f4fc8" }}>
+                <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
+                  <h2>Deal listed on the mainpage?</h2>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center" }} onChange={event => setVisibility(event.target.value)}>
+                  <td>
+                    <input type="radio" checked={visibility === "public"} value="public" name="visibility" /> True
+                  </td>
+                  <td>
+                    <input type="radio" checked={visibility === "private"} value="private" name="visibility" /> False
+                  </td>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center" }}>{visibility == "public" ? "Deal is going to be listed on the main page" : "Deal is going to be accessible over a generated link"}</div>
+              </div>
 
-          <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", paddingBottom: 10, paddingTop: 8 }}>
-            <div style={{ marginBottom: "15px" }}> You have in total {getTransactionCount(accessMechanism, distributionMechanism, visibility) + 1} transactions to confirm:</div>
-            <div>- transaction to deploy the deal</div>
-            {accessMechanism != "open" && <div>- transaction to set up the access mechanism</div>}
+              <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", paddingBottom: 10, paddingTop: 8 }}>
+                <div style={{ marginBottom: "15px" }}> You have in total {getTransactionCount(accessMechanism, distributionMechanism, visibility, requireKyc) + 1} transactions to confirm:</div>
+                <div>- transaction to deploy the deal contract</div>
+                {accessMechanism != "open" && <div>- transaction to set up the access mechanism</div>}
+                {requireKyc && <div>- transaction to set up the kyc module</div>}
 
-            {distributionMechanism != "instant" && <div>- transaction to set up the distribution mechanism</div>}
-            {visibility != "private" && <div>- transaction to set up the deal visibility</div>}
-            <div>- transaction to send tokens to a smart contract</div>
+                {distributionMechanism != "instant" && <div>- transaction to set up the distribution mechanism</div>}
+                {visibility != "private" && <div>- transaction to set up the deal visibility</div>}
+                <div>- transaction to approve the created contract in order to be able to send the tokens</div>
+                <div>- transaction to send tokens to a smart contract</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      {allowance == 0 && (
+      )}
+      {false && allowance == 0 && (
         <div style={{ display: "flex", justifyContent: "center", paddingTop: 20 }}>
           <Button onClick={() => handleLauncherApprove()}>Approve Launcher</Button>
           <br></br>
@@ -745,15 +790,18 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
       <br></br>
       <br></br>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Button onClick={() => handleNewSeedDeploy(offeredTokenAddress)}>Launch Deal</Button>
+        {formVisible && <Button onClick={() => handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddress)}>Launch Deal</Button>}
+         { isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
+         { !isWalletEnabled && <h3 style={{paddingTop:80}}>Please connect your wallet to see and create deals.</h3>}
       </div>
-      <br></br>
-      <br></br>
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 100 }}>
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 60 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
           {console.log("seed sales data ", seedSalesData)}
-          {seedSalesData &&
+          {dealsVisible &&
+            !formVisible &&
+            !cardVisible &&
+            seedSalesData &&
             seedSalesData.map(
               (
                 {
@@ -800,6 +848,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
                   nftBalance,
                   nttBalance,
                   hasValidNtt,
+                  kycEnabled,
                 },
                 index
               ) => {
@@ -818,7 +867,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
                     onClick={() => handleSeedClick(index)}
                   >
                     <div>
-                      {getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap)}
+                      {getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap)}
                       {false && <div>{getVisibilityStatus(dealVisibility, currentAccount)} </div>}
                     </div>
                     <h1>{name}</h1>
@@ -885,7 +934,9 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
               }
             )}
         </div>
-        {seedSalesData && seedSalesData[seedIndex] && <SeedCard setRefetchData={setRefetchData} refetchData={refetchData} getEligibilityStatus={getEligibilityStatus} seedSaleData={seedSalesData && seedSalesData[seedIndex]}></SeedCard>}
+        {cardVisible && seedSalesData && seedSalesData[seedIndex] && (
+          <SeedCard setCardVisible={setCardVisible} setDealsVisible={setDealsVisible} setRefetchData={setRefetchData} refetchData={refetchData} getEligibilityStatus={getEligibilityStatus} seedSaleData={seedSalesData && seedSalesData[seedIndex]}></SeedCard>
+        )}
       </div>
     </div>
   );
