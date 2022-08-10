@@ -126,12 +126,13 @@ export async function getNftBalance(userAddress, tokenAbi, tokenContractAddress)
   return projectBalance;
 }
 
-async function getNttBalanceAndValidity(userAddress, tokenAbi, tokenContractAddress) {
-  var abiToken = tokenAbi;
-  var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
+async function getNttBalanceAndValidity(userAddress, abi, nttAddress) {
+  console.log("ntt address and abi", nttAddress,abi)
+  const nttInstance = new window.web3.eth.Contract(abi, nttAddress);
 
-  var nttBalance = await tokenInst.methods.balanceOf(userAddress).call();
-  var hasValidNtt = await tokenInst.methods.hasValid(userAddress).call();
+  const nttBalance = await nttInstance.methods.balanceOf(userAddress).call();
+  const hasValidNtt = await nttInstance.methods.hasValid(userAddress).call();
+
   return { nttBalance: parseInt(nttBalance), hasValidNtt };
 }
 
@@ -1392,18 +1393,17 @@ export async function setVisibility(userAddress, SeedAbi, seedAddress, visibilit
 }
 
 export async function deployTokens(userAddress, SeedAbi, offeredTokenAddress, seedAddress, amount) {
-  await approveContract(userAddress, ERC20.abi, offeredTokenAddress, seedAddress, amount);
-
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
   let estimatedGas = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).estimateGas({
     from: userAddress,
   });
-  console.log("estimated gas for sync", estimatedGas);
 
+  console.log("estimated gas for sync", estimatedGas);
   const receipt = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).send({
     from: userAddress,
     gas: estimatedGas,
   });
+
   console.log("Tokens added", receipt);
 }
 
@@ -1440,7 +1440,11 @@ export async function deployNewSeed(
   nttAddress,
   nttCap,
   distributionMechanism,
-  visibility
+  visibility,
+  loadingIndicator,
+  setLoadingIndicator,
+  successMessage,
+  setSuccessMessage
 ) {
   console.log(userAddress, offeredTokenAddress, seedFactoryAddress, parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), visibility);
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
@@ -1453,58 +1457,140 @@ export async function deployNewSeed(
 
     //vestingEnabled,cliffDuration, vestingDuration,percentageVested,
 
+    let index = 0;
+    await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
+
     const receipt = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).send({
       from: userAddress,
       gas: estimatedGas,
     });
 
-    let seedAddress = receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+    console.log("current receipt", receipt);
+    let currentSuccessMessage = successMessage;
+
+    let currentLoadingIndicator;
+    currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+    await setLoadingIndicator(currentLoadingIndicator);
+    currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
+    await setSuccessMessage(currentSuccessMessage);
+    console.log("current loading indicator ", currentLoadingIndicator);
+
+    let seedAddress = await receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
+    console.log("seed address ", seedAddress);
     if (accessMechanism != "open") {
+      index = index + 1;
+      await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       if (accessMechanism == "whitelist") {
         await setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses);
+        currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+        await setLoadingIndicator(currentLoadingIndicator);
+        currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
+        await setSuccessMessage(currentSuccessMessage);
       } else if (accessMechanism == "nft-gate") {
         console.log("address of deployed contract ", seedAddress);
-        await setAccessNft(userAddress, SeedAbi, seedAddres, nftAddress, nftCap);
+        await setAccessNft(userAddress, SeedAbi, seedAddress, nftAddress, nftCap);
+        currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+        await setLoadingIndicator(currentLoadingIndicator);
+        currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
+        await setSuccessMessage(currentSuccessMessage);
       } else if (accessMechanism == "ntt-gate") {
-        console.log("address of deployed contract ", seedAddress);
-        await setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCap);
+        //console.log("address of deployed contract ", seedAddress);
+        //await setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCap);
+        //currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+        //await setLoadingIndicator(currentLoadingIndicator);
+        //await setSuccessMessage(successMessage.concat([`trx-${index}-success`]));
       } else if (accessMechanism == "token-gate-tiers") {
         console.log("address of deployed contract ", seedAddress);
         await setAccessToken(userAddress, SeedAbi, seedAddress, accessTokenAddress, accessTokenAmountTier1, accessTokenAmountTier2, accessTokenAmountTier3, accessTokenAmountTier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap);
+        currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+        await setLoadingIndicator(currentLoadingIndicator);
+        currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
+        await setSuccessMessage(currentSuccessMessage);
       }
     }
     if (requireKyc) {
+      index = index + 1;
+      await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       console.log("address of deployed contract ", seedAddress);
       await setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCap);
+      currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+      await setLoadingIndicator(currentLoadingIndicator);
+      currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
+      await setSuccessMessage(currentSuccessMessage);
     }
     if (distributionMechanism != "instant") {
+      index = index + 1;
+      setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       if (distributionMechanism == "lock") {
         await setVesting(userAddress, SeedAbi, seedAddress, vestingDuration, vestingDuration, percentageVested); // in case of locks without no linear vesting, cliff and vesting duration are the same.
+        currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+        await setLoadingIndicator(currentLoadingIndicator);
+        currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
+        await setSuccessMessage(currentSuccessMessage);
       } else if ((distributionMechanism = "linear-vesting")) {
         await setVesting(userAddress, SeedAbi, seedAddress, cliffDuration, vestingDuration, percentageVested);
+        currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+        await setLoadingIndicator(currentLoadingIndicator);
+        currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
+        await setSuccessMessage(currentSuccessMessage);
       }
     }
     if (visibility == "public") {
+      index = index + 1;
+      await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       await setVisibility(userAddress, SeedAbi, seedAddress, visibility);
+      currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
+      await setLoadingIndicator(currentLoadingIndicator);
+      currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
+      await setSuccessMessage(currentSuccessMessage);
     }
 
+    await setLoadingIndicator(loadingIndicator.concat([`deploy-${5}`]));
+    await approveContract(userAddress, ERC20.abi, offeredTokenAddress, seedAddress, amount, undefined);
+    currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${5}`); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+    currentSuccessMessage = currentSuccessMessage.concat([`trx-${5}-success`]);
+    await setSuccessMessage(currentSuccessMessage);
+
+    await setLoadingIndicator(loadingIndicator.concat([`deploy-${6}`]));
     await deployTokens(userAddress, SeedAbi, offeredTokenAddress, seedAddress, amount);
+    currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${6}`); // none is default when there is nothing
+    setLoadingIndicator(currentLoadingIndicator);
+    currentSuccessMessage = currentSuccessMessage.concat([`trx-${6}-success`]);
+    await setSuccessMessage(currentSuccessMessage);
 
     console.log("receipt", receipt);
+    return seedAddress;
   } catch (e) {
     console.log("Error while deploying new Seed contract ", e);
   }
 }
 
-export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFactoryAddress, erc20Abi) {
+export async function retrieveIndex(SeedFactoryAbi, seedFactoryAddress, seedAddress) {
+  const SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
+  let index = await SeedFactoryInstance.methods.retrieveIndex(seedAddress).call();
+  return index;
+}
+
+export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFactoryAddress, erc20Abi, activeContract) {
   console.log("user address seed ", userAddress);
   const SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
 
-  const count = await SeedFactoryInstance.methods.getCount().call();
-  const seedSalesData = [];
+  let count;
+  let iteratorStartingPoint;
+  let seedSalesData = [];
 
-  for (let i = 0; i < count; i++) {
-    let seedAddress = (await SeedFactoryInstance.methods.data(i).call()).toLowerCase();
+  if (activeContract) {
+    iteratorStartingPoint = parseInt(await SeedFactoryInstance.methods.retrieveIndex(activeContract).call());
+    count = iteratorStartingPoint + 1;
+  } else {
+    iteratorStartingPoint = 0;
+    count = await SeedFactoryInstance.methods.getCount().call();
+  }
+
+  for (iteratorStartingPoint; iteratorStartingPoint < count; iteratorStartingPoint++) {
+    console.log("count acc", iteratorStartingPoint, count);
+    let seedAddress = (await SeedFactoryInstance.methods.data(iteratorStartingPoint).call()).toLowerCase();
     let seedInstance = new window.web3.eth.Contract(seedAbi, seedAddress);
     let offeredTokenAddress = await seedInstance.methods.token().call();
     let acceptedTokenAddress = await seedInstance.methods.acceptedToken().call();
@@ -1645,6 +1731,7 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       //acceptedTokenTotalSupply
     });
   }
+  console.log("count acc 1111", iteratorStartingPoint, count, seedSalesData);
   return seedSalesData;
 }
 
@@ -1662,7 +1749,16 @@ export async function checkApprovalStatus(userAddress, tokenAbi, tokenAddress, a
   }
 }
 
-export async function approveContract(userAddress, tokenAbi, tokenAddress, addressOfContractToApprove, amount = "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", setApprovalStatus) {
+export async function approveContract(
+  userAddress,
+  tokenAbi,
+  tokenAddress,
+  addressOfContractToApprove,
+  amount = "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  setApprovalStatus,
+
+
+) {
   console.log("token add", tokenAddress, addressOfContractToApprove);
   var tokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress);
 
@@ -1673,6 +1769,7 @@ export async function approveContract(userAddress, tokenAbi, tokenAddress, addre
       //gas: gas,
     });
 
+
     console.log("estimated gas for approval", estimatedGas);
     const receipt = await tokenInstance.methods.approve(addressOfContractToApprove, amount).send({
       from: userAddress,
@@ -1681,6 +1778,9 @@ export async function approveContract(userAddress, tokenAbi, tokenAddress, addre
     });
 
     setApprovalStatus(false);
+  
+
+  
 
     console.log("receipt ", receipt);
   } catch (e) {

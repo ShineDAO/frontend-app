@@ -9,6 +9,7 @@ import ERC20 from "../../../../../static/abi/ShineToken";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import { SmallerText } from "components/common/Text";
 
 import { Text, Card } from "components/common";
 import * as utils from "../../../templates/utils";
@@ -54,6 +55,8 @@ import { Avatar } from "../../../common/Avatar";
 import seedSale from "pages/seed-sale.js";
 
 export function SeedCard({
+  setSeedSalesData,
+  setActiveContract,
   setCardVisible,
   setDealsVisible,
   isWalletEnabled1111,
@@ -116,6 +119,7 @@ export function SeedCard({
   {
     console.log("native token name 123 ", nativeTokenName);
   }
+  const [approveLoading, setApproveLoading] = useState(false);
   const [shineBalance, setShineBalance] = useState(23232);
   const [currentStatus, setCurrentStatus] = useState("seed");
   const [tokenContractAddress, setTokenContractAddress] = useState("0x00184f7E750Db6D16118597d18b79AAeCE26E5f2"); // random address initially
@@ -215,7 +219,7 @@ export function SeedCard({
             Distribution mechanism
           </Text>
           <Text color="#a2a2a2" fontWeight={300} fontSize="16px">
-            {percentageVested}% of tokens unlocked immediatly, and the rest after {vestingDuration / 86400} days
+            {100 - percentageVested}% of tokens unlocked immediatly, and the rest after {vestingDuration / 86400} days
           </Text>
         </div>
       );
@@ -227,7 +231,7 @@ export function SeedCard({
             Distribution mechanism
           </Text>
           <Text color="#a2a2a2" fontWeight={700} fontSize="16px">
-            {percentageVested}% of tokens unlocked immediatly, then distributed linearly over {vestingDuration / 86400} days with a cliff period of {cliffDuration / 86400} days
+            {100 - percentageVested}% of tokens unlocked immediatly, then distributed linearly over {vestingDuration / 86400} days with a cliff period of {cliffDuration / 86400} days
           </Text>
         </div>
       );
@@ -372,13 +376,17 @@ export function SeedCard({
     }
   }
 
-  function handleApprove() {
-    approveContract(currentAccount, ERC20.abi, acceptedTokenAddress, seedAddress, utils.toWei(amountToSpend), setApprovalStatus);
+  async function handleApprove() {
+    setApproveLoading(true);
+    await approveContract(currentAccount, ERC20.abi, acceptedTokenAddress, seedAddress, utils.toWei(amountToSpend), setApprovalStatus);
+    setApproveLoading(false);
   }
 
-  function setExpansionDetails(){
-    setCardVisible(false)
-    setDealsVisible(true)
+  function setExpansionDetails() {
+    setSeedSalesData();
+    setActiveContract(null);
+    setCardVisible(false);
+    setDealsVisible(true);
   }
 
   return (
@@ -532,8 +540,8 @@ export function SeedCard({
                   <br />
                   {weiRaised && new Date().getTime() > new Date(project.technicalDetails[currentStatus].date).getTime() && !project.technicalDetails[currentStatus].saleFinished && (
                     <div>
-                      <span>Sale progress: {(weiRaised / totalOffered) * 100}% </span>
-                      <ProgressBar animated striped variant="success" now={(weiRaised / totalOffered) * 100} label={`${(weiRaised / totalOffered) * 100}%`} />
+                      <span>Sale progress: {(weiRaised * fromFixed(rate) / totalOffered)  * 100}% </span>
+                      <ProgressBar animated striped variant="success" now={(weiRaised * fromFixed(rate)  / totalOffered) * 100} label={`${(weiRaised * fromFixed(rate)  / totalOffered) * 100}%`} />
                     </div>
                   )}
                   <br />
@@ -626,11 +634,17 @@ export function SeedCard({
                           <br />
                           <br />
                           <FlexBox>
-                            {approvalStatus && (
-                              <ConnectButton theme={theme} onClick={() => handleApprove()}>
-                                Approve
-                              </ConnectButton>
-                            )}
+                            {approvalStatus &&
+                              (!approveLoading ? (
+                                <ConnectButton theme={theme} onClick={() => handleApprove()}>
+                                  Approve
+                                </ConnectButton>
+                              ) : (
+                                <span style={{ paddingRight: 15 }}>
+                                  <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+                                  <SmallerText>Confirming...</SmallerText>
+                                </span>
+                              ))}
 
                             <ConnectButton
                               theme={theme}

@@ -19,6 +19,7 @@ export const Heading = styled.div`
 
 export const FlexBox = styled.div`
   display: flex;
+  align-items: center;
 `;
 export const InfoCards = styled.div`
   display: flex;

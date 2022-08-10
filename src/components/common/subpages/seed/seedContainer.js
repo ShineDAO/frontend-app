@@ -1,10 +1,12 @@
+//note both ntt address and seed factory address have to be updates
 import React, { useState, useContext, useEffect } from "react";
 import { Button } from "components/common";
-import { Card } from "components/common";
+import { Card, Text } from "components/common";
 
 import { TableD, TableR, TableLabel } from "components/common/Table";
 import { SmallerText } from "components/common/Text";
 import { Slider } from "components/common/Container/index";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import {
   getOnlyUserAddress,
@@ -28,6 +30,7 @@ import {
   erc4671Abi,
   ZERO_ADDRESS,
   getTokenAddressFromDealsConfig,
+  retrieveIndex,
 } from "../../../../../src/components/templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
@@ -38,10 +41,14 @@ import { WalletContext } from "providers/WalletProvider";
 import { Tab } from "react-bootstrap";
 import { families } from "detect.js";
 
-export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
-  const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, refetchData, setRefetchData } = useContext(WalletContext);
+export function SeedContainer({ activeContract, setActiveContract }) {
+  const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
+  const [createdTag, setCreatedTag] = useState();
+
+  const [salesLoading, setSalesLoading] = useState(false);
 
   //const [userAddress, setUserAddress] = useState();
+  const [successMessage, setSuccessMessage] = useState(["none"]);
   const [cardVisible, setCardVisible] = useState(false);
   const [dealsVisible, setDealsVisible] = useState(true);
   const [formVisible, setFormVisible] = useState(false);
@@ -77,7 +84,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
   const [nttCap, setNttCap] = useState(0);
 
   const [nftAddress, setAccessNftAddress] = useState();
-  const [nttAddress, setAccessNttAddress] = useState("0x1780bCf4103D3F501463AD3414c7f4b654bb7aFd");
+  const [nttAddress, setAccessNttAddress] = useState("0xdB05A386810c809aD5a77422eb189D36c7f24402");
 
   const [accessTokenAddress, setAccessTokenAddress] = useState();
   const [accessTokenAmountTier1, setAccessTokenAmountTier1] = useState(0);
@@ -96,16 +103,37 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
   const [vestingDuration, setVestingDuration] = useState(5184000);
   const [percentageVested, setPercentageVested] = useState(100);
 
-  const seedFactoryAddress = "0x3fdc08D815cc4ED3B7F69Ee246716f2C8bCD6b07";
+  const seedFactoryAddress = "0xFC4EE541377F3b6641c23CBE82F6f04388290421";
+
+  useEffect(() => {
+    if (isWalletEnabled == true && activeContract != null && currentAccount != null && typeof seedIndex == "undefined") {
+      async function getIndex() {
+        //setSeedIndex(await retrieveIndex(SeedFactory.abi, seedFactoryAddress, activeContract.toLocaleLowerCase()));
+      }
+      getIndex();
+    }
+  }, [isWalletEnabled, currentAccount, activeContract]);
 
   useEffect(() => {
     if (isWalletEnabled == true && currentAccount != null) {
       async function loadSeedSales() {
-        setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, seedFactoryAddress, ERC20.abi));
+        console.log("active acc dds", activeContract, seedIndex, typeof activeContract, typeof seedIndex, activeContract);
+
+        if (!activeContract) {
+          console.log("active acc 1", activeContract, seedIndex, typeof activeContract, typeof seedIndex);
+          setSalesLoading(true);
+          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, seedFactoryAddress, ERC20.abi, activeContract));
+          setSalesLoading(false);
+        } else if (activeContract) {
+          console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex);
+          setSalesLoading(true);
+          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, seedFactoryAddress, ERC20.abi, activeContract));
+          setSalesLoading(false);
+        }
       }
       loadSeedSales();
     }
-  }, [isWalletEnabled, currentAccount, refetchData, chainId]);
+  }, [isWalletEnabled, currentAccount, refetchData, chainId, seedIndex, activeContract]);
 
   useEffect(() => {
     console.log("allowance ", allowance, offeredTokenAddress);
@@ -144,8 +172,8 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
     }
 
     console.log("convertedRate", rate, convertedRate, fromFixed(convertedRate), offeredTokenAddress, tokenAmount, acceptedTokenAddress);
-
-    await deployNewSeed(
+    setSuccessMessage(["none"]);
+    let createdContract = await deployNewSeed(
       currentAccount,
       offeredTokenAddress,
       acceptedTokenAddress,
@@ -178,15 +206,22 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
       nttAddress,
       nttCap,
       distributionMechanism,
-      visibility
+      visibility,
+      ["none"],
+      setLoadingIndicator,
+      ["none"],
+      setSuccessMessage
     );
+    setCreatedTag(createdContract);
   }
 
-  function handleSeedClick(index) {
+  function handleSeedClick(index, seedAddress) {
     if (index != seedIndex) {
+      setSeedSalesData(); // this needs to be here because of caching performance issue
+      setSeedIndex(index);
       setCardVisible(true);
       setDealsVisible(false);
-      setSeedIndex(index);
+      setActiveContract(seedAddress);
     } else {
       setSeedIndex();
     }
@@ -336,20 +371,21 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
   }
 
   function handleKycCheckbox(requireKyc) {
-    setNttCap("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+    setNttCap(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffn);
     setRequireKyc(!requireKyc);
   }
 
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       {console.log("isVestingenabled  ", typeof vestingEnabled, vestingEnabled)}
       {console.log("converted rate ", convertedRate)}
+      {console.log("trx- ", successMessage)}
       {formVisible && (
         <div style={{ display: "flex", flexDirection: "column", paddingTop: 50, alignItems: "center" }}>
           <div onClick={() => setFormVisible(false)} style={{ cursor: "pointer", paddingBottom: 0 }}>
             <h3>← Go Back</h3>
           </div>
-          <div style={{ margin: "0 auto", width: "40vw", marginTop: "25px", border: "1px solid whitesmoke" }}>
+          <div style={{ margin: "0 auto", width: "70%", marginTop: "25px", border: "1px solid whitesmoke" }}>
             <div>
               <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
                 {" "}
@@ -608,15 +644,17 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
 
                   {accessMechanism == "token-gate-tiers" && (
                     <div>
-                      <label for="access-token-address">Enter access token address:</label>
-                      <input
-                        name="access-token-address"
-                        onChange={target => setAccessTokenAddress(target.target.value.toLocaleLowerCase())}
-                        value={accessTokenAddress}
-                        style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "67%", float: "right" }}
-                      ></input>{" "}
-                      <br></br>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", justifyContent: "center" }}>
+                        <label for="access-token-address">Enter access token address:</label>
+                        <input
+                          name="access-token-address"
+                          onChange={target => setAccessTokenAddress(target.target.value.toLocaleLowerCase())}
+                          value={accessTokenAddress}
+                          style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "52%", float: "right" }}
+                        ></input>{" "}
+                        <br></br>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <label for="tier-1-access-token">Tier 1 needs: </label>
                         <input
                           name="tier-1-access-token"
@@ -628,7 +666,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
                         <input name="tier-1-max-contribution" onChange={target => setTier1Cap(target.target.value.toLocaleLowerCase())} value={tier1Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
                         <br></br>
                       </div>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <label for="tier-2-access-token">Tier 2 needs: </label>
                         <input
                           name="tier-2-access-token"
@@ -641,7 +679,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
 
                         <br></br>
                       </div>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <label for="tier-3-access-token">Tier 3 needs: </label>
                         <input
                           name="tier-3-access-token"
@@ -654,7 +692,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
 
                         <br></br>
                       </div>
-                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <label for="tier-4-access-token">Tier 4 needs:</label>
                         <input
                           name="tier-4-access-token"
@@ -767,14 +805,92 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
 
               <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", paddingBottom: 10, paddingTop: 8 }}>
                 <div style={{ marginBottom: "15px" }}> You have in total {getTransactionCount(accessMechanism, distributionMechanism, visibility, requireKyc) + 1} transactions to confirm:</div>
-                <div>- transaction to deploy the deal contract</div>
-                {accessMechanism != "open" && <div>- transaction to set up the access mechanism</div>}
-                {requireKyc && <div>- transaction to set up the kyc module</div>}
+                <div>
+                  {" "}
+                  <span>- transaction to deploy the deal contract</span> {console.log("loading indicator 321", loadingIndicator, loadingIndicator.includes("deploy-0"))}
+                  {loadingIndicator.includes("deploy-0") && (
+                    <span>
+                      <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
 
-                {distributionMechanism != "instant" && <div>- transaction to set up the distribution mechanism</div>}
-                {visibility != "private" && <div>- transaction to set up the deal visibility</div>}
-                <div>- transaction to approve the created contract in order to be able to send the tokens</div>
-                <div>- transaction to send tokens to a smart contract</div>
+                      <SmallerText>Confirming...</SmallerText>
+                    </span>
+                  )}
+                  {successMessage.includes("trx-0-success") && <SmallerText color="green">Success</SmallerText>}
+                </div>
+                <div>
+                  {accessMechanism != "open" && <span>- transaction to set up the access mechanism</span>}
+                  {loadingIndicator.includes("deploy-1") && (
+                    <span>
+                      <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+
+                      <SmallerText>Confirming...</SmallerText>
+                    </span>
+                  )}
+                  {successMessage.includes("trx-1-success") && <SmallerText color="green">Success</SmallerText>}
+                </div>
+                <div>
+                  {requireKyc && <span>- transaction to set up the kyc module</span>}
+                  {loadingIndicator.includes("deploy-2") && (
+                    <span>
+                      <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+
+                      <SmallerText>Confirming...</SmallerText>
+                    </span>
+                  )}
+                  {successMessage.includes("trx-2-success") && <SmallerText color="green">Success</SmallerText>}
+                </div>
+                <div>
+                  {distributionMechanism != "instant" && <span>- transaction to set up the distribution mechanism</span>}
+                  {loadingIndicator.includes("deploy-3") && (
+                    <span>
+                      <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+
+                      <SmallerText>Confirming...</SmallerText>
+                    </span>
+                  )}
+                  {successMessage.includes("trx-3-success") && <SmallerText color="green">Success</SmallerText>}
+                </div>
+                <div>
+                  {visibility != "private" && <span>- transaction to set up the deal visibility</span>}
+                  {loadingIndicator.includes("deploy-4") && (
+                    <span>
+                      <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+
+                      <SmallerText>Confirming...</SmallerText>
+                    </span>
+                  )}
+                  {successMessage.includes("trx-4-success") && <SmallerText color="green">Success</SmallerText>}
+                </div>
+                <div>
+                  <span>- transaction to approve the created contract</span>
+                  {loadingIndicator.includes("deploy-5") && (
+                    <span>
+                      <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+
+                      <SmallerText>Confirming...</SmallerText>
+                    </span>
+                  )}
+                  {successMessage.includes("trx-5-success") && <SmallerText color="green">Success</SmallerText>}
+                </div>
+                <div>
+                  <span>- transaction to send tokens to a smart contract</span>
+                  {loadingIndicator.includes("deploy-6") && (
+                    <span>
+                      <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+
+                      <SmallerText>Confirming...</SmallerText>
+                    </span>
+                  )}
+                  {successMessage.includes("trx-6-success") && <SmallerText color="green">Success</SmallerText>}
+                </div>
+                <br></br>
+                <div style={{ textAlign: "center" }}>
+                  {createdTag && (
+                    <Text color="white" fontWeight={300} fontSize="18px">
+                      Your deal has been created. You can visit the deal at the following link <a href={`https://shinedao.finance/seed?tag=${createdTag}`}>https://shinedao.finance/seed?tag={createdTag}</a>
+                    </Text>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -791,14 +907,23 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
       <br></br>
       <div style={{ display: "flex", justifyContent: "center" }}>
         {formVisible && <Button onClick={() => handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddress)}>Launch Deal</Button>}
-         { isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
-         { !isWalletEnabled && <h3 style={{paddingTop:80}}>Please connect your wallet to see and create deals.</h3>}
+        {!salesLoading && !activeContract && isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
+        {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
       </div>
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 60 }}>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
           {console.log("seed sales data ", seedSalesData)}
-          {dealsVisible &&
+          {console.log("seed sales mapper  ", !activeContract, dealsVisible, !formVisible, !cardVisible, seedSalesData)}
+          {salesLoading && (
+            <div>
+              {" "}
+              <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+              <Text>Loading...</Text>
+            </div>
+          )}
+          {!activeContract &&
+            dealsVisible &&
             !formVisible &&
             !cardVisible &&
             seedSalesData &&
@@ -854,6 +979,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
               ) => {
                 return (
                   <Card
+                    key={index}
                     flexDirection="column"
                     alignItems="flex-start"
                     margin="5px"
@@ -864,7 +990,7 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
                     height="400px"
                     background={index == seedIndex ? "#2f2f2f" : "black"}
                     index={index}
-                    onClick={() => handleSeedClick(index)}
+                    onClick={() => handleSeedClick(index, seedAddress)}
                   >
                     <div>
                       {getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap)}
@@ -934,8 +1060,19 @@ export function SeedContainer({ loadingIndicator, setLoadingIndicator }) {
               }
             )}
         </div>
-        {cardVisible && seedSalesData && seedSalesData[seedIndex] && (
-          <SeedCard setCardVisible={setCardVisible} setDealsVisible={setDealsVisible} setRefetchData={setRefetchData} refetchData={refetchData} getEligibilityStatus={getEligibilityStatus} seedSaleData={seedSalesData && seedSalesData[seedIndex]}></SeedCard>
+
+        {activeContract && seedSalesData && console.log("activeContract xxx", activeContract, seedIndex, typeof seedIndex, seedSalesData, typeof seedSalesData)}
+        {activeContract && seedSalesData && (
+          <SeedCard
+            setSeedSalesData={setSeedSalesData}
+            setActiveContract={setActiveContract}
+            setCardVisible={setCardVisible}
+            setDealsVisible={setDealsVisible}
+            setRefetchData={setRefetchData}
+            refetchData={refetchData}
+            getEligibilityStatus={getEligibilityStatus}
+            seedSaleData={seedSalesData && seedSalesData[activeContract ? 0 : seedIndex]}
+          ></SeedCard>
         )}
       </div>
     </div>

@@ -1,0 +1,33 @@
+// inspiration from https://janosh.dev/blog/use-query-param
+import { useState } from "react";
+
+const handleParam = (key, value, options = {}) => {
+  // Required for SSR. Do nothing if location object is not available.
+  if (typeof location !== `undefined`) {
+    // historyMethod: push or replace (https://developer.mozilla.org/docs/Web/API/History)
+    // to either add to the browser history or replace the last item
+    const { historyMethod = `replace`, nullDeletes = true } = options;
+    // Parse current query string using the browser's URLSearchParams API.
+    const params = new URLSearchParams(location.search);
+    // If the passed value is undefined, check if the URL already contains
+    // a value for it. This is important on initial page load.
+    if (value === undefined) value = params.get(key);
+    // If the passed value is null and the nullDeletes option is
+    // set to true, delete the corresponding query parameter.
+    else if (value === null && nullDeletes) params.delete(key);
+    // Else use the provided key and value to set a new query parameter.
+    else params.set(key, value);
+    // Construct URL containing the updated query parameter(s).
+    let target = location.pathname + `?` + params.toString();
+    target = target.replace(/\/?\?$/, ``); // remove ? if search string is empty
+    history[historyMethod + `State`]({ path: value }, ``, target); // update the browser URL
+    return value;
+  }
+};
+export const useQueryParam = (key, value, options) => {
+  // Relies on useState to trigger component rerenders on calls to setParam.
+  const [param, setParam] = useState(handleParam(key, value, options));
+  // override allows changing options for individual setQueryParam calls
+  const setter = (newValue, override) => setParam(handleParam(key, newValue, { ...options, ...override }));
+  return [param, setter];
+};
