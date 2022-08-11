@@ -219,7 +219,7 @@ export function SeedCard({
             Distribution mechanism
           </Text>
           <Text color="#a2a2a2" fontWeight={300} fontSize="16px">
-            {100 - percentageVested}% of tokens unlocked immediatly, and the rest after {vestingDuration / 86400} days
+            {100 - percentageVested}% of the tokens are unlocked immediatly, and the rest after {vestingDuration / 86400} days
           </Text>
         </div>
       );
@@ -231,7 +231,7 @@ export function SeedCard({
             Distribution mechanism
           </Text>
           <Text color="#a2a2a2" fontWeight={700} fontSize="16px">
-            {100 - percentageVested}% of tokens unlocked immediatly, then distributed linearly over {vestingDuration / 86400} days with a cliff period of {cliffDuration / 86400} days
+            {100 - percentageVested}% of the tokens are unlocked immediatly, then distributed linearly over {vestingDuration / 86400} days with a cliff period of {cliffDuration / 86400} days
           </Text>
         </div>
       );
@@ -473,17 +473,17 @@ export function SeedCard({
         <TokenCard>
           <TitleText fontWeight={800} fontSize="24px" color="white">
             Offered Token Address{" "}
-            <Link href={`https://${project.technicalDetails[currentStatus].network == "0x1" ? "etherscan.io" : "polygonscan.com"}/address/${tokenContractAddress}`} target="_blank">
+            <Link href={`${chainId}== "0x1" ? "etherscan.io" : "polygonscan.com"}/address/${tokenContractAddress}`} target="_blank">
               {tokenContractAddress.substring(0, 6)}...{tokenContractAddress.substring(tokenContractAddress.length - 4)}
             </Link>
           </TitleText>
 
-          {isWalletEnabled && project.technicalDetails[currentStatus].saleFinished && (
+          {false && isWalletEnabled && project.technicalDetails[currentStatus].saleFinished && (
             <Text color="tomato" fontSize="17px" fontWeight={800}>
               The {currentStatus} offering has finished.
             </Text>
           )}
-          {isWalletEnabled && utils.getTier(shineBalance) === "No Tier" && !project.technicalDetails[currentStatus].saleFinished && (
+          {false && isWalletEnabled && utils.getTier(shineBalance) === "No Tier" && !project.technicalDetails[currentStatus].saleFinished && (
             <Text color="tomato" fontSize="17px" fontWeight={800}>
               The amount of SHN that you have is below a minimum threshold to be placed in a tier. In order to participate in the sale, please consider getting some SHN on{" "}
               <b style={{ cursor: "pointer", color: "#fada5e" }} onClick={() => window.open("https://info.quickswap.exchange/#/token/0x53d76f967de13e7f95e90196438dce695ecfa957", "_blank", "noopener")}>
@@ -504,12 +504,14 @@ export function SeedCard({
             <Details theme={theme}>
               <div style={{ width: "100%" }}>
                 <Text color="#aeaeae" fontWeight={100}>
-                  <span>Current Network: {getNetworkName(chainId)}</span>
+                  {false && <span>Current Network: {getNetworkName(chainId)}</span>}
                   <br />
-                  <span>
-                    Connected account: {window.ethereum.selectedAddress.substring(0, 6)}...
-                    {window.ethereum.selectedAddress.substring(window.ethereum.selectedAddress.length - 4)}
-                  </span>
+                  {false && (
+                    <span>
+                      Connected account: {window.ethereum.selectedAddress.substring(0, 6)}...
+                      {window.ethereum.selectedAddress.substring(window.ethereum.selectedAddress.length - 4)}
+                    </span>
+                  )}
                   <br />
                   {false && isWalletEnabled && (
                     <Text color="#aeaeae">
@@ -517,26 +519,23 @@ export function SeedCard({
                       Access token balance: {Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} SHN <b style={{ color: "#f2df96" }}>{utils.getTier(shineBalance)}</b>
                     </Text>
                   )}
-                  {acceptedTokenAddress != utils.ZERO_ADDRESS && (
+                  {acceptedTokenAddress != utils.ZERO_ADDRESS ? (
                     <span>
                       Accepted Token Balance: {Number.parseFloat(fromWei(acceptedTokenBalance)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {acceptedTokenSymbol}
                     </span>
+                  ) : (
+                    <span>
+                      {getNetworkName(chainId)} Balance: {Number.parseFloat(nativeBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {nativeTokenName}
+                    </span>
                   )}
-                  <br></br>
-                  <span>
-                    {getNetworkName(chainId)} Balance: {Number.parseFloat(nativeBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {nativeTokenName}
-                  </span>
+
                   <br />
                   {console.log("vestedSoFar ", vestedSoFar)}
                   <span>
-                    Project token balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
+                    Offered token balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
                   </span>
                   <br />
-                  {true && (
-                    <span>
-                      Remaining Deal Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} {offeredTokenSymbol}
-                    </span>
-                  )}
+                
                   <br />
                   {weiRaised && (
                     <div>
@@ -544,8 +543,13 @@ export function SeedCard({
                       <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
                       <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
                     </div>
+                    
                   )}
-                  <br />
+                  {true && (
+                    <span>
+                      Remaining Deal Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} {offeredTokenSymbol}
+                    </span>
+                  )}
 
                   {false && isWalletEnabled && !(new Date().getTime() > new Date(project.technicalDetails[currentStatus].date).getTime()) && (
                     <Text color="tomato" fontSize="17px" fontWeight={800}>
@@ -581,93 +585,92 @@ export function SeedCard({
                 <Text color="#aeaeae" fontWeight={100}>
                   {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
 
-                  {isWalletEnabled &&
-                    !isTransactionBeingProcessed && (
+                  {isWalletEnabled && !isTransactionBeingProcessed && (
+                    <div>
                       <div>
-                        <div>
-                          <br></br>
-                          {acceptedTokenAddress == utils.ZERO_ADDRESS ? <label htmlFor="eth_amount">Enter {nativeTokenName} amount:</label> : <label htmlFor="eth_amount">Enter {acceptedTokenSymbol} amount:</label>}
-                          <br />
-                          <EthInput autoComplete="off" type="number" id="eth_amount" value={amountToSpend} onChange={e => utils.handleChangeOfEthAmountToSpend(e.target.value, setAmountToSpend)} />
-                          {console.log("debug", currentEthPrice, amountToSpend, Number.parseFloat(currentEthPrice * amountToSpend).toLocaleString())}
-                          {amountToSpend && (
-                            <span>
-                              {acceptedTokenAddress == utils.ZERO_ADDRESS && (
-                                <span>
-                                  {" "}
-                                  <span> ≈ {Number.parseFloat(currentEthPrice * amountToSpend).toLocaleString()} USD</span> <br />{" "}
-                                </span>
-                              )}
+                        <br></br>
+                        {acceptedTokenAddress == utils.ZERO_ADDRESS ? <label htmlFor="eth_amount">Enter {nativeTokenName} amount:</label> : <label htmlFor="eth_amount">Enter {acceptedTokenSymbol} amount:</label>}
+                        <br />
+                        <EthInput autoComplete="off" type="number" id="eth_amount" value={amountToSpend} onChange={e => utils.handleChangeOfEthAmountToSpend(e.target.value, setAmountToSpend)} />
+                        {console.log("debug", currentEthPrice, amountToSpend, Number.parseFloat(currentEthPrice * amountToSpend).toLocaleString())}
+                        {amountToSpend && (
+                          <span>
+                            {acceptedTokenAddress == utils.ZERO_ADDRESS && (
                               <span>
-                                <br></br>
-                                Estimated tokens to receive: {utils.estimateReceivedTokens(amountToSpend, fromFixed(rate))} {offeredTokenSymbol}
+                                {" "}
+                                <span> ≈ {Number.parseFloat(currentEthPrice * amountToSpend).toLocaleString()} USD</span> <br />{" "}
                               </span>
-                              {false && utils.getTier(shineBalance) !== "No Tier" && <span>Current contribution: {contributions}</span>}
+                            )}
+                            <span>
+                              <br></br>
+                              Estimated tokens to receive: {utils.estimateReceivedTokens(amountToSpend, fromFixed(rate))} {offeredTokenSymbol}
                             </span>
-                          )}
-                          <br /> <br />
-                          {// relativeCap && shineBalance needed below because it takes few hundred miliseconds to load the state variables
-                          console.log("sshhnn", shineBalance, contributions)}
-                          {relativeCap && shineBalance && amountToSpend > utils.getMaximumContribution(relativeCap, shineBalance) - contributions && utils.getTier(shineBalance) !== "No Tier" && (
-                            <Text color="tomato">
-                              The amount that you are trying to buy exceeds the maximum contribution cap for your current tier which is {utils.getTier(shineBalance)}. Your remaining maximum contribution is:{" "}
-                              <span
-                                onClick={e =>
-                                  setAmountToSpend(
-                                    Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001)
-                                      .toLocaleString(undefined, {
-                                        minimumFractionDigits: 5,
-                                        maximumFractionDigits: 5,
-                                      })
-                                      .replace(",", "")
-                                  )
-                                }
-                                style={{ cursor: "pointer", color: "#007bff" }}
-                              >
-                                {Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001).toLocaleString(undefined, {
-                                  minimumFractionDigits: 5,
-                                  maximumFractionDigits: 5,
-                                })}{" "}
-                              </span>{" "}
-                              {nativeTokenName}
-                            </Text>
-                          )}
-                          <br />
-                          <br />
-                          <FlexBox>
-                            {approvalStatus &&
-                              (!approveLoading ? (
-                                <ConnectButton theme={theme} onClick={() => handleApprove()}>
-                                  Approve
-                                </ConnectButton>
-                              ) : (
-                                <span style={{ paddingRight: 15 }}>
-                                  <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
-                                  <SmallerText>Confirming...</SmallerText>
-                                </span>
-                              ))}
-
-                            <ConnectButton
-                              theme={theme}
-                              onClick={() =>
-                                handleSwapButton(acceptedTokenAddress, amountToSpend, setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus)
+                            {false && utils.getTier(shineBalance) !== "No Tier" && <span>Current contribution: {contributions}</span>}
+                          </span>
+                        )}
+                        <br /> <br />
+                        {// relativeCap && shineBalance needed below because it takes few hundred miliseconds to load the state variables
+                        console.log("sshhnn", shineBalance, contributions)}
+                        {relativeCap && shineBalance && amountToSpend > utils.getMaximumContribution(relativeCap, shineBalance) - contributions && utils.getTier(shineBalance) !== "No Tier" && (
+                          <Text color="tomato">
+                            The amount that you are trying to buy exceeds the maximum contribution cap for your current tier which is {utils.getTier(shineBalance)}. Your remaining maximum contribution is:{" "}
+                            <span
+                              onClick={e =>
+                                setAmountToSpend(
+                                  Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001)
+                                    .toLocaleString(undefined, {
+                                      minimumFractionDigits: 5,
+                                      maximumFractionDigits: 5,
+                                    })
+                                    .replace(",", "")
+                                )
                               }
+                              style={{ cursor: "pointer", color: "#007bff" }}
                             >
-                              Swap
-                            </ConnectButton>
-                            <Text margin="0 0 0 10px" color="#aeaeae">
-                              {" "}
-                              {false && "Note: 25% of the bought tokens are released immediatly, 75% is vested for 100 days."}
-                            </Text>
-                          </FlexBox>
-                        </div>
-                        
+                              {Number.parseFloat(utils.getMaximumContribution(relativeCap, shineBalance) - contributions - 0.0001).toLocaleString(undefined, {
+                                minimumFractionDigits: 5,
+                                maximumFractionDigits: 5,
+                              })}{" "}
+                            </span>{" "}
+                            {nativeTokenName}
+                          </Text>
+                        )}
                         <br />
                         <br />
+                        <FlexBox>
+                          {approvalStatus &&
+                            (!approveLoading ? (
+                              <ConnectButton theme={theme} onClick={() => handleApprove()}>
+                                Approve
+                              </ConnectButton>
+                            ) : (
+                              <span style={{ paddingRight: 15 }}>
+                                <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
+                                <SmallerText>Confirming...</SmallerText>
+                              </span>
+                            ))}
+
+                          <ConnectButton
+                            theme={theme}
+                            onClick={() =>
+                              handleSwapButton(acceptedTokenAddress, amountToSpend, setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus)
+                            }
+                          >
+                            Swap
+                          </ConnectButton>
+                          <Text margin="0 0 0 10px" color="#aeaeae">
+                            {" "}
+                            {false && "Note: 25% of the bought tokens are released immediatly, 75% is vested for 100 days."}
+                          </Text>
+                        </FlexBox>
                       </div>
-                    )}
+
+                      <br />
+                      <br />
+                    </div>
+                  )}
                   {isWalletEnabled && vestedBalance && console.log("vested balances ", utils.fromWei(vestedBalance))}
-                  {vestedBalance && vestedBalance > 0 && chainId === project.technicalDetails[currentStatus].network && (
+                  {vestedBalance && vestedBalance > 0 && (
                     <div>
                       <FlexBox>
                         {cliffPeriod != vestingPeriod && (
@@ -721,7 +724,7 @@ export function SeedCard({
                       <h5>Processing </h5>
                       <PulseLoader color={"yellow"} loading={true} size={15} margin={2} /> <br /> <br />
                       <h5>
-                        <i>(Can take up to few minutes, Matic network has been experiencing congestion for the last few weeks so please wait patiently)</i>
+                        <i>(Can take up to few minutes, so please wait patiently)</i>
                       </h5>
                     </div>
                   )}
