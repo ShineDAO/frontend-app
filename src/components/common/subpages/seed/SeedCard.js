@@ -538,7 +538,7 @@ export function SeedCard({
                     </span>
                   )}
                   <br />
-                  {weiRaised && new Date().getTime() > new Date(project.technicalDetails[currentStatus].date).getTime() && !project.technicalDetails[currentStatus].saleFinished && (
+                  {weiRaised &&(
                     <div>
                       <span>Sale progress: {(weiRaised * fromFixed(rate) / totalOffered)  * 100}% </span>
                       <ProgressBar animated striped variant="success" now={(weiRaised * fromFixed(rate)  / totalOffered) * 100} label={`${(weiRaised * fromFixed(rate)  / totalOffered) * 100}%`} />
@@ -546,12 +546,12 @@ export function SeedCard({
                   )}
                   <br />
 
-                  {isWalletEnabled && !(new Date().getTime() > new Date(project.technicalDetails[currentStatus].date).getTime()) && (
+                  {false && isWalletEnabled && !(new Date().getTime() > new Date(project.technicalDetails[currentStatus].date).getTime()) && (
                     <Text color="tomato" fontSize="17px" fontWeight={800}>
                       Sale is not open yet!
                     </Text>
                   )}
-                  {isWalletEnabled && chainId !== project.technicalDetails[currentStatus].network && (
+                  {false && isWalletEnabled && chainId !== project.technicalDetails[currentStatus].network && (
                     <div>
                       <Text color="tomato" fontSize="17px" fontWeight={800}>
                         You are on the wrong network. To access {currentStatus} please change your network to {getNetworkName(project.technicalDetails[currentStatus].network)}.
@@ -562,7 +562,7 @@ export function SeedCard({
                       <Text color="gold" fontSize="14px" fontWeight={500}>
                         <i>
                           {" "}
-                          {!project.title.includes("Kassandra") && (
+                          {false && !project.title.includes("Kassandra") && (
                             <div>
                               Note: if you want to access vested balances from the seed stage please click{" "}
                               <b style={{ color: "tomato", cursor: "pointer" }} onClick={() => setCurrentStatus("seed")}>
