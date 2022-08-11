@@ -540,6 +540,7 @@ export function SeedCard({
                   <br />
                   {weiRaised && (
                     <div>
+                      <br></br>
                       <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
                       <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
                     </div>
@@ -583,7 +584,7 @@ export function SeedCard({
                   {isWalletEnabled &&
                     !isTransactionBeingProcessed && (
                       <div>
-                        (
+                        
                         <div>
                           <br></br>
                           {acceptedTokenAddress == utils.ZERO_ADDRESS ? <label htmlFor="eth_amount">Enter {nativeTokenName} amount:</label> : <label htmlFor="eth_amount">Enter {acceptedTokenSymbol} amount:</label>}
@@ -661,7 +662,7 @@ export function SeedCard({
                             </Text>
                           </FlexBox>
                         </div>
-                        )
+                        
                         <br />
                         <br />
                       </div>
