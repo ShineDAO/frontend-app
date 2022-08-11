@@ -584,7 +584,6 @@ export function SeedCard({
                   {isWalletEnabled &&
                     !isTransactionBeingProcessed && (
                       <div>
-                        
                         <div>
                           <br></br>
                           {acceptedTokenAddress == utils.ZERO_ADDRESS ? <label htmlFor="eth_amount">Enter {nativeTokenName} amount:</label> : <label htmlFor="eth_amount">Enter {acceptedTokenSymbol} amount:</label>}
