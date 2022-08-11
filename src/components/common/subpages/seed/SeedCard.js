@@ -538,10 +538,10 @@ export function SeedCard({
                     </span>
                   )}
                   <br />
-                  {weiRaised &&(
+                  {weiRaised && (
                     <div>
-                      <span>Sale progress: {(weiRaised * fromFixed(rate) / totalOffered)  * 100}% </span>
-                      <ProgressBar animated striped variant="success" now={(weiRaised * fromFixed(rate)  / totalOffered) * 100} label={`${(weiRaised * fromFixed(rate)  / totalOffered) * 100}%`} />
+                      <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
+                      <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
                     </div>
                   )}
                   <br />
@@ -580,9 +580,10 @@ export function SeedCard({
                 <Text color="#aeaeae" fontWeight={100}>
                   {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
 
-                  {isWalletEnabled && !isTransactionBeingProcessed && new Date().getTime() > new Date(project.technicalDetails[currentStatus].date).getTime() && chainId === project.technicalDetails[currentStatus].network && (
-                    <div>
-                      {!project.technicalDetails[currentStatus].saleFinished && (
+                  {isWalletEnabled &&
+                    !isTransactionBeingProcessed(
+                      <div>
+                        (
                         <div>
                           <br></br>
                           {acceptedTokenAddress == utils.ZERO_ADDRESS ? <label htmlFor="eth_amount">Enter {nativeTokenName} amount:</label> : <label htmlFor="eth_amount">Enter {acceptedTokenSymbol} amount:</label>}
@@ -660,12 +661,11 @@ export function SeedCard({
                             </Text>
                           </FlexBox>
                         </div>
-                      )}
-
-                      <br />
-                      <br />
-                    </div>
-                  )}
+                        )
+                        <br />
+                        <br />
+                      </div>
+                    )}
                   {isWalletEnabled && vestedBalance && console.log("vested balances ", utils.fromWei(vestedBalance))}
                   {vestedBalance && vestedBalance > 0 && chainId === project.technicalDetails[currentStatus].network && (
                     <div>
