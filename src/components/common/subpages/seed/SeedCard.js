@@ -581,7 +581,7 @@ export function SeedCard({
                   {metamaskErrorCode && <ColorTitle>{metamaskErrorCode} </ColorTitle>}
 
                   {isWalletEnabled &&
-                    !isTransactionBeingProcessed(
+                    !isTransactionBeingProcessed && (
                       <div>
                         (
                         <div>
