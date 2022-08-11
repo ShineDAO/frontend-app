@@ -61,7 +61,7 @@ const NavbarLinks = ({ desktop }) => {
   return (
     <div>
       <Wrapper desktop={desktop} theme={theme}>
-        <a href="https://app.shinedao.finance/seed/" target="_blank">
+        <a href="https://app.shinedao.finance/deals/" target="_blank">
           Deals
         </a>
         <a href="https://app.shinedao.finance/veSHN/" target="_blank">
