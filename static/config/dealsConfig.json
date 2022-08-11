@@ -1,0 +1,7 @@
+{
+  "usdc": { "main": "", "matic": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174", "mumbai": "0x4303d32a6e743ea91944461738dfae2e271c36cd", "hardhat": "0x3C1Cb427D20F15563aDa8C249E71db76d7183B6c" },
+  "usdt": { "main": "", "matic": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", "mumbai": "0x5939ee3f4ff5bf51eefc4150307d20fdd5032c74", "hardhat": "0x22a9B82A6c3D2BFB68F324B2e8367f346Dd6f32a" },
+  "dai": { "main": "", "matic": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063", "mumbai": "0xf817e71096627ee387b4d5e3d3b1a6550cdf11b8", "hardhat": "0x7C8BaafA542c57fF9B2B90612bf8aB9E86e22C09" },
+  "frax": { "main": "", "matic": "0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89", "mumbai": "0x6c85a030127d0103afbfcd2547c55bb9d1633e1d", "hardhat": "0x5e6CB7E728E1C320855587E1D9C6F7972ebdD6D5" },
+  "shn": { "main": "", "matic": "0x53D76f967De13E7F95e90196438DCe695eCFA957", "mumbai": "0x908d0eb16f20ca365a577fca864583e6137feb70", "hardhat": "0x0Dd99d9f56A14E9D53b2DdC62D9f0bAbe806647A" }
+}

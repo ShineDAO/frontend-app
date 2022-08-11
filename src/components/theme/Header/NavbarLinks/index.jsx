@@ -10,6 +10,7 @@ import * as pagesUtils from "../../../../utils/pagesUtils";
 import { useLocation } from "@reach/router";
 
 import { WalletContext } from "providers/WalletProvider";
+import { loadWeb3 } from "../../../templates/utils";
 
 const NavbarLinks = ({ desktop }) => {
   const pathname = useLocation().pathname.replace(/\//g, "");
@@ -18,8 +19,7 @@ const NavbarLinks = ({ desktop }) => {
 
   const { theme } = useContext(ThemeContext);
 
-  const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount } = useContext(WalletContext);
-
+  const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount,setNativeBalance,setNativeTokenName } = useContext(WalletContext);
   const options = [
     { value: "0x1", label: "Ethereum" },
     { value: "0x89", label: "Polygon/Matic" },
@@ -37,11 +37,13 @@ const NavbarLinks = ({ desktop }) => {
     defaultOption = { value: "", label: "Chain unrecognized" };
   }
 
-  function manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount) {
-    if (pathname != "veSHN") {
+  function manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance) {
+    if (pathname != "veSHN" && pathname != "seed") {
       window.location.href = "#about";
+    } else if ((pathname = "seed")) {
+      pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance,setNativeTokenName);
     } else {
-      pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount);
+      pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance, setNativeTokenName);
     }
   }
 
@@ -65,7 +67,7 @@ const NavbarLinks = ({ desktop }) => {
         <a href="/kassandra" target="_blank">
           SEED
         </a>
-        <a style={{marginRight:80}} href="/news" target="_blank">
+        <a style={{ marginRight: 80 }} href="/news" target="_blank">
           News
         </a>
         <a href="http://docs.shinedao.finance" target="_blank">
@@ -83,10 +85,13 @@ const NavbarLinks = ({ desktop }) => {
               {currentAccount.substring(currentAccount.length - 4)}
             </div>
           </div>
-        ) : (pathname == "veSHN" &&
-          <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount)} theme={theme}>
-            {pathname == "veSHN" ? "Connect Wallet" : "See Upcoming Projects"}
-          </JoinButton>
+        ) : (
+          (pathname == "veSHN" ||
+          pathname == "seed") && (
+            <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance)} theme={theme}>
+              {pathname == "veSHN" || pathname == "seed" ? "Connect Wallet" : "See Upcoming Projects"}
+            </JoinButton>
+          )
         )}
         <ToggleTheme />
       </Wrapper>

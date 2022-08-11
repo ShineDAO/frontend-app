@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import React from 'react';
-import { Card } from '../common';
+import styled from "styled-components";
+import React from "react";
+import { Card } from "../common";
 
 export const Wrapper = styled.div`
   background-size: contain;
@@ -19,6 +19,7 @@ export const Heading = styled.div`
 
 export const FlexBox = styled.div`
   display: flex;
+  align-items: center;
 `;
 export const InfoCards = styled.div`
   display: flex;
@@ -31,7 +32,8 @@ export const InfoCards = styled.div`
 `;
 
 export const StatsCard = styled.div`
-  background: #4f4fc8;
+  background: ${({ background }) => background || "#4f4fc8"};
+  border: ${({ border }) => border || ""};
   padding: 40px;
   flex-direction: column;
   display: flex;
@@ -40,7 +42,6 @@ export const StatsCard = styled.div`
   border-radius: 0px;
   @media (max-width: 1200px) {
     margin-bottom: 40px;
-   
   }
   @media (max-width: 600px) {
     width: 120%;
@@ -58,10 +59,10 @@ export const TokenCard = styled.div`
   flex-direction: column;
   display: flex;
   width: 540px;
-  min-height:604px;
+  min-height: 604px;
   justify-content: flex-start;
   border-radius: 0px;
-  
+
   @media (max-width: 600px) {
     width: 100%;
   }
@@ -72,10 +73,9 @@ export const TokenCard = styled.div`
 `;
 
 export const TierWrapper = styled.div`
-
-  -webkit-box-shadow: ${({ highlightTier }) => (highlightTier ? '0 0 20px 9px #fada5d' : '')};
-  -moz-box-shadow: ${({ highlightTier }) => (highlightTier ? '0 0 20px 9px #fada5d' : '')};
-  box-shadow: ${({ highlightTier }) => (highlightTier ? '0 0 20px 9px #fada5d' : '')};
+  -webkit-box-shadow: ${({ highlightTier }) => (highlightTier ? "0 0 20px 9px #fada5d" : "")};
+  -moz-box-shadow: ${({ highlightTier }) => (highlightTier ? "0 0 20px 9px #fada5d" : "")};
+  box-shadow: ${({ highlightTier }) => (highlightTier ? "0 0 20px 9px #fada5d" : "")};
 
   width: 462px;
   border-radius: 10px;
@@ -114,23 +114,21 @@ export const CardHeaderTextWrapper = styled.div`
   height: 32px;
   width: 100%;
   display: flex;
-  text-align:center;
-  margin-top: 17px;
+  text-align: center;
+  margin-top: 8px;
   @media (max-width: 600px) {
     margin-top: 20px;
     width: 218px;
   }
 `;
 
-
 export const TBAText = styled.div`
-  color: ${({ color }) => color || 'black'};
+  color: ${({ color }) => color || "black"};
   font-weight: ${({ fontWeight }) => fontWeight || 400};
-  font-size: ${({ fontSize }) => fontSize || '16px'};
-  margin: ${({ margin }) => margin || '0'};
-  text-align:center;
-  margin:0 auto;
-
+  font-size: ${({ fontSize }) => fontSize || "16px"};
+  margin: ${({ margin }) => margin || "0"};
+  text-align: center;
+  margin: 0 auto;
 
   @media (max-width: 699px) {
     width: 218px;
@@ -140,12 +138,14 @@ export const TBAText = styled.div`
 `;
 
 export const CardBottomWrapper = styled.div`
-  background: #4f4fc8;
+  background: ${({ background }) => background || "#4f4fc8"};
+  flex-direction: column;
   flex-wrap: wrap;
   height: 100%;
   border-radius: 4px;
   display: flex;
-  align-content: flex-end;
+  align-content: flex-start;
+  justify-content: space-evenly;
   width: 460px;
   @media (max-width: 600px) {
     margin-top: 20px;
@@ -208,10 +208,10 @@ export const LeftStatsCard = styled.div`
 `;
 
 export const TitleText = styled.div`
-  color: ${({ color }) => color || 'black'};
+  color: ${({ color }) => color || "black"};
   font-weight: ${({ fontWeight }) => fontWeight || 400};
-  font-size: ${({ fontSize }) => fontSize || '16px'};
-  margin: ${({ margin }) => margin || '0'};
+  font-size: ${({ fontSize }) => fontSize || "16px"};
+  margin: ${({ margin }) => margin || "0"};
   @media (max-width: 600px) {
     text-align: center;
   }
@@ -227,10 +227,10 @@ export const HeadingText = styled.div`
 `;
 
 export const StatsCardHeading = styled.div`
-  color: ${({ color }) => color || 'black'};
+  color: ${({ color }) => color || "black"};
   font-weight: ${({ fontWeight }) => fontWeight || 400};
-  font-size: ${({ fontSize }) => fontSize || '16px'};
-  margin: ${({ margin }) => margin || '0'};
+  font-size: ${({ fontSize }) => fontSize || "16px"};
+  margin: ${({ margin }) => margin || "0"};
   @media (max-width: 600px) {
     text-align: center;
     margin: 0;
@@ -239,7 +239,7 @@ export const StatsCardHeading = styled.div`
 
 export const QuartCircleIntro = styled.div`
   border-bottom-left-radius: 100%;
-  background: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  background: ${({ theme }) => (theme === "light" ? "#EEEEFF" : "#3F3D56")};
   transition: 0.3s all;
   height: 500px;
   right: 0;
@@ -269,7 +269,7 @@ export const LitepaperCard = styled.div`
   flex-direction: column;
   align-items: center;
   top: 965px;
-  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
   a {
     font-size: 18px;
   }
@@ -297,10 +297,10 @@ export const Details = styled.div`
     font-size: 48px;
     line-height: 64px;
     margin-bottom: 2rem;
-    color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+    color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
 
     @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      mix-blend-mode: ${({ theme }) => (theme === "light" ? "unset" : "difference")};
     }
 
     @media (max-width: 680px) {
@@ -312,10 +312,10 @@ export const Details = styled.div`
     margin-bottom: 2.5rem;
     font-size: 18pt;
     font-weight: normal;
-    color: ${({ theme }) => (theme === 'light' ? '#f9a72a' : '#f9a72a')};
+    color: ${({ theme }) => (theme === "light" ? "#f9a72a" : "#f9a72a")};
 
     @media (max-width: 960px) {
-      mix-blend-mode: ${({ theme }) => (theme === 'light' ? 'unset' : 'difference')};
+      mix-blend-mode: ${({ theme }) => (theme === "light" ? "unset" : "difference")};
     }
 
     @media (max-width: 680px) {
@@ -359,25 +359,24 @@ export const Link = styled.a`
 export const ConnectWalletCard = styled.div`
   border-radius: 33px;
   padding: 40px;
-  background-color: ${({ theme }) => (theme === 'light' ? '#fff' : '#1E1E1E')};
+  background-color: ${({ theme }) => (theme === "light" ? "#fff" : "#1E1E1E")};
   box-sizing: border-box;
-  box-shadow: ${({ theme }) =>
-    theme === 'light' ? '0px 4px 20px rgba(0, 0, 0, 0.1)' : '0px 4px 20px rgba(255, 255, 255, 0.1)'};
+  box-shadow: ${({ theme }) => (theme === "light" ? "0px 4px 20px rgba(0, 0, 0, 0.1)" : "0px 4px 20px rgba(255, 255, 255, 0.1)")};
   min-width: 500px;
   max-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: ${({ isWalletEnabled }) => (isWalletEnabled ? 'none' : '344px')};
-  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  height: ${({ isWalletEnabled }) => (isWalletEnabled ? "none" : "344px")};
+  color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
 
   a {
-    color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+    color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
     font-size: 17px;
   }
   a: hover {
     text-decoration: none;
-    color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+    color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
   }
   @media (max-width: 960px) {
     min-width: 100%;
@@ -388,12 +387,12 @@ export const SaleCard = styled.div`
   border-radius: 33px;
   border: 1px solid #f5f5f538;
   padding: 40px;
-  background-color: ${({ theme }) => (theme === 'light' ? '#EEEEFF' : '#3F3D56')};
+  background-color: ${({ theme }) => (theme === "light" ? "#EEEEFF" : "#3F3D56")};
   box-sizing: border-box;
 
   min-width: 500px;
-  height: ${({ isWalletEnabled }) => (isWalletEnabled ? 'none' : '344px')};
-  color: ${({ theme }) => (theme === 'light' ? '#1E1E1E' : '#fff')};
+  height: ${({ isWalletEnabled }) => (isWalletEnabled ? "none" : "344px")};
+  color: ${({ theme }) => (theme === "light" ? "#1E1E1E" : "#fff")};
   margin-right: 40px;
   h3 {
     margin-bottom: 4px;
@@ -443,7 +442,7 @@ export const EthInput = styled.input`
   }
 
   /* Disable arrows in number input for Firefox */
-  &[type='number'] {
+  &[type="number"] {
     -moz-appearance: textfield;
   }
 
@@ -485,7 +484,6 @@ export const ConnectButton = styled.button`
   &:disabled {
     background: gray;
   }
- 
 
   &:hover {
     background: ${({ backgroundHover }) => backgroundHover || "#ECEE52"};
@@ -507,31 +505,31 @@ export const ConnectButton = styled.button`
 `;
 
 export const JoinCard = styled.div`
-background: ${({ theme }) => (theme === 'dark' ? '#000000' : '#EEEEFF')};
-border: 3px solid ${({ theme }) => (theme === 'light' ? '#fff' : '#FFFFFF')};
-font-weight: 800;
-box-sizing: border-box;
-width: 245px;
-margin:20px 0px 10px 0px;
-padding:6px 0px 0px 15px;
+  background: ${({ theme }) => (theme === "dark" ? "#000000" : "#EEEEFF")};
+  border: 3px solid ${({ theme }) => (theme === "light" ? "#fff" : "#FFFFFF")};
+  font-weight: 800;
+  box-sizing: border-box;
+  width: 245px;
+  margin: 20px 0px 10px 0px;
+  padding: 6px 0px 0px 15px;
 
-h2 { 
-  color: ${({ theme }) => (theme === 'light' ? '#fff' : '#322ad1')};
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  width: 80%;
-  margin: 6px 8px;
-}
-.frame1 {
-  font-size: 26px;
-  margin: 4px 0px 0px;
-}
-.frame2{
-box-sizing: border-box;
-font-weight: 600;
-font-size: 18px;
-}
+  h2 {
+    color: ${({ theme }) => (theme === "light" ? "#fff" : "#322ad1")};
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin: 6px 8px;
+  }
+  .frame1 {
+    font-size: 26px;
+    margin: 4px 0px 0px;
+  }
+  .frame2 {
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 18px;
+  }
 
   @media (max-width: 1200px) {
     margin: 0px auto;
