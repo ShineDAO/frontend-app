@@ -887,7 +887,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 <div style={{ textAlign: "center" }}>
                   {createdTag && (
                     <Text color="white" fontWeight={300} fontSize="18px">
-                      Your deal has been created. You can visit the deal at the following link <a href={`https://app.shinedao.finance/seed?tag=${createdTag}`}>https://app.shinedao.finance/seed?tag={createdTag}</a>
+                      Your deal has been created. You can visit the deal at the following link <a href={`https://app.shinedao.finance/deals?tag=${createdTag}`}>https://app.shinedao.finance/deals?tag={createdTag}</a>
                     </Text>
                   )}
                 </div>
