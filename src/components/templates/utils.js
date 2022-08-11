@@ -1837,6 +1837,7 @@ export function getNetworkName(chainId) {
     "0x1": "Ethereum",
     "0x89": "Polygon/Matic",
     "0x7a69": "Localhost",
+    "0x13881":"Mumbai"
   };
   if (chainMapper[chainId]) {
     return chainMapper[chainId];
