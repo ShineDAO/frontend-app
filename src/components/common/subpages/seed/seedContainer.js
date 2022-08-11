@@ -31,6 +31,7 @@ import {
   ZERO_ADDRESS,
   getTokenAddressFromDealsConfig,
   retrieveIndex,
+  getAddress
 } from "../../../../../src/components/templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
@@ -84,7 +85,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [nttCap, setNttCap] = useState(0);
 
   const [nftAddress, setAccessNftAddress] = useState();
-  const [nttAddress, setAccessNttAddress] = useState("0xdB05A386810c809aD5a77422eb189D36c7f24402");
+  const [nttAddress, setAccessNttAddress] = useState();
 
   const [accessTokenAddress, setAccessTokenAddress] = useState();
   const [accessTokenAmountTier1, setAccessTokenAmountTier1] = useState(0);
@@ -103,7 +104,6 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [vestingDuration, setVestingDuration] = useState(5184000);
   const [percentageVested, setPercentageVested] = useState(100);
 
-  const seedFactoryAddress = "0xFC4EE541377F3b6641c23CBE82F6f04388290421";
 
   useEffect(() => {
     if (isWalletEnabled == true && activeContract != null && currentAccount != null && typeof seedIndex == "undefined") {
@@ -122,12 +122,12 @@ export function SeedContainer({ activeContract, setActiveContract }) {
         if (!activeContract) {
           console.log("active acc 1", activeContract, seedIndex, typeof activeContract, typeof seedIndex);
           setSalesLoading(true);
-          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, seedFactoryAddress, ERC20.abi, activeContract));
+          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
           setSalesLoading(false);
         } else if (activeContract) {
           console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex);
           setSalesLoading(true);
-          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, seedFactoryAddress, ERC20.abi, activeContract));
+          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
           setSalesLoading(false);
         }
       }
@@ -138,7 +138,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   useEffect(() => {
     console.log("allowance ", allowance, offeredTokenAddress);
     if (typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "") {
-      getAllowance(setAllowance, seedFactoryAddress, currentAccount, ERC20.abi, offeredTokenAddress);
+      getAllowance(setAllowance, getAddress(chainId, "seedFactoryAddress"), currentAccount, ERC20.abi, offeredTokenAddress);
     }
   }, [offeredTokenAddress]);
 
@@ -179,7 +179,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       acceptedTokenAddress,
       SeedFactory.abi,
       Seed.abi,
-      seedFactoryAddress,
+      getAddress(chainId, "seedFactoryAddress"),
       toWei(tokenAmount),
       convertedRate,
       cliffDuration,
@@ -203,7 +203,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       nftAddress,
       toWei(nftCap),
       requireKyc,
-      nttAddress,
+      getAddress(chainId, "nttAddress"),
       nttCap,
       distributionMechanism,
       visibility,
@@ -227,7 +227,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
     }
   }
   async function handleLauncherApprove() {
-    await approveContract(currentAccount, ERC20.abi, offeredTokenAddress, seedFactoryAddress);
+    await approveContract(currentAccount, ERC20.abi, offeredTokenAddress, getAddress(chainId, "seedFactoryAddress"));
   }
 
   function getTransactionCount(accessMechanism, distributionMechanism, visibility, requireKyc) {
@@ -453,25 +453,25 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <TableR>
                       <TableD>
                         <div style={{ display: "flex", justifyContent: "center" }}>
-                          <TableLabel selected={selectedTokenKey == "native"} onClick={e => handleOfferedTokenAddress(e)} data-token="native" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                          <TableLabel selected={selectedTokenKey == "native"} onClick={e => handleOfferedTokenAddress(e)} data-token="native" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight:3 }}>
                             {nativeTokenName}
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "usdc"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdc" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                          <TableLabel selected={selectedTokenKey == "usdc"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdc" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight:3 }}>
                             USDC
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "usdt"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdt" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                          <TableLabel selected={selectedTokenKey == "usdt"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdt" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 , marginRight:3}}>
                             USDT
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "dai"} onClick={e => handleOfferedTokenAddress(e)} data-token="dai" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                          <TableLabel selected={selectedTokenKey == "dai"} onClick={e => handleOfferedTokenAddress(e)} data-token="dai" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight:3 }}>
                             DAI
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "frax"} onClick={e => handleOfferedTokenAddress(e)} data-token="frax" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                          <TableLabel selected={selectedTokenKey == "frax"} onClick={e => handleOfferedTokenAddress(e)} data-token="frax" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 , marginRight:3}}>
                             FRAX
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "shn"} onClick={e => handleOfferedTokenAddress(e)} data-token="shn" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                          <TableLabel selected={selectedTokenKey == "shn"} onClick={e => handleOfferedTokenAddress(e)} data-token="shn" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 , marginRight:3}}>
                             SHN
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "custom"} onClick={e => handleOfferedTokenAddress(e)} data-token="custom" style={{ borderRight: "1px solid white", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>
+                          <TableLabel selected={selectedTokenKey == "custom"} onClick={e => handleOfferedTokenAddress(e)} data-token="custom" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 , marginRight:3}}>
                             Custom Address
                           </TableLabel>
                         </div>

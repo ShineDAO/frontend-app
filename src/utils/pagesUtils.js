@@ -295,7 +295,9 @@ export function getNativeTokenName(chainId) {
   const chainMapper = {
     "0x1": "ETH",
     "0x89": "MATIC",
+    "0x13881": "MATIC",
     "0x7a69": "ETH", //localhost
+
   };
   if (chainMapper[chainId]) {
     return chainMapper[chainId];
@@ -311,13 +313,14 @@ export async function loadWeb3(setWalletStatus, setChainId, currentAccount, setC
     console.log("load 1", window.web3);
     window.web3 = new Web3(window.ethereum);
     await window.ethereum.enable();
+    chainId = await ethereum.request({ method: "eth_chainId" });
+    setChainId(chainId);
 
     await getEthBalance(setNativeBalance);
     await setNativeTokenName(getNativeTokenName(chainId))
     setWalletStatus(true);
 
-    chainId = await ethereum.request({ method: "eth_chainId" });
-    setChainId(chainId);
+  
     ethereum.on("chainChanged", handleChainChanged);
 
     ethereum
