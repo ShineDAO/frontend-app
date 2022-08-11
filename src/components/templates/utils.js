@@ -1651,7 +1651,7 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       accessMechanism = "token-gate-tiers";
       let accessErc20Instance = new window.web3.eth.Contract(erc20Abi, accessToken);
       accessTokenSymbol = await accessErc20Instance.methods.symbol().call();
-      accessTokenBalance = await getTokenBalance(userAddress, erc20Abi, accessToken);
+      accessTokenBalance = toWei(await getTokenBalance(userAddress, erc20Abi, accessToken));
     }
     let kycEnabled = false;
     let nttBalance, hasValidNtt, capForNTT;
