@@ -38,9 +38,9 @@ const NavbarLinks = ({ desktop }) => {
   }
 
   function manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance) {
-    if (pathname != "veSHN" && pathname != "seed") {
+    if (pathname != "veSHN" && pathname != "deals") {
       window.location.href = "#about";
-    } else if ((pathname = "seed")) {
+    } else if ((pathname = "deals")) {
       pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance,setNativeTokenName);
     } else {
       pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance, setNativeTokenName);
@@ -87,9 +87,9 @@ const NavbarLinks = ({ desktop }) => {
           </div>
         ) : (
           (pathname == "veSHN" ||
-          pathname == "seed") && (
+          pathname == "deals") && (
             <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance)} theme={theme}>
-              {pathname == "veSHN" || pathname == "seed" ? "Connect Wallet" : "See Upcoming Projects"}
+              {pathname == "veSHN" || pathname == "deals" ? "Connect Wallet" : "See Upcoming Projects"}
             </JoinButton>
           )
         )}
