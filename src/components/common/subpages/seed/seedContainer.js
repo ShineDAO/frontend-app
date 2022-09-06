@@ -31,7 +31,7 @@ import {
   ZERO_ADDRESS,
   getTokenAddressFromDealsConfig,
   retrieveIndex,
-  getAddress
+  getAddress,
 } from "../../../../../src/components/templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
@@ -77,7 +77,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
 
   const [accessMechanism, setAccessMechanism] = useState("open");
   const [distributionMechanism, setDistributionMechanism] = useState("instant");
-  const [lockedUntil, setLockedUntil] = useState();
+  const [lockDuration, setLockDuration] = useState();
 
   const [whitelistedAddresses, setWhitelistedAddresses] = useState();
   const [capsForWhitelistedAddresses, setcapsForWhitelistedAddresses] = useState();
@@ -98,12 +98,11 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [tier4Cap, setTier4Cap] = useState(0);
 
   const [startTime, setStartTime] = useState("0");
-  const [endTime, setEndTime] = useState("1678768277");
+  const [endTime, setEndTime] = useState(parseInt(parseInt(Date.now() / 1000 + 60 * 60 * 13).toString())); //3hrs from now
 
   const [cliffDuration, setCliffDuration] = useState(5184000);
   const [vestingDuration, setVestingDuration] = useState(5184000);
   const [percentageVested, setPercentageVested] = useState(100);
-
 
   useEffect(() => {
     if (isWalletEnabled == true && activeContract != null && currentAccount != null && typeof seedIndex == "undefined") {
@@ -182,6 +181,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       getAddress(chainId, "seedFactoryAddress"),
       toWei(tokenAmount),
       convertedRate,
+      lockDuration,
       cliffDuration,
       vestingDuration,
       percentageVested,
@@ -453,25 +453,60 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <TableR>
                       <TableD>
                         <div style={{ display: "flex", justifyContent: "center" }}>
-                          <TableLabel selected={selectedTokenKey == "native"} onClick={e => handleOfferedTokenAddress(e)} data-token="native" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight:3 }}>
+                          <TableLabel
+                            selected={selectedTokenKey == "native"}
+                            onClick={e => handleOfferedTokenAddress(e)}
+                            data-token="native"
+                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                          >
                             {nativeTokenName}
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "usdc"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdc" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight:3 }}>
+                          <TableLabel
+                            selected={selectedTokenKey == "usdc"}
+                            onClick={e => handleOfferedTokenAddress(e)}
+                            data-token="usdc"
+                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                          >
                             USDC
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "usdt"} onClick={e => handleOfferedTokenAddress(e)} data-token="usdt" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 , marginRight:3}}>
+                          <TableLabel
+                            selected={selectedTokenKey == "usdt"}
+                            onClick={e => handleOfferedTokenAddress(e)}
+                            data-token="usdt"
+                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                          >
                             USDT
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "dai"} onClick={e => handleOfferedTokenAddress(e)} data-token="dai" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight:3 }}>
+                          <TableLabel
+                            selected={selectedTokenKey == "dai"}
+                            onClick={e => handleOfferedTokenAddress(e)}
+                            data-token="dai"
+                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                          >
                             DAI
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "frax"} onClick={e => handleOfferedTokenAddress(e)} data-token="frax" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 , marginRight:3}}>
+                          <TableLabel
+                            selected={selectedTokenKey == "frax"}
+                            onClick={e => handleOfferedTokenAddress(e)}
+                            data-token="frax"
+                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                          >
                             FRAX
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "shn"} onClick={e => handleOfferedTokenAddress(e)} data-token="shn" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 , marginRight:3}}>
+                          <TableLabel
+                            selected={selectedTokenKey == "shn"}
+                            onClick={e => handleOfferedTokenAddress(e)}
+                            data-token="shn"
+                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                          >
                             SHN
                           </TableLabel>
-                          <TableLabel selected={selectedTokenKey == "custom"} onClick={e => handleOfferedTokenAddress(e)} data-token="custom" style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20 , marginRight:3}}>
+                          <TableLabel
+                            selected={selectedTokenKey == "custom"}
+                            onClick={e => handleOfferedTokenAddress(e)}
+                            data-token="custom"
+                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                          >
                             Custom Address
                           </TableLabel>
                         </div>
@@ -483,7 +518,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-                  <label for="rate">Token rate B/A </label>
+                  <label for="rate">Token rate A/B </label>
 
                   {false && (
                     <input
@@ -502,6 +537,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
                   <h2>Schedule</h2>
                 </div>
+
                 <div>
                   <table>
                     <TableR>
@@ -523,6 +559,10 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       </TableD>
                     </TableR>
                   </table>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    In case some offered tokens are not sold, you will be able to claim it back after the end timestamp<br></br>
+                    <br></br>
+                  </div>
                 </div>
               </div>
               <div style={{ background: "#4f4fc8" }}>
@@ -546,9 +586,11 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         <input type="radio" onChange={event => setAccessMechanism(event.target.value)} checked={accessMechanism === "token-gate-tiers"} value="token-gate-tiers" name="access" /> Token Gate + Tiers{" "}
                       </td>
 
-                      <td>
-                        <input type="checkbox" checked={requireKyc} onChange={() => handleKycCheckbox(requireKyc)} /> Require KYC{" "}
-                      </td>
+                      {false && (
+                        <td>
+                          <input type="checkbox" checked={requireKyc} onChange={() => handleKycCheckbox(requireKyc)} /> Require KYC{" "}
+                        </td>
+                      )}
                     </div>
                   </TableR>
                   {accessMechanism == "whitelist" && (
@@ -737,7 +779,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <table>
                       <TableR>
                         <TableD>% Locked</TableD>
-                        <TableD>Seconds Locked</TableD>
+                        <TableD>Lock Duration (in seconds)</TableD>
                       </TableR>
                       <TableR>
                         <TableD>
@@ -746,7 +788,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         </TableD>
                         <TableD>
                           {" "}
-                          <input name="locked-until" onChange={target => setLockedUntil(target.target.value.toLocaleLowerCase())} value={lockedUntil} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
+                          <input name="lock-duration" onChange={target => setLockDuration(target.target.value.toLocaleLowerCase())} value={lockDuration} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> 
                         </TableD>
                       </TableR>
                     </table>
@@ -800,7 +842,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <input type="radio" checked={visibility === "private"} value="private" name="visibility" /> False
                   </td>
                 </div>
-                <div style={{ display: "flex", justifyContent: "center" }}>{visibility == "public" ? "Deal is going to be listed on the main page" : "Deal is going to be accessible over a generated link"}</div>
+                <div style={{ display: "flex", justifyContent: "center" }}>{visibility == "public" ? "Deal is going to be listed on the main page and accessible over a generated link" : "Deal is only going to be accessible over a generated link"}</div>
               </div>
 
               <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", paddingBottom: 10, paddingTop: 8 }}>
@@ -977,86 +1019,88 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 },
                 index
               ) => {
-                return (
-                  <Card
-                    key={index}
-                    flexDirection="column"
-                    alignItems="flex-start"
-                    margin="5px"
-                    padding="0px 0px 0px 35px"
-                    clickable="true"
-                    border="1px solid white"
-                    width="350px"
-                    height="400px"
-                    background={index == seedIndex ? "#2f2f2f" : "black"}
-                    index={index}
-                    onClick={() => handleSeedClick(index, seedAddress)}
-                  >
-                    <div>
-                      {getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap)}
-                      {false && <div>{getVisibilityStatus(dealVisibility, currentAccount)} </div>}
-                    </div>
-                    <h1>{name}</h1>
-                    {false && (
+                if (dealVisibility === true) {
+                  return (
+                    <Card
+                      key={index}
+                      flexDirection="column"
+                      alignItems="flex-start"
+                      margin="5px"
+                      padding="0px 0px 0px 35px"
+                      clickable="true"
+                      border="1px solid white"
+                      width="350px"
+                      height="400px"
+                      background={index == seedIndex ? "#2f2f2f" : "black"}
+                      index={index}
+                      onClick={() => handleSeedClick(index, seedAddress)}
+                    >
                       <div>
-                        - {offeredTokenName} - {acceptedTokenSymbol} - {fromWei(weiRaised)}
+                        {getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap)}
+                        {false && <div>{getVisibilityStatus(dealVisibility, currentAccount)} </div>}
                       </div>
-                    )}
-                    <div>
-                      <b>Tokens:</b>
-                      <SmallerText>
+                      <h1>{name}</h1>
+                      {false && (
+                        <div>
+                          - {offeredTokenName} - {acceptedTokenSymbol} - {fromWei(weiRaised)}
+                        </div>
+                      )}
+                      <div>
+                        <b>Tokens:</b>
+                        <SmallerText>
+                          {" "}
+                          {offeredTokenSymbol} for {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                        </SmallerText>
+                      </div>
+                      <div>
                         {" "}
-                        {offeredTokenSymbol} for {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
-                      </SmallerText>
-                    </div>
-                    <div>
-                      {" "}
-                      <b>Deal size</b>{" "}
-                      <SmallerText>
-                        {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromFixed(rate) * fromWei(totalOffered)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
-                      </SmallerText>
-                    </div>
-                    <div>
-                      {" "}
-                      <b>Rate</b>{" "}
-                      <SmallerText>
-                        {fromFixed(rate)} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
-                      </SmallerText>
-                    </div>
-                    <div>
-                      <b> Start time</b> <SmallerText>{timeConverter(startTime)}</SmallerText>
-                    </div>
-                    <div>
-                      <b>End time </b>
-                      <SmallerText> {timeConverter(endTime)}</SmallerText>
-                    </div>
-                    {false && (
-                      <div>
-                        <b>Offered Token Address</b> <SmallerText>{substringAddress(offeredTokenAddress)}</SmallerText>
+                        <b>Deal size</b>{" "}
+                        <SmallerText>
+                          {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromFixed(rate) * fromWei(totalOffered)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                        </SmallerText>
                       </div>
-                    )}
-                    {false && (
                       <div>
-                        <b>Accepted Token Address</b>
-                        <SmallerText> {substringAddress(acceptedTokenAddress)}</SmallerText>
+                        {" "}
+                        <b>Rate</b>{" "}
+                        <SmallerText>
+                          {fromFixed(rate)} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                        </SmallerText>
                       </div>
-                    )}{" "}
-                    {false && (
                       <div>
-                        <b>Visibility </b>
-                        <SmallerText> {dealVisibility ? "Public" : "Private"}</SmallerText>
+                        <b> Start time</b> <SmallerText>{timeConverter(startTime)}</SmallerText>
                       </div>
-                    )}
-                    <div>
-                      <b>Access Type </b>
-                      <SmallerText> {getAccessStatus(accessMechanism)}</SmallerText>
-                    </div>
-                    <div>
-                      <b>Distribution Type </b>
-                      <SmallerText> {distributionMechanism}</SmallerText>
-                    </div>
-                  </Card>
-                );
+                      <div>
+                        <b>End time </b>
+                        <SmallerText> {timeConverter(endTime)}</SmallerText>
+                      </div>
+                      {false && (
+                        <div>
+                          <b>Offered Token Address</b> <SmallerText>{substringAddress(offeredTokenAddress)}</SmallerText>
+                        </div>
+                      )}
+                      {false && (
+                        <div>
+                          <b>Accepted Token Address</b>
+                          <SmallerText> {substringAddress(acceptedTokenAddress)}</SmallerText>
+                        </div>
+                      )}{" "}
+                      {false && (
+                        <div>
+                          <b>Visibility </b>
+                          <SmallerText> {dealVisibility ? "Public" : "Private"}</SmallerText>
+                        </div>
+                      )}
+                      <div>
+                        <b>Access Type </b>
+                        <SmallerText> {getAccessStatus(accessMechanism)}</SmallerText>
+                      </div>
+                      <div>
+                        <b>Distribution Type </b>
+                        <SmallerText> {distributionMechanism}</SmallerText>
+                      </div>
+                    </Card>
+                  );
+                }
               }
             )}
         </div>

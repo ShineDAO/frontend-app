@@ -1416,6 +1416,7 @@ export async function deployNewSeed(
   seedFactoryAddress,
   amount,
   rate,
+  lockDuration,
   cliffDuration,
   vestingDuration,
   percentageVested,
@@ -1522,7 +1523,7 @@ export async function deployNewSeed(
       index = index + 1;
       setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       if (distributionMechanism == "lock") {
-        await setVesting(userAddress, SeedAbi, seedAddress, vestingDuration, vestingDuration, percentageVested); // in case of locks without no linear vesting, cliff and vesting duration are the same.
+        await setVesting(userAddress, SeedAbi, seedAddress, lockDuration, lockDuration, percentageVested); // in case of locks without no linear vesting, cliff and vesting duration are the same.
         currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
         await setLoadingIndicator(currentLoadingIndicator);
         currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
@@ -1791,13 +1792,28 @@ export async function approveContract(userAddress, tokenAbi, tokenAddress, addre
     console.log("create lock error ", e);
   }
 }
+
+export async function recoverErc20Tokens(userAddress, SeedAbi, seedAddress,offeredTokenAddress,tokenAmount) {
+    var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+    let estimatedGas = await seedInstance.methods.recoverERC20(offeredTokenAddress, tokenAmount).estimateGas({
+      from: userAddress,
+    });
+    console.log("estimated gas for sync", estimatedGas);
+  
+    const receipt = await seedInstance.methods.recoverERC20(offeredTokenAddress, tokenAmount).send({
+      from: userAddress,
+      gas: estimatedGas,
+    });
+    console.log("ERC20 Tokens recovered", receipt);
+}
+
 export function getTokenRatio(tokenA, tokenB) {
-  const rate = tokenB / tokenA;
+  const rate = tokenA / tokenB;
   return (rate * 1000000000000000000000000).toLocaleString("fullwide", { useGrouping: false }); // multiplication with 1000000000000000000000000 is there in order to support fixed float operations. For example without it, some tokens ratios could not be offered. Lets say 1USDC for 0.1TKNx rate would be 0.1 which is not supported in Solidity. More info: https://github.com/CementDAO/Fixidity/blob/master/contracts/FixidityLib.sol
 }
 
 export function fromFixed(tokenRatio) {
-  return tokenRatio / 1000000000000000000000000;
+  return (tokenRatio / 1000000000000000000000000).toFixed();
 }
 
 export function getTokenRate(nativeTokenPriceInUsd, offeredTokenPriceInUsd) {

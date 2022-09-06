@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button } from "components/common";
 import { ThemeContext } from "providers/ThemeProvider";
 
-import { getOnlyUserAddress, deployNewSeed, getSeedSales, getCoingeckoName, getNetworkName, getRateInUsd, getNativeTokenPrice, ZERO_ADDRESS } from "../../../templates/utils.js";
+import { getOnlyUserAddress, deployNewSeed, getSeedSales, getCoingeckoName, getNetworkName, getRateInUsd, getNativeTokenPrice, ZERO_ADDRESS, recoverErc20Tokens } from "../../../templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
 import ERC20 from "../../../../../static/abi/ShineToken";
@@ -299,7 +299,7 @@ export function SeedCard({
             Token Gated With Tiers
           </Text>
           <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-            Your Balance - {fromWei(accessTokenBalance)} {accessTokenSymbol} {calculatedTier}
+            Your Balance: {fromWei(accessTokenBalance)} {accessTokenSymbol} ({calculatedTier})
           </Text>
           <div style={{ display: "flex", paddingTop: 10, paddingBottom: 10, flexWrap: "wrap", justifyContent: "space-between" }}>
             <div style={{ paddingBottom: 10, paddingRight: 10 }}>
@@ -389,6 +389,10 @@ export function SeedCard({
     setDealsVisible(true);
   }
 
+  async function handleWithdrawUnsoldTokens() {
+    await recoverErc20Tokens(currentAccount, Seed.abi, seedAddress, offeredTokenAddress, utils.toWei(seedSaleShnBalance));
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", paddingTop: 50, alignItems: "center" }}>
       <div onClick={() => setExpansionDetails()} style={{ cursor: "pointer" }}>
@@ -462,8 +466,11 @@ export function SeedCard({
               </Card>
             )}
 
+            <br></br>
+            <br></br>
+            {secondsSinceEpoch > endTime && <Button onClick={() => handleWithdrawUnsoldTokens()}>Widthdraw Unsold Tokens</Button>}
             <Text color="red" fontWeight={800}>
-              {endTime && secondsSinceEpoch > endTime && "Sale closed!"}
+              {endTime && secondsSinceEpoch > endTime && "Deal closed!"}
             </Text>
             <br></br>
             <br></br>
@@ -473,7 +480,7 @@ export function SeedCard({
         <TokenCard>
           <TitleText fontWeight={800} fontSize="24px" color="white">
             Offered Token Address{" "}
-            <Link href={`${chainId}== "0x1" ? "etherscan.io" : "polygonscan.com"}/address/${tokenContractAddress}`} target="_blank">
+            <Link href={`${chainId == "0x1" ? "https://etherscan.io" : `https://polygonscan.com/address/${tokenContractAddress}`}`} target="_blank">
               {tokenContractAddress.substring(0, 6)}...{tokenContractAddress.substring(tokenContractAddress.length - 4)}
             </Link>
           </TitleText>
@@ -535,7 +542,7 @@ export function SeedCard({
                     Offered token balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
                   </span>
                   <br />
-                
+
                   <br />
                   {weiRaised && (
                     <div>
@@ -543,7 +550,6 @@ export function SeedCard({
                       <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
                       <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
                     </div>
-                    
                   )}
                   {true && (
                     <span>
