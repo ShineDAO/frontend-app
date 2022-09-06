@@ -1591,38 +1591,84 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
 
   for (iteratorStartingPoint; iteratorStartingPoint < count; iteratorStartingPoint++) {
     console.log("count acc", iteratorStartingPoint, count);
-    let seedAddress =  (await SeedFactoryInstance.methods.data(iteratorStartingPoint).call()).toLowerCase();
+    let seedAddress = (await SeedFactoryInstance.methods.data(iteratorStartingPoint).call()).toLowerCase();
     let seedInstance = new window.web3.eth.Contract(seedAbi, seedAddress);
-    let offeredTokenAddress =  seedInstance.methods.token().call();
-    let acceptedTokenAddress =  seedInstance.methods.acceptedToken().call();
-    let rate =  seedInstance.methods.rate().call();
-    let vestedBalance =  seedInstance.methods.vestedBalances(userAddress).call();
-    let vestingPeriod =  seedInstance.methods.vestingPeriod(userAddress).call();
-    let cliffPeriod =  seedInstance.methods.cliffPeriod(userAddress).call();
-    let startTime =  seedInstance.methods.startTime().call();
-    let endTime =  seedInstance.methods.endTime().call();
-    let weiRaised =  seedInstance.methods.weiRaised().call();
-    let name =  seedInstance.methods.name().call();
-    let createdTimestamp =  seedInstance.methods.createdTimestamp().call();
-    let totalOffered =  seedInstance.methods.totalOffered().call();
+    let offeredTokenAddress = seedInstance.methods.token().call();
+    let acceptedTokenAddress = seedInstance.methods.acceptedToken().call();
+    let rate = seedInstance.methods.rate().call();
+    let vestedBalance = seedInstance.methods.vestedBalances(userAddress).call();
+    let vestingPeriod = seedInstance.methods.vestingPeriod(userAddress).call();
+    let cliffPeriod = seedInstance.methods.cliffPeriod(userAddress).call();
+    let startTime = seedInstance.methods.startTime().call();
+    let endTime = seedInstance.methods.endTime().call();
+    let weiRaised = seedInstance.methods.weiRaised().call();
+    let name = seedInstance.methods.name().call();
+    let createdTimestamp = seedInstance.methods.createdTimestamp().call();
+    let totalOffered = seedInstance.methods.totalOffered().call();
 
-    let capPerAddressEnabled =  seedInstance.methods.capPerAddressEnabled().call();
-    let capPerAddress =  seedInstance.methods.capPerAddress(userAddress).call();
+    let capPerAddressEnabled = seedInstance.methods.capPerAddressEnabled().call();
+    let capPerAddress = seedInstance.methods.capPerAddress(userAddress).call();
 
-    let accessNFT =  seedInstance.methods.accessNFT().call();
-    let accessNTT =  seedInstance.methods.accessNTT().call();
-    let accessToken =  seedInstance.methods.accessToken().call();
+    let accessNFT = seedInstance.methods.accessNFT().call();
+    let accessNTT = seedInstance.methods.accessNTT().call();
+    let accessToken = seedInstance.methods.accessToken().call();
 
-    let vestingEnabled =  seedInstance.methods.vestingEnabled().call();
-    let cliffDuration =  seedInstance.methods.cliffDuration().call();
+    let vestingEnabled = seedInstance.methods.vestingEnabled().call();
+    let cliffDuration = seedInstance.methods.cliffDuration().call();
     let vestingDuration = seedInstance.methods.vestingDuration().call();
-    let percentageVested =  seedInstance.methods.percentageVested().call();
+    let percentageVested = seedInstance.methods.percentageVested().call();
 
-    let dealVisibility =  seedInstance.methods.dealVisibility().call();
+    let dealVisibility = seedInstance.methods.dealVisibility().call();
 
-
-    [seedAddress,offeredTokenAddress,acceptedTokenAddress,rate,vestedBalance,vestingPeriod,cliffPeriod,startTime,endTime,weiRaised,name,createdTimestamp,totalOffered,capPerAddressEnabled,capPerAddress,accessNFT,accessNTT,accessToken,vestingEnabled,cliffDuration,vestingDuration,percentageVested,dealVisibility] = await Promise.all([seedAddress,offeredTokenAddress,acceptedTokenAddress,rate,vestedBalance,vestingPeriod,cliffPeriod,startTime,endTime,weiRaised,name,createdTimestamp,totalOffered,capPerAddressEnabled,capPerAddress,accessNFT,accessNTT,accessToken,vestingEnabled,cliffDuration,vestingDuration,percentageVested,dealVisibility]);
-
+    [
+      seedAddress,
+      offeredTokenAddress,
+      acceptedTokenAddress,
+      rate,
+      vestedBalance,
+      vestingPeriod,
+      cliffPeriod,
+      startTime,
+      endTime,
+      weiRaised,
+      name,
+      createdTimestamp,
+      totalOffered,
+      capPerAddressEnabled,
+      capPerAddress,
+      accessNFT,
+      accessNTT,
+      accessToken,
+      vestingEnabled,
+      cliffDuration,
+      vestingDuration,
+      percentageVested,
+      dealVisibility,
+    ] = await Promise.all([
+      seedAddress,
+      offeredTokenAddress,
+      acceptedTokenAddress,
+      rate,
+      vestedBalance,
+      vestingPeriod,
+      cliffPeriod,
+      startTime,
+      endTime,
+      weiRaised,
+      name,
+      createdTimestamp,
+      totalOffered,
+      capPerAddressEnabled,
+      capPerAddress,
+      accessNFT,
+      accessNTT,
+      accessToken,
+      vestingEnabled,
+      cliffDuration,
+      vestingDuration,
+      percentageVested,
+      dealVisibility,
+    ]);
 
     let distributionMechanism = "instant";
     if (vestingEnabled) {
@@ -1641,28 +1687,28 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       accessMechanism = "whitelist";
     } else if (accessNFT != ZERO_ADDRESS) {
       accessMechanism = "nft-gate";
-      nftBalance =  getNftBalance(userAddress, erc721Abi, accessNFT);
-      capForNFT =  seedInstance.methods.capForNFT().call();
-      [nftBalance,capForNFT] = await Promise.all([nftBalance,capForNFT])
+      nftBalance = getNftBalance(userAddress, erc721Abi, accessNFT);
+      capForNFT = seedInstance.methods.capForNFT().call();
+      [nftBalance, capForNFT] = await Promise.all([nftBalance, capForNFT]);
     } else if (accessToken != ZERO_ADDRESS) {
       accessMechanism = "token-gate-tiers";
       let accessErc20Instance = new window.web3.eth.Contract(erc20Abi, accessToken);
 
-      accessTokenSymbol =  accessErc20Instance.methods.symbol().call();
-      accessTokenBalance =  getTokenBalance(userAddress, erc20Abi, accessToken);
+      accessTokenSymbol = accessErc20Instance.methods.symbol().call();
+      accessTokenBalance = getTokenBalance(userAddress, erc20Abi, accessToken);
 
-      tier1 =  seedInstance.methods.tier1().call();
-      tier2 =  seedInstance.methods.tier2().call();
-      tier3 =  seedInstance.methods.tier3().call();
-      tier4 =  seedInstance.methods.tier4().call();
+      tier1 = seedInstance.methods.tier1().call();
+      tier2 = seedInstance.methods.tier2().call();
+      tier3 = seedInstance.methods.tier3().call();
+      tier4 = seedInstance.methods.tier4().call();
 
-      tier1Cap =  seedInstance.methods.tier1Cap().call();
-      tier2Cap =  seedInstance.methods.tier2Cap().call();
-      tier3Cap =  seedInstance.methods.tier3Cap().call();
-      tier4Cap =  seedInstance.methods.tier4Cap().call();
+      tier1Cap = seedInstance.methods.tier1Cap().call();
+      tier2Cap = seedInstance.methods.tier2Cap().call();
+      tier3Cap = seedInstance.methods.tier3Cap().call();
+      tier4Cap = seedInstance.methods.tier4Cap().call();
 
-      [accessTokenSymbol,accessTokenBalance,tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap] = await Promise.all([accessTokenSymbol,accessTokenBalance,tier1, tier2,tier3,tier4, tier1Cap,tier2Cap,tier3Cap,tier4Cap]);
-      accessTokenBalance=toWei(accessTokenBalance)
+      [accessTokenSymbol, accessTokenBalance, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap] = await Promise.all([accessTokenSymbol, accessTokenBalance, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap]);
+      accessTokenBalance = toWei(accessTokenBalance);
     }
     let kycEnabled = false;
     let nttBalance, hasValidNtt, capForNTT;
@@ -1670,30 +1716,29 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       kycEnabled = true;
       capForNTT = await seedInstance.methods.capForNTT().call();
       //({ nttBalance, hasValidNtt } = await getNttBalanceAndValidity(userAddress, erc4671Abi, accessNTT));
-      [{nttBalance,hasValidNtt}] = await Promise.all([getNttBalanceAndValidity(userAddress, erc4671Abi, accessNTT)])
+      [{ nttBalance, hasValidNtt }] = await Promise.all([getNttBalanceAndValidity(userAddress, erc4671Abi, accessNTT)]);
     }
 
     let rewardPerSecond = vestedBalance / (vestingPeriod - cliffPeriod);
     console.log("token address ()", offeredTokenAddress);
 
     let erc20Instance = new window.web3.eth.Contract(erc20Abi, offeredTokenAddress);
-    let offeredTokenName =  erc20Instance.methods.name().call();
-    let offeredTokenSymbol =  erc20Instance.methods.symbol().call();
-    let offeredTokenTotalSupply =  erc20Instance.methods.totalSupply().call();
+    let offeredTokenName = erc20Instance.methods.name().call();
+    let offeredTokenSymbol = erc20Instance.methods.symbol().call();
+    let offeredTokenTotalSupply = erc20Instance.methods.totalSupply().call();
 
-    [offeredTokenName,offeredTokenSymbol,offeredTokenTotalSupply] = await Promise.all([offeredTokenName,offeredTokenSymbol,offeredTokenTotalSupply]);
-
+    [offeredTokenName, offeredTokenSymbol, offeredTokenTotalSupply] = await Promise.all([offeredTokenName, offeredTokenSymbol, offeredTokenTotalSupply]);
 
     let acceptedTokenName;
     let acceptedTokenSymbol;
     let acceptedTokenBalance;
     if (acceptedTokenAddress != ZERO_ADDRESS) {
       let acceptedErc20Instance = new window.web3.eth.Contract(erc20Abi, acceptedTokenAddress);
-      acceptedTokenName =  acceptedErc20Instance.methods.name().call();
-      acceptedTokenSymbol =  acceptedErc20Instance.methods.symbol().call();
-      acceptedTokenBalance =  acceptedErc20Instance.methods.balanceOf(userAddress).call();
+      acceptedTokenName = acceptedErc20Instance.methods.name().call();
+      acceptedTokenSymbol = acceptedErc20Instance.methods.symbol().call();
+      acceptedTokenBalance = acceptedErc20Instance.methods.balanceOf(userAddress).call();
 
-      [acceptedTokenName,acceptedTokenSymbol,acceptedTokenBalance] = await Promise.all([acceptedTokenName,acceptedTokenSymbol,acceptedTokenBalance]);
+      [acceptedTokenName, acceptedTokenSymbol, acceptedTokenBalance] = await Promise.all([acceptedTokenName, acceptedTokenSymbol, acceptedTokenBalance]);
 
       //let acceptedTokenTotalSupply = await erc20Instance.methods.totalSupply().call();
     }
@@ -1793,29 +1838,37 @@ export async function approveContract(userAddress, tokenAbi, tokenAddress, addre
   }
 }
 
-export async function recoverErc20Tokens(userAddress, SeedAbi, seedAddress,offeredTokenAddress,tokenAmount) {
-    var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
-    let estimatedGas = await seedInstance.methods.recoverERC20(offeredTokenAddress, tokenAmount).estimateGas({
-      from: userAddress,
-    });
-    console.log("estimated gas for sync", estimatedGas);
-  
-    const receipt = await seedInstance.methods.recoverERC20(offeredTokenAddress, tokenAmount).send({
-      from: userAddress,
-      gas: estimatedGas,
-    });
-    console.log("ERC20 Tokens recovered", receipt);
+export async function recoverErc20Tokens(userAddress, SeedAbi, seedAddress, offeredTokenAddress, tokenAmount) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  let estimatedGas = await seedInstance.methods.recoverERC20(offeredTokenAddress, tokenAmount).estimateGas({
+    from: userAddress,
+  });
+  console.log("estimated gas for sync", estimatedGas);
+
+  const receipt = await seedInstance.methods.recoverERC20(offeredTokenAddress, tokenAmount).send({
+    from: userAddress,
+    gas: estimatedGas,
+  });
+  console.log("ERC20 Tokens recovered", receipt);
 }
+const BigNumber = require('bignumber.js');
 
 export function getTokenRatio(tokenA, tokenB) {
   const rate = tokenA / tokenB;
-  return (rate * 1000000000000000000000000).toLocaleString("fullwide", { useGrouping: false }); // multiplication with 1000000000000000000000000 is there in order to support fixed float operations. For example without it, some tokens ratios could not be offered. Lets say 1USDC for 0.1TKNx rate would be 0.1 which is not supported in Solidity. More info: https://github.com/CementDAO/Fixidity/blob/master/contracts/FixidityLib.sol
+
+
+  console.log("cc rate",( new BigNumber(tokenA)).dividedBy(new BigNumber(tokenB)).multipliedBy(new BigNumber("1000000000000000000000000")).toNumber()  );
+  return new BigNumber(tokenA).dividedBy(new BigNumber(tokenB)).multipliedBy(new BigNumber("1000000000000000000000000")).toNumber()  ;
+
+  //return (rate * 1000000000000000000000000).toLocaleString("fullwide", { useGrouping: false }); // multiplication with 1000000000000000000000000 is there in order to support fixed float operations. For example without it, some tokens ratios could not be offered. Lets say 1USDC for 0.1TKNx rate would be 0.1 which is not supported in Solidity. More info: https://github.com/CementDAO/Fixidity/blob/master/contracts/FixidityLib.sol
 }
 
 export function fromFixed(tokenRatio) {
-  return (tokenRatio / 1000000000000000000000000).toFixed();
+  return new BigNumber(tokenRatio).dividedBy(new BigNumber("1000000000000000000000000")).toNumber();
+  //return (tokenRatio / 1000000000000000000000000);
 }
 
+// not used, check getTokenRatio
 export function getTokenRate(nativeTokenPriceInUsd, offeredTokenPriceInUsd) {
   console.log("token rates ", nativeTokenPriceInUsd, offeredTokenPriceInUsd);
   const oneUsdInWei = 1000000000000000000 / nativeTokenPriceInUsd;
