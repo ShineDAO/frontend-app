@@ -77,7 +77,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
 
   const [accessMechanism, setAccessMechanism] = useState("open");
   const [distributionMechanism, setDistributionMechanism] = useState("instant");
-  const [lockDuration, setLockDuration] = useState();
+  const [lockDuration, setLockDuration] = useState(0);
 
   const [whitelistedAddresses, setWhitelistedAddresses] = useState();
   const [capsForWhitelistedAddresses, setcapsForWhitelistedAddresses] = useState();
@@ -98,7 +98,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [tier4Cap, setTier4Cap] = useState(0);
 
   const [startTime, setStartTime] = useState("0");
-  const [endTime, setEndTime] = useState(parseInt(parseInt(Date.now() / 1000 + 60 * 60 * 13).toString())); //3hrs from now
+  const [endTime, setEndTime] = useState(parseInt(parseInt(Date.now() / 1000 + 60 * 60 * 3).toString())); //3hrs from now
 
   const [cliffDuration, setCliffDuration] = useState(5184000);
   const [vestingDuration, setVestingDuration] = useState(5184000);
