@@ -108,6 +108,27 @@ export async function getProjectBalance(setProjectBalance, userAddress, tokenAbi
   setProjectBalance(projectBalanceFromWei);
 }
 
+export async function getErc20Balance(userAddress, tokenContractAddress) {
+  var abiToken = erc20Abi;
+  var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
+
+  let projectBalance = await tokenInst.methods.balanceOf(userAddress).call();
+
+  console.log("balance222222, ", projectBalance);
+
+  var projectBalanceFromWei = window.web3.utils.fromWei(projectBalance, "ether");
+  return projectBalanceFromWei;
+}
+
+export async function getErc20Symbol(tokenContractAddress) {
+  var abiToken = erc20Abi;
+  var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
+
+  let symbol = await tokenInst.methods.symbol().call();
+
+  return symbol;
+}
+
 export async function getTokenBalance(userAddress, tokenAbi, tokenContractAddress) {
   var abiToken = tokenAbi;
   var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
@@ -1445,9 +1466,10 @@ export async function deployNewSeed(
   loadingIndicator,
   setLoadingIndicator,
   successMessage,
-  setSuccessMessage
+  setSuccessMessage,
+  setErrorMessage
 ) {
-  console.log("deployment",  userAddress, offeredTokenAddress, seedFactoryAddress,rate, parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), visibility);
+  console.log("deployment", userAddress, offeredTokenAddress, seedFactoryAddress, rate, parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), visibility);
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
   try {
     //1000000000000000000000000
@@ -1478,8 +1500,8 @@ export async function deployNewSeed(
 
     let seedAddress = await receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
     console.log("seed address ", seedAddress);
+    index = index + 1;
     if (accessMechanism != "open") {
-      index = index + 1;
       await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       if (accessMechanism == "whitelist") {
         await setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses);
@@ -1509,8 +1531,8 @@ export async function deployNewSeed(
         await setSuccessMessage(currentSuccessMessage);
       }
     }
+    index = index + 1;
     if (requireKyc) {
-      index = index + 1;
       await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       console.log("address of deployed contract ", seedAddress);
       await setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCap);
@@ -1519,8 +1541,8 @@ export async function deployNewSeed(
       currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
       await setSuccessMessage(currentSuccessMessage);
     }
+    index = index + 1;
     if (distributionMechanism != "instant") {
-      index = index + 1;
       setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       if (distributionMechanism == "lock") {
         await setVesting(userAddress, SeedAbi, seedAddress, lockDuration, lockDuration, percentageVested); // in case of locks without no linear vesting, cliff and vesting duration are the same.
@@ -1536,8 +1558,8 @@ export async function deployNewSeed(
         await setSuccessMessage(currentSuccessMessage);
       }
     }
+    index = index + 1;
     if (visibility == "public") {
-      index = index + 1;
       await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       await setVisibility(userAddress, SeedAbi, seedAddress, visibility);
       currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
@@ -1563,6 +1585,15 @@ export async function deployNewSeed(
     console.log("receipt", receipt);
     return seedAddress;
   } catch (e) {
+    let errore = e.toString();
+    if (errore.indexOf("Internal JSON-RPC error.") > -1) {
+      errore = errore
+        .replace("\n", "")
+        .replace("Error: ", "")
+        .replace("Internal JSON-RPC error.", "");
+      errore = JSON.parse(errore);
+    }
+    setErrorMessage(errore.message);
     console.log("Error while deploying new Seed contract ", e);
   }
 }
@@ -1851,23 +1882,22 @@ export async function recoverErc20Tokens(userAddress, SeedAbi, seedAddress, offe
   });
   console.log("ERC20 Tokens recovered", receipt);
 }
-const BigNumber = require('bignumber.js');
+const BigNumber = require("bignumber.js");
 
 export function getTokenRatio(tokenA, tokenB) {
   const rate = tokenA / tokenB;
 
+  console.log("cc2 rate", !(rate != rate) && window.web3.utils.toWei(rate.toString(), "mether")); //https://stackoverflow.com/questions/35048081/javascript-isnan-function-not-working
 
-  console.log("cc2 rate", !(rate!=rate) && window.web3.utils.toWei(rate.toString(), 'mether')  ); //https://stackoverflow.com/questions/35048081/javascript-isnan-function-not-working
-  
-  return !(rate!=rate) ? window.web3.utils.toWei(rate.toString(), 'mether') : 0
+  return !(rate != rate) ? window.web3.utils.toWei(rate.toString(), "mether") : 0;
   //return new BigNumber(tokenA).dividedBy(new BigNumber(tokenB)).multipliedBy(new BigNumber("1000000000000000000000000")).toNumber()  ;
 
   //return (rate * 1000000000000000000000000).toLocaleString("fullwide", { useGrouping: false }); // multiplication with 1000000000000000000000000 is there in order to support fixed float operations. For example without it, some tokens ratios could not be offered. Lets say 1USDC for 0.1TKNx rate would be 0.1 which is not supported in Solidity. More info: https://github.com/CementDAO/Fixidity/blob/master/contracts/FixidityLib.sol
 }
 
 export function fromFixed(tokenRatio) {
-  console.log("cc23 ", !(tokenRatio!=tokenRatio) && window.web3.utils.fromWei(tokenRatio.toString(), 'mether'))
-  return !(tokenRatio!=tokenRatio) ? window.web3.utils.fromWei(tokenRatio.toString(), 'mether') : 0
+  console.log("cc23 ", !(tokenRatio != tokenRatio) && window.web3.utils.fromWei(tokenRatio.toString(), "mether"));
+  return !(tokenRatio != tokenRatio) ? window.web3.utils.fromWei(tokenRatio.toString(), "mether") : 0;
   //return new BigNumber(tokenRatio).dividedBy(new BigNumber("1000000000000000000000000")).toNumber();
   //return (tokenRatio / 1000000000000000000000000);
 }
@@ -1926,6 +1956,41 @@ export function substringAddress(address) {
   return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
 }
 
+export const erc20Abi = [
+  {
+    constant: true,
+    inputs: [],
+    name: "symbol",
+    outputs: [
+      {
+        name: "",
+        type: "string",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "_owner",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        name: "balance",
+        type: "uint256",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+];
 export const erc721Abi = [
   {
     inputs: [

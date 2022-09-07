@@ -25,6 +25,8 @@ import {
   timeConverter,
   substringAddress,
   getTokenBalance,
+  getErc20Balance,
+  getErc20Symbol,
   getNftBalance,
   erc721Abi,
   erc4671Abi,
@@ -41,15 +43,25 @@ import axios from "axios";
 import { WalletContext } from "providers/WalletProvider";
 import { Tab } from "react-bootstrap";
 import { families } from "detect.js";
+import { ErrorMessage } from "formik";
 
 export function SeedContainer({ activeContract, setActiveContract }) {
-  const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
+  const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, nativeBalance, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
+
+  const [offeredTokenBalance, setOfferedTokenBalance] = useState();
+  const [acceptedTokenBalance, setAcceptedTokenBalance] = useState();
+  const [tokenASymbol, setTokenASymbol] = useState();
+  const [tokenBSymbol, setTokenBSymbol] = useState();
+
   const [createdTag, setCreatedTag] = useState();
 
   const [salesLoading, setSalesLoading] = useState(false);
 
   //const [userAddress, setUserAddress] = useState();
+  const [tokenSectionError, setTokenSectionError] = useState();
   const [successMessage, setSuccessMessage] = useState(["none"]);
+  const [errorMessage, setErrorMessage] = useState();
+
   const [cardVisible, setCardVisible] = useState(false);
   const [dealsVisible, setDealsVisible] = useState(true);
   const [formVisible, setFormVisible] = useState(false);
@@ -58,7 +70,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
 
   const [nativeTokenUsed, setNativeTokenUsed] = useState(true);
   const [isListedCustomTokenUsed, setIsListedCustomTokenUsed] = useState(true); // for example if USDC, USDT are used
-  const [selectedTokenKey, setSelectedTokenKey] = useState();
+  const [selectedTokenKey, setSelectedTokenKey] = useState("native");
   const [stablesUsed, setStablesUsed] = useState(true);
   const [maxRaise, setMaxRaise] = useState();
   const [visibility, setVisibility] = useState("private");
@@ -135,11 +147,41 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   }, [isWalletEnabled, currentAccount, refetchData, chainId, seedIndex, activeContract]);
 
   useEffect(() => {
-    console.log("allowance ", allowance, offeredTokenAddress);
-    if (typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "") {
-      getAllowance(setAllowance, getAddress(chainId, "seedFactoryAddress"), currentAccount, ERC20.abi, offeredTokenAddress);
+    console.log("roki ", Number(offeredTokenBalance),Number(tokenAmount),offeredTokenBalance < tokenAmount && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "")
+    if (Number(offeredTokenBalance) < Number(tokenAmount) && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "") {
+      setTokenSectionError("You don't have enough offered tokens (A) in your balance to launch a deal successfully");
+    }else{
+      setTokenSectionError();
+
     }
+  }, [offeredTokenBalance, offeredTokenAddress,tokenAmount]);
+
+  useEffect(() => {
+    console.log("allowance ", allowance, offeredTokenAddress);
+    async function loadData() {
+      if (typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "") {
+        console.log("balance1, ", await getErc20Balance(currentAccount, offeredTokenAddress));
+        getAllowance(setAllowance, getAddress(chainId, "seedFactoryAddress"), currentAccount, ERC20.abi, offeredTokenAddress);
+        setOfferedTokenBalance(await getErc20Balance(currentAccount, offeredTokenAddress));
+        setTokenASymbol(await getErc20Symbol(offeredTokenAddress));
+      } else {
+        setOfferedTokenBalance(0);
+        setTokenASymbol("");
+      }
+    }
+    loadData();
   }, [offeredTokenAddress]);
+
+  useEffect(() => {
+    async function loadDataForAcceptedTokenAddress() {
+      console.log("balance2", currentAccount, acceptedTokenAddress, typeof acceptedTokenAddress, typeof acceptedTokenAddress !== "undefined" && acceptedTokenAddress !== "");
+      if (typeof acceptedTokenAddress !== "undefined" && acceptedTokenAddress !== "") {
+        setAcceptedTokenBalance(await getErc20Balance(currentAccount, acceptedTokenAddress));
+        setTokenBSymbol(await getErc20Symbol(acceptedTokenAddress));
+      }
+    }
+    loadDataForAcceptedTokenAddress();
+  }, [acceptedTokenAddress]);
 
   useEffect(() => {
     axios
@@ -172,6 +214,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
 
     console.log("convertedRate", rate, convertedRate, fromFixed(convertedRate), offeredTokenAddress, tokenAmount, acceptedTokenAddress);
     setSuccessMessage(["none"]);
+    setErrorMessage();
     let createdContract = await deployNewSeed(
       currentAccount,
       offeredTokenAddress,
@@ -210,7 +253,8 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       ["none"],
       setLoadingIndicator,
       ["none"],
-      setSuccessMessage
+      setSuccessMessage,
+      setErrorMessage
     );
     setCreatedTag(createdContract);
   }
@@ -356,15 +400,21 @@ export function SeedContainer({ activeContract, setActiveContract }) {
     let offeredTokenKey = data.target.getAttribute("data-token");
     setSelectedTokenKey(offeredTokenKey);
     if (offeredTokenKey == "custom") {
+      setAcceptedTokenBalance(0);
+      setTokenBSymbol("");
       setAcceptedTokenAddress("");
       setIsListedCustomTokenUsed(false);
       setNativeTokenUsed(false);
     } else if (offeredTokenKey == "native") {
       setNativeTokenUsed(true);
+      setAcceptedTokenBalance(0);
+      setTokenBSymbol("");
       setAcceptedTokenAddress("");
       setIsListedCustomTokenUsed(true);
     } else {
       setIsListedCustomTokenUsed(true);
+      setAcceptedTokenBalance(0);
+      setTokenBSymbol("");
       setAcceptedTokenAddress(getTokenAddressFromDealsConfig(chainId, offeredTokenKey));
       setNativeTokenUsed(false);
     }
@@ -408,6 +458,9 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         <label for="offered-erc20-token-address">Offered Token (A) Address:</label>
                       </TableD>
                       <TableD>
+                        <label for="offered-erc20-token-address">Your Balance of token (A): </label>
+                      </TableD>
+                      <TableD>
                         <label for="emitted-token-amount">Offered Token (A) Amount: </label>
                       </TableD>
                     </TableR>
@@ -420,6 +473,9 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           value={offeredTokenAddress}
                           style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}
                         ></input>{" "}
+                      </TableD>
+                      <TableD>
+                        {offeredTokenBalance} {tokenASymbol}
                       </TableD>
                       <TableD>
                         <input
@@ -436,7 +492,10 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         <label for="accepted-token-address">Accepted Token (B) Amount:</label>
                       </TableD>
                       <TableD>
-                        <label for="">Enter amount (Max Raise) </label>
+                        <label for="offered-erc20-token-address">Your Balance of token (B): </label>
+                      </TableD>
+                      <TableD>
+                        <label for="">Accepted Token (B) Amount: </label>
                       </TableD>
                     </TableR>
                     <TableR>
@@ -445,7 +504,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           <input name="accepted-token-address" onChange={target => setAcceptedTokenAddress(target.target.value.toLocaleLowerCase())} value={acceptedTokenAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}></input>{" "}
                         </TableD>
                       }
-
+                      <TableD>{selectedTokenKey == "native" ? `${nativeBalance} ${nativeTokenName}` : `${acceptedTokenBalance} ${tokenBSymbol}`} </TableD>
                       <TableD style={{ paddingLeft: 0 }}>
                         <input name="max-raise" onChange={target => setMaxRaise(target.target.value.toLocaleLowerCase())} value={maxRaise} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}
                       </TableD>
@@ -531,6 +590,12 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   <h4>{fromFixed(convertedRate)}</h4>
                 </div>
                 <br></br>
+                {tokenSectionError && (
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Text color="red">{tokenSectionError}</Text>
+                    <br></br>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -560,7 +625,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     </TableR>
                   </table>
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    In case some offered tokens are not sold, you will be able to claim it back after the end timestamp<br></br>
+                    You will be able to reclaim all unsold tokens after the end timestamp<br></br>
                     <br></br>
                   </div>
                 </div>
@@ -793,7 +858,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       </TableR>
                     </table>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      {percentageVested}% of the tokens are going to be vested for  {lockDuration}  seconds&nbsp; {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
+                      {percentageVested}% of the tokens are going to be vested for {lockDuration} seconds&nbsp; {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
                     </div>
                     <br></br>
                     <br></br>
@@ -822,9 +887,11 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         </TableD>
                       </TableR>
                     </table>
-                    <div style={{ display: "flex", justifyContent: "center" , flexDirection:"column"}}>
-                    {percentageVested < 100 && <span style={{textAlign:"center"}}>{100 - percentageVested}% are going to be released immediatly while</span>}
-                      <span style={{textAlign:"center"}}>{percentageVested}% of the tokens are going to be locked over Cliff Duration of {cliffDuration} seconds and vested linearly over Vesting Duration of {vestingDuration} seconds. </span> 
+                    <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+                      {percentageVested < 100 && <span style={{ textAlign: "center" }}>{100 - percentageVested}% are going to be released immediatly while</span>}
+                      <span style={{ textAlign: "center" }}>
+                        {percentageVested}% of the tokens are going to be locked over Cliff Duration of {cliffDuration} seconds and vested linearly over Vesting Duration of {vestingDuration} seconds.{" "}
+                      </span>
                     </div>
                     <br></br>
                     <br></br>
@@ -927,6 +994,8 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   {successMessage.includes("trx-6-success") && <SmallerText color="green">Success</SmallerText>}
                 </div>
                 <br></br>
+                <div>{errorMessage && <Text color="red">{errorMessage}</Text>}</div>
+                <br></br>
                 <div style={{ textAlign: "center" }}>
                   {createdTag && (
                     <Text color="white" fontWeight={300} fontSize="18px">
@@ -1020,7 +1089,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 },
                 index
               ) => {
-                if (dealVisibility === true) {
+                if (dealVisibility === true && totalOffered != 0) {
                   return (
                     <Card
                       key={index}
