@@ -61,7 +61,6 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [notEnoughTokensAError, setNotEnoughTokensAError] = useState(false);
   const [titleError, setTitleError] = useState(false);
 
-  
   const [successMessage, setSuccessMessage] = useState(["none"]);
   const [errorMessage, setErrorMessage] = useState();
 
@@ -128,16 +127,14 @@ export function SeedContainer({ activeContract, setActiveContract }) {
     }
   }, [isWalletEnabled, currentAccount, activeContract]);
   useEffect(() => {
-    if(title.length > 50){
-      setTitleError("Maximum Title length is 50 charachters")
-    }else if (title.length == 0){
-      setTitleError("Please enter value for Title")
-    }else{
-      setTitleError(false)
+    if (title.length > 50) {
+      setTitleError("Maximum Title length is 50 charachters");
+    } else if (title.length == 0) {
+      setTitleError("Please enter value for Title");
+    } else {
+      setTitleError(false);
     }
   }, [title]);
-
-  
 
   useEffect(() => {
     if (isWalletEnabled == true && currentAccount != null) {
@@ -161,14 +158,12 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   }, [isWalletEnabled, currentAccount, refetchData, chainId, seedIndex, activeContract]);
 
   useEffect(() => {
-    console.log("roki ", Number(offeredTokenBalance),Number(tokenAmount),offeredTokenBalance < tokenAmount && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "")
     if (Number(offeredTokenBalance) < Number(tokenAmount) && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "") {
       setNotEnoughTokensAError("You don't have enough offered tokens (A) in your balance to launch a deal successfully");
-    }else{
+    } else {
       setNotEnoughTokensAError(false);
-
     }
-  }, [offeredTokenBalance, offeredTokenAddress,tokenAmount]);
+  }, [offeredTokenBalance, offeredTokenAddress, tokenAmount]);
 
   useEffect(() => {
     console.log("allowance ", allowance, offeredTokenAddress);
@@ -610,14 +605,12 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <br></br>
                   </div>
                 )}
-                {
-                  titleError && (
-                    <div style={{ display: "flex", justifyContent: "center" }}>
+                {titleError && (
+                  <div style={{ display: "flex", justifyContent: "center" }}>
                     <Text color="red">{titleError}</Text>
                     <br></br>
                   </div>
-                  )
-                }
+                )}
               </div>
 
               <div>
@@ -1040,7 +1033,9 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       <br></br>
       <br></br>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        {formVisible &&  notEnoughTokensAError==false && titleError==false &&<Button onClick={() => handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddress)}>Launch Deal</Button>}
+        {formVisible && typeof tokenAmount != "undefined" && typeof maxRaise !=="undefined" && maxRaise !=="" && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "" && notEnoughTokensAError == false && titleError == false && (
+          <Button onClick={() => handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddress)}>Launch Deal</Button>
+        )}
         {!salesLoading && !activeContract && isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
         {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
       </div>

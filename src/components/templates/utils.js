@@ -1592,8 +1592,11 @@ export async function deployNewSeed(
         .replace("Error: ", "")
         .replace("Internal JSON-RPC error.", "");
       errore = JSON.parse(errore);
+      setErrorMessage(errore.message);
+    }else{
+      setErrorMessage(e)
     }
-    setErrorMessage(errore.message);
+    
     console.log("Error while deploying new Seed contract ", e);
   }
 }
@@ -1885,7 +1888,12 @@ export async function recoverErc20Tokens(userAddress, SeedAbi, seedAddress, offe
 const BigNumber = require("bignumber.js");
 
 export function getTokenRatio(tokenA, tokenB) {
-  const rate = tokenA / tokenB;
+  let rate;
+  if (Number(tokenB)!==0 && typeof tokenB!=="undefined"){
+     rate = tokenA / tokenB;
+  }else{
+    rate = 0;
+  }
 
   console.log("cc2 rate", !(rate != rate) && window.web3.utils.toWei(rate.toString(), "mether")); //https://stackoverflow.com/questions/35048081/javascript-isnan-function-not-working
 
