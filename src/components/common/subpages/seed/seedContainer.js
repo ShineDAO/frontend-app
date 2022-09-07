@@ -622,16 +622,16 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   <table>
                     <TableR>
                       <TableD>
-                        <label for="start-time">Start Timestamp:</label> 
+                        <label for="start-time">Start Timestamp (Unix Timestamp):</label> 
                       </TableD>
                       <TableD>
-                        <label for="end-time">End Timestamp:</label>
+                        <label for="end-time">End Timestamp: (Unix Timestamp):</label>
                       </TableD>
                     </TableR>
                     <TableR>
                       <TableD>
                         {" "}
-                        <input name="start-time" onChange={target => setStartTime(target.target.value.toLocaleLowerCase())} value={startTime} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
+                        <input name="start-time" onChange={target => setStartTime(target.target.value.toLocaleLowerCase())} value={startTime == 0 ? "Now" : startTime} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>
                       </TableD>
                       <TableD>
                         {" "}
@@ -639,8 +639,8 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       </TableD>
                     </TableR>
                   </table>
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    You will be able to reclaim all unsold tokens after the end timestamp<br></br>
+                  <div style={{ display: "flex", justifyContent: "center", textAlign:"center"}}>
+                    You will be able to claim remaining Offered Tokens (A) after the End Timestamp, Accepted Token (B) will be sent to your address immediately.<br></br>
                     <br></br>
                   </div>
                 </div>
@@ -1033,7 +1033,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       <br></br>
       <br></br>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        {formVisible && typeof tokenAmount != "undefined" && typeof maxRaise !=="undefined" && maxRaise !=="" && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "" && notEnoughTokensAError == false && titleError == false && (
+        {formVisible && typeof tokenAmount != "undefined" && typeof maxRaise !== "undefined" && maxRaise !== "" && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "" && notEnoughTokensAError == false && titleError == false && (
           <Button onClick={() => handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddress)}>Launch Deal</Button>
         )}
         {!salesLoading && !activeContract && isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
