@@ -583,7 +583,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       </td>
 
                       <td>
-                        <input type="radio" onChange={event => setAccessMechanism(event.target.value)} checked={accessMechanism === "token-gate-tiers"} value="token-gate-tiers" name="access" /> Token Gate + Tiers{" "}
+                        <input type="radio" onChange={event => setAccessMechanism(event.target.value)} checked={accessMechanism === "token-gate-tiers"} value="token-gate-tiers" name="access" /> Token Gate{" "}
                       </td>
 
                       {false && (
@@ -609,7 +609,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         </TableR>
                         <br></br>
                         <TableR>
-                          <TableD>Cap/Address (comma separated)</TableD>
+                          <TableD>Token (B) Cap/Address (comma separated)</TableD>
                         </TableR>
                         <TableR>
                           {" "}
@@ -632,7 +632,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         <TableR>
                           {" "}
                           <TableD>
-                            <label for="NFT-address">Enter NFT address:</label>
+                            <label for="NFT-address">NFT address:</label>
                           </TableD>
                         </TableR>
                         <TableR>
@@ -643,7 +643,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         </TableR>
                         <br></br>
                         <TableR>
-                          <TableD>NFT Cap</TableD>
+                          <TableD>Token (B) Cap/NFT</TableD>
                         </TableR>
                         <TableR>
                           <TableD>
@@ -687,7 +687,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   {accessMechanism == "token-gate-tiers" && (
                     <div>
                       <div style={{ display: "flex", justifyContent: "center" }}>
-                        <label for="access-token-address">Enter access token address:</label>
+                        <label for="access-token-address">Access Token Address: </label>
                         <input
                           name="access-token-address"
                           onChange={target => setAccessTokenAddress(target.target.value.toLocaleLowerCase())}
@@ -704,7 +704,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           value={accessTokenAmountTier1}
                           style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
                         ></input>
-                        <label for="tier-1-max-contribution"> access tokens and max contribution is: </label>
+                        <label for="tier-1-max-contribution"> Access Tokens and Token (B) Cap/Address is: </label>
                         <input name="tier-1-max-contribution" onChange={target => setTier1Cap(target.target.value.toLocaleLowerCase())} value={tier1Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
                         <br></br>
                       </div>
@@ -716,7 +716,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           value={accessTokenAmountTier2}
                           style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
                         ></input>
-                        <label for="tier-2-max-contribution"> access tokens and max contribution is: </label>
+                        <label for="tier-2-max-contribution"> Access Tokens and Token (B) Cap/Address is: </label>
                         <input name="tier-2-max-contribution" onChange={target => setTier2Cap(target.target.value.toLocaleLowerCase())} value={tier2Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
 
                         <br></br>
@@ -729,7 +729,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           value={accessTokenAmountTier3}
                           style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
                         ></input>
-                        <label for="tier-3-max-contribution"> access tokens and max contribution is: </label>
+                        <label for="tier-3-max-contribution"> Access Tokens and Token (B) Cap/Address is: </label>
                         <input name="tier-3-max-contribution" onChange={target => setTier3Cap(target.target.value.toLocaleLowerCase())} value={tier3Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
 
                         <br></br>
@@ -742,7 +742,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           value={accessTokenAmountTier4}
                           style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}
                         ></input>
-                        <label for="tier-4-max-contribution"> access tokens and max contribution is: </label>
+                        <label for="tier-4-max-contribution"> Access Tokens and Token (B) Cap/Address is: </label>
                         <input name="tier-4-max-contribution" onChange={target => setTier4Cap(target.target.value.toLocaleLowerCase())} value={tier4Cap} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20, width: "100px" }}></input>
                       </div>
                     </div>
@@ -763,7 +763,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         <input type="radio" checked={distributionMechanism === "lock"} value="lock" name="distribution" /> Lock
                       </TableD>
                       <TableD>
-                        <input type="radio" checked={distributionMechanism === "linear-vesting"} value="linear-vesting" name="distribution" /> Linear vesting
+                        <input type="radio" checked={distributionMechanism === "linear-vesting"} value="linear-vesting" name="distribution" /> Linear Vesting
                       </TableD>
                     </div>
                   </TableR>
@@ -793,7 +793,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       </TableR>
                     </table>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      {percentageVested}% of the tokens are going to be vested {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
+                      {percentageVested}% of the tokens are going to be vested for  {lockDuration}  seconds&nbsp; {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
                     </div>
                     <br></br>
                     <br></br>
@@ -804,8 +804,8 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <table>
                       <TableR>
                         <TableD>% Locked</TableD>
-                        <TableD>Cliff duration</TableD>
-                        <TableD>Vest duration</TableD>
+                        <TableD>Cliff Duration (s)</TableD>
+                        <TableD>Vest Duration (s)</TableD>
                       </TableR>
                       <TableR>
                         <TableD>
@@ -822,8 +822,9 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         </TableD>
                       </TableR>
                     </table>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      {percentageVested}% of the tokens are going to be vested {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
+                    <div style={{ display: "flex", justifyContent: "center" , flexDirection:"column"}}>
+                    {percentageVested < 100 && <span style={{textAlign:"center"}}>{100 - percentageVested}% are going to be released immediatly while</span>}
+                      <span style={{textAlign:"center"}}>{percentageVested}% of the tokens are going to be locked over Cliff Duration of {cliffDuration} seconds and vested linearly over Vesting Duration of {vestingDuration} seconds. </span> 
                     </div>
                     <br></br>
                     <br></br>
@@ -832,7 +833,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
               </div>
               <div style={{ background: "#4f4fc8" }}>
                 <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
-                  <h2>Deal listed on the mainpage?</h2>
+                  <h2>Listing</h2>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center" }} onChange={event => setVisibility(event.target.value)}>
                   <td>
@@ -842,7 +843,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <input type="radio" checked={visibility === "private"} value="private" name="visibility" /> False
                   </td>
                 </div>
-                <div style={{ display: "flex", justifyContent: "center" }}>{visibility == "public" ? "Deal is going to be listed on the main page and accessible over a generated link" : "Deal is only going to be accessible over a generated link"}</div>
+                <div style={{ display: "flex", justifyContent: "center" }}>{visibility == "public" ? "Deal is going to be listed on the main page and also accessible via a generated link" : "Deal is only going to be accessible via a generated link"}</div>
               </div>
 
               <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", paddingBottom: 10, paddingTop: 8 }}>
