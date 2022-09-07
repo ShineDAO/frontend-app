@@ -421,7 +421,7 @@ export function SeedCard({
                 Total Deal
               </Text>
               <Text color="#a2a2a2" fontWeight={300} fontSize="16px">
-                {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromFixed(rate) * fromWei(totalOffered)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                {fromWei(totalOffered)} {offeredTokenSymbol} for max { fromWei(totalOffered)/ fromFixed(rate) } {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
               </Text>
             </div>
 

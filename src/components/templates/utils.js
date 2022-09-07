@@ -1447,7 +1447,7 @@ export async function deployNewSeed(
   successMessage,
   setSuccessMessage
 ) {
-  console.log(userAddress, offeredTokenAddress, seedFactoryAddress, parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), visibility);
+  console.log("deployment",  userAddress, offeredTokenAddress, seedFactoryAddress,rate, parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), visibility);
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
   try {
     //1000000000000000000000000
@@ -1857,14 +1857,18 @@ export function getTokenRatio(tokenA, tokenB) {
   const rate = tokenA / tokenB;
 
 
-  console.log("cc rate",( new BigNumber(tokenA)).dividedBy(new BigNumber(tokenB)).multipliedBy(new BigNumber("1000000000000000000000000")).toNumber()  );
-  return new BigNumber(tokenA).dividedBy(new BigNumber(tokenB)).multipliedBy(new BigNumber("1000000000000000000000000")).toNumber()  ;
+  console.log("cc2 rate", !(rate!=rate) && window.web3.utils.toWei(rate.toString(), 'mether')  ); //https://stackoverflow.com/questions/35048081/javascript-isnan-function-not-working
+  
+  return !(rate!=rate) ? window.web3.utils.toWei(rate.toString(), 'mether') : 0
+  //return new BigNumber(tokenA).dividedBy(new BigNumber(tokenB)).multipliedBy(new BigNumber("1000000000000000000000000")).toNumber()  ;
 
   //return (rate * 1000000000000000000000000).toLocaleString("fullwide", { useGrouping: false }); // multiplication with 1000000000000000000000000 is there in order to support fixed float operations. For example without it, some tokens ratios could not be offered. Lets say 1USDC for 0.1TKNx rate would be 0.1 which is not supported in Solidity. More info: https://github.com/CementDAO/Fixidity/blob/master/contracts/FixidityLib.sol
 }
 
 export function fromFixed(tokenRatio) {
-  return new BigNumber(tokenRatio).dividedBy(new BigNumber("1000000000000000000000000")).toNumber();
+  console.log("cc23 ", !(tokenRatio!=tokenRatio) && window.web3.utils.fromWei(tokenRatio.toString(), 'mether'))
+  return !(tokenRatio!=tokenRatio) ? window.web3.utils.fromWei(tokenRatio.toString(), 'mether') : 0
+  //return new BigNumber(tokenRatio).dividedBy(new BigNumber("1000000000000000000000000")).toNumber();
   //return (tokenRatio / 1000000000000000000000000);
 }
 
