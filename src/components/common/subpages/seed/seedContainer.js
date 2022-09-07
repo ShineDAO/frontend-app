@@ -405,10 +405,10 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <TableR>
                       <TableD>
                         {" "}
-                        <label for="offered-erc20-token-address">Offered token address: (A)</label>
+                        <label for="offered-erc20-token-address">Offered Token (A) Address:</label>
                       </TableD>
                       <TableD>
-                        <label for="emitted-token-amount">Enter amount: </label>
+                        <label for="emitted-token-amount">Offered Token (A) Amount: </label>
                       </TableD>
                     </TableR>
                     <TableR>
@@ -433,7 +433,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <br></br>
                     <TableR>
                       <TableD>
-                        <label for="accepted-token-address">Token to accept payment in: (B)</label>
+                        <label for="accepted-token-address">Accepted Token (B) Amount:</label>
                       </TableD>
                       <TableD>
                         <label for="">Enter amount (Max Raise) </label>
@@ -518,7 +518,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-                  <label for="rate">Token rate A/B </label>
+                  <label for="rate">Token Rate A/B </label>
 
                   {false && (
                     <input
@@ -542,10 +542,10 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   <table>
                     <TableR>
                       <TableD>
-                        <label for="start-time">Enter start timestamp:</label> 
+                        <label for="start-time">Start Timestamp:</label> 
                       </TableD>
                       <TableD>
-                        <label for="end-time">Enter end timestamp:</label>
+                        <label for="end-time">End Timestamp:</label>
                       </TableD>
                     </TableR>
                     <TableR>

@@ -539,7 +539,7 @@ export function SeedCard({
                   <br />
                   {console.log("vestedSoFar ", vestedSoFar)}
                   <span>
-                    Offered token balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
+                    Offered Token Balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
                   </span>
                   <br />
 
