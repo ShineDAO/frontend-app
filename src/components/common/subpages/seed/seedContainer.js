@@ -93,15 +93,15 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [distributionMechanism, setDistributionMechanism] = useState("instant");
   const [lockDuration, setLockDuration] = useState(0);
 
-  const [whitelistedAddresses, setWhitelistedAddresses] = useState();
-  const [capsForWhitelistedAddresses, setcapsForWhitelistedAddresses] = useState();
+  const [whitelistedAddresses, setWhitelistedAddresses] = useState("");
+  const [capsForWhitelistedAddresses, setcapsForWhitelistedAddresses] = useState("");
   const [nftCap, setNftCap] = useState(0);
   const [nttCap, setNttCap] = useState(0);
 
-  const [nftAddress, setAccessNftAddress] = useState();
-  const [nttAddress, setAccessNttAddress] = useState();
+  const [nftAddress, setAccessNftAddress] = useState("");
+  const [nttAddress, setAccessNttAddress] = useState("");
 
-  const [accessTokenAddress, setAccessTokenAddress] = useState();
+  const [accessTokenAddress, setAccessTokenAddress] = useState("");
   const [accessTokenAmountTier1, setAccessTokenAmountTier1] = useState(0);
   const [accessTokenAmountTier2, setAccessTokenAmountTier2] = useState(0);
   const [accessTokenAmountTier3, setAccessTokenAmountTier3] = useState(0);
@@ -380,6 +380,62 @@ export function SeedContainer({ activeContract, setActiveContract }) {
     }
   }
 
+  function isErrorInAccessMechanism(accessMechanism, whitelistedAddresses, capsForWhitelistedAddresses, nftAddress, nftCap, nttAddress, nttCap, accessTokenAddress, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap) {
+    console.log(
+      "error test",
+      accessMechanism,
+      typeof capsForWhitelistedAddresses != "undefined" && capsForWhitelistedAddresses != "",
+      typeof capsForWhitelistedAddresses == "string" && capsForWhitelistedAddresses == "",
+      capsForWhitelistedAddresses,
+      typeof capsForWhitelistedAddresses,
+      nftCap!=0,
+      typeof nftCap,
+      Number(tier1),
+      Number(tier2),
+      Number(tier3),
+      Number(tier4),
+      (Number(tier1)<Number(tier2)) && (Number(tier2)<Number(tier3)) && (Number(tier3)<Number(tier4))
+    );
+
+    function checkTiersValidity(tier1,tier2,tier3,tier4){
+      if(Number(tier1)<Number(tier2) && (Number(tier2)<Number(tier3)) && (Number(tier3)<Number(tier4))){
+        return true
+      }else{return false}
+    }
+    function checkTierCapsValidity(tier1Cap,tier2Cap,tier3Cap,tier4Cap){
+      if(   (Number(tier1Cap)<Number(tier2Cap)) &&  (Number(tier2Cap)<Number(tier3Cap)) &&  (Number(tier3Cap)<Number(tier4Cap))    ){
+        return true
+      }else{return false}
+    }
+    if (accessMechanism == "open") {
+      return false;
+    } else if (accessMechanism == "whitelist") {
+      if (whitelistedAddresses != "" && capsForWhitelistedAddresses != "") {
+        return false;
+      } else if (whitelistedAddresses == "" || capsForWhitelistedAddresses == "") {
+        return true;
+      }
+    } else if (accessMechanism == "nft-gate") {
+      if (nftAddress != "" && nftCap != "" && nftCap!=0) {
+        return false;
+      } else if (nftAddress == "" || nftCap == "" || nftCap==0) {
+        return true;
+      }
+    } else if (accessMechanism == "ntt-gate") {
+      if (nttAddress != "" && nttCap != "" && nttCap!=0) {
+        return false;
+      } else if (nttAddress == "" || nttCap == "" || nttCap==0) {
+        return true;
+      }
+    } else if (accessMechanism == "token-gate-tiers") {
+      if (accessTokenAddress != ""  && tier1 != "" && tier1 != 0  && tier2 != "" && tier2 != 0  && tier3 != "" && tier3 != 0  && tier4 != "" && tier4 != 0  && tier1Cap != "" && tier1Cap != 0  && tier2Cap != "" && tier2Cap != 0  && tier3Cap != "" && tier3Cap != 0  && tier4Cap != "" && tier4Cap != 0  && checkTiersValidity(tier1,tier2,tier3,tier4) && checkTierCapsValidity(tier1Cap,tier2Cap,tier3Cap,tier4Cap) ) {
+        return false; 
+      } else if (accessTokenAddress == "" || tier1 == "" || tier1==0 || tier2 == "" || tier2==0 || tier3 == "" || tier3==0 || tier4 == "" || tier4==0 || tier1Cap == "" || tier1Cap==0 || tier2Cap == "" || tier2Cap==0 || tier3Cap == "" || tier3Cap==0 || tier4Cap == "" || tier4Cap==0 || !checkTiersValidity(tier1,tier2,tier3,tier4)  || !checkTierCapsValidity(tier1Cap,tier2Cap,tier3Cap,tier4Cap)) {
+        return true;
+      }
+    }
+  }
+
   function getVisibilityStatus(visiblityStatus, currentAccount) {
     if (visiblityStatus == true) {
       return <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Public</div>;
@@ -601,13 +657,13 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 <br></br>
                 {notEnoughTokensAError && (
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Text color="red">{notEnoughTokensAError}</Text>
+                    <Text color="tomato">{notEnoughTokensAError}</Text>
                     <br></br>
                   </div>
                 )}
                 {titleError && (
                   <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Text color="red">{titleError}</Text>
+                    <Text color="tomato">{titleError}</Text>
                     <br></br>
                   </div>
                 )}
@@ -639,7 +695,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       </TableD>
                     </TableR>
                   </table>
-                  <div style={{ display: "flex", justifyContent: "center", textAlign:"center"}}>
+                  <div style={{ display: "flex", justifyContent: "center", textAlign: "center" }}>
                     You will be able to claim remaining Offered Tokens (A) after the End Timestamp, Accepted Token (B) will be sent to your address immediately.<br></br>
                     <br></br>
                   </div>
@@ -873,7 +929,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       </TableR>
                     </table>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      {percentageVested}% of the tokens are going to be vested for {lockDuration} seconds&nbsp; {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
+                      {percentageVested}% of the tokens are going to be locked for {lockDuration} seconds&nbsp; {percentageVested < 100 && <span>and {100 - percentageVested}% are going to be released immediatly.</span>}
                     </div>
                     <br></br>
                     <br></br>
@@ -1009,7 +1065,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   {successMessage.includes("trx-6-success") && <SmallerText color="green">Success</SmallerText>}
                 </div>
                 <br></br>
-                <div>{errorMessage && <Text color="red">{errorMessage}</Text>}</div>
+                <div>{errorMessage && <Text color="tomato">{errorMessage}</Text>}</div>
                 <br></br>
                 <div style={{ textAlign: "center" }}>
                   {createdTag && (
@@ -1033,8 +1089,36 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       <br></br>
       <br></br>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        {formVisible && typeof tokenAmount != "undefined" && typeof maxRaise !== "undefined" && maxRaise !== "" && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "" && notEnoughTokensAError == false && titleError == false && (
+        {console.log("form visible", formVisible)}
+        {
+        typeof tokenAmount != "undefined" &&
+        typeof maxRaise !== "undefined" &&
+        maxRaise !== "" &&
+        typeof offeredTokenAddress !== "undefined" &&
+        offeredTokenAddress !== "" &&
+        notEnoughTokensAError == false &&
+        titleError == false &&
+        !isErrorInAccessMechanism(
+          accessMechanism,
+          whitelistedAddresses,
+          capsForWhitelistedAddresses,
+          nftAddress,
+          nftCap,
+          nttAddress,
+          nttCap,
+          accessTokenAddress,
+          accessTokenAmountTier1,
+          accessTokenAmountTier2,
+          accessTokenAmountTier3,
+          accessTokenAmountTier4,
+          tier1Cap,
+          tier2Cap,
+          tier3Cap,
+          tier4Cap
+        ) ? (
           <Button onClick={() => handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddress)}>Launch Deal</Button>
+        ) : (
+          formVisible &&  <Text color="tomato">Please enter correct value for all fields.</Text>
         )}
         {!salesLoading && !activeContract && isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
         {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}

@@ -16,7 +16,7 @@ export default ({}) => {
 
   return (
     <Layout position="absolute" bottom="4px" width="100%" height="60px">
-      <SEO title="deals" description="Discover and launch custom token deals" />
+      <SEO title="Deals" description="Discover and launch custom token deals" />
       <Header />
       <MobileDiv mobileWidth="100%" width="90%" background="" style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
         {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
