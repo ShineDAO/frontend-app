@@ -1357,13 +1357,26 @@ async function setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCa
   console.log("NTT access token set", receipt);
 }
 async function setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses) {
+  //https://stackoverflow.com/questions/931872/what-s-the-difference-between-array-and-while-declaring-a-javascript-ar/931875#931875
+  const CSVToArray = (data, delimiter = ',', omitFirstRow = false) =>
+  data
+    .slice(omitFirstRow ? data.indexOf('\n') + 1 : 0)
+    .split('\n')
+    .map(v => v.split(delimiter));
+  
+  let whitelistedAddressesFormatted =  CSVToArray(whitelistedAddresses)
+  let capsForWhitelistedAddressesFormatted =  CSVToArray(capsForWhitelistedAddresses)
+  let whitelistedAddressesFormatted1 = ["0x70997970c51812dc3a010c7d01b50e0d17dc79c8","0x70997970c51812dc3a010c7d01b50e0d17dc79c8"]
+  console.log("formaBefore ", whitelistedAddresses,whitelistedAddressesFormatted,whitelistedAddressesFormatted1, typeof whitelistedAddresses, typeof whitelistedAddressesFormatted, typeof whitelistedAddressesFormatted1)
+  console.log("format ", whitelistedAddresses,whitelistedAddressesFormatted,capsForWhitelistedAddresses,capsForWhitelistedAddressesFormatted)
+
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
-  let estimatedGas = await seedInstance.methods.setWhitelistedAddresses(whitelistedAddresses, capsForWhitelistedAddresses, true).estimateGas({
+  let estimatedGas = await seedInstance.methods.setWhitelistedAddresses(...whitelistedAddressesFormatted, ...capsForWhitelistedAddressesFormatted, true).estimateGas({
     from: userAddress,
   });
   console.log("estimated gas for sync", estimatedGas);
 
-  const receipt = await seedInstance.methods.setWhitelistedAddresses(whitelistedAddresses, capsForWhitelistedAddresses, true).send({
+  const receipt = await seedInstance.methods.setWhitelistedAddresses(...whitelistedAddressesFormatted, ...capsForWhitelistedAddressesFormatted, true).send({
     from: userAddress,
     gas: estimatedGas,
   });
@@ -1499,7 +1512,7 @@ export async function deployNewSeed(
     console.log("current loading indicator ", currentLoadingIndicator);
 
     let seedAddress = await receipt.events.AddedNewRewardAddress.returnValues.newAddress.toLowerCase();
-    console.log("seed address ", seedAddress);
+    console.log("seed address and whitelisted addresses ", seedAddress);
     index = index + 1;
     if (accessMechanism != "open") {
       await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));

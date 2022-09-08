@@ -95,6 +95,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
 
   const [whitelistedAddresses, setWhitelistedAddresses] = useState("");
   const [capsForWhitelistedAddresses, setcapsForWhitelistedAddresses] = useState("");
+  const [whitelistError, setWhitelistError] = useState(false);
   const [nftCap, setNftCap] = useState(0);
   const [nttCap, setNttCap] = useState(0);
 
@@ -117,6 +118,14 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [cliffDuration, setCliffDuration] = useState(5184000);
   const [vestingDuration, setVestingDuration] = useState(5184000);
   const [percentageVested, setPercentageVested] = useState(100);
+
+  useEffect(() => {
+    if (whitelistedAddresses.split(",").length - 1 != capsForWhitelistedAddresses.split(",").length - 1) {
+      setWhitelistError(true);
+    } else {
+      setWhitelistError(false);
+    }
+  }, [whitelistedAddresses, capsForWhitelistedAddresses]);
 
   useEffect(() => {
     if (isWalletEnabled == true && activeContract != null && currentAccount != null && typeof seedIndex == "undefined") {
@@ -380,57 +389,102 @@ export function SeedContainer({ activeContract, setActiveContract }) {
     }
   }
 
-  function isErrorInAccessMechanism(accessMechanism, whitelistedAddresses, capsForWhitelistedAddresses, nftAddress, nftCap, nttAddress, nttCap, accessTokenAddress, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap) {
-    console.log(
-      "error test",
-      accessMechanism,
-      typeof capsForWhitelistedAddresses != "undefined" && capsForWhitelistedAddresses != "",
-      typeof capsForWhitelistedAddresses == "string" && capsForWhitelistedAddresses == "",
-      capsForWhitelistedAddresses,
-      typeof capsForWhitelistedAddresses,
-      nftCap!=0,
-      typeof nftCap,
-      Number(tier1),
-      Number(tier2),
-      Number(tier3),
-      Number(tier4),
-      (Number(tier1)<Number(tier2)) && (Number(tier2)<Number(tier3)) && (Number(tier3)<Number(tier4))
-    );
-
-    function checkTiersValidity(tier1,tier2,tier3,tier4){
-      if(Number(tier1)<Number(tier2) && (Number(tier2)<Number(tier3)) && (Number(tier3)<Number(tier4))){
-        return true
-      }else{return false}
+  function isErrorInDistributionMechanism(distributionMechanism, lockDuration, cliffDuration, vestingDuration) {
+    if (distributionMechanism == "instant") {
+      return false;
+    } else if (distributionMechanism == "lock") {
+      if (lockDuration != 0 && lockDuration != "") {
+        return false;
+      } else {
+        return true;
+      }
+    } else if (distributionMechanism == "linear-vesting") {
+      if (cliffDuration != 0 && cliffDuration != "" && vestingDuration != 0 && cliffDuration != 0 ) {
+        return false;
+      } else {
+        return true;
+      }
     }
-    function checkTierCapsValidity(tier1Cap,tier2Cap,tier3Cap,tier4Cap){
-      if(   (Number(tier1Cap)<Number(tier2Cap)) &&  (Number(tier2Cap)<Number(tier3Cap)) &&  (Number(tier3Cap)<Number(tier4Cap))    ){
-        return true
-      }else{return false}
+  }
+  function isErrorInAccessMechanism(accessMechanism, whitelistedAddresses, capsForWhitelistedAddresses, nftAddress, nftCap, nttAddress, nttCap, accessTokenAddress, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap) {
+    function checkTiersValidity(tier1, tier2, tier3, tier4) {
+      if (Number(tier1) < Number(tier2) && Number(tier2) < Number(tier3) && Number(tier3) < Number(tier4)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    function checkTierCapsValidity(tier1Cap, tier2Cap, tier3Cap, tier4Cap) {
+      if (Number(tier1Cap) < Number(tier2Cap) && Number(tier2Cap) < Number(tier3Cap) && Number(tier3Cap) < Number(tier4Cap)) {
+        return true;
+      } else {
+        return false;
+      }
     }
     if (accessMechanism == "open") {
       return false;
     } else if (accessMechanism == "whitelist") {
-      if (whitelistedAddresses != "" && capsForWhitelistedAddresses != "") {
+      if (whitelistedAddresses != "" && capsForWhitelistedAddresses != "" && whitelistedAddresses.split(",").length - 1 == capsForWhitelistedAddresses.split(",").length - 1) {
         return false;
-      } else if (whitelistedAddresses == "" || capsForWhitelistedAddresses == "") {
+      } else if (whitelistedAddresses == "" || capsForWhitelistedAddresses == "" || whitelistedAddresses.split(",").length - 1 != capsForWhitelistedAddresses.split(",").length - 1) {
         return true;
       }
     } else if (accessMechanism == "nft-gate") {
-      if (nftAddress != "" && nftCap != "" && nftCap!=0) {
+      if (nftAddress != "" && nftCap != "" && nftCap != 0) {
         return false;
-      } else if (nftAddress == "" || nftCap == "" || nftCap==0) {
+      } else if (nftAddress == "" || nftCap == "" || nftCap == 0) {
         return true;
       }
     } else if (accessMechanism == "ntt-gate") {
-      if (nttAddress != "" && nttCap != "" && nttCap!=0) {
+      if (nttAddress != "" && nttCap != "" && nttCap != 0) {
         return false;
-      } else if (nttAddress == "" || nttCap == "" || nttCap==0) {
+      } else if (nttAddress == "" || nttCap == "" || nttCap == 0) {
         return true;
       }
     } else if (accessMechanism == "token-gate-tiers") {
-      if (accessTokenAddress != ""  && tier1 != "" && tier1 != 0  && tier2 != "" && tier2 != 0  && tier3 != "" && tier3 != 0  && tier4 != "" && tier4 != 0  && tier1Cap != "" && tier1Cap != 0  && tier2Cap != "" && tier2Cap != 0  && tier3Cap != "" && tier3Cap != 0  && tier4Cap != "" && tier4Cap != 0  && checkTiersValidity(tier1,tier2,tier3,tier4) && checkTierCapsValidity(tier1Cap,tier2Cap,tier3Cap,tier4Cap) ) {
-        return false; 
-      } else if (accessTokenAddress == "" || tier1 == "" || tier1==0 || tier2 == "" || tier2==0 || tier3 == "" || tier3==0 || tier4 == "" || tier4==0 || tier1Cap == "" || tier1Cap==0 || tier2Cap == "" || tier2Cap==0 || tier3Cap == "" || tier3Cap==0 || tier4Cap == "" || tier4Cap==0 || !checkTiersValidity(tier1,tier2,tier3,tier4)  || !checkTierCapsValidity(tier1Cap,tier2Cap,tier3Cap,tier4Cap)) {
+      if (
+        accessTokenAddress != "" &&
+        tier1 != "" &&
+        tier1 != 0 &&
+        tier2 != "" &&
+        tier2 != 0 &&
+        tier3 != "" &&
+        tier3 != 0 &&
+        tier4 != "" &&
+        tier4 != 0 &&
+        tier1Cap != "" &&
+        tier1Cap != 0 &&
+        tier2Cap != "" &&
+        tier2Cap != 0 &&
+        tier3Cap != "" &&
+        tier3Cap != 0 &&
+        tier4Cap != "" &&
+        tier4Cap != 0 &&
+        checkTiersValidity(tier1, tier2, tier3, tier4) &&
+        checkTierCapsValidity(tier1Cap, tier2Cap, tier3Cap, tier4Cap)
+      ) {
+        return false;
+      } else if (
+        accessTokenAddress == "" ||
+        tier1 == "" ||
+        tier1 == 0 ||
+        tier2 == "" ||
+        tier2 == 0 ||
+        tier3 == "" ||
+        tier3 == 0 ||
+        tier4 == "" ||
+        tier4 == 0 ||
+        tier1Cap == "" ||
+        tier1Cap == 0 ||
+        tier2Cap == "" ||
+        tier2Cap == 0 ||
+        tier3Cap == "" ||
+        tier3Cap == 0 ||
+        tier4Cap == "" ||
+        tier4Cap == 0 ||
+        !checkTiersValidity(tier1, tier2, tier3, tier4) ||
+        !checkTierCapsValidity(tier1Cap, tier2Cap, tier3Cap, tier4Cap)
+      ) {
         return true;
       }
     }
@@ -759,6 +813,11 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           </TableD>
                         </TableR>
                       </table>
+                      {whitelistError && (
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                          <Text color="tomato"> There is a missmatch between a number of Addresses and number of Caps/Address</Text>
+                        </div>
+                      )}
                     </div>
                   )}
                   {accessMechanism == "nft-gate" && (
@@ -1065,7 +1124,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   {successMessage.includes("trx-6-success") && <SmallerText color="green">Success</SmallerText>}
                 </div>
                 <br></br>
-                <div>{errorMessage && <Text color="tomato">{errorMessage}</Text>}</div>
+                <div>{errorMessage && <Text color="tomato">{errorMessage.toString()}</Text>}</div>
                 <br></br>
                 <div style={{ textAlign: "center" }}>
                   {createdTag && (
@@ -1090,14 +1149,14 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       <br></br>
       <div style={{ display: "flex", justifyContent: "center" }}>
         {console.log("form visible", formVisible)}
-        {
-        typeof tokenAmount != "undefined" &&
+        {typeof tokenAmount != "undefined" &&
         typeof maxRaise !== "undefined" &&
         maxRaise !== "" &&
         typeof offeredTokenAddress !== "undefined" &&
         offeredTokenAddress !== "" &&
         notEnoughTokensAError == false &&
         titleError == false &&
+        tokenAmount != "" &&
         !isErrorInAccessMechanism(
           accessMechanism,
           whitelistedAddresses,
@@ -1115,10 +1174,11 @@ export function SeedContainer({ activeContract, setActiveContract }) {
           tier2Cap,
           tier3Cap,
           tier4Cap
-        ) ? (
+        ) &&
+        !isErrorInDistributionMechanism(distributionMechanism, lockDuration, cliffDuration, vestingDuration) ? (
           <Button onClick={() => handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddress)}>Launch Deal</Button>
         ) : (
-          formVisible &&  <Text color="tomato">Please enter correct value for all fields.</Text>
+          formVisible && <Text color="tomato">Please enter correct value for all fields.</Text>
         )}
         {!salesLoading && !activeContract && isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
         {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
