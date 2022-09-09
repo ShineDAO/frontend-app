@@ -578,7 +578,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         <label for="offered-erc20-token-address">Offered Token (A) Address:</label>
                       </TableD>
                       <TableD>
-                        <label for="offered-erc20-token-address">Your Balance of token (A): </label>
+                        <label for="offered-erc20-token-address">Balance of (A): </label>
                       </TableD>
                       <TableD>
                         <label for="emitted-token-amount">Offered Token (A) Amount: </label>
@@ -612,7 +612,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         <label for="accepted-token-address">Accepted Token (B) Amount:</label>
                       </TableD>
                       <TableD>
-                        <label for="offered-erc20-token-address">Your Balance of token (B): </label>
+                        <label for="offered-erc20-token-address">Balance of (B): </label>
                       </TableD>
                       <TableD>
                         <label for="">Accepted Token (B) Amount: </label>
@@ -624,14 +624,14 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           <input name="accepted-token-address" onChange={target => setAcceptedTokenAddress(target.target.value.toLocaleLowerCase())} value={acceptedTokenAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}></input>{" "}
                         </TableD>
                       }
-                      <TableD>{selectedTokenKey == "native" ? `${nativeBalance} ${nativeTokenName}` : `${acceptedTokenBalance} ${tokenBSymbol}`} </TableD>
+                      <TableD>{selectedTokenKey == "native" ? `${parseFloat(nativeBalance).toFixed(2)} ${nativeTokenName}` : `${acceptedTokenBalance} ${tokenBSymbol}`} </TableD>
                       <TableD style={{ paddingLeft: 0 }}>
                         <input name="max-raise" onChange={target => setMaxRaise(target.target.value.toLocaleLowerCase())} value={maxRaise} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}
                       </TableD>
                     </TableR>
                     <TableR>
                       <TableD>
-                        <div style={{ display: "flex", justifyContent: "center" }}>
+                        <div style={{ display: "flex", justifyContent: "center", flexWrap:"wrap"}}>
                           <TableLabel
                             selected={selectedTokenKey == "native"}
                             onClick={e => handleOfferedTokenAddress(e)}
