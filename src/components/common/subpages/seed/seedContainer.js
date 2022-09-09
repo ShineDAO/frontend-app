@@ -371,7 +371,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       }
     } else if (accessMechanism == "token-gate-tiers") {
       console.log("test debug 1", fromWei(accessTokenBalance), fromWei(tier1), fromWei(accessTokenBalance) >= fromWei(tier1), Number(fromWei(accessTokenBalance)) >= Number(fromWei(tier1)));
-      if (Number(fromWei(accessTokenBalance) )>= Number(fromWei(tier1))) {
+      if (Number(fromWei(accessTokenBalance)) >= Number(fromWei(tier1))) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
@@ -577,7 +577,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         {" "}
                         <label for="offered-erc20-token-address">Offered Token (A) Address:</label>
                       </TableD>
-                     
+
                       <TableD>
                         <label for="emitted-token-amount">Offered Token (A) Amount: </label>
                       </TableD>
@@ -592,7 +592,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}
                         ></input>{" "}
                       </TableD>
-                
+
                       <TableD>
                         <input
                           name="accepted-token-amount"
@@ -607,9 +607,9 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <br></br>
                     <TableR>
                       <TableD>
-                        <label for="accepted-token-address">Accepted Token (B) Amount:</label>
+                        <label for="accepted-token-address">Accepted Token (B):</label>
                       </TableD>
-                     
+
                       <TableD>
                         <label for="">Accepted Token (B) Amount: </label>
                       </TableD>
@@ -620,15 +620,15 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           <input name="accepted-token-address" onChange={target => setAcceptedTokenAddress(target.target.value.toLocaleLowerCase())} value={acceptedTokenAddress} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: 300 }}></input>{" "}
                         </TableD>
                       }
-                      
+
                       <TableD style={{ paddingLeft: 0 }}>
-                        <input name="max-raise" onChange={target => setMaxRaise(target.target.value.toLocaleLowerCase())} value={maxRaise} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input>{" "}<br></br>
-                        Balance: {selectedTokenKey == "native" ? `${parseFloat(nativeBalance).toFixed(2)} ${nativeTokenName}` : `${acceptedTokenBalance} ${tokenBSymbol}`} 
+                        <input name="max-raise" onChange={target => setMaxRaise(target.target.value.toLocaleLowerCase())} value={maxRaise} style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}></input> <br></br>
+                        Balance: {selectedTokenKey == "native" ? `${parseFloat(nativeBalance).toFixed(2)} ${nativeTokenName}` : `${parseFloat(acceptedTokenBalance).toFixed(2)} ${tokenBSymbol}`}
                       </TableD>
                     </TableR>
                     <TableR>
                       <TableD>
-                        <div style={{ display: "flex", justifyContent: "center", flexWrap:"wrap"}}>
+                        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
                           <TableLabel
                             selected={selectedTokenKey == "native"}
                             onClick={e => handleOfferedTokenAddress(e)}
@@ -730,10 +730,10 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   <table>
                     <TableR>
                       <TableD>
-                        <label for="start-time">Start Timestamp (Unix Timestamp):</label> 
+                        <label for="start-time">Start Timestamp (Unix):</label> 
                       </TableD>
                       <TableD>
-                        <label for="end-time">End Timestamp: (Unix Timestamp):</label>
+                        <label for="end-time">End Timestamp: (Unix):</label>
                       </TableD>
                     </TableR>
                     <TableR>
@@ -878,7 +878,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                   )}
 
                   {accessMechanism == "token-gate-tiers" && (
-                    <div>
+                    <div style={{ paddingBottom: 20 }}>
                       <div style={{ display: "flex", justifyContent: "center" }}>
                         <label for="access-token-address">Access Token Address: </label>
                         <input
@@ -997,8 +997,8 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                     <table>
                       <TableR>
                         <TableD>% Locked</TableD>
-                        <TableD>Cliff Duration (s)</TableD>
-                        <TableD>Vest Duration (s)</TableD>
+                        <TableD>Cliff Duration (in seconds)</TableD>
+                        <TableD>Vest Duration (in seconds)</TableD>
                       </TableR>
                       <TableR>
                         <TableD>
