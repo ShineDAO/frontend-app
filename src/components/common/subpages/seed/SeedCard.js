@@ -281,9 +281,14 @@ export function SeedCard({
       );
     } else if (accessMechanism == "nft-gate") {
       return (
-        <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-          NFT Gated, {fromWei(capForNFT)} {acceptedTokenSymbol} cap/address
-        </Text>
+        <div>
+          <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
+            NFT Gated: {fromWei(capForNFT)} {acceptedTokenSymbol} cap/address
+          </Text>
+          <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
+            NFT: {accessNFT}
+          </Text>
+        </div>
       );
     } else if (accessMechanism == "ntt-gate") {
       return (
@@ -297,6 +302,9 @@ export function SeedCard({
         <div>
           <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
             Token Gated With Tiers
+          </Text>
+          <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
+            Access Token: {accessToken}
           </Text>
           <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
             Your Balance: {fromWei(accessTokenBalance)} {accessTokenSymbol} ({calculatedTier})
@@ -400,7 +408,7 @@ export function SeedCard({
       </div>
       <div style={{ display: "flex", justifyContent: "center", paddingTop: 50 }}>
         <StatsCard background="black" border="1px solid white">
-          <div>{getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap)}</div>
+          <div>{getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1)}</div>
 
           <CardHeaderWrapper>
             <ProjectNameWrapper>
@@ -421,7 +429,7 @@ export function SeedCard({
                 Total Deal
               </Text>
               <Text color="#a2a2a2" fontWeight={300} fontSize="16px">
-                {fromWei(totalOffered)} {offeredTokenSymbol} for max { fromWei(totalOffered)/ fromFixed(rate) } {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromWei(totalOffered) / fromFixed(rate)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
               </Text>
             </div>
 

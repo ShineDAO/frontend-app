@@ -309,7 +309,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
     return count;
   }
 
-  function getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap) {
+  function getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1) {
     console.log("eligible ", accessMechanism);
     if (accessMechanism == "open") {
       return (
@@ -370,7 +370,8 @@ export function SeedContainer({ activeContract, setActiveContract }) {
         );
       }
     } else if (accessMechanism == "token-gate-tiers") {
-      if (fromWei(accessTokenBalance) > fromWei(tier1Cap)) {
+      console.log("test debug 1", fromWei(accessTokenBalance), fromWei(tier1), fromWei(accessTokenBalance) >= fromWei(tier1), Number(fromWei(accessTokenBalance)) >= Number(fromWei(tier1)));
+      if (Number(fromWei(accessTokenBalance) )>= Number(fromWei(tier1))) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
@@ -399,7 +400,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
         return true;
       }
     } else if (distributionMechanism == "linear-vesting") {
-      if (cliffDuration != 0 && cliffDuration != "" && vestingDuration != 0 && cliffDuration != 0 ) {
+      if (cliffDuration != 0 && cliffDuration != "" && vestingDuration != 0 && cliffDuration != 0) {
         return false;
       } else {
         return true;
@@ -1154,6 +1155,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
         maxRaise !== "" &&
         typeof offeredTokenAddress !== "undefined" &&
         offeredTokenAddress !== "" &&
+        acceptedTokenAddress !== "" &&
         notEnoughTokensAError == false &&
         titleError == false &&
         tokenAmount != "" &&
@@ -1267,7 +1269,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       onClick={() => handleSeedClick(index, seedAddress)}
                     >
                       <div>
-                        {getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1Cap)}
+                        {getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1)}
                         {false && <div>{getVisibilityStatus(dealVisibility, currentAccount)} </div>}
                       </div>
                       <h1>{name}</h1>
