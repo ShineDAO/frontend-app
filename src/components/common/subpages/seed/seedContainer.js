@@ -825,7 +825,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         <TableR>
                           {" "}
                           <TableD>
-                            <label for="NFT-address">NFT address:</label>
+                            <label for="NFT-address">NFT Address:</label>
                           </TableD>
                         </TableR>
                         <TableR>
