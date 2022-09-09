@@ -1183,7 +1183,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
         {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
       </div>
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 60 }}>
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 10 }}>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
           {console.log("seed sales data ", seedSalesData)}
           {console.log("seed sales mapper  ", !activeContract, dealsVisible, !formVisible, !cardVisible, seedSalesData)}

@@ -486,12 +486,58 @@ export function SeedCard({
         </StatsCard>
 
         <TokenCard>
-          <TitleText fontWeight={800} fontSize="24px" color="white">
-            Offered Token Address{" "}
-            <Link href={`${chainId == "0x1" ? "https://etherscan.io" : `https://polygonscan.com/address/${tokenContractAddress}`}`} target="_blank">
-              {tokenContractAddress.substring(0, 6)}...{tokenContractAddress.substring(tokenContractAddress.length - 4)}
-            </Link>
+          <TitleText fontWeight={600} fontSize="16px" color="white">
+            <b> {offeredTokenSymbol}</b>
+            {false && (
+              <Link href={`${chainId == "0x1" ? "https://etherscan.io" : `https://polygonscan.com/address/${tokenContractAddress}`}`} target="_blank">
+                {tokenContractAddress.substring(0, 6)}...{tokenContractAddress.substring(tokenContractAddress.length - 4)}
+              </Link>
+            )}
+            <Text>
+              Address: <span style={{ color: "#aeaeae" }}>{tokenContractAddress} </span>
+            </Text>
+
+            <span>
+              Balance:{" "}
+              <span style={{ color: "#aeaeae" }}>
+                {" "}
+                {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
+              </span>
+            </span>
           </TitleText>
+
+          <br></br>
+          {
+            <TitleText fontWeight={600} fontSize="16px" color="white">
+              <b>{acceptedTokenSymbol} </b>
+              {false && (
+                <Link href={`${chainId == "0x1" ? "https://etherscan.io" : `https://polygonscan.com/address/${tokenContractAddress}`}`} target="_blank">
+                  {acceptedTokenAddress.substring(0, 6)}...{acceptedTokenAddress.substring(acceptedTokenAddress.length - 4)}
+                </Link>
+              )}
+              {acceptedTokenAddress !== utils.ZERO_ADDRESS && (
+                <Text>
+                  {" "}
+                  Address: <span style={{ color: "#aeaeae" }}>{acceptedTokenAddress} </span>
+                </Text>
+              )}
+            </TitleText>
+          }
+          {acceptedTokenAddress != utils.ZERO_ADDRESS ? (
+            <span>
+              Balance:{" "}
+              <span style={{ color: "#aeaeae" }}>
+                {Number.parseFloat(fromWei(acceptedTokenBalance)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {acceptedTokenSymbol}
+              </span>
+            </span>
+          ) : (
+            <span>
+              {getNetworkName(chainId)} Balance:{" "}
+              <span style={{ color: "#aeaeae" }}>
+                {Number.parseFloat(nativeBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {nativeTokenName}
+              </span>
+            </span>
+          )}
 
           {false && isWalletEnabled && project.technicalDetails[currentStatus].saleFinished && (
             <Text color="tomato" fontSize="17px" fontWeight={800}>
@@ -534,22 +580,9 @@ export function SeedCard({
                       Access token balance: {Number.parseFloat(shineBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} SHN <b style={{ color: "#f2df96" }}>{utils.getTier(shineBalance)}</b>
                     </Text>
                   )}
-                  {acceptedTokenAddress != utils.ZERO_ADDRESS ? (
-                    <span>
-                      Accepted Token Balance: {Number.parseFloat(fromWei(acceptedTokenBalance)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {acceptedTokenSymbol}
-                    </span>
-                  ) : (
-                    <span>
-                      {getNetworkName(chainId)} Balance: {Number.parseFloat(nativeBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {nativeTokenName}
-                    </span>
-                  )}
 
                   <br />
                   {console.log("vestedSoFar ", vestedSoFar)}
-                  <span>
-                    Offered Token Balance: {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
-                  </span>
-                  <br />
 
                   <br />
                   {weiRaised && (
