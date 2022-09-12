@@ -47,7 +47,6 @@ import { ErrorMessage } from "formik";
 
 export function SeedContainer({ activeContract, setActiveContract }) {
   const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, nativeBalance, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
-
   const [offeredTokenBalance, setOfferedTokenBalance] = useState();
   const [acceptedTokenBalance, setAcceptedTokenBalance] = useState();
   const [tokenASymbol, setTokenASymbol] = useState();
@@ -1333,6 +1332,11 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 }
               }
             )}
+            {!activeContract &&
+            dealsVisible &&
+            !formVisible &&
+            !cardVisible &&
+            seedSalesData && seedSalesData.map(({dealVisibility,totalOffered})=>{ return dealVisibility === true && totalOffered != 0}).length <= 0 &&<Text>There are no publicly listed deals on the selected chain. Click on the button to create a new Deal.</Text>}
         </div>
 
         {activeContract && seedSalesData && console.log("activeContract xxx", activeContract, seedIndex, typeof seedIndex, seedSalesData, typeof seedSalesData)}
