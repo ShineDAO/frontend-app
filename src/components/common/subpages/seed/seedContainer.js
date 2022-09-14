@@ -7,6 +7,7 @@ import { TableD, TableR, TableLabel } from "components/common/Table";
 import { SmallerText } from "components/common/Text";
 import { Slider } from "components/common/Container/index";
 import PulseLoader from "react-spinners/PulseLoader";
+import ProgressBar from "react-bootstrap/ProgressBar";
 
 import {
   getOnlyUserAddress,
@@ -34,6 +35,9 @@ import {
   getTokenAddressFromDealsConfig,
   retrieveIndex,
   getAddress,
+  getDeploymentFeeFromAbi,
+  getTokenAFee,
+  getTokenBFee,
 } from "../../../../../src/components/templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
@@ -51,6 +55,10 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [acceptedTokenBalance, setAcceptedTokenBalance] = useState();
   const [tokenASymbol, setTokenASymbol] = useState();
   const [tokenBSymbol, setTokenBSymbol] = useState();
+
+  const [deploymentFee, setDeploymentFee] = useState();
+  const [defaultTokenAFee, setDefaultTokenAFee] = useState();
+  const [defaultTokenBFee, setDefaultTokenBFee] = useState();
 
   const [createdTag, setCreatedTag] = useState();
 
@@ -138,7 +146,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
     if (title.length > 50) {
       setTitleError("Maximum Title length is 50 charachters");
     } else if (title.length == 0) {
-      setTitleError("Please enter value for Title");
+      //setTitleError("Please enter value for Title");
     } else {
       setTitleError(false);
     }
@@ -148,7 +156,9 @@ export function SeedContainer({ activeContract, setActiveContract }) {
     if (isWalletEnabled == true && currentAccount != null) {
       async function loadSeedSales() {
         console.log("active acc dds", activeContract, seedIndex, typeof activeContract, typeof seedIndex, activeContract);
-
+        setDeploymentFee(await getDeploymentFeeFromAbi(SeedFactory.abi, getAddress(chainId, "seedFactoryAddress")));
+        setDefaultTokenAFee(await getTokenAFee(SeedFactory.abi, getAddress(chainId, "seedFactoryAddress")));
+        setDefaultTokenBFee(await getTokenBFee(SeedFactory.abi, getAddress(chainId, "seedFactoryAddress")));
         if (!activeContract) {
           console.log("active acc 1", activeContract, seedIndex, typeof activeContract, typeof seedIndex);
           setSalesLoading(true);
@@ -217,7 +227,12 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   }, [rate]);
 
   useEffect(() => {
-    setConvertedRate(getTokenRatio(tokenAmount, maxRaise));
+    async function calculateConvertedRate() {
+      if (isWalletEnabled) {
+        setConvertedRate(await getTokenRatio(tokenAmount, maxRaise));
+      }
+    }
+    calculateConvertedRate();
   }, [tokenAmount, maxRaise]);
 
   async function handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddressArg) {
@@ -564,7 +579,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 <input name="title" onChange={target => typeof target.target.value !== "undefined" && setTitle(target.target.value)} value={title} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "80%" }}></input>{" "}
               </div>
               <br></br>
-              <div style={{ background: "#4f4fc8" }}>
+              <div style={{ background: "#4f4fc8", paddingRight:70 }}>
                 <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
                   <h2>Tokens</h2>
                 </div>
@@ -668,14 +683,16 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           >
                             FRAX
                           </TableLabel>
-                          <TableLabel
-                            selected={selectedTokenKey == "shn"}
-                            onClick={e => handleOfferedTokenAddress(e)}
-                            data-token="shn"
-                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
-                          >
-                            SHN
-                          </TableLabel>
+                          {(chainId == "0x89" || chainId == "0x13881" || chainId == "0x7a69") && (
+                            <TableLabel
+                              selected={selectedTokenKey == "shn"}
+                              onClick={e => handleOfferedTokenAddress(e)}
+                              data-token="shn"
+                              style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                            >
+                              SHN
+                            </TableLabel>
+                          )}
                           <TableLabel
                             selected={selectedTokenKey == "custom"}
                             onClick={e => handleOfferedTokenAddress(e)}
@@ -1173,14 +1190,26 @@ export function SeedContainer({ activeContract, setActiveContract }) {
           tier3Cap,
           tier4Cap
         ) &&
-        !isErrorInDistributionMechanism(distributionMechanism, lockDuration, cliffDuration, vestingDuration) ? (
+        !isErrorInDistributionMechanism(distributionMechanism, lockDuration, cliffDuration, vestingDuration) &&
+        formVisible ? (
           <Button onClick={() => handleNewSeedDeploy(offeredTokenAddress, acceptedTokenAddress)}>Launch Deal</Button>
         ) : (
           formVisible && <Text color="tomato">Please enter correct value for all fields.</Text>
         )}
+
         {!salesLoading && !activeContract && isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
         {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
       </div>
+      {formVisible && (
+        <Text style={{ display: "flex", justifyContent: "center", textAlign: "center" }} color="green">
+          <br></br> Fees:<br></br>
+          <br></br> Slippage: 0.0% <br></br>
+          Deployment fee: {deploymentFee} {nativeTokenName}
+          <br></br>
+          Token A swap fee: {defaultTokenAFee / 100}%<br></br>
+          Token B swap fee: {defaultTokenBFee / 100}%
+        </Text>
+      )}
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 10 }}>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
@@ -1274,6 +1303,13 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           - {offeredTokenName} - {acceptedTokenSymbol} - {fromWei(weiRaised)}
                         </div>
                       )}
+                      {weiRaised && (
+                        <div>
+             
+                          <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
+                          <ProgressBar style={{width:280, marginBottom:20}} animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
+                        </div>
+                      )}
                       <div>
                         <b>Tokens:</b>
                         <SmallerText>
@@ -1285,7 +1321,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         {" "}
                         <b>Deal size</b>{" "}
                         <SmallerText>
-                          {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromFixed(rate) * fromWei(totalOffered)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                          {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromWei(totalOffered) / fromFixed(rate)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
                       <div>
@@ -1332,11 +1368,14 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 }
               }
             )}
-            {!activeContract &&
+          {!activeContract &&
             dealsVisible &&
             !formVisible &&
             !cardVisible &&
-            seedSalesData && seedSalesData.map(({dealVisibility,totalOffered})=>{ return dealVisibility === true && totalOffered != 0}).length <= 0 &&<Text>There are no publicly listed deals on the selected chain. Click on the button to create a new Deal.</Text>}
+            seedSalesData &&
+            seedSalesData.map(({ dealVisibility, totalOffered }) => {
+              return dealVisibility === true && totalOffered != 0;
+            }).length <= 0 && <Text>There are no publicly listed deals on the selected chain. Click on the button to create a new Deal.</Text>}
         </div>
 
         {activeContract && seedSalesData && console.log("activeContract xxx", activeContract, seedIndex, typeof seedIndex, seedSalesData, typeof seedSalesData)}

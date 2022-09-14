@@ -1158,9 +1158,13 @@ export async function createVeShnLock(userAddress, veShnAbi, veShnAddress, amoun
 }
 import addresses from "../../../static/config/config";
 export function getAddress(chainId, contract) {
+  //gets address such as SeedFactory
   let chainIdContainer = {
     "0x1": "main",
     "0x89": "matic",
+    "0xa": "optimism",
+    "0x4e454152": "aurora",
+    "0xa4b1": "arbitrum",
     "0x13881": "mumbai",
     "0x7a69": "hardhat",
   };
@@ -1178,6 +1182,9 @@ export function getTokenAddressFromDealsConfig(chainId, tokenName) {
   let chainIdContainer = {
     "0x1": "main",
     "0x89": "matic",
+    "0xa": "optimism",
+    "0x4e454152": "aurora",
+    "0xa4b1": "arbitrum",
     "0x13881": "mumbai",
     "0x7a69": "hardhat",
   };
@@ -1185,8 +1192,6 @@ export function getTokenAddressFromDealsConfig(chainId, tokenName) {
   console.log("chainx ", chain, typeof chain, dealsConfig[tokenName][chain]);
   if (typeof chain != "undefined") {
     return dealsConfig[tokenName][chain].toLowerCase();
-  } else {
-    return dealsConfig["usdc"].hardhat.toLowerCase();
   }
 }
 
@@ -1358,17 +1363,17 @@ async function setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCa
 }
 async function setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses) {
   //https://stackoverflow.com/questions/931872/what-s-the-difference-between-array-and-while-declaring-a-javascript-ar/931875#931875
-  const CSVToArray = (data, delimiter = ',', omitFirstRow = false) =>
-  data
-    .slice(omitFirstRow ? data.indexOf('\n') + 1 : 0)
-    .split('\n')
-    .map(v => v.split(delimiter));
-  
-  let whitelistedAddressesFormatted =  CSVToArray(whitelistedAddresses)
-  let capsForWhitelistedAddressesFormatted =  CSVToArray(capsForWhitelistedAddresses)
-  let whitelistedAddressesFormatted1 = ["0x70997970c51812dc3a010c7d01b50e0d17dc79c8","0x70997970c51812dc3a010c7d01b50e0d17dc79c8"]
-  console.log("formaBefore ", whitelistedAddresses,whitelistedAddressesFormatted,whitelistedAddressesFormatted1, typeof whitelistedAddresses, typeof whitelistedAddressesFormatted, typeof whitelistedAddressesFormatted1)
-  console.log("format ", whitelistedAddresses,whitelistedAddressesFormatted,capsForWhitelistedAddresses,capsForWhitelistedAddressesFormatted)
+  const CSVToArray = (data, delimiter = ",", omitFirstRow = false) =>
+    data
+      .slice(omitFirstRow ? data.indexOf("\n") + 1 : 0)
+      .split("\n")
+      .map(v => v.split(delimiter));
+
+  let whitelistedAddressesFormatted = CSVToArray(whitelistedAddresses);
+  let capsForWhitelistedAddressesFormatted = CSVToArray(capsForWhitelistedAddresses);
+  let whitelistedAddressesFormatted1 = ["0x70997970c51812dc3a010c7d01b50e0d17dc79c8", "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"];
+  console.log("formaBefore ", whitelistedAddresses, whitelistedAddressesFormatted, whitelistedAddressesFormatted1, typeof whitelistedAddresses, typeof whitelistedAddressesFormatted, typeof whitelistedAddressesFormatted1);
+  console.log("format ", whitelistedAddresses, whitelistedAddressesFormatted, capsForWhitelistedAddresses, capsForWhitelistedAddressesFormatted);
 
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
   let estimatedGas = await seedInstance.methods.setWhitelistedAddresses(...whitelistedAddressesFormatted, ...capsForWhitelistedAddressesFormatted, true).estimateGas({
@@ -1440,7 +1445,24 @@ export async function deployTokens(userAddress, SeedAbi, offeredTokenAddress, se
 
   console.log("Tokens added", receipt);
 }
+export async function getTokenAFee(SeedFactoryAbi,seedFactoryAddress) {
+  var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
+  return await SeedFactoryInstance.methods.defaultTokenFee().call();
+}
 
+export async function getTokenBFee(SeedFactoryAbi,seedFactoryAddress) {
+  var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
+  return await SeedFactoryInstance.methods.defaultRaisingFee().call()
+}
+
+export async function getDeploymentFeeFromAbi(SeedFactoryAbi,seedFactoryAddress) {
+  var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
+  return fromWei(await SeedFactoryInstance.methods.defaultDeploymentFee().call());
+}
+async function getDeploymentFee(SeedFactoryInstance) {
+  console.log("default deployment fee ", await SeedFactoryInstance.methods.defaultDeploymentFee().call());
+  return await SeedFactoryInstance.methods.defaultDeploymentFee().call();
+}
 export async function deployNewSeed(
   userAddress,
   offeredTokenAddress,
@@ -1482,12 +1504,13 @@ export async function deployNewSeed(
   setSuccessMessage,
   setErrorMessage
 ) {
-  console.log("deployment", userAddress, offeredTokenAddress, seedFactoryAddress, rate, parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), visibility);
+  console.log("deployment", acceptedTokenAddress, userAddress, offeredTokenAddress, seedFactoryAddress, rate, parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), visibility);
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
   try {
     //1000000000000000000000000
     let estimatedGas = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).estimateGas({
       from: userAddress,
+      value: await getDeploymentFee(SeedFactoryInstance),
     });
     console.log("estimated gas for sync", estimatedGas);
 
@@ -1499,6 +1522,7 @@ export async function deployNewSeed(
     const receipt = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).send({
       from: userAddress,
       gas: estimatedGas,
+      value: await getDeploymentFee(SeedFactoryInstance),
     });
 
     console.log("current receipt", receipt);
@@ -1606,10 +1630,10 @@ export async function deployNewSeed(
         .replace("Internal JSON-RPC error.", "");
       errore = JSON.parse(errore);
       setErrorMessage(errore.message);
-    }else{
-      setErrorMessage(e)
+    } else {
+      setErrorMessage(e);
     }
-    
+
     console.log("Error while deploying new Seed contract ", e);
   }
 }
@@ -1900,25 +1924,25 @@ export async function recoverErc20Tokens(userAddress, SeedAbi, seedAddress, offe
 }
 const BigNumber = require("bignumber.js");
 
-export function getTokenRatio(tokenA, tokenB) {
+export async function getTokenRatio(tokenA, tokenB) {
   let rate;
-  if (Number(tokenB)!==0 && typeof tokenB!=="undefined"){
-     rate = tokenA / tokenB;
-  }else{
+  if (Number(tokenB) !== 0 && typeof tokenB !== "undefined") {
+    rate = tokenA / tokenB;
+  } else {
     rate = 0;
   }
+  //console.log("cc2 rate22", rate, typeof rate)
+  //console.log("cc2 rate", !(rate != rate) && window.web3.utils.toWei(rate.toString(), "mether")); //https://stackoverflow.com/questions/35048081/javascript-isnan-function-not-working
 
-  console.log("cc2 rate", !(rate != rate) && window.web3.utils.toWei(rate.toString(), "mether")); //https://stackoverflow.com/questions/35048081/javascript-isnan-function-not-working
-
-  return !(rate != rate) ? window.web3.utils.toWei(rate.toString(), "mether") : 0;
+  return !(rate != rate) ? await window.web3.utils.toWei(rate.toString(), "mether") : 0;
   //return new BigNumber(tokenA).dividedBy(new BigNumber(tokenB)).multipliedBy(new BigNumber("1000000000000000000000000")).toNumber()  ;
 
   //return (rate * 1000000000000000000000000).toLocaleString("fullwide", { useGrouping: false }); // multiplication with 1000000000000000000000000 is there in order to support fixed float operations. For example without it, some tokens ratios could not be offered. Lets say 1USDC for 0.1TKNx rate would be 0.1 which is not supported in Solidity. More info: https://github.com/CementDAO/Fixidity/blob/master/contracts/FixidityLib.sol
 }
 
 export function fromFixed(tokenRatio) {
-  console.log("cc23 ", !(tokenRatio != tokenRatio) && window.web3.utils.fromWei(tokenRatio.toString(), "mether"));
-  return !(tokenRatio != tokenRatio) ? window.web3.utils.fromWei(tokenRatio.toString(), "mether") : 0;
+  console.log("cc23 ", typeof tokenRatio != "undefined" && !(tokenRatio != tokenRatio) && window.web3.utils.fromWei(tokenRatio.toString(), "mether"));
+  return typeof tokenRatio != "undefined" && !(tokenRatio != tokenRatio) ? window.web3.utils.fromWei(tokenRatio.toString(), "mether") : 0;
   //return new BigNumber(tokenRatio).dividedBy(new BigNumber("1000000000000000000000000")).toNumber();
   //return (tokenRatio / 1000000000000000000000000);
 }

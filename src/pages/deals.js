@@ -14,14 +14,28 @@ export default ({}) => {
   const [activeContract, setActiveContract] = useQueryParam(`tag`);
   const { isWalletEnabled, chainId } = useContext(WalletContext);
 
+  function isChainSupported(chainId){
+    const supportedChainsMapper = {
+      "0x89":"polygon",
+      "0xa":"optimism",
+      "0xa4b1":"arbitrum",
+      "0x4e454152":"aurora",
+      "0x13881":"mumbai",
+    }
+    if(typeof supportedChainsMapper[chainId]!="undefined"){
+      return true
+    }else{
+      return false
+    }
+  }
   return (
     <Layout position="absolute" bottom="4px" width="100%" height="60px">
       <SEO title="Deals" description="Discover and launch custom token deals" />
       <Header />
       <MobileDiv mobileWidth="100%" width="90%" background="" style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
-        {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
-
-        {chainId == "0x13881" || (process.env.NODE_ENV == "development" && chainId == "0x7a69") ? (
+        {true && !isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
+    {console.log("chainId 23", chainId, process.env.NODE_ENV)}
+        {isChainSupported(chainId) || (process.env.NODE_ENV == "development" && chainId == "0x7a69") ? (
           <SeedContainer activeContract={activeContract} setActiveContract={setActiveContract}></SeedContainer>
         ) : (
           isWalletEnabled && (
@@ -31,7 +45,7 @@ export default ({}) => {
                 Chain unsupported
               </Text>
               <br></br>
-              <p style={{ marginLeft: 80, marginRight: 80 }}>App is only available on Mumbai Network.</p>
+              <p style={{ marginLeft: 80, marginRight: 80 }}>Please select the supported chain from the drop-down menu.</p>
             </div>
           )
         )}
@@ -39,3 +53,7 @@ export default ({}) => {
     </Layout>
   );
 };
+//0x539 - ganache
+//0x7a69 - hardhat
+//0x13881 - mumbai
+//0x89 - polygon

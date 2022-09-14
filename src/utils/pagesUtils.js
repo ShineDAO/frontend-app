@@ -150,6 +150,8 @@ export async function switchChain(chainId) {
     console.log("code error ", switchError.code);
     if (switchError.code === 4902) {
       try {
+        console.log("now or never ", chainId, chainId == "0xa4b1");
+
         if (chainId == "0x89") {
           await window.ethereum.request({
             method: "wallet_addEthereumChain",
@@ -163,8 +165,65 @@ export async function switchChain(chainId) {
               },
             ],
           });
+        } else if ((chainId == "0xa")) {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0xa",
+                chainName: "Optimism",
+                rpcUrls: ["https://mainnet.optimism.io"],
+                blockExplorerUrls: ["https://optimistic.etherscan.io"],
+                nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 } /* ... */,
+              },
+            ],
+          });
+        } else if (chainId == "0x4e454152") {
+
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x4e454152",
+                chainName: "Aurora",
+                rpcUrls: ["https://mainnet.aurora.dev"],
+                blockExplorerUrls: ["https://aurorascan.dev"],
+                nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 } /* ... */,
+              },
+            ],
+          });
+        } else if (chainId == "0xa4b1") {
+          console.log("now or never 1", chainId, chainId == "0x4e454152");
+
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0xa4b1",
+                chainName: "Arbitrum",
+                rpcUrls: ["https://rpc.ankr.com/arbitrum"],
+                blockExplorerUrls: ["https://arbiscan.io/"],
+                nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 } /* ... */,
+              },
+            ],
+          });
+        }
+        else if (chainId == "0x13881") {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0x13881",
+                chainName: "Mumbai",
+                rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
+                blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+                nativeCurrency: { name: "MATIC", symbol: "MATIC", decimals: 18 } /* ... */,
+              },
+            ],
+          });
         }
       } catch (addError) {
+        console.log("add error ", addError);
         // handle "add" error
       }
     }
@@ -296,8 +355,10 @@ export function getNativeTokenName(chainId) {
     "0x1": "ETH",
     "0x89": "MATIC",
     "0x13881": "MATIC",
+    "0xa": "ETH",
+    "0xa4b1": "ETH",
+    "0x4e454152": "ETH",
     "0x7a69": "ETH", //localhost
-
   };
   if (chainMapper[chainId]) {
     return chainMapper[chainId];
@@ -306,8 +367,7 @@ export function getNativeTokenName(chainId) {
   }
 }
 
-
-export async function loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance, setNativeTokenName) {
+export async function loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount, setNativeBalance, setNativeTokenName) {
   let chainId;
   if (window.ethereum) {
     console.log("load 1", window.web3);
@@ -317,10 +377,9 @@ export async function loadWeb3(setWalletStatus, setChainId, currentAccount, setC
     setChainId(chainId);
 
     await getEthBalance(setNativeBalance);
-    await setNativeTokenName(getNativeTokenName(chainId))
+    await setNativeTokenName(getNativeTokenName(chainId));
     setWalletStatus(true);
 
-  
     ethereum.on("chainChanged", handleChainChanged);
 
     ethereum

@@ -1,7 +1,8 @@
 {
-  "usdc": { "main": "", "matic": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174", "mumbai": "0x4303d32a6e743ea91944461738dfae2e271c36cd", "hardhat": "0x114e375B6FCC6d6fCb68c7A1d407E652C54F25FB" },
-  "usdt": { "main": "", "matic": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", "mumbai": "0x5939ee3f4ff5bf51eefc4150307d20fdd5032c74", "hardhat": "0x8bEe2037448F096900Fd9affc427d38aE6CC0350" },
-  "dai": { "main": "", "matic": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063", "mumbai": "0xf817e71096627ee387b4d5e3d3b1a6550cdf11b8", "hardhat": "0xcC4c41415fc68B2fBf70102742A83cDe435e0Ca7" },
-  "frax": { "main": "", "matic": "0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89", "mumbai": "0x6c85a030127d0103afbfcd2547c55bb9d1633e1d", "hardhat": "0x967AB65ef14c58bD4DcfFeaAA1ADb40a022140E5" },
-  "shn": { "main": "", "matic": "0x53D76f967De13E7F95e90196438DCe695eCFA957", "mumbai": "0x908d0eb16f20ca365a577fca864583e6137feb70", "hardhat": "0x8e264821AFa98DD104eEcfcfa7FD9f8D8B320adA" }
+  "usdc": { "main": "", "matic": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174", "optimism":"0x7F5c764cBc14f9669B88837ca1490cCa17c31607", "arbitrum":"0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8", "aurora":"0xB12BFcA5A55806AaF64E99521918A4bf0fC40802", "mumbai": "0x4303d32a6e743ea91944461738dfae2e271c36cd", "hardhat": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0" },
+  "usdt": { "main": "", "matic": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", "optimism":"0x94b008aA00579c1307B0EF2c499aD98a8ce58e58", "arbitrum":"0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9", "aurora":"0x4988a896b1227218e4A686fdE5EabdcAbd91571f", "mumbai": "0x5939ee3f4ff5bf51eefc4150307d20fdd5032c74", "hardhat": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9" },
+  "dai": { "main": "", "matic": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063", "optimism":"0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1", "arbitrum":"0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1", "aurora":"0xe3520349F477A5F6EB06107066048508498A291b", "mumbai": "0xf817e71096627ee387b4d5e3d3b1a6550cdf11b8", "hardhat": "0x0165878A594ca255338adfa4d48449f69242Eb8F" },
+  "frax": { "main": "", "matic": "0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89","optimism":"0x2E3D870790dC77A83DD1d18184Acc7439A53f475", "arbitrum":"0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F", "aurora":"0xE4B9e004389d91e4134a28F19BD833cBA1d994B6", "mumbai": "0x6c85a030127d0103afbfcd2547c55bb9d1633e1d", "hardhat": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6" },
+  "shn": { "main": "", "matic": "0x53D76f967De13E7F95e90196438DCe695eCFA957","optimism":"", "arbitrum":"", "aurora":"", "mumbai": "0x908d0eb16f20ca365a577fca864583e6137feb70", "hardhat": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788" }
 }
+

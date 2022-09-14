@@ -5,6 +5,6 @@
   "veShnYieldDistributorAddress": { "main": "0xMAIN-veShnAddress", "matic": "0xF2E0980f077d9FF9802520F9AbD1d02785c32e27", "mumbai": "0x36Cf9b60E46739b1dd6E243ee7d09298BB7e7Fc2", "hardhat": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0" },
   "GeneralCheckpointAddress": { "main": "0xMAIN-GeneralCheckpointAddress", "matic": "0x8d3b222b0acfe7c6f47b06ee414878923cb10c95", "mumbai": "0x2ded2cbd8164105394869217ef8251feed8662b1", "hardhat": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9" },
 
-  "seedFactoryAddress": { "main": "0xMAIN-seedFactoryAddress", "matic": "", "mumbai": "0x5b0426158e23816B719b1e7ece517D50b38df57e", "hardhat": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d" },
+  "seedFactoryAddress": { "main": "0xMAIN-seedFactoryAddress", "matic": "0xAC4406465a392001168aCC407171b16d8240d6fb", "optimism":"0x787130bFFFEa85B132160C3e4F6ACbec379c0d64","arbitrum":"0x787130bFFFEa85B132160C3e4F6ACbec379c0d64", "aurora":"0x172976D891F3762b2928d1f2f03b13Ff951545A4", "mumbai": "0x31B12ABAA5b992DFF1dDA8E7A03E338B2f0FAaA8", "hardhat": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512" },
   "nttAddress": { "main": "0xMAIN-NttAddress", "matic": "", "mumbai": "0xa2f7570ae9c395987bfa9e86465e308bbfbcc388", "hardhat": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6" }
 }

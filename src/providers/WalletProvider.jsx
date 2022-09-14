@@ -5,7 +5,7 @@ export const WalletContext = createContext({});
 export default ({ children }) => {
 
   const [isWalletEnabled, setWalletStatus] = useState();
-  const [chainId, setChainId] = useState("0x89");
+  const [chainId, setChainId] = useState("");
   const [nativeBalance, setNativeBalance] = useState();
   const [nativeTokenName, setNativeTokenName] = useState();
   const [currentAccount, setCurrentAccount] = useState(null);

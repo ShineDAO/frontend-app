@@ -19,10 +19,13 @@ const NavbarLinks = ({ desktop }) => {
 
   const { theme } = useContext(ThemeContext);
 
-  const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount,setNativeBalance,setNativeTokenName } = useContext(WalletContext);
+  const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount, setNativeBalance, setNativeTokenName } = useContext(WalletContext);
   const options = [
     { value: "0x1", label: "Ethereum" },
     { value: "0x89", label: "Polygon/Matic" },
+    { value: "0xa", label: "Optimism" },
+    { value: "0xa4b1", label: "Arbitrum" },
+    { value: "0x4e454152", label: "Aurora" },
     { value: "0x13881", label: "Mumbai testnet" },
   ];
 
@@ -31,19 +34,25 @@ const NavbarLinks = ({ desktop }) => {
     defaultOption = options[0];
   } else if (chainId == "0x89") {
     defaultOption = options[1];
-  } else if (chainId == "0x13881") {
+  } else if (chainId == "0xa") {
     defaultOption = options[2];
+  } else if (chainId == "0xa4b1") {
+    defaultOption = options[3];
+  } else if (chainId == "0x4e454152") {
+    defaultOption = options[4];
+  } else if (chainId == "0x13881") {
+    defaultOption = options[5];
   } else {
     defaultOption = { value: "", label: "Chain unrecognized" };
   }
 
-  function manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance) {
+  function manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount, setNativeBalance) {
     if (pathname != "veSHN" && pathname != "deals") {
       window.location.href = "#about";
     } else if ((pathname = "deals")) {
-      pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance,setNativeTokenName);
+      pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount, setNativeBalance, setNativeTokenName);
     } else {
-      pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance, setNativeTokenName);
+      pagesUtils.loadWeb3(setWalletStatus, setChainId, currentAccount, setCurrentAccount, setNativeBalance, setNativeTokenName);
     }
   }
 
@@ -55,6 +64,12 @@ const NavbarLinks = ({ desktop }) => {
       pagesUtils.switchChain("0x89");
     } else if (option.value == "0x13881") {
       pagesUtils.switchChain("0x13881");
+    } else if (option.value == "0xa") {
+      pagesUtils.switchChain("0xa");
+    } else if (option.value == "0x4e454152") {
+      pagesUtils.switchChain("0x4e454152");
+    }else if (option.value == "0xa4b1") {
+      pagesUtils.switchChain("0xa4b1");
     }
     setChainId(option.value);
   }
@@ -86,9 +101,8 @@ const NavbarLinks = ({ desktop }) => {
             </div>
           </div>
         ) : (
-          (pathname == "veSHN" ||
-          pathname == "deals") && (
-            <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount,setNativeBalance)} theme={theme}>
+          (pathname == "veSHN" || pathname == "deals") && (
+            <JoinButton onClick={() => manageButtonClick(pathname, setWalletStatus, setChainId, currentAccount, setCurrentAccount, setNativeBalance)} theme={theme}>
               {pathname == "veSHN" || pathname == "deals" ? "Connect Wallet" : "See Upcoming Projects"}
             </JoinButton>
           )
