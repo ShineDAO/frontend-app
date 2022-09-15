@@ -21,7 +21,7 @@ const NavbarLinks = ({ desktop }) => {
 
   const { isWalletEnabled, setWalletStatus, chainId, setChainId, currentAccount, setCurrentAccount, setNativeBalance, setNativeTokenName } = useContext(WalletContext);
   const options = [
-    { value: "0x1", label: "Ethereum" },
+    //{ value: "0x1", label: "Ethereum" },
     { value: "0x89", label: "Polygon/Matic" },
     { value: "0xa", label: "Optimism" },
     { value: "0xa4b1", label: "Arbitrum" },
@@ -30,18 +30,19 @@ const NavbarLinks = ({ desktop }) => {
   ];
 
   let defaultOption;
-  if (chainId == "0x1") {
+  //if (chainId == "0x1") {
+    //defaultOption = options[0];
+  //}
+  if (chainId == "0x89") {
     defaultOption = options[0];
-  } else if (chainId == "0x89") {
-    defaultOption = options[1];
   } else if (chainId == "0xa") {
-    defaultOption = options[2];
+    defaultOption = options[1];
   } else if (chainId == "0xa4b1") {
-    defaultOption = options[3];
+    defaultOption = options[2];
   } else if (chainId == "0x4e454152") {
-    defaultOption = options[4];
+    defaultOption = options[3];
   } else if (chainId == "0x13881") {
-    defaultOption = options[5];
+    defaultOption = options[4];
   } else {
     defaultOption = { value: "", label: "Chain unrecognized" };
   }
@@ -58,9 +59,10 @@ const NavbarLinks = ({ desktop }) => {
 
   function handleDropdown(option) {
     console.log("selected option", option);
-    if (option.value == "0x1") {
-      pagesUtils.switchToMainnet();
-    } else if (option.value == "0x89") {
+    //if (option.value == "0x1") {
+    //  pagesUtils.switchToMainnet();
+   // } //else 
+   if (option.value == "0x89") {
       pagesUtils.switchChain("0x89");
     } else if (option.value == "0x13881") {
       pagesUtils.switchChain("0x13881");

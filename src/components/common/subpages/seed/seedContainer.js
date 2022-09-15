@@ -82,7 +82,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
   const [selectedTokenKey, setSelectedTokenKey] = useState("native");
   const [stablesUsed, setStablesUsed] = useState(true);
   const [maxRaise, setMaxRaise] = useState();
-  const [visibility, setVisibility] = useState("private");
+  const [visibility, setVisibility] = useState("public");
 
   const [acceptedTokenAddress, setAcceptedTokenAddress] = useState();
   const [requireKyc, setRequireKyc] = useState(false);
@@ -615,7 +615,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                           style={{ borderRadius: 6, boder: "1px solid #3f3d56" }}
                         ></input>{" "}
                         <br></br>
-                        Balance: {offeredTokenBalance} {tokenASymbol}
+                        Balance: {parseFloat(offeredTokenBalance).toFixed(2)} {tokenASymbol}
                       </TableD>
                     </TableR>
                     <br></br>
@@ -852,7 +852,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                         </TableR>
                         <br></br>
                         <TableR>
-                          <TableD>Token (B) Cap/NFT</TableD>
+                          <TableD>Token (B) Cap/Address</TableD>
                         </TableR>
                         <TableR>
                           <TableD>
@@ -1202,7 +1202,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       </div>
       {formVisible && (
         <Text style={{ display: "flex", justifyContent: "center", textAlign: "center" }} color="green">
-          <br></br> Fees:<br></br>
+         
           <br></br> Slippage: 0.0% <br></br>
           Deployment fee: {deploymentFee} {nativeTokenName}
           <br></br>
