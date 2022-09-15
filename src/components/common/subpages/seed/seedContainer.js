@@ -1055,10 +1055,10 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                 </div>
                 <div style={{ display: "flex", justifyContent: "center" }} onChange={event => setVisibility(event.target.value)}>
                   <td>
-                    <input type="radio" checked={visibility === "public"} value="public" name="visibility" /> True
+                    <input type="radio" checked={visibility === "public"} value="public" name="visibility" /> Public
                   </td>
                   <td>
-                    <input type="radio" checked={visibility === "private"} value="private" name="visibility" /> False
+                    <input type="radio" checked={visibility === "private"} value="private" name="visibility" /> Private
                   </td>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center" }}>{visibility == "public" ? "Deal is going to be listed on the main page and also accessible via a generated link" : "Deal is only going to be accessible via a generated link"}</div>
