@@ -1,6 +1,6 @@
 import React from "react";
 import Helmet from "react-helmet";
-import Thumbnail from "assets/thumbnail/shine_thumbnail.png";
+import Thumbnail from "assets/thumbnail/shine_thumbnail_new.png";
 import DegenNews from "assets/illustrations/degen_news.png";
 import OGDegenNews from "assets/illustrations/og_degen_news.png";
 
