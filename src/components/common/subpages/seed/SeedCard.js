@@ -222,7 +222,7 @@ export function SeedCard({
             Distribution mechanism
           </Text>
           <Text color="#a2a2a2" fontWeight={300} fontSize="16px">
-            {100 - percentageVested}% of the tokens are unlocked immediatly, and the rest after {vestingDuration / 86400} days
+            {100 - percentageVested}% of the tokens are unlocked immediatly, and the rest after {(vestingDuration / 86400).toFixed(2)} days
           </Text>
         </div>
       );
@@ -234,7 +234,7 @@ export function SeedCard({
             Distribution mechanism
           </Text>
           <Text color="#a2a2a2" fontWeight={700} fontSize="16px">
-            {100 - percentageVested}% of the tokens are unlocked immediatly, then distributed linearly over {vestingDuration / 86400} days with a cliff period of {cliffDuration / 86400} days
+            {100 - percentageVested}% of the tokens are unlocked immediatly, then distributed linearly over {(vestingDuration / 86400).toFixed(2)} days with a cliff period of {(cliffDuration / 86400).toFixed(2)} days
           </Text>
         </div>
       );
