@@ -12,6 +12,7 @@ import { useQueryParam } from "../hooks/useQueryParam";
 
 export default ({}) => {
   const [activeContract, setActiveContract] = useQueryParam(`tag`);
+  const [chainQueryParam, setChainQueryParam] = useQueryParam(`chain`); // full name e.g. "optimism"
   const { isWalletEnabled, chainId } = useContext(WalletContext);
 
   function isChainSupported(chainId){
@@ -36,7 +37,7 @@ export default ({}) => {
         {true && !isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
     {console.log("chainId 23", chainId, process.env.NODE_ENV)}
         {isChainSupported(chainId) || (process.env.NODE_ENV == "development" && chainId == "0x7a69") ? (
-          <SeedContainer activeContract={activeContract} setActiveContract={setActiveContract}></SeedContainer>
+          <SeedContainer chainQueryParam={chainQueryParam} activeContract={activeContract} setActiveContract={setActiveContract}></SeedContainer>
         ) : (
           isWalletEnabled && (
             <div style={{ textAlign: "center" }}>

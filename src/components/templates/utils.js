@@ -1156,6 +1156,33 @@ export async function createVeShnLock(userAddress, veShnAbi, veShnAddress, amoun
     setLockError("Lock could not be created, please check the amount of SHN that you are locking. Additionally check that you have approved the contract.");
   }
 }
+export function chainNameToIdMapper(chainName) {
+  let chainToId = { main: "0x1", matic: "0x89", optimism: "0xa", aurora: "0x4e454152", arbitrum: "0xa4b1", mumbai: "0x13881", hardhat: "0x7a69" };
+  console.log("active acc 222 ", chainToId[chainName]);
+  if (typeof chainToId[chainName] == "undefined") {
+    return "unknown";
+  } else {
+    return chainToId[chainName];
+  }
+}
+
+export function chainIdToNameMapper(chainId) {
+  let chainIdContainer = {
+    "0x1": "main",
+    "0x89": "matic",
+    "0xa": "optimism",
+    "0x4e454152": "aurora",
+    "0xa4b1": "arbitrum",
+    "0x13881": "mumbai",
+    "0x7a69": "hardhat",
+  };
+  let chain = chainIdContainer[chainId];
+  if (typeof chain == "undefined") {
+    return "unknown";
+  } else {
+    return chain;
+  }
+}
 import addresses from "../../../static/config/config";
 export function getAddress(chainId, contract) {
   //gets address such as SeedFactory
@@ -1445,17 +1472,17 @@ export async function deployTokens(userAddress, SeedAbi, offeredTokenAddress, se
 
   console.log("Tokens added", receipt);
 }
-export async function getTokenAFee(SeedFactoryAbi,seedFactoryAddress) {
+export async function getTokenAFee(SeedFactoryAbi, seedFactoryAddress) {
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
   return await SeedFactoryInstance.methods.defaultTokenFee().call();
 }
 
-export async function getTokenBFee(SeedFactoryAbi,seedFactoryAddress) {
+export async function getTokenBFee(SeedFactoryAbi, seedFactoryAddress) {
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
-  return await SeedFactoryInstance.methods.defaultRaisingFee().call()
+  return await SeedFactoryInstance.methods.defaultRaisingFee().call();
 }
 
-export async function getDeploymentFeeFromAbi(SeedFactoryAbi,seedFactoryAddress) {
+export async function getDeploymentFeeFromAbi(SeedFactoryAbi, seedFactoryAddress) {
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
   return fromWei(await SeedFactoryInstance.methods.defaultDeploymentFee().call());
 }

@@ -38,6 +38,8 @@ import {
   getDeploymentFeeFromAbi,
   getTokenAFee,
   getTokenBFee,
+  chainNameToIdMapper,
+  chainIdToNameMapper,
 } from "../../../../../src/components/templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
@@ -49,8 +51,9 @@ import { Tab } from "react-bootstrap";
 import { families } from "detect.js";
 import { ErrorMessage } from "formik";
 
-export function SeedContainer({ activeContract, setActiveContract }) {
+export function SeedContainer({ activeContract, setActiveContract, chainQueryParam }) {
   const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, nativeBalance, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
+  const [wrongChainError, setWrongChainError] = useState("");
   const [offeredTokenBalance, setOfferedTokenBalance] = useState();
   const [acceptedTokenBalance, setAcceptedTokenBalance] = useState();
   const [tokenASymbol, setTokenASymbol] = useState();
@@ -165,10 +168,18 @@ export function SeedContainer({ activeContract, setActiveContract }) {
           setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
           setSalesLoading(false);
         } else if (activeContract) {
-          console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex);
-          setSalesLoading(true);
-          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
-          setSalesLoading(false);
+          console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex, chainQueryParam, chainId,chainNameToIdMapper(chainQueryParam), chainNameToIdMapper(chainQueryParam) == chainId);
+          // if chainId from queryParams differs from the chainId then
+          // stop the loading
+          // show the error
+          if (chainNameToIdMapper(chainQueryParam) != chainId) {
+            setSalesLoading(false);
+            setWrongChainError(`Please change your chain to ${chainQueryParam}`);
+          } else {
+            setSalesLoading(true);
+            setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
+            setSalesLoading(false);
+          }
         }
       }
       loadSeedSales();
@@ -579,7 +590,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 <input name="title" onChange={target => typeof target.target.value !== "undefined" && setTitle(target.target.value)} value={title} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "80%" }}></input>{" "}
               </div>
               <br></br>
-              <div style={{ background: "#4f4fc8", paddingRight:70 }}>
+              <div style={{ background: "#4f4fc8", paddingRight: 70 }}>
                 <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
                   <h2>Tokens</h2>
                 </div>
@@ -1143,7 +1154,8 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                 <div style={{ textAlign: "center" }}>
                   {createdTag && (
                     <Text color="white" fontWeight={300} fontSize="18px">
-                      Your deal has been created. You can visit the deal at the following link <a href={`https://app.shinedao.finance/deals?tag=${createdTag}`}>https://app.shinedao.finance/deals?tag={createdTag}</a>
+                      Your deal has been created. You can visit the deal at the following link{" "}
+                      <a href={`https://app.shinedao.finance/deals?tag=${createdTag}&chain=${chainIdToNameMapper(chainId)}`}>{`https://app.shinedao.finance/deals?tag=${createdTag}&chain=${chainIdToNameMapper(chainId)}`}</a>
                     </Text>
                   )}
                 </div>
@@ -1202,7 +1214,6 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       </div>
       {formVisible && (
         <Text style={{ display: "flex", justifyContent: "center", textAlign: "center" }} color="green">
-         
           <br></br> Slippage: 0.0% <br></br>
           Deployment fee: {deploymentFee} {nativeTokenName}
           <br></br>
@@ -1213,7 +1224,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 10 }}>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-          {console.log("seed sales data ", seedSalesData)}
+          {console.log("seed sales data ", seedSalesData, typeof seedSalesData == "undefined")}
           {console.log("seed sales mapper  ", !activeContract, dealsVisible, !formVisible, !cardVisible, seedSalesData)}
           {salesLoading && (
             <div>
@@ -1222,6 +1233,7 @@ export function SeedContainer({ activeContract, setActiveContract }) {
               <Text>Loading...</Text>
             </div>
           )}
+          {wrongChainError != "" && <Text color="tomato">{wrongChainError}</Text>}
           {!activeContract &&
             dealsVisible &&
             !formVisible &&
@@ -1305,9 +1317,8 @@ export function SeedContainer({ activeContract, setActiveContract }) {
                       )}
                       {weiRaised && (
                         <div>
-             
                           <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
-                          <ProgressBar style={{width:280, marginBottom:20}} animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
+                          <ProgressBar style={{ width: 280, marginBottom: 20 }} animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
                         </div>
                       )}
                       <div>
@@ -1373,9 +1384,14 @@ export function SeedContainer({ activeContract, setActiveContract }) {
             !formVisible &&
             !cardVisible &&
             seedSalesData &&
-            seedSalesData.map(({ dealVisibility, totalOffered }) => {
+            (seedSalesData.map(({ dealVisibility, totalOffered }) => {
               return dealVisibility === true && totalOffered != 0;
-            }).length <= 0 && <Text>There are no publicly listed deals on the selected chain. Click on the button to create a new Deal.</Text>}
+            }).length <= 0 ||
+              typeof seedSalesData == "undefined") && (
+              <Text>
+                <br></br>There are no publicly listed deals on the selected chain. Click on the button to create a new Deal.
+              </Text>
+            )}
         </div>
 
         {activeContract && seedSalesData && console.log("activeContract xxx", activeContract, seedIndex, typeof seedIndex, seedSalesData, typeof seedSalesData)}
