@@ -309,6 +309,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       setCardVisible(true);
       setDealsVisible(false);
       setActiveContract(seedAddress);
+      setChainQueryParam(chainIdToNameMapper(chainId))
     } else {
       setSeedIndex();
     }
