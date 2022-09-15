@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button } from "components/common";
 import { ThemeContext } from "providers/ThemeProvider";
 
-import { getOnlyUserAddress, deployNewSeed, getSeedSales, getCoingeckoName, getNetworkName, getRateInUsd, getNativeTokenPrice, ZERO_ADDRESS, recoverErc20Tokens } from "../../../templates/utils.js";
+import { getOnlyUserAddress, deployNewSeed, getSeedSales, getCoingeckoName, getNetworkName, getRateInUsd, getNativeTokenPrice, ZERO_ADDRESS, recoverErc20Tokens, getDealOwner } from "../../../templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
 import ERC20 from "../../../../../static/abi/ShineToken";
@@ -120,6 +120,7 @@ export function SeedCard({
   {
     console.log("native token name 123 ", nativeTokenName);
   }
+  const [dealOwner,setDealOwner] = useState();
   const [approveLoading, setApproveLoading] = useState(false);
   const [shineBalance, setShineBalance] = useState(23232);
   const [currentStatus, setCurrentStatus] = useState("seed");
@@ -160,6 +161,7 @@ export function SeedCard({
 
     if (isWalletEnabled == true && typeof name != "undefined") {
       async function getLocked() {
+        setDealOwner(await getDealOwner(Seed.abi, seedAddress))
         setTokenContractAddress(offeredTokenAddress);
         setSaleContractAddress(seedAddress);
         //setRate(rate);
@@ -478,7 +480,7 @@ export function SeedCard({
 
             <br></br>
             <br></br>
-            {secondsSinceEpoch > endTime && <Button onClick={() => handleWithdrawUnsoldTokens()}>Widthdraw Unsold Tokens</Button>}
+            {secondsSinceEpoch > endTime && currentAccount == dealOwner && <Button onClick={() => handleWithdrawUnsoldTokens()}>Widthdraw Unsold Tokens</Button>}
             <Text color="red" fontWeight={800}>
               {endTime && secondsSinceEpoch > endTime && "Deal closed!"}
             </Text>

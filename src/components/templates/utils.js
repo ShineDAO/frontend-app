@@ -1156,6 +1156,7 @@ export async function createVeShnLock(userAddress, veShnAbi, veShnAddress, amoun
     setLockError("Lock could not be created, please check the amount of SHN that you are locking. Additionally check that you have approved the contract.");
   }
 }
+
 export function chainNameToIdMapper(chainName) {
   let chainToId = { main: "0x1", matic: "0x89", optimism: "0xa", aurora: "0x4e454152", arbitrum: "0xa4b1", mumbai: "0x13881", hardhat: "0x7a69" };
   console.log("active acc 222 ", chainToId[chainName]);
@@ -1443,7 +1444,11 @@ async function setVesting(userAddress, SeedAbi, seedAddress, cliffDuration, vest
   });
   console.log("Whitelisted addresses set", receipt);
 }
-
+export async function getDealOwner( SeedAbi, seedAddress) {
+  var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
+  let ownerAddress = await seedInstance.methods.owner().call();
+  return ownerAddress;
+}
 export async function setVisibility(userAddress, SeedAbi, seedAddress, visibility) {
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
   let estimatedGas = await seedInstance.methods.setDealVisibility(true).estimateGas({
