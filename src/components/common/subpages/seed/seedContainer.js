@@ -51,7 +51,7 @@ import { Tab } from "react-bootstrap";
 import { families } from "detect.js";
 import { ErrorMessage } from "formik";
 
-export function SeedContainer({ activeContract, setActiveContract, chainQueryParam }) {
+export function SeedContainer({ activeContract, setActiveContract, chainQueryParam, setChainQueryParam }) {
   const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, nativeBalance, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
   const [wrongChainError, setWrongChainError] = useState("");
   const [offeredTokenBalance, setOfferedTokenBalance] = useState();
@@ -354,7 +354,6 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Private</div>
             <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Whitelist</div>
             {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
@@ -371,7 +370,6 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Private</div>
             <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NFT Gate</div>
             {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
@@ -388,7 +386,6 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Private</div>
             <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NTT Gate</div>
             {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
@@ -406,7 +403,6 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "gray", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Private</div>
             <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
             {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
           </div>
@@ -1399,6 +1395,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
           <SeedCard
             setSeedSalesData={setSeedSalesData}
             setActiveContract={setActiveContract}
+            setChainQueryParam={setChainQueryParam}
             setCardVisible={setCardVisible}
             setDealsVisible={setDealsVisible}
             setRefetchData={setRefetchData}

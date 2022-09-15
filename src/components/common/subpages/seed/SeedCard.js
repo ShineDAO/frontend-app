@@ -57,6 +57,7 @@ import seedSale from "pages/seed-sale.js";
 export function SeedCard({
   setSeedSalesData,
   setActiveContract,
+  setChainQueryParam,
   setCardVisible,
   setDealsVisible,
   isWalletEnabled1111,
@@ -393,6 +394,7 @@ export function SeedCard({
   function setExpansionDetails() {
     setSeedSalesData();
     setActiveContract(null);
+    setChainQueryParam(null);
     setCardVisible(false);
     setDealsVisible(true);
   }

@@ -37,7 +37,7 @@ export default ({}) => {
         {true && !isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
     {console.log("chainId 23", chainId, process.env.NODE_ENV)}
         {isChainSupported(chainId) || (process.env.NODE_ENV == "development" && chainId == "0x7a69") ? (
-          <SeedContainer chainQueryParam={chainQueryParam} activeContract={activeContract} setActiveContract={setActiveContract}></SeedContainer>
+          <SeedContainer chainQueryParam={chainQueryParam} setChainQueryParam={setChainQueryParam} activeContract={activeContract} setActiveContract={setActiveContract}></SeedContainer>
         ) : (
           isWalletEnabled && (
             <div style={{ textAlign: "center" }}>
