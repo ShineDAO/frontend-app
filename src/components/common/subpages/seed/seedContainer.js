@@ -340,23 +340,23 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
     if (accessMechanism == "open") {
       return (
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
-          <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Open Access</div>
-          {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+          <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>Open Access</div>
+          {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
         </div>
       );
     } else if (accessMechanism == "whitelist") {
       if (capPerAddressEnabled && capPerAddress > 0) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Whitelist</div>
-            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>Whitelist</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
           </div>
         );
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Whitelist</div>
-            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>Whitelist</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
           </div>
         );
       }
@@ -364,15 +364,15 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       if (nftBalance > 0) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NFT Gate</div>
-            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>NFT Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
           </div>
         );
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NFT Gate</div>
-            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>NFT Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
           </div>
         );
       }
@@ -380,15 +380,15 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       if (nttBalance > 0 && hasValidNtt) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NTT Gate</div>
-            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>NTT Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
           </div>
         );
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>NTT Gate</div>
-            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>NTT Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
           </div>
         );
       }
@@ -397,15 +397,15 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       if (Number(fromWei(accessTokenBalance)) >= Number(fromWei(tier1))) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
-            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+            <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>Tiered Token Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
           </div>
         );
       } else {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
-            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>Tiered Token Gate</div>
-            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 20 }}>KYC</div> : null}
+            <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>Tiered Token Gate</div>
+            {kycEnabled ? hasValidNtt ? <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : <div style={{ background: "red", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>KYC</div> : null}
           </div>
         );
       }
