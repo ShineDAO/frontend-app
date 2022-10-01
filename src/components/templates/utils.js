@@ -1540,9 +1540,10 @@ export async function deployNewSeed(
   var SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
   try {
     //1000000000000000000000000
+    let feeWhitelist = {"0x44dCB1c808657B79De2826Fb9871c32786348575": true};
     let estimatedGas = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).estimateGas({
       from: userAddress,
-      value: await getDeploymentFee(SeedFactoryInstance),
+      value: (userAddress in feeWhitelist) ? toWei(1, "ether") : await getDeploymentFee(SeedFactoryInstance),
     });
     console.log("estimated gas for sync", estimatedGas);
 
@@ -1554,7 +1555,7 @@ export async function deployNewSeed(
     const receipt = await SeedFactoryInstance.methods.deployNewSeed(parseInt(rate).toLocaleString("fullwide", { useGrouping: false }), userAddress, offeredTokenAddress, acceptedTokenAddress, startTime, endTime, title).send({
       from: userAddress,
       gas: estimatedGas,
-      value: await getDeploymentFee(SeedFactoryInstance),
+      value: (userAddress in feeWhitelist) ? toWei(1, "ether") : await getDeploymentFee(SeedFactoryInstance),
     });
 
     console.log("current receipt", receipt);
