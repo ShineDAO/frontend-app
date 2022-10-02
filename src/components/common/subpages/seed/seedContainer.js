@@ -40,6 +40,9 @@ import {
   getTokenBFee,
   chainNameToIdMapper,
   chainIdToNameMapper,
+  getErc20Decimals,
+  toWeiWithDecimals,
+  fromWeiWithDecimals
 } from "../../../../../src/components/templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
@@ -58,6 +61,10 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
   const [acceptedTokenBalance, setAcceptedTokenBalance] = useState();
   const [tokenASymbol, setTokenASymbol] = useState();
   const [tokenBSymbol, setTokenBSymbol] = useState();
+  const [tokenADecimals, setTokenADecimals] = useState();
+  const [tokenBDecimals, setTokenBDecimals] = useState();
+
+  const [accessTokenDecimals, setAccessTokenDecimals] = useState();
 
   const [deploymentFee, setDeploymentFee] = useState();
   const [defaultTokenAFee, setDefaultTokenAFee] = useState();
@@ -168,7 +175,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
           setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
           setSalesLoading(false);
         } else if (activeContract) {
-          console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex, chainQueryParam, chainId,chainNameToIdMapper(chainQueryParam), chainNameToIdMapper(chainQueryParam) == chainId);
+          console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex, chainQueryParam, chainId, chainNameToIdMapper(chainQueryParam), chainNameToIdMapper(chainQueryParam) == chainId);
           // if chainId from queryParams differs from the chainId then
           // stop the loading
           // show the error
@@ -202,6 +209,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
         getAllowance(setAllowance, getAddress(chainId, "seedFactoryAddress"), currentAccount, ERC20.abi, offeredTokenAddress);
         setOfferedTokenBalance(await getErc20Balance(currentAccount, offeredTokenAddress));
         setTokenASymbol(await getErc20Symbol(offeredTokenAddress));
+        setTokenADecimals(await getErc20Decimals(offeredTokenAddress));
       } else {
         setOfferedTokenBalance(0);
         setTokenASymbol("");
@@ -216,10 +224,20 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       if (typeof acceptedTokenAddress !== "undefined" && acceptedTokenAddress !== "") {
         setAcceptedTokenBalance(await getErc20Balance(currentAccount, acceptedTokenAddress));
         setTokenBSymbol(await getErc20Symbol(acceptedTokenAddress));
+        setTokenBDecimals(await getErc20Decimals(acceptedTokenAddress));
       }
     }
     loadDataForAcceptedTokenAddress();
   }, [acceptedTokenAddress]);
+
+  useEffect(() => {
+    async function loadDataForAccessTokenAddress() {
+      if (typeof accessTokenAddress !== "undefined" && accessTokenAddress !== "") {
+        setAccessTokenDecimals(await getErc20Decimals(accessTokenAddress));
+      }
+    }
+    loadDataForAccessTokenAddress();
+  }, [accessTokenAddress]);
 
   useEffect(() => {
     axios
@@ -265,7 +283,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       SeedFactory.abi,
       Seed.abi,
       getAddress(chainId, "seedFactoryAddress"),
-      toWei(tokenAmount),
+      toWeiWithDecimals(tokenAmount, tokenADecimals),
       convertedRate,
       lockDuration,
       cliffDuration,
@@ -274,20 +292,21 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       startTime,
       endTime,
       accessTokenAddress,
-      toWei(accessTokenAmountTier1),
-      toWei(accessTokenAmountTier2),
-      toWei(accessTokenAmountTier3),
-      toWei(accessTokenAmountTier4),
-      toWei(tier1Cap),
-      toWei(tier2Cap),
-      toWei(tier3Cap),
-      toWei(tier4Cap),
+      toWeiWithDecimals(accessTokenAmountTier1,accessTokenDecimals),
+      toWeiWithDecimals(accessTokenAmountTier2,accessTokenDecimals),
+      toWeiWithDecimals(accessTokenAmountTier3,accessTokenDecimals),
+      toWeiWithDecimals(accessTokenAmountTier4,accessTokenDecimals),
+      toWeiWithDecimals(tier1Cap, tokenBDecimals),
+      toWeiWithDecimals(tier2Cap, tokenBDecimals),
+      toWeiWithDecimals(tier3Cap, tokenBDecimals),
+      toWeiWithDecimals(tier4Cap, tokenBDecimals),
       title,
       accessMechanism,
       whitelistedAddresses,
       capsForWhitelistedAddresses,
+      tokenADecimals,
       nftAddress,
-      toWei(nftCap),
+      toWeiWithDecimals(nftCap, tokenBDecimals),
       requireKyc,
       getAddress(chainId, "nttAddress"),
       nttCap,
@@ -309,7 +328,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       setCardVisible(true);
       setDealsVisible(false);
       setActiveContract(seedAddress);
-      setChainQueryParam(chainIdToNameMapper(chainId))
+      setChainQueryParam(chainIdToNameMapper(chainId));
     } else {
       setSeedIndex();
     }
@@ -393,8 +412,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
         );
       }
     } else if (accessMechanism == "token-gate-tiers") {
-      console.log("test debug 1", fromWei(accessTokenBalance), fromWei(tier1), fromWei(accessTokenBalance) >= fromWei(tier1), Number(fromWei(accessTokenBalance)) >= Number(fromWei(tier1)));
-      if (Number(fromWei(accessTokenBalance)) >= Number(fromWei(tier1))) {
+      if (Number(fromWeiWithDecimals(accessTokenBalance,accessTokenDecimals)) >= Number(fromWeiWithDecimals(tier1,accessTokenDecimals))) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>Tiered Token Gate</div>
@@ -1243,9 +1261,11 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                   seedAddress,
                   rate,
                   offeredTokenName,
+                  offeredTokenDecimals,
                   offeredTokenTotalSupply,
                   offeredTokenSymbol,
                   acceptedTokenSymbol,
+                  acceptedTokenDecimals,
                   acceptedTokenBalance,
                   weiRaised,
                   dealVisibility,
@@ -1277,6 +1297,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                   tier4Cap,
                   accessTokenSymbol,
                   accessTokenBalance,
+                  accessTokenDecimals,
                   capForNTT,
                   capForNFT,
                   nftBalance,
@@ -1309,7 +1330,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                       <h1>{name}</h1>
                       {false && (
                         <div>
-                          - {offeredTokenName} - {acceptedTokenSymbol} - {fromWei(weiRaised)}
+                          - {offeredTokenName} - {acceptedTokenSymbol} - {fromWeiWithDecimals(weiRaised,acceptedTokenDecimals)}
                         </div>
                       )}
                       {weiRaised && (
@@ -1329,7 +1350,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                         {" "}
                         <b>Deal size</b>{" "}
                         <SmallerText>
-                          {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromWei(totalOffered) / fromFixed(rate)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                          {fromWeiWithDecimals(totalOffered,offeredTokenDecimals)} {offeredTokenSymbol} for max {fromWeiWithDecimals(totalOffered,offeredTokenDecimals) / fromFixed(rate)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
                       <div>

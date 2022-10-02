@@ -64,12 +64,16 @@ export async function getWeiRaised(setWeiRaised, saleAbi, saleContractAddress) {
 }
 
 export async function getSeedSaleShnBalance(setSeedSaleShnBalance, tokenAbi, saleContractAddress, tokenContractAddress) {
+  const BigNumber = require("bignumber.js");
+
   var abiToken = tokenAbi;
   var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
   var seedSaleShnBalance = await tokenInst.methods.balanceOf(saleContractAddress).call();
-  let shnAvailable = window.web3.utils.fromWei(seedSaleShnBalance.toString(), "ether");
 
-  setSeedSaleShnBalance(shnAvailable);
+  let decimals = await tokenInst.methods.decimals().call();
+  console.log("decimals 22", seedSaleShnBalance, decimals);
+  const balance = new BigNumber(seedSaleShnBalance).div(10 ** decimals);
+  setSeedSaleShnBalance(balance);
 }
 
 export async function getEthRaised(setEthRaised, saleAbi, saleContractAddress) {
@@ -98,26 +102,37 @@ export async function getShineBalance(setShineBalance, userAddress, tokenAbi, to
 }
 
 export async function getProjectBalance(setProjectBalance, userAddress, tokenAbi, tokenContractAddress) {
+  const BigNumber = require("bignumber.js");
+
   console.log("adress ", userAddress);
   var abiToken = tokenAbi;
   var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
 
   var projectBalance = await tokenInst.methods.balanceOf(userAddress).call();
+  let decimals = await tokenInst.methods.decimals().call();
 
-  var projectBalanceFromWei = window.web3.utils.fromWei(projectBalance, "ether");
-  setProjectBalance(projectBalanceFromWei);
+  console.log("decimals 12", projectBalance, decimals);
+
+  const balance = new BigNumber(projectBalance).div(10 ** decimals);
+  setProjectBalance(balance);
 }
 
 export async function getErc20Balance(userAddress, tokenContractAddress) {
+  const BigNumber = require("bignumber.js");
+
   var abiToken = erc20Abi;
   var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
 
   let projectBalance = await tokenInst.methods.balanceOf(userAddress).call();
+  let decimals = await tokenInst.methods.decimals().call();
 
-  console.log("balance222222, ", projectBalance);
+  //var projectBalanceFromWei = window.web3.utils.fromWei(projectBalance, "ether"); // this is incorrect as there are tokens with different balances
+  //return projectBalanceFromWei;
 
-  var projectBalanceFromWei = window.web3.utils.fromWei(projectBalance, "ether");
-  return projectBalanceFromWei;
+  const balance = new BigNumber(projectBalance).div(10 ** decimals);
+  console.log("balance222222, ", balance);
+
+  return balance;
 }
 
 export async function getErc20Symbol(tokenContractAddress) {
@@ -127,6 +142,15 @@ export async function getErc20Symbol(tokenContractAddress) {
   let symbol = await tokenInst.methods.symbol().call();
 
   return symbol;
+}
+
+export async function getErc20Decimals(tokenContractAddress) {
+  var abiToken = erc20Abi;
+  var tokenInst = new window.web3.eth.Contract(abiToken, tokenContractAddress);
+
+  let decimals = await tokenInst.methods.decimals().call();
+
+  return decimals;
 }
 
 export async function getTokenBalance(userAddress, tokenAbi, tokenContractAddress) {
@@ -329,7 +353,7 @@ export async function enableAccessForTier1AndTier2(userAddress, gas, saleAbi, sa
   }
 }
 
-export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, currentStatus, setRefetchData) {
+export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, currentStatus, setRefetchData,offeredTokenDecimals) {
   if (ethAmountToSpend !== "") {
     //disable button if no amount is entered
     let abi = saleAbi;
@@ -341,7 +365,7 @@ export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setS
     try {
       let estimatedGas = await simpleCrowdsaleInstance.methods.buyTokens(userAddress).estimateGas({
         from: userAddress,
-        value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
+        value: ethAmountToSpend,
       });
       //let estimatedGas = 100000;
 
@@ -350,12 +374,12 @@ export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setS
       console.log("eth amount to spend", ethAmountToSpend);
       const receipt = await simpleCrowdsaleInstance.methods.buyTokens(userAddress).send({
         from: userAddress,
-        value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
+        value: ethAmountToSpend,
         gas: estimatedGas,
       });
       console.log("receipt", receipt);
       var amountBoughtInWei = receipt.events.TokensPurchased.returnValues.amount;
-      var amountBoughtInTKNs = window.web3.utils.fromWei(amountBoughtInWei, "ether");
+      var amountBoughtInTKNs = fromWeiWithDecimals(amountBoughtInWei,offeredTokenDecimals);
 
       setRefetchData(true);
       setShineBought(true);
@@ -402,7 +426,7 @@ export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setS
   }
 }
 
-export async function swapTokenWithToken(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, currentStatus, setRefetchData) {
+export async function swapTokenWithToken(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, currentStatus, setRefetchData,offeredTokenDecimals) {
   if (ethAmountToSpend !== "") {
     //disable button if no amount is entered
     let abi = saleAbi;
@@ -412,7 +436,7 @@ export async function swapTokenWithToken(ethAmountToSpend, setEthAmountToSpend, 
     setMetamaskErrorCode(undefined);
 
     try {
-      let estimatedGas = await simpleCrowdsaleInstance.methods.buyTokensWithToken(userAddress, toWei(ethAmountToSpend)).estimateGas({
+      let estimatedGas = await simpleCrowdsaleInstance.methods.buyTokensWithToken(userAddress, ethAmountToSpend).estimateGas({
         from: userAddress,
       });
       //let estimatedGas = 100000;
@@ -420,13 +444,14 @@ export async function swapTokenWithToken(ethAmountToSpend, setEthAmountToSpend, 
       console.log("estimated gas ", estimatedGas);
 
       console.log("eth amount to spend", ethAmountToSpend);
-      const receipt = await simpleCrowdsaleInstance.methods.buyTokensWithToken(userAddress, toWei(ethAmountToSpend)).send({
+      const receipt = await simpleCrowdsaleInstance.methods.buyTokensWithToken(userAddress, ethAmountToSpend).send({
         from: userAddress,
         gas: estimatedGas,
       });
       console.log("receipt", receipt);
       var amountBoughtInWei = receipt.events.TokensPurchased.returnValues.amount;
-      var amountBoughtInTKNs = window.web3.utils.fromWei(amountBoughtInWei, "ether");
+      //var amountBoughtInTKNs = window.web3.utils.fromWei(amountBoughtInWei, "ether"); offeredTokenDecimals
+      var amountBoughtInTKNs = fromWeiWithDecimals(amountBoughtInWei, offeredTokenDecimals); 
 
       setRefetchData(true);
       setShineBought(true);
@@ -597,10 +622,27 @@ export function fromWei(amountInWei) {
   return Number.parseFloat(amountInBaseUnit);
 }
 
+export function fromWeiWithDecimals(amountInWei, _decimals) {
+  const BigNumber = require("bignumber.js");
+  let decimals = typeof _decimals == "undefined" ? 1 : _decimals;
+  const balance = new BigNumber(amountInWei).div(10 ** decimals);
+  return balance.toNumber();
+}
+
 export function toWei(amountInBaseUnit) {
   console.log("convertedRate11 ", amountInBaseUnit);
   const amountInWei = window.web3.utils.toWei(amountInBaseUnit.toString(), "ether");
   return amountInWei.toString();
+}
+export function strtodec(amount, dec) {
+  let stringf = "";
+  for (var i = 0; i < dec; i++) {
+    stringf = stringf + "0";
+  }
+  return amount + stringf;
+}
+export function toWeiWithDecimals(amountInBaseUnit, decimals) {
+  return strtodec(amountInBaseUnit, decimals);
 }
 
 export async function getAllowance(setAllowance, targetContract, userAddress, tokenAbi, tokenContractAddress) {
@@ -1389,7 +1431,7 @@ async function setAccessNtt(userAddress, SeedAbi, seedAddress, nttAddress, nttCa
   });
   console.log("NTT access token set", receipt);
 }
-async function setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses) {
+async function setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses, tokenADecimals) {
   //https://stackoverflow.com/questions/931872/what-s-the-difference-between-array-and-while-declaring-a-javascript-ar/931875#931875
   const CSVToArray = (data, delimiter = ",", omitFirstRow = false) =>
     data
@@ -1399,17 +1441,20 @@ async function setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitel
 
   let whitelistedAddressesFormatted = CSVToArray(whitelistedAddresses);
   let capsForWhitelistedAddressesFormatted = CSVToArray(capsForWhitelistedAddresses);
+  let capsForWhitelistedAddressesWithDecimals = capsForWhitelistedAddressesFormatted[0].map(cap => strtodec(cap, tokenADecimals)); //there are some issues with native js arrays https://stackoverflow.com/a/28599347
+  let capsForWhitelistedAddressesWithDecimalsFormatted = new Array(capsForWhitelistedAddressesWithDecimals);
+
   let whitelistedAddressesFormatted1 = ["0x70997970c51812dc3a010c7d01b50e0d17dc79c8", "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"];
   console.log("formaBefore ", whitelistedAddresses, whitelistedAddressesFormatted, whitelistedAddressesFormatted1, typeof whitelistedAddresses, typeof whitelistedAddressesFormatted, typeof whitelistedAddressesFormatted1);
-  console.log("format ", whitelistedAddresses, whitelistedAddressesFormatted, capsForWhitelistedAddresses, capsForWhitelistedAddressesFormatted);
+  console.log("format ", whitelistedAddresses, whitelistedAddressesFormatted, capsForWhitelistedAddresses, capsForWhitelistedAddressesFormatted, capsForWhitelistedAddressesWithDecimals, capsForWhitelistedAddressesWithDecimalsFormatted);
 
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
-  let estimatedGas = await seedInstance.methods.setWhitelistedAddresses(...whitelistedAddressesFormatted, ...capsForWhitelistedAddressesFormatted, true).estimateGas({
+  let estimatedGas = await seedInstance.methods.setWhitelistedAddresses(...whitelistedAddressesFormatted, ...capsForWhitelistedAddressesWithDecimalsFormatted, true).estimateGas({
     from: userAddress,
   });
   console.log("estimated gas for sync", estimatedGas);
 
-  const receipt = await seedInstance.methods.setWhitelistedAddresses(...whitelistedAddressesFormatted, ...capsForWhitelistedAddressesFormatted, true).send({
+  const receipt = await seedInstance.methods.setWhitelistedAddresses(...whitelistedAddressesFormatted, ...capsForWhitelistedAddressesWithDecimalsFormatted, true).send({
     from: userAddress,
     gas: estimatedGas,
   });
@@ -1444,7 +1489,7 @@ async function setVesting(userAddress, SeedAbi, seedAddress, cliffDuration, vest
   });
   console.log("Whitelisted addresses set", receipt);
 }
-export async function getDealOwner( SeedAbi, seedAddress) {
+export async function getDealOwner(SeedAbi, seedAddress) {
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
   let ownerAddress = await seedInstance.methods.owner().call();
   return ownerAddress;
@@ -1523,6 +1568,7 @@ export async function deployNewSeed(
   accessMechanism,
   whitelistedAddresses,
   capsForWhitelistedAddresses,
+  tokenADecimals,
   nftAddress,
   nftCap,
   requireKyc,
@@ -1573,7 +1619,7 @@ export async function deployNewSeed(
     if (accessMechanism != "open") {
       await setLoadingIndicator(loadingIndicator.concat([`deploy-${index}`]));
       if (accessMechanism == "whitelist") {
-        await setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses);
+        await setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitelistedAddresses, capsForWhitelistedAddresses, tokenADecimals);
         currentLoadingIndicator = loadingIndicator.filter(v => v !== "none" && v !== `deploy-${index}`); // none is default when there is nothing
         await setLoadingIndicator(currentLoadingIndicator);
         currentSuccessMessage = currentSuccessMessage.concat([`trx-${index}-success`]);
@@ -1783,7 +1829,7 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
     }
 
     let accessMechanism = "open";
-    let accessTokenSymbol, accessTokenBalance, capForNFT, nftBalance;
+    let accessTokenSymbol, accessTokenBalance, accessTokenDecimals, capForNFT, nftBalance;
     let tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap;
 
     if (capPerAddressEnabled == true) {
@@ -1798,6 +1844,7 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       let accessErc20Instance = new window.web3.eth.Contract(erc20Abi, accessToken);
 
       accessTokenSymbol = accessErc20Instance.methods.symbol().call();
+      accessTokenDecimals = accessErc20Instance.methods.decimals().call();
       accessTokenBalance = getTokenBalance(userAddress, erc20Abi, accessToken);
 
       tier1 = seedInstance.methods.tier1().call();
@@ -1810,7 +1857,7 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       tier3Cap = seedInstance.methods.tier3Cap().call();
       tier4Cap = seedInstance.methods.tier4Cap().call();
 
-      [accessTokenSymbol, accessTokenBalance, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap] = await Promise.all([accessTokenSymbol, accessTokenBalance, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap]);
+      [accessTokenSymbol, accessTokenBalance, accessTokenDecimals, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap] = await Promise.all([accessTokenSymbol, accessTokenBalance,accessTokenDecimals,tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap]);
       accessTokenBalance = toWei(accessTokenBalance);
     }
     let kycEnabled = false;
@@ -1829,19 +1876,22 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
     let offeredTokenName = erc20Instance.methods.name().call();
     let offeredTokenSymbol = erc20Instance.methods.symbol().call();
     let offeredTokenTotalSupply = erc20Instance.methods.totalSupply().call();
+    let offeredTokenDecimals = erc20Instance.methods.decimals().call();
 
-    [offeredTokenName, offeredTokenSymbol, offeredTokenTotalSupply] = await Promise.all([offeredTokenName, offeredTokenSymbol, offeredTokenTotalSupply]);
+    [offeredTokenName, offeredTokenSymbol, offeredTokenTotalSupply, offeredTokenDecimals] = await Promise.all([offeredTokenName, offeredTokenSymbol, offeredTokenTotalSupply, offeredTokenDecimals]);
 
     let acceptedTokenName;
     let acceptedTokenSymbol;
     let acceptedTokenBalance;
+    let acceptedTokenDecimals;
     if (acceptedTokenAddress != ZERO_ADDRESS) {
       let acceptedErc20Instance = new window.web3.eth.Contract(erc20Abi, acceptedTokenAddress);
       acceptedTokenName = acceptedErc20Instance.methods.name().call();
       acceptedTokenSymbol = acceptedErc20Instance.methods.symbol().call();
       acceptedTokenBalance = acceptedErc20Instance.methods.balanceOf(userAddress).call();
+      acceptedTokenDecimals = acceptedErc20Instance.methods.decimals().call();
 
-      [acceptedTokenName, acceptedTokenSymbol, acceptedTokenBalance] = await Promise.all([acceptedTokenName, acceptedTokenSymbol, acceptedTokenBalance]);
+      [acceptedTokenName, acceptedTokenSymbol, acceptedTokenBalance, acceptedTokenDecimals] = await Promise.all([acceptedTokenName, acceptedTokenSymbol, acceptedTokenBalance, acceptedTokenDecimals]);
 
       //let acceptedTokenTotalSupply = await erc20Instance.methods.totalSupply().call();
     }
@@ -1849,8 +1899,10 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
     seedSalesData.push({
       offeredTokenName,
       offeredTokenAddress,
+      offeredTokenDecimals,
       acceptedTokenAddress,
       acceptedTokenBalance,
+      acceptedTokenDecimals,
       seedAddress,
       rate,
       offeredTokenSymbol,
@@ -1888,6 +1940,7 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       totalOffered,
       accessTokenSymbol,
       accessTokenBalance,
+      accessTokenDecimals,
       capForNTT,
       capForNFT,
       nftBalance,
@@ -1906,8 +1959,8 @@ export async function checkApprovalStatus(userAddress, tokenAbi, tokenAddress, a
 
   var tokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress);
   const amountApproved = await tokenInstance.methods.allowance(userAddress, addressOfContractToApprove).call();
-  console.log("tex ", parsedAmount, typeof parsedAmount, parsedAmount != 0, fromWei(amountApproved), typeof fromWei(amountApproved));
-  if (fromWei(amountApproved) >= parsedAmount) {
+  const acceptedTokenDecimals = await tokenInstance.methods.decimals().call();
+  if (fromWeiWithDecimals(amountApproved,acceptedTokenDecimals) >= parsedAmount) {
     setApprovalStatus(false);
   } else {
     console.log("tex mex");
@@ -2035,36 +2088,343 @@ export function substringAddress(address) {
 
 export const erc20Abi = [
   {
-    constant: true,
-    inputs: [],
-    name: "symbol",
-    outputs: [
+    inputs: [
       {
-        name: "",
+        internalType: "string",
+        name: "__name",
         type: "string",
       },
+      {
+        internalType: "string",
+        name: "__symbol",
+        type: "string",
+      },
+      {
+        internalType: "uint8",
+        name: "__decimals",
+        type: "uint8",
+      },
     ],
-    payable: false,
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+    ],
+    name: "allowance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    constant: true,
     inputs: [
       {
-        name: "_owner",
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "approve",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
         type: "address",
       },
     ],
     name: "balanceOf",
     outputs: [
       {
-        name: "balance",
+        internalType: "uint256",
+        name: "",
         type: "uint256",
       },
     ],
-    payable: false,
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "burn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "burnFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "decimals",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "subtractedValue",
+        type: "uint256",
+      },
+    ],
+    name: "decreaseAllowance",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "addedValue",
+        type: "uint256",
+      },
+    ],
+    name: "increaseAllowance",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "mint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "recipient",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "transfer",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "recipient",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "transferFrom",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
