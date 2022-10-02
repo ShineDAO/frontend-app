@@ -659,22 +659,22 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                           >
                             {nativeTokenName}
                           </TableLabel>
-                          <TableLabel
+                         { false && <TableLabel
                             selected={selectedTokenKey == "usdc"}
                             onClick={e => handleOfferedTokenAddress(e)}
                             data-token="usdc"
                             style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
                           >
                             USDC
-                          </TableLabel>
-                          <TableLabel
+                          </TableLabel>}
+                          {false && <TableLabel
                             selected={selectedTokenKey == "usdt"}
                             onClick={e => handleOfferedTokenAddress(e)}
                             data-token="usdt"
                             style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
                           >
                             USDT
-                          </TableLabel>
+                          </TableLabel>}
                           <TableLabel
                             selected={selectedTokenKey == "dai"}
                             onClick={e => handleOfferedTokenAddress(e)}
