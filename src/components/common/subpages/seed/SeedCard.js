@@ -592,7 +592,7 @@ export function SeedCard({
                   {weiRaised && (
                     <div>
                       <br></br>
-                      <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
+                      <span>Sale progress: {(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}% </span>
                       <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
                     </div>
                   )}

@@ -1293,11 +1293,11 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                       flexDirection="column"
                       alignItems="flex-start"
                       margin="5px"
-                      padding="0px 0px 0px 35px"
+                      padding="15px 0px 0px 35px"
                       clickable="true"
                       border="1px solid white"
                       width="350px"
-                      height="400px"
+                      height="430px"
                       background={index == seedIndex ? "#2f2f2f" : "black"}
                       index={index}
                       onClick={() => handleSeedClick(index, seedAddress)}
@@ -1314,7 +1314,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                       )}
                       {weiRaised && (
                         <div>
-                          <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
+                          <span>Sale progress: {(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}% </span>
                           <ProgressBar style={{ width: 280, marginBottom: 20 }} animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
                         </div>
                       )}
