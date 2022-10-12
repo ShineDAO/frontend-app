@@ -480,7 +480,7 @@ export function SeedCard({
 
             <br></br>
             <br></br>
-            {secondsSinceEpoch > endTime && currentAccount == dealOwner && <Button onClick={() => handleWithdrawUnsoldTokens()}>Widthdraw Unsold Tokens</Button>}
+            {secondsSinceEpoch && dealOwner && secondsSinceEpoch > endTime && currentAccount.toLowerCase() == dealOwner.toLowerCase() && <Button onClick={() => handleWithdrawUnsoldTokens()}>Widthdraw Unsold Tokens</Button>}
             <Text color="red" fontWeight={800}>
               {endTime && secondsSinceEpoch > endTime && "Deal closed!"}
             </Text>
