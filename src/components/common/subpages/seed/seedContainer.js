@@ -168,7 +168,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
           setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
           setSalesLoading(false);
         } else if (activeContract) {
-          console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex, chainQueryParam, chainId,chainNameToIdMapper(chainQueryParam), chainNameToIdMapper(chainQueryParam) == chainId);
+          console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex, chainQueryParam, chainId, chainNameToIdMapper(chainQueryParam), chainNameToIdMapper(chainQueryParam) == chainId);
           // if chainId from queryParams differs from the chainId then
           // stop the loading
           // show the error
@@ -309,7 +309,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       setCardVisible(true);
       setDealsVisible(false);
       setActiveContract(seedAddress);
-      setChainQueryParam(chainIdToNameMapper(chainId))
+      setChainQueryParam(chainIdToNameMapper(chainId));
     } else {
       setSeedIndex();
     }
@@ -659,22 +659,26 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                           >
                             {nativeTokenName}
                           </TableLabel>
-                         { false && <TableLabel
-                            selected={selectedTokenKey == "usdc"}
-                            onClick={e => handleOfferedTokenAddress(e)}
-                            data-token="usdc"
-                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
-                          >
-                            USDC
-                          </TableLabel>}
-                          {false && <TableLabel
-                            selected={selectedTokenKey == "usdt"}
-                            onClick={e => handleOfferedTokenAddress(e)}
-                            data-token="usdt"
-                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
-                          >
-                            USDT
-                          </TableLabel>}
+                          {false && (
+                            <TableLabel
+                              selected={selectedTokenKey == "usdc"}
+                              onClick={e => handleOfferedTokenAddress(e)}
+                              data-token="usdc"
+                              style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                            >
+                              USDC
+                            </TableLabel>
+                          )}
+                          {false && (
+                            <TableLabel
+                              selected={selectedTokenKey == "usdt"}
+                              onClick={e => handleOfferedTokenAddress(e)}
+                              data-token="usdt"
+                              style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                            >
+                              USDT
+                            </TableLabel>
+                          )}
                           <TableLabel
                             selected={selectedTokenKey == "dai"}
                             onClick={e => handleOfferedTokenAddress(e)}
@@ -1214,8 +1218,12 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
           <br></br> Slippage: 0.0% <br></br>
           Deployment fee: {deploymentFee} {nativeTokenName}
           <br></br>
-          Token A swap fee: {defaultTokenAFee / 100}%<br></br>
-          Token B swap fee: {defaultTokenBFee / 100}%
+          {false && (
+            <>
+              Token A swap fee: {defaultTokenAFee / 100}%<br></br>{" "}
+            </>
+          )}
+          {false && <>Token B swap fee: {defaultTokenBFee / 100}%</>}
         </Text>
       )}
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
