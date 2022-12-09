@@ -1323,7 +1323,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                       {weiRaised && (
                         <div>
                           <span>Sale progress: {(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}% </span>
-                          <ProgressBar style={{ width: 280, marginBottom: 20 }} animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
+                          <ProgressBar style={{ width: 280, marginBottom: 20 }} animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}%`} />
                         </div>
                       )}
                       <div>
@@ -1337,7 +1337,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                         {" "}
                         <b>Deal size</b>{" "}
                         <SmallerText>
-                          {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromWei(totalOffered) / fromFixed(rate)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                          {fromWei(totalOffered)} {offeredTokenSymbol} for max {(fromWei(totalOffered) / fromFixed(rate)).toFixed(2)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
                       <div>

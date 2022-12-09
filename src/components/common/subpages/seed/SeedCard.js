@@ -502,7 +502,7 @@ export function SeedCard({
             </Text>
 
             <span>
-              Balance:{" "}
+              Your Balance:{" "}
               <span style={{ color: "#aeaeae" }}>
                 {" "}
                 {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
@@ -529,7 +529,7 @@ export function SeedCard({
           }
           {acceptedTokenAddress != utils.ZERO_ADDRESS ? (
             <span>
-              Balance:{" "}
+              Your Balance:{" "}
               <span style={{ color: "#aeaeae" }}>
                 {Number.parseFloat(fromWei(acceptedTokenBalance)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {acceptedTokenSymbol}
               </span>
@@ -593,7 +593,7 @@ export function SeedCard({
                     <div>
                       <br></br>
                       <span>Sale progress: {(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}% </span>
-                      <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
+                      <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}%`} />
                     </div>
                   )}
                   {true && (
@@ -654,7 +654,7 @@ export function SeedCard({
                             )}
                             <span>
                               <br></br>
-                              Estimated tokens to receive: {utils.estimateReceivedTokens(amountToSpend, fromFixed(rate))} {offeredTokenSymbol}
+                              Estimated tokens to receive: {utils.estimateReceivedTokens(amountToSpend, fromFixed(rate))} {offeredTokenSymbol} <i>(-1.2% fee)</i>
                             </span>
                             {false && utils.getTier(shineBalance) !== "No Tier" && <span>Current contribution: {contributions}</span>}
                           </span>
