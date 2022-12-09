@@ -1218,12 +1218,12 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
           <br></br> Slippage: 0.0% <br></br>
           Deployment fee: {deploymentFee} {nativeTokenName}
           <br></br>
-          {false && (
+          {true && (
             <>
               Token A swap fee: {defaultTokenAFee / 100}%<br></br>{" "}
             </>
           )}
-          {false && <>Token B swap fee: {defaultTokenBFee / 100}%</>}
+          {true && <>Token B swap fee: {defaultTokenBFee / 100}%</>}
         </Text>
       )}
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
