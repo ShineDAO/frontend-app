@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button } from "components/common";
 import { ThemeContext } from "providers/ThemeProvider";
 
-import { getOnlyUserAddress, deployNewSeed, getSeedSales, getCoingeckoName, getNetworkName, getRateInUsd, getNativeTokenPrice, ZERO_ADDRESS, recoverErc20Tokens, getDealOwner } from "../../../templates/utils.js";
+import { getOnlyUserAddress, deployNewSeed, getSeedSales, getCoingeckoName, getNetworkName, getRateInUsd, getNativeTokenPrice, ZERO_ADDRESS, recoverErc20Tokens, getDealOwner, fromWeiWithDecimals } from "../../../templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
 import ERC20 from "../../../../../static/abi/ShineToken";
@@ -72,8 +72,10 @@ export function SeedCard({
     rate,
     offeredTokenName,
     offeredTokenSymbol,
+    offeredTokenDecimals,
     offeredTokenTotalSupply,
     acceptedTokenSymbol,
+    acceptedTokenDecimals,
     acceptedTokenBalance,
     weiRaised,
     dealVisibility,
@@ -104,6 +106,7 @@ export function SeedCard({
     tier3Cap,
     tier4Cap,
     accessTokenSymbol,
+    accessTokenDecimals,
     capForNTT,
     capForNFT,
     nftBalance,
@@ -279,14 +282,14 @@ export function SeedCard({
     } else if (accessMechanism == "whitelist") {
       return (
         <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-          Whitelist, {fromWei(capPerAddress)} {acceptedTokenSymbol} cap/address
+          Whitelist, {fromWeiWithDecimals(capPerAddress,offeredTokenDecimals)} {acceptedTokenSymbol} cap/address
         </Text>
       );
     } else if (accessMechanism == "nft-gate") {
       return (
         <div>
           <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-            NFT Gated: {fromWei(capForNFT)} {acceptedTokenSymbol} cap/address
+            NFT Gated: {fromWeiWithDecimals(capForNFT,offeredTokenDecimals)} {acceptedTokenSymbol} cap/address
           </Text>
           <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
             NFT: {accessNFT}
@@ -296,11 +299,11 @@ export function SeedCard({
     } else if (accessMechanism == "ntt-gate") {
       return (
         <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-          NTT Gated {fromWei(capForNTT)} {acceptedTokenSymbol} cap/address
+          NTT Gated {fromWeiWithDecimals(capForNTT,offeredTokenDecimals)} {acceptedTokenSymbol} cap/address
         </Text>
       );
     } else if (accessMechanism == "token-gate-tiers") {
-      let calculatedTier = getCustomTier(fromWei(accessTokenBalance), fromWei(tier1), fromWei(tier2), fromWei(tier3), fromWei(tier4));
+      let calculatedTier = getCustomTier(fromWeiWithDecimals(accessTokenBalance,accessTokenDecimals), fromWeiWithDecimals(tier1,accessTokenDecimals), fromWeiWithDecimals(tier2,accessTokenDecimals), fromWeiWithDecimals(tier3,accessTokenDecimals), fromWeiWithDecimals(tier4,accessTokenDecimals));
       return (
         <div>
           <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
@@ -310,7 +313,7 @@ export function SeedCard({
             Access Token: {accessToken}
           </Text>
           <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-            Your Balance: {fromWei(accessTokenBalance)} {accessTokenSymbol} ({calculatedTier})
+            Your Balance: {fromWeiWithDecimals(accessTokenBalance,accessTokenDecimals)} {accessTokenSymbol} ({calculatedTier})
           </Text>
           <div style={{ display: "flex", paddingTop: 10, paddingBottom: 10, flexWrap: "wrap", justifyContent: "space-between" }}>
             <div style={{ paddingBottom: 10, paddingRight: 10 }}>
@@ -319,13 +322,13 @@ export function SeedCard({
               </Text>
 
               <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-                &#62; {fromWei(tier1)} {accessTokenSymbol}
+                &#62; {fromWeiWithDecimals(tier1,accessTokenDecimals)} {accessTokenSymbol}
               </Text>
               <Text color="white" fontWeight={500} fontSize="16px">
                 Cap/address{" "}
               </Text>
               <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-                {fromWei(tier1Cap)} {acceptedTokenSymbol}
+                {fromWeiWithDecimals(tier1Cap,acceptedTokenDecimals)} {acceptedTokenSymbol}
               </Text>
             </div>
             <div style={{ paddingBottom: 10, paddingRight: 10 }}>
@@ -334,13 +337,13 @@ export function SeedCard({
               </Text>
 
               <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-                &#62; {fromWei(tier2)} {accessTokenSymbol}
+                &#62; {fromWeiWithDecimals(tier2,accessTokenDecimals)} {accessTokenSymbol}
               </Text>
               <Text color="white" fontWeight={500} fontSize="16px">
                 Cap/address{" "}
               </Text>
               <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-                {fromWei(tier2Cap)} {acceptedTokenSymbol}
+                {fromWeiWithDecimals(tier2Cap,acceptedTokenDecimals)} {acceptedTokenSymbol}
               </Text>
             </div>
             <div style={{ paddingBottom: 10, paddingRight: 10 }}>
@@ -348,13 +351,13 @@ export function SeedCard({
                 TIER 3
               </Text>
               <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-                &#62; {fromWei(tier3)} {accessTokenSymbol}
+                &#62; {fromWeiWithDecimals(tier3,accessTokenDecimals)} {accessTokenSymbol}
               </Text>
               <Text color="white" fontWeight={500} fontSize="16px">
                 Cap/address{" "}
               </Text>
               <Text color="#a2a2a2" fontWeight={700} fontSize="16px">
-                {fromWei(tier3Cap)} {acceptedTokenSymbol}
+                {fromWeiWithDecimals(tier3Cap,acceptedTokenDecimals)} {acceptedTokenSymbol}
               </Text>
             </div>
             <div style={{ paddingBottom: 10, paddingRight: 10 }}>
@@ -362,13 +365,13 @@ export function SeedCard({
                 TIER 4
               </Text>
               <Text color="#a2a2a2" fontWeight={700} fontSize="16px">
-                &#62; {fromWei(tier4)} {accessTokenSymbol}
+                &#62; {fromWeiWithDecimals(tier4,accessTokenDecimals)} {accessTokenSymbol}
               </Text>
               <Text color="white" fontWeight={500} fontSize="16px">
                 Cap/address{" "}
               </Text>
               <Text color="#a2a2a2" fontWeight={500} fontSize="16px">
-                {fromWei(tier4Cap)} {acceptedTokenSymbol}
+                {fromWeiWithDecimals(tier4Cap,acceptedTokenDecimals)} {acceptedTokenSymbol}
               </Text>
             </div>
           </div>{" "}
@@ -379,17 +382,18 @@ export function SeedCard({
     }
   }
 
-  function handleSwapButton(acceptedTokenAddress, amountToSpend, setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus) {
+  function handleSwapButton(acceptedTokenAddress, amountToSpend, setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus,acceptedTokenDecimals,offeredTokenDecimals) {
+    console.log("swap am ", amountToSpend, utils.toWeiWithDecimals(amountToSpend,acceptedTokenDecimals))
     if (acceptedTokenAddress == utils.ZERO_ADDRESS) {
-      utils.buyShineTokens(amountToSpend, setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus, setRefetchData);
+      utils.buyShineTokens(utils.toWeiWithDecimals(amountToSpend,18), setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus, setRefetchData,offeredTokenDecimals);
     } else {
-      utils.swapTokenWithToken(amountToSpend, setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus, setRefetchData);
+      utils.swapTokenWithToken(utils.toWeiWithDecimals(amountToSpend,acceptedTokenDecimals), setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus, setRefetchData,offeredTokenDecimals);
     }
   }
 
   async function handleApprove() {
     setApproveLoading(true);
-    await approveContract(currentAccount, ERC20.abi, acceptedTokenAddress, seedAddress, utils.toWei(amountToSpend), setApprovalStatus);
+    await approveContract(currentAccount, ERC20.abi, acceptedTokenAddress, seedAddress, utils.toWeiWithDecimals(amountToSpend,acceptedTokenDecimals), setApprovalStatus);
     setApproveLoading(false);
   }
 
@@ -402,7 +406,7 @@ export function SeedCard({
   }
 
   async function handleWithdrawUnsoldTokens() {
-    await recoverErc20Tokens(currentAccount, Seed.abi, seedAddress, offeredTokenAddress, utils.toWei(seedSaleShnBalance));
+    await recoverErc20Tokens(currentAccount, Seed.abi, seedAddress, offeredTokenAddress, utils.toWeiWithDecimals(seedSaleShnBalance,offeredTokenDecimals));
   }
 
   return (
@@ -433,7 +437,7 @@ export function SeedCard({
                 Total Deal
               </Text>
               <Text color="#a2a2a2" fontWeight={300} fontSize="16px">
-                {fromWei(totalOffered)} {offeredTokenSymbol} for max {fromWei(totalOffered) / fromFixed(rate)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                {fromWeiWithDecimals(totalOffered, offeredTokenDecimals)} {offeredTokenSymbol} for max {fromWeiWithDecimals(totalOffered,offeredTokenDecimals) / fromFixed(rate)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
               </Text>
             </div>
 
@@ -451,7 +455,7 @@ export function SeedCard({
                 Total supply for offered token
               </Text>
               <Text color="#a2a2a2" fontWeight={300} fontSize="16px">
-                {utils.fromWei(offeredTokenTotalSupply)} {offeredTokenSymbol}
+                {utils.fromWeiWithDecimals(offeredTokenTotalSupply,offeredTokenDecimals)} {offeredTokenSymbol}
               </Text>
             </div>
 
@@ -531,7 +535,7 @@ export function SeedCard({
             <span>
               Your Balance:{" "}
               <span style={{ color: "#aeaeae" }}>
-                {Number.parseFloat(fromWei(acceptedTokenBalance)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {acceptedTokenSymbol}
+                {Number.parseFloat(fromWeiWithDecimals(acceptedTokenBalance,acceptedTokenDecimals)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {acceptedTokenSymbol}
               </span>
             </span>
           ) : (
@@ -704,7 +708,7 @@ export function SeedCard({
                           <ConnectButton
                             theme={theme}
                             onClick={() =>
-                              handleSwapButton(acceptedTokenAddress, amountToSpend, setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus)
+                              handleSwapButton(acceptedTokenAddress, amountToSpend, setAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, currentAccount, saleAbi, saleContractAddress, currentStatus,acceptedTokenDecimals,offeredTokenDecimals)
                             }
                           >
                             Swap
@@ -720,7 +724,7 @@ export function SeedCard({
                       <br />
                     </div>
                   )}
-                  {isWalletEnabled && vestedBalance && console.log("vested balances ", utils.fromWei(vestedBalance))}
+                  {false && isWalletEnabled && vestedBalance && console.log("vested balances ", utils.fromWei(vestedBalance))}
                   {vestedBalance && vestedBalance > 0 && (
                     <div>
                       <FlexBox>
@@ -745,12 +749,12 @@ export function SeedCard({
                         {typeof vestedSoFar != "undefined" && (
                           <Text margin="0 0 0 10px" color="#aeaeae">
                             {" "}
-                            Available: {Number.parseFloat(utils.fromWei(vestedSoFar)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}{" "}
+                            Available: {Number.parseFloat(utils.fromWeiWithDecimals(vestedSoFar,offeredTokenDecimals)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}{" "}
                           </Text>
                         )}
                         <Text margin="0 0 0 10px" color="#aeaeae">
                           {" "}
-                          Remaining vest: {Number.parseFloat(utils.fromWei(vestedBalance)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}{" "}
+                          Remaining vest: {Number.parseFloat(utils.fromWeiWithDecimals(vestedBalance,offeredTokenDecimals)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}{" "}
                         </Text>
                       </FlexBox>
                     </div>
