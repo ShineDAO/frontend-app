@@ -1358,14 +1358,14 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                         {" "}
                         <b>Deal size</b>{" "}
                         <SmallerText>
-                          {fromWeiWithDecimals(totalOffered,offeredTokenDecimals)} {offeredTokenSymbol} for max {fromWeiWithDecimals(totalOffered,offeredTokenDecimals) / fromFixed(rate)} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                          {Number.parseFloat(fromWeiWithDecimals(totalOffered,offeredTokenDecimals)).toLocaleString()} {offeredTokenSymbol} for max {Number.parseFloat(fromWeiWithDecimals(totalOffered,offeredTokenDecimals) / fromFixed(rate).toLocaleString())} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
                       <div>
                         {" "}
                         <b>Rate</b>{" "}
                         <SmallerText>
-                          {fromFixed(rate)} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                          {Number.parseFloat((fromFixed(rate))).toLocaleString()} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
                       <div>
