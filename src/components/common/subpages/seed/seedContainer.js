@@ -677,22 +677,26 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                           >
                             {nativeTokenName}
                           </TableLabel>
-                          <TableLabel
-                            selected={selectedTokenKey == "usdc"}
-                            onClick={e => handleOfferedTokenAddress(e)}
-                            data-token="usdc"
-                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
-                          >
-                            USDC
-                          </TableLabel>
-                          <TableLabel
-                            selected={selectedTokenKey == "usdt"}
-                            onClick={e => handleOfferedTokenAddress(e)}
-                            data-token="usdt"
-                            style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
-                          >
-                            USDT
-                          </TableLabel>
+                          {false && (
+                            <TableLabel
+                              selected={selectedTokenKey == "usdc"}
+                              onClick={e => handleOfferedTokenAddress(e)}
+                              data-token="usdc"
+                              style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                            >
+                              USDC
+                            </TableLabel>
+                          )}
+                          {false && (
+                            <TableLabel
+                              selected={selectedTokenKey == "usdt"}
+                              onClick={e => handleOfferedTokenAddress(e)}
+                              data-token="usdt"
+                              style={{ borderRight: "1px solid gray", cursor: "pointer", paddingLeft: 5, paddingRight: 5, marginBottom: 20, marginRight: 3 }}
+                            >
+                              USDT
+                            </TableLabel>
+                          )}
                           <TableLabel
                             selected={selectedTokenKey == "dai"}
                             onClick={e => handleOfferedTokenAddress(e)}
@@ -1232,8 +1236,12 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
           <br></br> Slippage: 0.0% <br></br>
           Deployment fee: {deploymentFee} {nativeTokenName}
           <br></br>
-          Token A swap fee: {defaultTokenAFee / 100}%<br></br>
-          Token B swap fee: {defaultTokenBFee / 100}%
+          {true && (
+            <>
+              Token A swap fee: {defaultTokenAFee / 100}%<br></br>{" "}
+            </>
+          )}
+          {true && <>Token B swap fee: {defaultTokenBFee / 100}%</>}
         </Text>
       )}
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
@@ -1314,11 +1322,11 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                       flexDirection="column"
                       alignItems="flex-start"
                       margin="5px"
-                      padding="0px 0px 0px 35px"
+                      padding="15px 0px 0px 35px"
                       clickable="true"
                       border="1px solid white"
                       width="350px"
-                      height="400px"
+                      height="430px"
                       background={index == seedIndex ? "#2f2f2f" : "black"}
                       index={index}
                       onClick={() => handleSeedClick(index, seedAddress)}
@@ -1335,8 +1343,8 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                       )}
                       {weiRaised && (
                         <div>
-                          <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
-                          <ProgressBar style={{ width: 280, marginBottom: 20 }} animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
+                          <span>Sale progress: {(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}% </span>
+                          <ProgressBar style={{ width: 280, marginBottom: 20 }} animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}%`} />
                         </div>
                       )}
                       <div>

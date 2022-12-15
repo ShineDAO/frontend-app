@@ -484,7 +484,7 @@ export function SeedCard({
 
             <br></br>
             <br></br>
-            {secondsSinceEpoch > endTime && currentAccount == dealOwner && <Button onClick={() => handleWithdrawUnsoldTokens()}>Widthdraw Unsold Tokens</Button>}
+            {secondsSinceEpoch && dealOwner && secondsSinceEpoch > endTime && currentAccount.toLowerCase() == dealOwner.toLowerCase() && <Button onClick={() => handleWithdrawUnsoldTokens()}>Widthdraw Unsold Tokens</Button>}
             <Text color="red" fontWeight={800}>
               {endTime && secondsSinceEpoch > endTime && "Deal closed!"}
             </Text>
@@ -506,7 +506,7 @@ export function SeedCard({
             </Text>
 
             <span>
-              Balance:{" "}
+              Your Balance:{" "}
               <span style={{ color: "#aeaeae" }}>
                 {" "}
                 {Number.parseFloat(projectBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {offeredTokenSymbol}
@@ -533,7 +533,7 @@ export function SeedCard({
           }
           {acceptedTokenAddress != utils.ZERO_ADDRESS ? (
             <span>
-            Balance:{" "}
+              Your Balance:{" "}
               <span style={{ color: "#aeaeae" }}>
                 {Number.parseFloat(fromWeiWithDecimals(acceptedTokenBalance,acceptedTokenDecimals)).toLocaleString(undefined, { maximumFractionDigits: 2 })} {acceptedTokenSymbol}
               </span>
@@ -596,8 +596,8 @@ export function SeedCard({
                   {weiRaised && (
                     <div>
                       <br></br>
-                      <span>Sale progress: {((weiRaised * fromFixed(rate)) / totalOffered) * 100}% </span>
-                      <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${((weiRaised * fromFixed(rate)) / totalOffered) * 100}%`} />
+                      <span>Sale progress: {(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}% </span>
+                      <ProgressBar animated striped variant="success" now={((weiRaised * fromFixed(rate)) / totalOffered) * 100} label={`${(((weiRaised * fromFixed(rate)) / totalOffered) * 100).toFixed(2)}%`} />
                     </div>
                   )}
                   {true && (
@@ -658,7 +658,7 @@ export function SeedCard({
                             )}
                             <span>
                               <br></br>
-                              Estimated tokens to receive: {utils.estimateReceivedTokens(amountToSpend, fromFixed(rate))} {offeredTokenSymbol}
+                              Estimated tokens to receive: {utils.estimateReceivedTokens(amountToSpend, fromFixed(rate))} {offeredTokenSymbol} <i>(-1.2% fee)</i>
                             </span>
                             {false && utils.getTier(shineBalance) !== "No Tier" && <span>Current contribution: {contributions}</span>}
                           </span>

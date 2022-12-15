@@ -600,7 +600,7 @@ export function estimateReceivedTokens(ethAmountToSpend, rate) {
   //console.log("www", weiAmountToSpend * rate);
 
   //const estimatedShnInWei = weiAmountToSpend * rate
-  const estimatedReceivedShn = window.web3.utils.fromWei(toPlainString(weiAmountToSpend * rate), "ether");
+  const estimatedReceivedShn = window.web3.utils.fromWei(toPlainString((weiAmountToSpend * rate).toFixed()), "ether");
   //console.log("www1", Number.parseFloat(estimatedReceivedShn));
   return Number.parseFloat(estimatedReceivedShn);
 }
