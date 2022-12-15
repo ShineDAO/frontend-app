@@ -353,7 +353,20 @@ export async function enableAccessForTier1AndTier2(userAddress, gas, saleAbi, sa
   }
 }
 
-export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, currentStatus, setRefetchData,offeredTokenDecimals) {
+export async function buyShineTokens(
+  ethAmountToSpend,
+  setEthAmountToSpend,
+  setShineBought,
+  setShineBoughtAmount,
+  setTransactionBeingProcessed,
+  setMetamaskErrorCode,
+  userAddress,
+  saleAbi,
+  saleContractAddress,
+  currentStatus,
+  setRefetchData,
+  offeredTokenDecimals
+) {
   if (ethAmountToSpend !== "") {
     //disable button if no amount is entered
     let abi = saleAbi;
@@ -379,7 +392,7 @@ export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setS
       });
       console.log("receipt", receipt);
       var amountBoughtInWei = receipt.events.TokensPurchased.returnValues.amount;
-      var amountBoughtInTKNs = fromWeiWithDecimals(amountBoughtInWei,offeredTokenDecimals);
+      var amountBoughtInTKNs = fromWeiWithDecimals(amountBoughtInWei, offeredTokenDecimals);
 
       setRefetchData(true);
       setShineBought(true);
@@ -426,7 +439,20 @@ export async function buyShineTokens(ethAmountToSpend, setEthAmountToSpend, setS
   }
 }
 
-export async function swapTokenWithToken(ethAmountToSpend, setEthAmountToSpend, setShineBought, setShineBoughtAmount, setTransactionBeingProcessed, setMetamaskErrorCode, userAddress, saleAbi, saleContractAddress, currentStatus, setRefetchData,offeredTokenDecimals) {
+export async function swapTokenWithToken(
+  ethAmountToSpend,
+  setEthAmountToSpend,
+  setShineBought,
+  setShineBoughtAmount,
+  setTransactionBeingProcessed,
+  setMetamaskErrorCode,
+  userAddress,
+  saleAbi,
+  saleContractAddress,
+  currentStatus,
+  setRefetchData,
+  offeredTokenDecimals
+) {
   if (ethAmountToSpend !== "") {
     //disable button if no amount is entered
     let abi = saleAbi;
@@ -451,7 +477,7 @@ export async function swapTokenWithToken(ethAmountToSpend, setEthAmountToSpend, 
       console.log("receipt", receipt);
       var amountBoughtInWei = receipt.events.TokensPurchased.returnValues.amount;
       //var amountBoughtInTKNs = window.web3.utils.fromWei(amountBoughtInWei, "ether"); offeredTokenDecimals
-      var amountBoughtInTKNs = fromWeiWithDecimals(amountBoughtInWei, offeredTokenDecimals); 
+      var amountBoughtInTKNs = fromWeiWithDecimals(amountBoughtInWei, offeredTokenDecimals);
 
       setRefetchData(true);
       setShineBought(true);
@@ -635,11 +661,12 @@ export function toWei(amountInBaseUnit) {
   return amountInWei.toString();
 }
 export function strtodec(amount, dec) {
-  let stringf = "";
+  let stringf = "1";
   for (var i = 0; i < dec; i++) {
     stringf = stringf + "0";
   }
-  return amount + stringf;
+
+  return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
 }
 export function toWeiWithDecimals(amountInBaseUnit, decimals) {
   return strtodec(amountInBaseUnit, decimals);
@@ -1857,7 +1884,19 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
       tier3Cap = seedInstance.methods.tier3Cap().call();
       tier4Cap = seedInstance.methods.tier4Cap().call();
 
-      [accessTokenSymbol, accessTokenBalance, accessTokenDecimals, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap] = await Promise.all([accessTokenSymbol, accessTokenBalance,accessTokenDecimals,tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap]);
+      [accessTokenSymbol, accessTokenBalance, accessTokenDecimals, tier1, tier2, tier3, tier4, tier1Cap, tier2Cap, tier3Cap, tier4Cap] = await Promise.all([
+        accessTokenSymbol,
+        accessTokenBalance,
+        accessTokenDecimals,
+        tier1,
+        tier2,
+        tier3,
+        tier4,
+        tier1Cap,
+        tier2Cap,
+        tier3Cap,
+        tier4Cap,
+      ]);
       accessTokenBalance = toWei(accessTokenBalance);
     }
     let kycEnabled = false;
@@ -1960,7 +1999,7 @@ export async function checkApprovalStatus(userAddress, tokenAbi, tokenAddress, a
   var tokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress);
   const amountApproved = await tokenInstance.methods.allowance(userAddress, addressOfContractToApprove).call();
   const acceptedTokenDecimals = await tokenInstance.methods.decimals().call();
-  if (fromWeiWithDecimals(amountApproved,acceptedTokenDecimals) >= parsedAmount) {
+  if (fromWeiWithDecimals(amountApproved, acceptedTokenDecimals) >= parsedAmount) {
     setApprovalStatus(false);
   } else {
     console.log("tex mex");
@@ -2075,6 +2114,9 @@ export function getNetworkName(chainId) {
     "0x89": "Polygon/Matic",
     "0x7a69": "Localhost",
     "0x13881": "Mumbai",
+    "0xa4b1": "Arbitrum",
+    "0xa": "Optimism",
+    "0x4e454152": "Aurora",
   };
   if (chainMapper[chainId]) {
     return chainMapper[chainId];
