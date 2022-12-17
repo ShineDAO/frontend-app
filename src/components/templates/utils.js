@@ -367,6 +367,7 @@ export async function buyShineTokens(
   setRefetchData,
   offeredTokenDecimals
 ) {
+  console.log("ETH M123 ", ethAmountToSpend, ethAmountToSpend.toString(), typeof ethAmountToSpend, saleContractAddress);
   if (ethAmountToSpend !== "") {
     //disable button if no amount is entered
     let abi = saleAbi;
@@ -374,6 +375,8 @@ export async function buyShineTokens(
 
     setTransactionBeingProcessed(true);
     setMetamaskErrorCode(undefined);
+
+    console.log("ETH M123333333 ", ethAmountToSpend, ethAmountToSpend.toString(), typeof ethAmountToSpend, saleContractAddress);
 
     try {
       let estimatedGas = await simpleCrowdsaleInstance.methods.buyTokens(userAddress).estimateGas({
@@ -665,9 +668,22 @@ export function strtodec(amount, dec) {
   for (var i = 0; i < dec; i++) {
     stringf = stringf + "0";
   }
-
-  return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
+  return new BigNumber(amount).multipliedBy(stringf);
+  //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
 }
+
+
+//unused
+function strtodecBN(amount, dec) {
+  let stringf = "1";
+  for (var i = 0; i < dec; i++) {
+    stringf = stringf + "0";
+  }
+  return new BN(new BN(amount).mul(new BN(stringf)));
+  //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
+}
+
+
 export function toWeiWithDecimals(amountInBaseUnit, decimals) {
   return strtodec(amountInBaseUnit, decimals);
 }
