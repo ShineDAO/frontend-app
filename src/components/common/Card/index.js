@@ -15,6 +15,10 @@ export const Card = styled.div`
   padding: ${({ padding }) => padding || "0"};
   margin: ${({ margin }) => margin || "0"};
   border: ${({ border }) => border || "none"};
+
+  &:hover {
+    background-color: #2f2f2f;
+  }
 `;
 
 export const TitleWrap = styled.div`

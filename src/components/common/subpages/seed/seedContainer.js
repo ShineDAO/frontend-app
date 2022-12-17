@@ -42,7 +42,7 @@ import {
   chainIdToNameMapper,
   getErc20Decimals,
   toWeiWithDecimals,
-  fromWeiWithDecimals
+  fromWeiWithDecimals,
 } from "../../../../../src/components/templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
@@ -86,6 +86,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
   const [formVisible, setFormVisible] = useState(false);
 
   const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
 
   const [nativeTokenUsed, setNativeTokenUsed] = useState(true);
   const [isListedCustomTokenUsed, setIsListedCustomTokenUsed] = useState(true); // for example if USDC, USDT are used
@@ -292,15 +293,15 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       startTime,
       endTime,
       accessTokenAddress,
-      toWeiWithDecimals(accessTokenAmountTier1,accessTokenDecimals),
-      toWeiWithDecimals(accessTokenAmountTier2,accessTokenDecimals),
-      toWeiWithDecimals(accessTokenAmountTier3,accessTokenDecimals),
-      toWeiWithDecimals(accessTokenAmountTier4,accessTokenDecimals),
+      toWeiWithDecimals(accessTokenAmountTier1, accessTokenDecimals),
+      toWeiWithDecimals(accessTokenAmountTier2, accessTokenDecimals),
+      toWeiWithDecimals(accessTokenAmountTier3, accessTokenDecimals),
+      toWeiWithDecimals(accessTokenAmountTier4, accessTokenDecimals),
       toWeiWithDecimals(tier1Cap, tokenBDecimals),
       toWeiWithDecimals(tier2Cap, tokenBDecimals),
       toWeiWithDecimals(tier3Cap, tokenBDecimals),
       toWeiWithDecimals(tier4Cap, tokenBDecimals),
-      title,
+      title + "§!§" + url,
       accessMechanism,
       whitelistedAddresses,
       capsForWhitelistedAddresses,
@@ -412,7 +413,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
         );
       }
     } else if (accessMechanism == "token-gate-tiers") {
-      if (Number(fromWeiWithDecimals(accessTokenBalance,accessTokenDecimals)) >= Number(fromWeiWithDecimals(tier1,accessTokenDecimals))) {
+      if (Number(fromWeiWithDecimals(accessTokenBalance, accessTokenDecimals)) >= Number(fromWeiWithDecimals(tier1, accessTokenDecimals))) {
         return (
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <div style={{ background: "green", paddingLeft: 5, paddingRight: 5, marginBottom: 7 }}>Tiered Token Gate</div>
@@ -586,7 +587,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
   }
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "90%" }}>
       {console.log("isVestingenabled  ", typeof vestingEnabled, vestingEnabled)}
       {console.log("converted rate ", convertedRate)}
       {console.log("trx- ", successMessage)}
@@ -599,10 +600,18 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
             <div>
               <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
                 {" "}
-                <h2>Title</h2>
+                <h2>Deal Title</h2>
               </div>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <input name="title" onChange={target => typeof target.target.value !== "undefined" && setTitle(target.target.value)} value={title} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "80%" }}></input>{" "}
+              </div>
+              <br></br>
+              <div style={{ display: "flex", justifyContent: "center", paddingTop: 25 }}>
+                {" "}
+                <h2>Project URL</h2>
+              </div>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <input name="url" onChange={target => typeof target.target.value !== "undefined" && setUrl(target.target.value)} value={url} style={{ borderRadius: 6, boder: "1px solid #3f3d56", width: "80%" }}></input>{" "}
               </div>
               <br></br>
               <div style={{ background: "#4f4fc8", paddingRight: 70 }}>
@@ -1229,6 +1238,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
         )}
 
         {!salesLoading && !activeContract && isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
+
         {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
       </div>
       {formVisible && (
@@ -1245,8 +1255,8 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
         </Text>
       )}
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 10 }}>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+      <div style={{ margin:"0 auto", maxWidth:"60%", display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 10, width: "100vw" }}>
+        <div style={{  display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
           {console.log("seed sales data ", seedSalesData, typeof seedSalesData == "undefined")}
           {console.log("seed sales mapper  ", !activeContract, dealsVisible, !formVisible, !cardVisible, seedSalesData)}
           {salesLoading && (
@@ -1315,18 +1325,18 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                 },
                 index
               ) => {
-                if (dealVisibility === true && totalOffered != 0 && ["0xc84162f9b6ed1e685ad73b42bc3112143b7698e7","0xdc6182dc7c7562e4d4ac8e26193a126912627d43","0xe5d8885ed5fe68cd48820491de50b9019b0274c3"].indexOf(seedAddress) === -1) {
+                if (dealVisibility === true && totalOffered != 0 && ["0xc84162f9b6ed1e685ad73b42bc3112143b7698e7", "0xdc6182dc7c7562e4d4ac8e26193a126912627d43", "0xe5d8885ed5fe68cd48820491de50b9019b0274c3"].indexOf(seedAddress) === -1) {
                   return (
                     <Card
                       key={index}
                       flexDirection="column"
                       alignItems="flex-start"
-                      margin="5px"
-                      padding="15px 0px 0px 35px"
+                      margin="10px 10px 20px 10px"
+                      padding="10px 0px 0px 20px"
                       clickable="true"
                       border="1px solid white"
-                      width="350px"
-                      height="430px"
+                      width="320px"
+                      height="420px"
                       background={index == seedIndex ? "#2f2f2f" : "black"}
                       index={index}
                       onClick={() => handleSeedClick(index, seedAddress)}
@@ -1335,10 +1345,16 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                         {getEligibilityStatus(accessMechanism, capPerAddressEnabled, capPerAddress, nftBalance, kycEnabled, nttBalance, hasValidNtt, accessTokenBalance, tier1)}
                         {false && <div>{getVisibilityStatus(dealVisibility, currentAccount)} </div>}
                       </div>
-                      <h1>{name}</h1>
+                      <h2>{name.split("§!§")[0]}</h2>
+                      <div style={{maxWidth:"284px"}}>
+                        <a style={{color:"#3bff3b"}} target="_blank" href={name.split("§!§")[name.split("§!§").length - 1]}>
+                          {name.split("§!§")[name.split("§!§").length - 1]}
+                        </a>
+                      </div>
+                      <br></br>
                       {false && (
                         <div>
-                          - {offeredTokenName} - {acceptedTokenSymbol} - {fromWeiWithDecimals(weiRaised,acceptedTokenDecimals)}
+                          - {offeredTokenName} - {acceptedTokenSymbol} - {fromWeiWithDecimals(weiRaised, acceptedTokenDecimals)}
                         </div>
                       )}
                       {weiRaised && (
@@ -1358,14 +1374,15 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                         {" "}
                         <b>Deal size</b>{" "}
                         <SmallerText>
-                          {Number.parseFloat(fromWeiWithDecimals(totalOffered,offeredTokenDecimals)).toLocaleString()} {offeredTokenSymbol} for max {Number.parseFloat(fromWeiWithDecimals(totalOffered,offeredTokenDecimals) / fromFixed(rate).toLocaleString())} {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                          {Number.parseFloat(fromWeiWithDecimals(totalOffered, offeredTokenDecimals)).toLocaleString()} {offeredTokenSymbol} for max {Number.parseFloat(fromWeiWithDecimals(totalOffered, offeredTokenDecimals) / fromFixed(rate).toLocaleString())}{" "}
+                          {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
                       <div>
                         {" "}
                         <b>Rate</b>{" "}
                         <SmallerText>
-                          {Number.parseFloat((fromFixed(rate))).toLocaleString()} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                          {Number.parseFloat(fromFixed(rate)).toLocaleString()} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
                       <div>

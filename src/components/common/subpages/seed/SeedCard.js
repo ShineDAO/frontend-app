@@ -469,11 +469,14 @@ export function SeedCard({
           <CardHeaderWrapper>
             <ProjectNameWrapper>
               {false && <Avatar imageUrl={project.image} alt="Defi options logo" width="60px" height="60px" />}
-              <StatsCardHeading margin="0 0 40px 0px" fontSize="30px" fontWeight={800} color="white">
-                {name}
+              <StatsCardHeading margin="0 0 20px 0px" fontSize="30px" fontWeight={800} color="white">
+                {name.split("§!§")[0]}
               </StatsCardHeading>
             </ProjectNameWrapper>
           </CardHeaderWrapper>
+
+          <a target="_blank" style={{color:"#3bff3b"}}  href={name.split("§!§")[name.split("§!§").length - 1]}>{name.split("§!§")[name.split("§!§").length - 1]}</a>
+          <br></br>
 
           <Text color="white" style={{ margin: "0 auto" }}>
             <i>{false && "Please Note: for Tier1 and Tier 2 sale is opening 15 mins after"}</i>

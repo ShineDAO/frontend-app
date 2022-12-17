@@ -15,27 +15,27 @@ export default ({}) => {
   const [chainQueryParam, setChainQueryParam] = useQueryParam(`chain`); // full name e.g. "optimism"
   const { isWalletEnabled, chainId } = useContext(WalletContext);
 
-  function isChainSupported(chainId){
+  function isChainSupported(chainId) {
     const supportedChainsMapper = {
-      "0x89":"polygon",
-      "0xa":"optimism",
-      "0xa4b1":"arbitrum",
-      "0x4e454152":"aurora",
-      "0x13881":"mumbai",
-    }
-    if(typeof supportedChainsMapper[chainId]!="undefined"){
-      return true
-    }else{
-      return false
+      "0x89": "polygon",
+      "0xa": "optimism",
+      "0xa4b1": "arbitrum",
+      "0x4e454152": "aurora",
+      "0x13881": "mumbai",
+    };
+    if (typeof supportedChainsMapper[chainId] != "undefined") {
+      return true;
+    } else {
+      return false;
     }
   }
   return (
     <Layout position="absolute" bottom="4px" width="100%" height="60px">
       <SEO title="Deals" description="Discover and launch custom token deals" />
       <Header />
-      <MobileDiv mobileWidth="100%" width="90%" background="" style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
+      <MobileDiv mobileWidth="100%" width="100%" background="" style={{ display: "flex", alignItems: "center", flexDirection: "column", paddingBottom: "200px" }}>
         {true && !isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
-    {console.log("chainId 23", chainId, process.env.NODE_ENV)}
+        {console.log("chainId 23", chainId, process.env.NODE_ENV)}
         {isChainSupported(chainId) || (process.env.NODE_ENV == "development" && chainId == "0x7a69") ? (
           <SeedContainer chainQueryParam={chainQueryParam} setChainQueryParam={setChainQueryParam} activeContract={activeContract} setActiveContract={setActiveContract}></SeedContainer>
         ) : (
