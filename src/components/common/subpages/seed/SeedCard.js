@@ -403,9 +403,10 @@ export function SeedCard({
     acceptedTokenDecimals,
     offeredTokenDecimals
   ) {
-    console.log("swap am ", amountToSpend, utils.toWeiWithDecimals(amountToSpend, acceptedTokenDecimals));
     if (acceptedTokenAddress == utils.ZERO_ADDRESS) {
       console.log("tam", utils.toWeiWithDecimals(amountToSpend, 18));
+      console.log("swap am ", amountToSpend, utils.toWeiWithDecimals(amountToSpend, 18));
+
       utils.buyShineTokens(
         utils.toWeiWithDecimals(amountToSpend, 18),
         setAmountToSpend,
@@ -497,13 +498,12 @@ export function SeedCard({
               </Text>
             </div>
 
-
             <div style={{ paddingBottom: 10 }}>
               <Text color="white" fontWeight={300} fontSize="20px">
                 Rate
               </Text>
               <Text color="#a2a2a2" fontWeight={700} fontSize="20px">
-               You get {fromFixed(rate).toLocaleString()} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                You get {fromFixed(rate).toLocaleString()} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
               </Text>
             </div>
             <div style={{ paddingBottom: 10 }}>
@@ -700,7 +700,7 @@ export function SeedCard({
                         <br />
                         <EthInput autoComplete="off" type="number" id="eth_amount" value={amountToSpend} onChange={e => utils.handleChangeOfEthAmountToSpend(e.target.value, setAmountToSpend)} />
                         {console.log("debug", currentEthPrice, amountToSpend, Number.parseFloat(currentEthPrice * amountToSpend).toLocaleString())}
-                        {amountToSpend!=0 && (
+                        {amountToSpend != 0 && (
                           <span>
                             {acceptedTokenAddress == utils.ZERO_ADDRESS && (
                               <span>
@@ -710,7 +710,7 @@ export function SeedCard({
                             )}
                             <span>
                               <br></br>
-                              Estimated tokens to receive: {(utils.estimateReceivedTokens(amountToSpend, fromFixed(rate))).toLocaleString()} {offeredTokenSymbol} <i style={{color:"gray"}}>(-1.2% fee)</i>
+                              Estimated tokens to receive: {utils.estimateReceivedTokens(amountToSpend, fromFixed(rate)).toLocaleString()} {offeredTokenSymbol} <i style={{ color: "gray" }}>(-1.2% fee)</i>
                             </span>
                             {false && utils.getTier(shineBalance) !== "No Tier" && <span>Current contribution: {contributions}</span>}
                           </span>

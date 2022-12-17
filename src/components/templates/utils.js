@@ -672,18 +672,6 @@ export function strtodec(amount, dec) {
   //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
 }
 
-
-//unused
-function strtodecBN(amount, dec) {
-  let stringf = "1";
-  for (var i = 0; i < dec; i++) {
-    stringf = stringf + "0";
-  }
-  return new BN(new BN(amount).mul(new BN(stringf)));
-  //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
-}
-
-
 export function toWeiWithDecimals(amountInBaseUnit, decimals) {
   return strtodec(amountInBaseUnit, decimals);
 }
