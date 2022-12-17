@@ -1,10 +1,10 @@
 {
   "controllerAddress": { "main": "0xMAIN-shnAddress", "matic": "0xb1d92eeec6f9f224abd294de643c94a01cb14e51", "mumbai": "0x4faeee1ecf32a8e2979edd8189950a1dd1cf68be", "hardhat": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266" },
-  "shnAddress": { "main": "0xMAIN-shnAddress", "matic": "0x53D76f967De13E7F95e90196438DCe695eCFA957", "mumbai": "0x2be63a8f27f7a8868Cc50791BdB2F32ca3dD9436", "hardhat": "0x5FbDB2315678afecb367f032d93F642f64180aa3" },
+  "shnAddress": { "main": "0xMAIN-shnAddress", "matic": "0x53D76f967De13E7F95e90196438DCe695eCFA957", "mumbai": "0x2be63a8f27f7a8868Cc50791BdB2F32ca3dD9436", "hardhat": "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE" },
   "veShnAddress": { "main": "0xMAIN-veShnAddress", "matic": "0x60b157f028a0C760B0A3d65aedaF97A82F09994a", "mumbai": "0xA2822Ec695A9B072E47Cf2F08EF0D3dd12e45500", "hardhat": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512" },
   "veShnYieldDistributorAddress": { "main": "0xMAIN-veShnAddress", "matic": "0xF2E0980f077d9FF9802520F9AbD1d02785c32e27", "mumbai": "0x36Cf9b60E46739b1dd6E243ee7d09298BB7e7Fc2", "hardhat": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0" },
   "GeneralCheckpointAddress": { "main": "0xMAIN-GeneralCheckpointAddress", "matic": "0x8d3b222b0acfe7c6f47b06ee414878923cb10c95", "mumbai": "0x2ded2cbd8164105394869217ef8251feed8662b1", "hardhat": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9" },
 
-  "seedFactoryAddress": { "main": "0xMAIN-seedFactoryAddress", "matic": "0xAC4406465a392001168aCC407171b16d8240d6fb", "optimism":"0x787130bFFFEa85B132160C3e4F6ACbec379c0d64","arbitrum":"0x787130bFFFEa85B132160C3e4F6ACbec379c0d64", "aurora":"0x172976D891F3762b2928d1f2f03b13Ff951545A4", "mumbai": "0x31B12ABAA5b992DFF1dDA8E7A03E338B2f0FAaA8", "hardhat": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512" },
+  "seedFactoryAddress": { "main": "0xMAIN-seedFactoryAddress", "matic": "0xAC4406465a392001168aCC407171b16d8240d6fb", "optimism":"0x787130bFFFEa85B132160C3e4F6ACbec379c0d64","arbitrum":"0xa8D93865739330461E83C6912De8cE0506b549b2", "aurora":"0x172976D891F3762b2928d1f2f03b13Ff951545A4", "mumbai": "0x675F14E08e3387ac30bdd1339d167D4577c5245e", "hardhat": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512" },
   "nttAddress": { "main": "0xMAIN-NttAddress", "matic": "", "optimism":"", "arbitrum":"", "aurora":"",  "mumbai": "0xa2f7570ae9c395987bfa9e86465e308bbfbcc388", "hardhat": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6" }
 }
