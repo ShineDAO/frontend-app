@@ -1325,7 +1325,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                 },
                 index
               ) => {
-                if (dealVisibility === true && totalOffered != 0 && ["0xc84162f9b6ed1e685ad73b42bc3112143b7698e7", "0xdc6182dc7c7562e4d4ac8e26193a126912627d43", "0xe5d8885ed5fe68cd48820491de50b9019b0274c3"].indexOf(seedAddress) === -1) {
+                if (dealVisibility === true && totalOffered != 0) {
                   return (
                     <Card
                       key={index}
@@ -1376,7 +1376,10 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                         {" "}
                         <b>Deal size</b>{" "}
                         <SmallerText>
-                          {Number.parseFloat(fromWeiWithDecimals(totalOffered, offeredTokenDecimals)).toLocaleString()} {offeredTokenSymbol} for max {Number.parseFloat(fromWeiWithDecimals(totalOffered, offeredTokenDecimals) / fromFixed(rate).toLocaleString())}{" "}
+                          {Number.parseFloat(fromWeiWithDecimals(totalOffered, offeredTokenDecimals)).toLocaleString(undefined, { maximumFractionDigits: Number(fromFixed(rate)) > 1 ? 2 : 8 })} {offeredTokenSymbol} for max{" "}
+                          {Number.parseFloat(fromWeiWithDecimals(totalOffered, offeredTokenDecimals) / fromFixed(rate)).toLocaleString(undefined, {
+                            maximumFractionDigits: Number.parseFloat(fromWeiWithDecimals(totalOffered, offeredTokenDecimals) / fromFixed(rate)) > 1 ? 2 : 8,
+                          })}{" "}
                           {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
