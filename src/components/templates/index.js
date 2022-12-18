@@ -6,7 +6,7 @@ function strtodecBN(amount, dec) {
   for (var i = 0; i < dec; i++) {
     stringf = stringf + "0";
   }
-  return new BN(new BN(amount).mul(new BN(stringf)));
+  return (new BN(amount).mul(new BN(stringf))).toString();
   //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
 }
 function strtodec(amount, dec) {

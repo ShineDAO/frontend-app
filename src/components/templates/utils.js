@@ -663,29 +663,43 @@ export function toWei(amountInBaseUnit) {
   const amountInWei = window.web3.utils.toWei(amountInBaseUnit.toString(), "ether");
   return amountInWei.toString();
 }
+
 export function strtodec(amount, dec) {
   let stringf = "1";
   for (var i = 0; i < dec; i++) {
     stringf = stringf + "0";
   }
-  return new BigNumber(amount).multipliedBy(stringf);
+  const bigNrAmount = new BigNumber(amount) //https://stackoverflow.com/a/54604860
+  console.log("big Number amount ", bigNrAmount.toString())
+  return bigNrAmount.multipliedBy(stringf);
   //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
 }
 
-const BN = require("bn.js");
-
-// We need BN library because BigNumber is buggy
+// below not used
 function strtodecBN(amount, dec) {
+  //const BN = require("bn.js");
   let stringf = "1";
   for (var i = 0; i < dec; i++) {
     stringf = stringf + "0";
   }
-  return new BN(new BN(amount).mul(new BN(stringf)));
+  //console.log("hello ", BN(amount).mul((stringf)));
+  //return  BN(amount).mul( (stringf));
+  console.log("test log amounts ", amount);
+ 
+  const bigNumberAmount =  window.web3.utils.BN(amount)
+  console.log(
+    "test log ",
+    bigNumberAmount.toString(),
+    bigNumberAmount.mul(new window.web3.utils.BN(stringf)),
+    bigNumberAmount.mul(new window.web3.utils.BN(stringf)).toString(),
+    new window.web3.utils.BN(stringf).toString()
+  );
+  return bigNumberAmount.mul(new window.web3.utils.BN(stringf));
   //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
 }
 
 export function toWeiWithDecimals(amountInBaseUnit, decimals) {
-  return strtodecBN(amountInBaseUnit, decimals);
+  return strtodec(amountInBaseUnit, decimals);
 }
 
 export async function getAllowance(setAllowance, targetContract, userAddress, tokenAbi, tokenContractAddress) {
