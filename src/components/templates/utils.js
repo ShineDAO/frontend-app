@@ -669,32 +669,9 @@ export function strtodec(amount, dec) {
   for (var i = 0; i < dec; i++) {
     stringf = stringf + "0";
   }
-  const bigNrAmount = new BigNumber(amount) //https://stackoverflow.com/a/54604860
-  console.log("big Number amount ", bigNrAmount.toString())
+  const bigNrAmount = new BigNumber(amount); //https://stackoverflow.com/a/54604860
+  console.log("big Number amount ", bigNrAmount.toString());
   return bigNrAmount.multipliedBy(stringf);
-  //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
-}
-
-// below not used
-function strtodecBN(amount, dec) {
-  //const BN = require("bn.js");
-  let stringf = "1";
-  for (var i = 0; i < dec; i++) {
-    stringf = stringf + "0";
-  }
-  //console.log("hello ", BN(amount).mul((stringf)));
-  //return  BN(amount).mul( (stringf));
-  console.log("test log amounts ", amount);
- 
-  const bigNumberAmount =  window.web3.utils.BN(amount)
-  console.log(
-    "test log ",
-    bigNumberAmount.toString(),
-    bigNumberAmount.mul(new window.web3.utils.BN(stringf)),
-    bigNumberAmount.mul(new window.web3.utils.BN(stringf)).toString(),
-    new window.web3.utils.BN(stringf).toString()
-  );
-  return bigNumberAmount.mul(new window.web3.utils.BN(stringf));
   //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
 }
 
@@ -1568,12 +1545,12 @@ export async function setVisibility(userAddress, SeedAbi, seedAddress, visibilit
 export async function deployTokens(userAddress, SeedAbi, offeredTokenAddress, seedAddress, amount) {
   console.log("deploy tokens log", amount, amount.toString(), amount);
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
-  let estimatedGas = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).estimateGas({
+  let estimatedGas = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, Number(amount).toLocaleString("fullwide", { useGrouping: false })).estimateGas({
     from: userAddress,
   });
 
   console.log("estimated gas for sync", estimatedGas);
-  const receipt = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).send({
+  const receipt = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, Number(amount).toLocaleString("fullwide", { useGrouping: false })).send({
     from: userAddress,
     gas: estimatedGas,
   });
