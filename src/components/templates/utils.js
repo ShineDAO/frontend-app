@@ -676,7 +676,7 @@ export function strtodec(amount, dec) {
 }
 
 export function toWeiWithDecimals(amountInBaseUnit, decimals) {
-  return strtodec(amountInBaseUnit, decimals);
+  return Number(strtodec(amountInBaseUnit, decimals)).toLocaleString("fullwide", { useGrouping: false });
 }
 
 export async function getAllowance(setAllowance, targetContract, userAddress, tokenAbi, tokenContractAddress) {
@@ -2020,14 +2020,14 @@ export async function approveContract(userAddress, tokenAbi, tokenAddress, addre
   var tokenInstance = new window.web3.eth.Contract(tokenAbi, tokenAddress);
 
   try {
-    let estimatedGas = await tokenInstance.methods.approve(addressOfContractToApprove, amount).estimateGas({
+    let estimatedGas = await tokenInstance.methods.approve(addressOfContractToApprove, Number(amount).toLocaleString("fullwide", { useGrouping: false })).estimateGas({
       from: userAddress,
       //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
       //gas: gas,
     });
 
     console.log("estimated gas for approval", estimatedGas);
-    const receipt = await tokenInstance.methods.approve(addressOfContractToApprove, amount).send({
+    const receipt = await tokenInstance.methods.approve(addressOfContractToApprove, Number(amount).toLocaleString("fullwide", { useGrouping: false })).send({
       from: userAddress,
       //value: window.web3.utils.toWei(ethAmountToSpend.toString(), "ether"),
       gas: estimatedGas,
