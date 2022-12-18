@@ -716,6 +716,7 @@ export function SeedCard({
                               </span>
                             )}
                             <span>
+                              {amountToSpend > fromWeiWithDecimals(totalOffered, offeredTokenDecimals) / fromFixed(rate) && <span style={{ color: "red" }}>You are trying to purchase more than the max deal size</span>}
                               <br></br>
                               Estimated tokens to receive: {utils.estimateReceivedTokens(amountToSpend, fromFixed(rate)).toLocaleString()} {offeredTokenSymbol} <i style={{ color: "gray" }}>(-1.2% fee)</i>
                             </span>

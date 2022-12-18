@@ -1540,6 +1540,7 @@ export async function setVisibility(userAddress, SeedAbi, seedAddress, visibilit
 }
 
 export async function deployTokens(userAddress, SeedAbi, offeredTokenAddress, seedAddress, amount) {
+  console.log("deploy tokens log" , amount, amount.toString())
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
   let estimatedGas = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).estimateGas({
     from: userAddress,
