@@ -672,8 +672,20 @@ export function strtodec(amount, dec) {
   //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
 }
 
+const BN = require("bn.js");
+
+// We need BN library because BigNumber is buggy
+function strtodecBN(amount, dec) {
+  let stringf = "1";
+  for (var i = 0; i < dec; i++) {
+    stringf = stringf + "0";
+  }
+  return new BN(new BN(amount).mul(new BN(stringf)));
+  //return (amount * stringf).toString(); // "22" * "100000000" = 2200000000
+}
+
 export function toWeiWithDecimals(amountInBaseUnit, decimals) {
-  return strtodec(amountInBaseUnit, decimals);
+  return strtodecBN(amountInBaseUnit, decimals);
 }
 
 export async function getAllowance(setAllowance, targetContract, userAddress, tokenAbi, tokenContractAddress) {
@@ -1540,14 +1552,14 @@ export async function setVisibility(userAddress, SeedAbi, seedAddress, visibilit
 }
 
 export async function deployTokens(userAddress, SeedAbi, offeredTokenAddress, seedAddress, amount) {
-  console.log("deploy tokens log" , amount, amount.toString(), new BigNumber(amount))
+  console.log("deploy tokens log", amount, amount.toString(), amount);
   var seedInstance = new window.web3.eth.Contract(SeedAbi, seedAddress);
-  let estimatedGas = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, new BigNumber(amount)).estimateGas({
+  let estimatedGas = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).estimateGas({
     from: userAddress,
   });
 
   console.log("estimated gas for sync", estimatedGas);
-  const receipt = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, new BigNumber(amount)).send({
+  const receipt = await seedInstance.methods.addTokens(offeredTokenAddress, userAddress, amount).send({
     from: userAddress,
     gas: estimatedGas,
   });

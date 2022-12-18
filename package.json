@@ -8,6 +8,7 @@
     "@loadable/component": "^5.15.0",
     "axios": "^0.21.1",
     "bignumber.js": "^9.1.0",
+    "bn.js": "^5.2.1",
     "bootstrap": "^4.6.0",
     "detect.js": "^2.2.3",
     "dotenv": "^6.2.0",
