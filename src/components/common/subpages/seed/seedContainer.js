@@ -310,7 +310,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
       toWeiWithDecimals(nftCap, tokenBDecimals),
       requireKyc,
       getAddress(chainId, "nttAddress"),
-      nttCap,
+      toWeiWithDecimals(nttCap, tokenBDecimals),
       distributionMechanism,
       visibility,
       ["none"],

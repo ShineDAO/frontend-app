@@ -1475,7 +1475,8 @@ async function setWhitelistedAddresses(userAddress, SeedAbi, seedAddress, whitel
 
   let whitelistedAddressesFormatted = CSVToArray(whitelistedAddresses);
   let capsForWhitelistedAddressesFormatted = CSVToArray(capsForWhitelistedAddresses);
-  let capsForWhitelistedAddressesWithDecimals = capsForWhitelistedAddressesFormatted[0].map(cap => strtodec(cap, tokenADecimals)); //there are some issues with native js arrays https://stackoverflow.com/a/28599347
+
+  let capsForWhitelistedAddressesWithDecimals = capsForWhitelistedAddressesFormatted[0].map(cap => Number(strtodec(cap, tokenADecimals)).toLocaleString("fullwide", { useGrouping: false })); //there are some issues with native js arrays https://stackoverflow.com/a/28599347
   let capsForWhitelistedAddressesWithDecimalsFormatted = new Array(capsForWhitelistedAddressesWithDecimals);
 
   let whitelistedAddressesFormatted1 = ["0x70997970c51812dc3a010c7d01b50e0d17dc79c8", "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"];
