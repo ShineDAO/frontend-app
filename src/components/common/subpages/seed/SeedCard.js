@@ -475,7 +475,11 @@ export function SeedCard({
             </ProjectNameWrapper>
           </CardHeaderWrapper>
 
-          <a target="_blank" style={{color:"#3bff3b"}}  href={name.split("§!§")[name.split("§!§").length - 1]}>{name.split("§!§")[name.split("§!§").length - 1]}</a>
+          {name.split("§!§").length > 1 && ( // this line is here for older contracts that didnt have §!§
+            <a target="_blank" style={{ color: "#3bff3b" }} href={name.split("§!§")[name.split("§!§").length - 1]}>
+              {name.split("§!§")[name.split("§!§").length - 1]}
+            </a>
+          )}
           <br></br>
 
           <Text color="white" style={{ margin: "0 auto" }}>
@@ -506,7 +510,7 @@ export function SeedCard({
                 Rate
               </Text>
               <Text color="#a2a2a2" fontWeight={700} fontSize="20px">
-                You get {fromFixed(rate).toLocaleString()} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                You get {Number(fromFixed(rate)).toLocaleString(undefined, { maximumFractionDigits: Number(fromFixed(rate)) > 1 ? 2 : 8 })} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
               </Text>
             </div>
             <div style={{ paddingBottom: 10 }}>
@@ -657,7 +661,7 @@ export function SeedCard({
                   )}
                   {true && (
                     <span>
-                      Remaining Deal Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString()} {offeredTokenSymbol}
+                      Remaining Deal Balance: {Number.parseFloat(seedSaleShnBalance).toLocaleString(undefined, { maximumFractionDigits: Number.parseFloat(seedSaleShnBalance) > 1 ? 2 : 8 })} {offeredTokenSymbol}
                     </span>
                   )}
 

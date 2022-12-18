@@ -1255,8 +1255,8 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
         </Text>
       )}
       {false && <Button onClick={() => loadSeedSales()}>Load seed sales</Button>}
-      <div style={{ margin:"0 auto", maxWidth:"60%", display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 10, width: "100vw" }}>
-        <div style={{  display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+      <div style={{ margin: "0 auto", maxWidth: "60%", display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 10, width: "100vw" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
           {console.log("seed sales data ", seedSalesData, typeof seedSalesData == "undefined")}
           {console.log("seed sales mapper  ", !activeContract, dealsVisible, !formVisible, !cardVisible, seedSalesData)}
           {salesLoading && (
@@ -1346,10 +1346,12 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                         {false && <div>{getVisibilityStatus(dealVisibility, currentAccount)} </div>}
                       </div>
                       <h2>{name.split("§!§")[0]}</h2>
-                      <div style={{maxWidth:"284px"}}>
-                        <a style={{color:"#3bff3b"}} target="_blank" href={name.split("§!§")[name.split("§!§").length - 1]}>
-                          {name.split("§!§")[name.split("§!§").length - 1]}
-                        </a>
+                      <div style={{ maxWidth: "284px" }}>
+                        {name.split("§!§").length > 1 && ( // this line is here for older contracts that didnt have §!§
+                          <a style={{ color: "#3bff3b" }} target="_blank" href={name.split("§!§")[name.split("§!§").length - 1]}>
+                            {name.split("§!§")[name.split("§!§").length - 1]}
+                          </a>
+                        )}
                       </div>
                       <br></br>
                       {false && (
@@ -1382,7 +1384,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                         {" "}
                         <b>Rate</b>{" "}
                         <SmallerText>
-                          {Number.parseFloat(fromFixed(rate)).toLocaleString()} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
+                          {Number.parseFloat(fromFixed(rate)).toLocaleString(undefined, { maximumFractionDigits: Number(fromFixed(rate)) > 1 ? 2 : 8 })} {offeredTokenSymbol} for 1 {acceptedTokenAddress != ZERO_ADDRESS ? acceptedTokenSymbol : nativeTokenName}
                         </SmallerText>
                       </div>
                       <div>
