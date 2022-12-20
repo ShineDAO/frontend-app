@@ -1348,7 +1348,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                       <h2>{name.split("§!§")[0]}</h2>
                       <div style={{ maxWidth: "284px" }}>
                         {name.split("§!§").length > 1 && ( // this line is here for older contracts that didnt have §!§
-                          <a style={{ color: "#3bff3b" }} target="_blank" href={`//${name.split("§!§")[name.split("§!§").length - 1]}`}>
+                          <a style={{ color: "#3bff3b" }} target="_blank" href={`${name.split("§!§")[name.split("§!§").length - 1]}`}>
                             {name.split("§!§")[name.split("§!§").length - 1]}
                           </a>
                         )}

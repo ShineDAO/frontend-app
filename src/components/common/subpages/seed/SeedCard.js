@@ -476,7 +476,7 @@ export function SeedCard({
           </CardHeaderWrapper>
 
           {name.split("§!§").length > 1 && ( // this line is here for older contracts that didnt have §!§
-            <a target="_blank" style={{ color: "#3bff3b" }} href={`//${name.split("§!§")[name.split("§!§").length - 1]}`}>
+            <a target="_blank" style={{ color: "#3bff3b" }} href={`${name.split("§!§")[name.split("§!§").length - 1]}`}>
               {name.split("§!§")[name.split("§!§").length - 1]}
             </a>
           )}
