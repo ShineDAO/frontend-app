@@ -454,7 +454,8 @@ export function SeedCard({
   }
 
   async function handleWithdrawUnsoldTokens() {
-    await recoverErc20Tokens(currentAccount, Seed.abi, seedAddress, offeredTokenAddress, utils.toWeiWithDecimals(seedSaleShnBalance, offeredTokenDecimals));
+    console.log("withdraw balance ", seedSaleShnBalance, seedSaleShnBalance.toNumber(), utils.floor10(seedSaleShnBalance, -8), utils.toWeiWithDecimals(utils.floor10(seedSaleShnBalance, -8), offeredTokenDecimals)); // floor is needed to round it down, since if it rounds it up, EVM will throw error during withdrawal
+    await recoverErc20Tokens(currentAccount, Seed.abi, seedAddress, offeredTokenAddress, utils.toWeiWithDecimals(utils.floor10(seedSaleShnBalance, -8), offeredTokenDecimals));
   }
 
   return (
