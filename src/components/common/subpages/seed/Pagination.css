@@ -1,0 +1,47 @@
+button[title]::before {
+    content: attr(title);
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: #ffffff87;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 4px 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+button[title]:hover::before {
+    opacity: 1;
+}
+.pagination-container {
+    margin: 0 auto;
+    position: relative;
+}
+
+.arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+
+.arrow.left {
+    border-right: 5px solid black;
+}
+
+.arrow.left-double {
+    border-right: 10px solid black;
+}
+
+.arrow.right {
+    border-left: 5px solid black;
+}
+
+.arrow.right-double {
+    border-left: 10px solid black;
+}

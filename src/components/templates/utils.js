@@ -672,12 +672,10 @@ export function toWei(amountInBaseUnit) {
  * @param {number} exp The exponent (the 10 logarithm of the adjustment base).
  * @returns {number} The adjusted value.
  */
- function decimalAdjust(type, value, exp) {
+function decimalAdjust(type, value, exp) {
   type = String(type);
   if (!["round", "floor", "ceil"].includes(type)) {
-    throw new TypeError(
-      "The type of decimal adjustment must be one of 'round', 'floor', or 'ceil'."
-    );
+    throw new TypeError("The type of decimal adjustment must be one of 'round', 'floor', or 'ceil'.");
   }
   exp = Number(exp);
   value = Number(value);
@@ -708,7 +706,7 @@ export function strtodec(amount, dec) {
 }
 
 export function toWeiWithDecimals(amountInBaseUnit, decimals) {
-  console.log("big number amount 12-x ", Number(strtodec(amountInBaseUnit, decimals)).toLocaleString("en-US", { useGrouping: false, maximumFractionDigits: 20, maximumSignificantDigits:21 }));
+  console.log("big number amount 12-x ", Number(strtodec(amountInBaseUnit, decimals)).toLocaleString("en-US", { useGrouping: false, maximumFractionDigits: 20, maximumSignificantDigits: 21 }));
   return Number(strtodec(amountInBaseUnit, decimals)).toLocaleString("fullwide", { useGrouping: false });
 }
 
@@ -1790,11 +1788,17 @@ export async function retrieveIndex(SeedFactoryAbi, seedFactoryAddress, seedAddr
   let index = await SeedFactoryInstance.methods.retrieveIndex(seedAddress).call();
   return index;
 }
+export async function getTotalCountOfSeeds(SeedFactoryAbi, seedFactoryAddress) {
+  const SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
+  const countOfSeeds = Number.parseFloat(await SeedFactoryInstance.methods.getCount().call());
+  return countOfSeeds;
+}
 
-export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFactoryAddress, erc20Abi, activeContract) {
+export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFactoryAddress, erc20Abi, activeContract, currentPage, seedsPerPage, setTotalPages) {
   console.log("user address seed ", userAddress);
   const SeedFactoryInstance = new window.web3.eth.Contract(SeedFactoryAbi, seedFactoryAddress);
-
+  const totalCountOfSeeds = await getTotalCountOfSeeds(SeedFactoryAbi, seedFactoryAddress);
+  setTotalPages(Math.ceil(totalCountOfSeeds / seedsPerPage));
   let count;
   let iteratorStartingPoint;
   let seedSalesData = [];
@@ -1803,9 +1807,15 @@ export async function getSeedSales(userAddress, seedAbi, SeedFactoryAbi, seedFac
     iteratorStartingPoint = parseInt(await SeedFactoryInstance.methods.retrieveIndex(activeContract).call());
     count = iteratorStartingPoint + 1;
   } else {
-    iteratorStartingPoint = 0;
-    count = await SeedFactoryInstance.methods.getCount().call();
-  }
+    //iteratorStartingPoint = 0;
+    //count = await SeedFactoryInstance.methods.getCount().call();
+    //console.log("get count ", count)
+    iteratorStartingPoint = (currentPage - 1) * seedsPerPage;
+    count = currentPage * seedsPerPage < totalCountOfSeeds ? currentPage * seedsPerPage : totalCountOfSeeds;
+  } 
+
+
+  //while (seedSalesData.length < perPage) 
 
   for (iteratorStartingPoint; iteratorStartingPoint < count; iteratorStartingPoint++) {
     console.log("count acc", iteratorStartingPoint, count);

@@ -8,7 +8,7 @@ import { SmallerText } from "components/common/Text";
 import { Slider } from "components/common/Container/index";
 import PulseLoader from "react-spinners/PulseLoader";
 import ProgressBar from "react-bootstrap/ProgressBar";
-
+import Pagination from "./Pagination";
 import {
   getOnlyUserAddress,
   deployNewSeed,
@@ -43,6 +43,7 @@ import {
   getErc20Decimals,
   toWeiWithDecimals,
   fromWeiWithDecimals,
+  getTotalPages,
 } from "../../../../../src/components/templates/utils.js";
 import SeedFactory from "../../../../../static/abi/SeedFactory";
 import Seed from "../../../../../static/abi/Seed";
@@ -56,6 +57,10 @@ import { ErrorMessage } from "formik";
 
 export function SeedContainer({ activeContract, setActiveContract, chainQueryParam, setChainQueryParam }) {
   const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, nativeBalance, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
+  const seedsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+
   const [wrongChainError, setWrongChainError] = useState("");
   const [offeredTokenBalance, setOfferedTokenBalance] = useState();
   const [acceptedTokenBalance, setAcceptedTokenBalance] = useState();
@@ -137,6 +142,11 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
   const [vestingDuration, setVestingDuration] = useState(5184000);
   const [percentageVested, setPercentageVested] = useState(100);
 
+  function handlePageChange(page){
+    setSeedSalesData([])
+    setCurrentPage(page)
+  }
+
   useEffect(() => {
     if (whitelistedAddresses.split(",").length - 1 != capsForWhitelistedAddresses.split(",").length - 1) {
       setWhitelistError(true);
@@ -165,15 +175,27 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
 
   useEffect(() => {
     if (isWalletEnabled == true && currentAccount != null) {
+      async function loadCurrentPageData() {
+        setSalesLoading(true);
+        setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract, currentPage, seedsPerPage,setTotalPages));
+        setSalesLoading(false);
+      }
+      loadCurrentPageData();
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (isWalletEnabled == true && currentAccount != null) {
       async function loadSeedSales() {
         console.log("active acc dds", activeContract, seedIndex, typeof activeContract, typeof seedIndex, activeContract);
+        //setTotalPages(await getTotalPages(SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), seedsPerPage));
         setDeploymentFee(await getDeploymentFeeFromAbi(SeedFactory.abi, getAddress(chainId, "seedFactoryAddress")));
         setDefaultTokenAFee(await getTokenAFee(SeedFactory.abi, getAddress(chainId, "seedFactoryAddress")));
         setDefaultTokenBFee(await getTokenBFee(SeedFactory.abi, getAddress(chainId, "seedFactoryAddress")));
         if (!activeContract) {
           console.log("active acc 1", activeContract, seedIndex, typeof activeContract, typeof seedIndex);
           setSalesLoading(true);
-          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
+          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract, currentPage, seedsPerPage, setTotalPages));
           setSalesLoading(false);
         } else if (activeContract) {
           console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex, chainQueryParam, chainId, chainNameToIdMapper(chainQueryParam), chainNameToIdMapper(chainQueryParam) == chainId);
@@ -185,7 +207,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
             setWrongChainError(`Please change your chain to ${chainQueryParam}`);
           } else {
             setSalesLoading(true);
-            setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract));
+            setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract, currentPage, seedsPerPage,setTotalPages));
             setSalesLoading(false);
           }
         }
@@ -1435,7 +1457,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
             (seedSalesData.map(({ dealVisibility, totalOffered }) => {
               return dealVisibility === true && totalOffered != 0;
             }).length <= 0 ||
-              typeof seedSalesData == "undefined") && (
+              typeof seedSalesData == "undefined") && !salesLoading && (
               <Text>
                 <br></br>There are no publicly listed deals on the selected chain. Click on the button to create a new Deal.
               </Text>
@@ -1456,6 +1478,8 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
             seedSaleData={seedSalesData && seedSalesData[activeContract ? 0 : seedIndex]}
           ></SeedCard>
         )}
+
+       {!activeContract && !formVisible && <Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}></Pagination>}
       </div>
     </div>
   );
