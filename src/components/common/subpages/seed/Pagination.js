@@ -55,7 +55,7 @@ const Pagination = props => {
   return (
     <div className="pagination-container">
       {!salesLoading && renderPreviousButton()}
-      <span style={{margin:10}}> {currentPage}  </span>
+      {!salesLoading && <span style={{margin:10}}>Page {currentPage}  </span>}
       {!salesLoading && !hideNextButton && renderNextButton()}
       {false && renderLastButton()}
     </div>

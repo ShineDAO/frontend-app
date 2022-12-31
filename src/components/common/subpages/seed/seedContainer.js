@@ -1349,7 +1349,7 @@ export function SeedContainer({ seedsPerPage, indexHistory, setIndexHistory, act
         )}
 
         {!salesLoading && !activeContract && isWalletEnabled && !formVisible && !cardVisible && <Button onClick={() => setFormVisible(true)}>New Deal</Button>}
-
+        <hr></hr>
         {!isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
       </div>
       {formVisible && (
@@ -1371,10 +1371,10 @@ export function SeedContainer({ seedsPerPage, indexHistory, setIndexHistory, act
           {console.log("seed sales data ", seedSalesData, typeof seedSalesData == "undefined")}
           {console.log("seed sales mapper  ", !activeContract, dealsVisible, !formVisible, !cardVisible, seedSalesData)}
           {salesLoading && (
-            <div>
+            <div style={{ textAlign: "center" }}>
               {" "}
               <PulseLoader color={"gold"} loading={true} size={10} margin={2} />
-              <Text>Loading...</Text>
+              <Text>Loading chain data...</Text>
             </div>
           )}
           {wrongChainError != "" && <Text color="tomato">{wrongChainError}</Text>}
@@ -1553,7 +1553,7 @@ export function SeedContainer({ seedsPerPage, indexHistory, setIndexHistory, act
               </Text>
             )}
         </div>
-        <div style={{ display: "flex", flexWrap:"wrap", justifyContent:'center'}}>{salesLoading && !activeContract && Array.from({ length: seedsPerPage }, (value, index) => index).map(item => <SkeletonCard></SkeletonCard>)}</div>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>{salesLoading && !activeContract && Array.from({ length: seedsPerPage }, (value, index) => index).map(item => <SkeletonCard></SkeletonCard>)}</div>
         {activeContract && seedSalesData && console.log("activeContract xxx", activeContract, seedIndex, typeof seedIndex, seedSalesData, typeof seedSalesData)}
         {activeContract && seedSalesData && (
           <SeedCard
@@ -1575,7 +1575,7 @@ export function SeedContainer({ seedsPerPage, indexHistory, setIndexHistory, act
         {!activeContract && !formVisible && (
           <Pagination
             currentPage={currentPage}
-            hideNextButton={seedSalesData && (seedSalesData.length < seedsPerPage)}
+            hideNextButton={seedSalesData && seedSalesData.length < seedsPerPage}
             salesLoading={salesLoading}
             totalPages={
               !activeContract &&
