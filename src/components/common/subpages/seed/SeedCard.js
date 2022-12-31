@@ -55,6 +55,9 @@ import { Avatar } from "../../../common/Avatar";
 import seedSale from "pages/seed-sale.js";
 
 export function SeedCard({
+  indexHistory,
+  setStartIndex,
+  setEndIndex,
   setSeedSalesData,
   setActiveContract,
   setChainQueryParam,
@@ -123,6 +126,12 @@ export function SeedCard({
   {
     console.log("native token name 123 ", nativeTokenName);
   }
+  console.log("index history", indexHistory);
+  if (indexHistory.length > 0) {
+    setStartIndex(indexHistory[indexHistory.length - 1].startIndex);
+    setEndIndex(indexHistory[indexHistory.length - 1].endIndex);
+  }
+
   const [dealOwner, setDealOwner] = useState();
   const [approveLoading, setApproveLoading] = useState(false);
   const [shineBalance, setShineBalance] = useState(23232);

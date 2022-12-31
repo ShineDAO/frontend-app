@@ -14,6 +14,8 @@ export default ({}) => {
   const [activeContract, setActiveContract] = useQueryParam(`tag`);
   const [chainQueryParam, setChainQueryParam] = useQueryParam(`chain`); // full name e.g. "optimism"
   const { isWalletEnabled, chainId } = useContext(WalletContext);
+  const seedsPerPage = 4;
+  const [indexHistory,setIndexHistory] = useState([]);
 
   function isChainSupported(chainId) {
     const supportedChainsMapper = {
@@ -37,7 +39,7 @@ export default ({}) => {
         {true && !isWalletEnabled && <h3 style={{ paddingTop: 80 }}>Please connect your wallet to see and create deals.</h3>}
         {console.log("chainId 23", chainId, process.env.NODE_ENV)}
         {isChainSupported(chainId) || (process.env.NODE_ENV == "development" && chainId == "0x7a69") ? (
-          <SeedContainer chainQueryParam={chainQueryParam} setChainQueryParam={setChainQueryParam} activeContract={activeContract} setActiveContract={setActiveContract}></SeedContainer>
+          <SeedContainer seedsPerPage={seedsPerPage} indexHistory={indexHistory} setIndexHistory={setIndexHistory} chainQueryParam={chainQueryParam} setChainQueryParam={setChainQueryParam} activeContract={activeContract} setActiveContract={setActiveContract}></SeedContainer>
         ) : (
           isWalletEnabled && (
             <div style={{ textAlign: "center" }}>

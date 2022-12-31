@@ -2,6 +2,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button } from "components/common";
 import { Card, Text } from "components/common";
+import SkeletonCard from "./SkeletonCard";
 
 import { TableD, TableR, TableLabel } from "components/common/Table";
 import { SmallerText } from "components/common/Text";
@@ -55,9 +56,8 @@ import { Tab } from "react-bootstrap";
 import { families } from "detect.js";
 import { ErrorMessage } from "formik";
 
-export function SeedContainer({ activeContract, setActiveContract, chainQueryParam, setChainQueryParam }) {
+export function SeedContainer({ seedsPerPage, indexHistory, setIndexHistory, activeContract, setActiveContract, chainQueryParam, setChainQueryParam }) {
   const { currentAccount, setCurrentAccount, isWalletEnabled, chainId, nativeTokenName, nativeBalance, refetchData, setRefetchData, loadingIndicator, setLoadingIndicator } = useContext(WalletContext);
-  const seedsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
 
@@ -142,9 +142,64 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
   const [vestingDuration, setVestingDuration] = useState(5184000);
   const [percentageVested, setPercentageVested] = useState(100);
 
-  function handlePageChange(page){
-    setSeedSalesData([])
-    setCurrentPage(page)
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(seedsPerPage);
+
+  function handlePageChange(page) {
+    async function loadCurrentPageData(goingForward) {
+      setSeedSalesData([]);
+      setSalesLoading(true);
+      goingForward
+        ? setSeedSalesData(
+            await getSeedSales(
+              currentAccount,
+              Seed.abi,
+              SeedFactory.abi,
+              getAddress(chainId, "seedFactoryAddress"),
+              ERC20.abi,
+              activeContract,
+              seedsPerPage,
+              setTotalPages,
+              setCurrentPage,
+              startIndex,
+              endIndex,
+              setStartIndex,
+              setEndIndex,
+              indexHistory,
+              setIndexHistory
+            )
+          )
+        : setSeedSalesData(
+            await getSeedSales(
+              currentAccount,
+              Seed.abi,
+              SeedFactory.abi,
+              getAddress(chainId, "seedFactoryAddress"),
+              ERC20.abi,
+              activeContract,
+              seedsPerPage,
+              setTotalPages,
+              setCurrentPage,
+              indexHistory[page - 1].startIndex,
+              indexHistory[page - 1].endIndex,
+              setStartIndex,
+              setEndIndex,
+              indexHistory,
+              setIndexHistory
+            )
+          );
+      setSalesLoading(false);
+    }
+
+    if (page > currentPage) {
+      setCurrentPage(page);
+      loadCurrentPageData(true);
+      console.log("start end forwARD", indexHistory, indexHistory[page - 1]);
+    } else {
+      setCurrentPage(page);
+      loadCurrentPageData(false);
+      console.log("start end BACKWARD", indexHistory, indexHistory[page - 1]);
+    }
   }
 
   useEffect(() => {
@@ -176,9 +231,9 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
   useEffect(() => {
     if (isWalletEnabled == true && currentAccount != null) {
       async function loadCurrentPageData() {
-        setSalesLoading(true);
-        setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract, currentPage, seedsPerPage,setTotalPages));
-        setSalesLoading(false);
+        //setSalesLoading(true);
+        //setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract, seedsPerPage, setTotalPages, setCurrentPage, startIndex,endIndex,setStartIndex,setEndIndex));
+        //setSalesLoading(false);
       }
       loadCurrentPageData();
     }
@@ -195,7 +250,25 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
         if (!activeContract) {
           console.log("active acc 1", activeContract, seedIndex, typeof activeContract, typeof seedIndex);
           setSalesLoading(true);
-          setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract, currentPage, seedsPerPage, setTotalPages));
+          setSeedSalesData(
+            await getSeedSales(
+              currentAccount,
+              Seed.abi,
+              SeedFactory.abi,
+              getAddress(chainId, "seedFactoryAddress"),
+              ERC20.abi,
+              activeContract,
+              seedsPerPage,
+              setTotalPages,
+              setCurrentPage,
+              startIndex,
+              endIndex,
+              setStartIndex,
+              setEndIndex,
+              indexHistory,
+              setIndexHistory
+            )
+          );
           setSalesLoading(false);
         } else if (activeContract) {
           console.log("active acc 2", activeContract, seedIndex, typeof activeContract, typeof seedIndex, chainQueryParam, chainId, chainNameToIdMapper(chainQueryParam), chainNameToIdMapper(chainQueryParam) == chainId);
@@ -207,14 +280,32 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
             setWrongChainError(`Please change your chain to ${chainQueryParam}`);
           } else {
             setSalesLoading(true);
-            setSeedSalesData(await getSeedSales(currentAccount, Seed.abi, SeedFactory.abi, getAddress(chainId, "seedFactoryAddress"), ERC20.abi, activeContract, currentPage, seedsPerPage,setTotalPages));
+            setSeedSalesData(
+              await getSeedSales(
+                currentAccount,
+                Seed.abi,
+                SeedFactory.abi,
+                getAddress(chainId, "seedFactoryAddress"),
+                ERC20.abi,
+                activeContract,
+                seedsPerPage,
+                setTotalPages,
+                setCurrentPage,
+                startIndex,
+                endIndex,
+                setStartIndex,
+                setEndIndex,
+                indexHistory,
+                setIndexHistory
+              )
+            );
             setSalesLoading(false);
           }
         }
       }
       loadSeedSales();
     }
-  }, [isWalletEnabled, currentAccount, refetchData, chainId, seedIndex, activeContract]);
+  }, [isWalletEnabled, currentAccount, refetchData, seedIndex, activeContract]);
 
   useEffect(() => {
     if (Number(offeredTokenBalance) < Number(tokenAmount) && typeof offeredTokenAddress !== "undefined" && offeredTokenAddress !== "") {
@@ -345,16 +436,14 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
   }
 
   function handleSeedClick(index, seedAddress) {
-    if (index != seedIndex) {
-      setSeedSalesData(); // this needs to be here because of caching performance issue
-      setSeedIndex(index);
-      setCardVisible(true);
-      setDealsVisible(false);
-      setActiveContract(seedAddress);
-      setChainQueryParam(chainIdToNameMapper(chainId));
-    } else {
-      setSeedIndex();
-    }
+    console.log("seed index ", index);
+    setSeedSalesData(); // this needs to be here because of caching performance issue
+
+    setSeedIndex(index);
+    setCardVisible(true);
+    setDealsVisible(false);
+    setActiveContract(seedAddress);
+    setChainQueryParam(chainIdToNameMapper(chainId));
   }
   async function handleLauncherApprove() {
     await approveContract(currentAccount, ERC20.abi, offeredTokenAddress, getAddress(chainId, "seedFactoryAddress"));
@@ -1359,7 +1448,7 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
                       border="1px solid white"
                       width="320px"
                       height="420px"
-                      background={index == seedIndex ? "#2f2f2f" : "black"}
+                      background={"black"}
                       index={index}
                       onClick={() => handleSeedClick(index, seedAddress)}
                     >
@@ -1457,13 +1546,14 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
             (seedSalesData.map(({ dealVisibility, totalOffered }) => {
               return dealVisibility === true && totalOffered != 0;
             }).length <= 0 ||
-              typeof seedSalesData == "undefined") && !salesLoading && (
+              typeof seedSalesData == "undefined") &&
+            !salesLoading && (
               <Text>
-                <br></br>There are no publicly listed deals on the selected chain. Click on the button to create a new Deal.
+                <br></br>There are no remaining publicly listed deals on the selected chain.
               </Text>
             )}
         </div>
-
+        <div style={{ display: "flex", flexWrap:"wrap", justifyContent:'center'}}>{salesLoading && !activeContract && Array.from({ length: seedsPerPage }, (value, index) => index).map(item => <SkeletonCard></SkeletonCard>)}</div>
         {activeContract && seedSalesData && console.log("activeContract xxx", activeContract, seedIndex, typeof seedIndex, seedSalesData, typeof seedSalesData)}
         {activeContract && seedSalesData && (
           <SeedCard
@@ -1476,10 +1566,32 @@ export function SeedContainer({ activeContract, setActiveContract, chainQueryPar
             refetchData={refetchData}
             getEligibilityStatus={getEligibilityStatus}
             seedSaleData={seedSalesData && seedSalesData[activeContract ? 0 : seedIndex]}
+            indexHistory={indexHistory}
+            setStartIndex={setStartIndex}
+            setEndIndex={setEndIndex}
           ></SeedCard>
         )}
 
-       {!activeContract && !formVisible && <Pagination currentPage={currentPage} totalPages={totalPages} handlePageChange={handlePageChange}></Pagination>}
+        {!activeContract && !formVisible && (
+          <Pagination
+            currentPage={currentPage}
+            hideNextButton={seedSalesData && (seedSalesData.length < seedsPerPage)}
+            salesLoading={salesLoading}
+            totalPages={
+              !activeContract &&
+              dealsVisible &&
+              !formVisible &&
+              !cardVisible &&
+              seedSalesData &&
+              (seedSalesData.map(({ dealVisibility, totalOffered }) => {
+                return dealVisibility === true && totalOffered != 0;
+              }).length <= 0 ||
+                typeof seedSalesData == "undefined") &&
+              currentPage
+            }
+            handlePageChange={handlePageChange}
+          ></Pagination>
+        )}
       </div>
     </div>
   );

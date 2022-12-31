@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Pagination.css";
 
 const Pagination = props => {
-  const { currentPage, totalPages, handlePageChange } = props;
+  const { currentPage, totalPages, handlePageChange, hideNextButton, salesLoading} = props;
 
   const renderFirstButton = () => {
     if (currentPage === 1) {
@@ -54,11 +54,10 @@ const Pagination = props => {
 
   return (
     <div className="pagination-container">
-      {renderFirstButton()}
-      {renderPreviousButton()}
-      {currentPage} of {totalPages}
-      {renderNextButton()}
-      {renderLastButton()}
+      {!salesLoading && renderPreviousButton()}
+      <span style={{margin:10}}> {currentPage}  </span>
+      {!salesLoading && !hideNextButton && renderNextButton()}
+      {false && renderLastButton()}
     </div>
   );
 };
