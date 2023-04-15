@@ -1206,6 +1206,17 @@ export async function checkLocked(userAddress, veShnAddress, veShnAbi) {
   }
 }
 
+export async function checkEmergencyUnlock( veShnAddress, veShnAbi) {
+  var veSHN = new window.web3.eth.Contract(veShnAbi, veShnAddress);
+  try {
+    const emergencyUnlockActive = await veSHN.methods.emergencyUnlockActive().call();
+    return locked;
+  } catch (e) {
+    console.log("emergencyUnlockActive err ", e);
+  }
+}
+
+
 export async function veShnApprove(userAddress, veShnAddress, setAllowance, loadingIndicator, setLoadingIndicator, shineAbi, shnAddress) {
   var SHN = new window.web3.eth.Contract(shineAbi, shnAddress);
 

@@ -22,6 +22,7 @@ import {
   getUserPointHistory,
   getAddress,
   checkLocked,
+  checkEmergencyUnlock,
   roundTo2Decimals,
 } from "../../templates/utils";
 import veSHN from "../../../../static/abi/veFXS";
@@ -39,6 +40,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
   console.log("chainxxx ", chainId, getAddress(chainId, "shnAddress"));
 
   const [locked, setLocked] = useState();
+  const [emergencyActive, setEmergencyActive] = useState();
   const [shnBalance, setShnBalance] = useState(0);
   const [amountToLock, setAmountToLock] = useState(0);
   const [sliderValue, setSliderValue] = useState(90);
@@ -53,7 +55,6 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
   const [userAddress, setUserAddress] = useState();
 
   const [shinePrice, setShinePrice] = useState(0);
-
 
   //useEffect(() => {
   //    setShnAddress(getAddress(chainId,"shnAddress"))
@@ -77,27 +78,27 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
       setEstimatedBias(bias);
       //console.log("estimated Slope and bias ", slope, bias, toWei(amountToLock), amountToLock, desiredLockTimestamp);
       //console.log("lower timestamp ",new Date(desiredLockTimestamp* 1000).getTime(), new Date(locked.end * 1000).getTime(), locked.end, locked.end != 0 && new Date(desiredLockTimestamp*1000).getTime()  <= new Date(locked.end * 1000).getTime())
-      if (locked.end != 0 && new Date(desiredLockTimestamp * 1000).getTime()  <= new Date(locked.end * 1000).getTime()) {
+      if (locked.end != 0 && new Date(desiredLockTimestamp * 1000).getTime() <= new Date(locked.end * 1000).getTime()) {
         setLockError("The time on the lock can only be increased.");
       }
     }
   }, [desiredLockTimestamp, amountToLock]);
 
-  async function getUsdValue(setShinePrice){
+  async function getUsdValue(setShinePrice) {
     axios
-    .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=shinedao")
-    .then(function(response) {
-      // handle success
-      //console.log("priceeee ", response.data[0].current_price)
-      setShinePrice(response.data[0].current_price);
-    })
-    .catch(function(error) {
-      // handle error
-      console.log(error);
-    })
-    .then(function() {
-      // always executed
-    });
+      .get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=shinedao")
+      .then(function(response) {
+        // handle success
+        //console.log("priceeee ", response.data[0].current_price)
+        setShinePrice(response.data[0].current_price);
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function() {
+        // always executed
+      });
   }
   useEffect(() => {
     console.log("data ", isWalletEnabled, chainId, getAddress(chainId, "veShnAddress"));
@@ -105,6 +106,9 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
       async function getLocked() {
         setUserAddress(await getOnlyUserAddress());
         const lockedBalance = await checkLocked(await getOnlyUserAddress(), getAddress(chainId, "veShnAddress"), veSHN.abi);
+        const emergencyUnlockActive = await checkEmergencyUnlock(getAddress(chainId, "veShnAddress"), veSHN.abi);
+        setEmergencyActive(emergencyUnlockActive);
+        console.log("active status", emergencyUnlockActive);
         console.log("queried balance", lockedBalance);
         console.log("refetchData ", refetchData);
         console.log("chainY ", getAddress(chainId, "shnAddress"));
@@ -112,7 +116,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
         getShineBalance(setShnBalance, await getOnlyUserAddress(), ShineToken.abi, getAddress(chainId, "shnAddress"));
         getAllowance(setAllowance, getAddress(chainId, "veShnAddress"), await getOnlyUserAddress(), ShineToken.abi, getAddress(chainId, "shnAddress"));
         getEpoch(setEpoch, getAddress(chainId, "veShnAddress"), veSHN.abi);
-        await getUsdValue(setShinePrice)
+        await getUsdValue(setShinePrice);
       }
       getLocked();
     }
@@ -234,14 +238,16 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
   }
   return (
     <div style={{ textAlign: "center" }}>
-      <div style={{ width: "85%", margin:"0 auto" }}>
+      <div style={{ width: "85%", margin: "0 auto" }}>
         <div>
           <div>
             <br></br>
-            <Text fontSize="26px" fontWeight="600" fontFamily="ClashGrotesk-Regular">veSHN Locking</Text>
+            <Text fontSize="26px" fontWeight="600" fontFamily="ClashGrotesk-Regular">
+              veSHN Locking
+            </Text>
             <br></br>
             <p>
-            veSHN contract allows users to lock & stake their SHN to get SEED access, SHN yield, project token distribution and governance rights. Benefits are proportional to the lock time. Find more info here:{" "}
+              veSHN contract allows users to lock & stake their SHN to get SEED access, SHN yield, project token distribution and governance rights. Benefits are proportional to the lock time. Find more info here:{" "}
               <a href="https://docs.shinedao.finance/community/shn-token/veshn" target="_self">
                 docs
               </a>
@@ -250,7 +256,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
           </div>
           <div>
             <SliderContainer>
-              <span>Balance:</span> {roundTo2Decimals(shnBalance)} SHN 🌟  ($ { roundTo2Decimals(shinePrice*shnBalance)})  { false && allowance}  <br></br> <br></br>
+              <span>Balance:</span> {roundTo2Decimals(shnBalance)} SHN 🌟 ($ {roundTo2Decimals(shinePrice * shnBalance)}) {false && allowance} <br></br> <br></br>
               <span>{"Enter amount to lock"} </span>
               <input onChange={target => handleAmountToLock(target.target.value, setAmountToLock)} value={filterAmountToLock(amountToLock)} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 20 }}></input>{" "}
               <b onClick={() => setAmountToLock(shnBalance)} style={{ cursor: "pointer" }}>
@@ -271,14 +277,15 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                 ))}
               <br></br>
               <br></br>
-              <br></br><br></br>
+              <br></br>
+              <br></br>
               <Slider type="range" min="7" max="1460" value={sliderValue} onChange={handleChange}></Slider>
               <input onChange={handleChange} value={sliderValue} style={{ borderRadius: 6, boder: "1px solid #3f3d56", marginLeft: 35 }}></input>
               <span>{" Days "} </span>
               {sliderValue > 1460 && <Text color="#4F4FC8">Maximum allowed lock time is 4 Years / 1460 days</Text>}
               {lockError && <Text color="#4F4FC8"> {lockError}</Text>}
             </SliderContainer>{" "}
-            <Text >Please select the lock time:</Text>
+            <Text>Please select the lock time:</Text>
             <br></br>
             {console.log("loading indicator ", loadingIndicator)}
             {allowance == 0 &&
@@ -290,10 +297,11 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                 </div>
               ) : (
                 <div>
-                  <Button onClick={() => handleApprove()}>Approve</Button><br></br><br></br>
+                  <Button onClick={() => handleApprove()}>Approve</Button>
+                  <br></br>
+                  <br></br>
                 </div>
               ))}
-            
             {locked && locked.amount > 0 ? (
               <div>
                 {loadingIndicator.includes("increaseLockTime") ? (
@@ -303,7 +311,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                     <i>Confirming transaction, please wait.</i>
                   </div>
                 ) : (
-                  allowance != 0 &&  <Button onClick={() => handleUnlockTimeIncrease()}>Increase Lock Time</Button>
+                  allowance != 0 && <Button onClick={() => handleUnlockTimeIncrease()}>Increase Lock Time</Button>
                 )}
               </div>
             ) : allowance != 0 && loadingIndicator.includes("createLock") ? (
@@ -317,7 +325,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
             )}
             <br></br>
             {console.log("amount to lock ", amountToLock, typeof amountToLock, amountToLock == 0, amountToLock == "0", amountToLock != "0")}
-            {amountToLock != "0" && estimatedBias && <Text > = {(parseInt(amountToLock) + VOTE_WEIGHT_MULTIPLIER * fromWei(estimatedBias)).toFixed(2)} veSHN</Text>}
+            {amountToLock != "0" && estimatedBias && <Text> = {(parseInt(amountToLock) + VOTE_WEIGHT_MULTIPLIER * fromWei(estimatedBias)).toFixed(2)} veSHN</Text>}
             {true && (
               <div>
                 {locked && (
@@ -338,7 +346,7 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                       </Text>
                     )}
                     {console.log("time now in seconds", new Date().getTime(), new Date(locked.end * 1000).getTime(), new Date().getTime() >= new Date(locked.end * 1000).getTime(), locked.end * 1000)}
-                    {locked.end != 0 && new Date().getTime() >= new Date(locked.end * 1000).getTime() && (
+                    {((locked.end != 0 && new Date().getTime() >= new Date(locked.end * 1000).getTime()) || emergencyActive) && (
                       <div>
                         <br></br>
                         {loadingIndicator.includes("withdraw") ? (
@@ -374,7 +382,12 @@ export function VeShnContainer({ isWalletEnabled, chainId, refetchData, setRefet
                     <i>Confirming transaction, please wait.</i>
                   </div>
                 ) : (
-                  isWalletEnabled && userAddress === getAddress(chainId, "controllerAddress") && <Button style={{marginBottom:10}} onClick={() => handleCheckpoint()}>Checkpoint</Button>
+                  isWalletEnabled &&
+                  userAddress === getAddress(chainId, "controllerAddress") && (
+                    <Button style={{ marginBottom: 10 }} onClick={() => handleCheckpoint()}>
+                      Checkpoint
+                    </Button>
+                  )
                 )}
               </div>
             )}
