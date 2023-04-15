@@ -1210,7 +1210,7 @@ export async function checkEmergencyUnlock( veShnAddress, veShnAbi) {
   var veSHN = new window.web3.eth.Contract(veShnAbi, veShnAddress);
   try {
     const emergencyUnlockActive = await veSHN.methods.emergencyUnlockActive().call();
-    return locked;
+    return emergencyUnlockActive;
   } catch (e) {
     console.log("emergencyUnlockActive err ", e);
   }
